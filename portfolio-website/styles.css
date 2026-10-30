@@ -191,6 +191,17 @@ body :is(.topbar nav>a:not(.nav-linkedin),.text-link,.project-link,.back-top):is
 body :is(.topbar nav>a:not(.nav-linkedin),.text-link,.project-link,.back-top):is(:hover,:focus-visible)::before{background:var(--accent);border-color:var(--accent);box-shadow:0 5px 16px rgba(0,0,0,.17)}
 body :is(.topbar nav>a:not(.nav-linkedin),.text-link,.project-link,.back-top):is(:hover,:focus-visible) span{color:inherit}
 body :is(.contact-link,.book-cta:not(:disabled)):is(:hover,:focus-visible){color:#18140e;transform:none;background:var(--accent);border-color:var(--accent);box-shadow:0 8px 20px rgba(0,0,0,.17);text-shadow:none}
+
+/* Page-launch links read as unmistakable controls, with a full tap target on mobile. */
+.project-main .project-link{display:inline-flex;align-items:center;justify-content:space-between;gap:24px;width:fit-content;min-height:46px;margin-top:3px;padding:12px 17px 12px 19px;border:1px solid rgba(210,163,109,.58);border-radius:999px;background:linear-gradient(115deg,rgba(210,163,109,.16),rgba(142,181,162,.08));box-shadow:0 9px 24px rgba(0,0,0,.13),inset 0 1px rgba(255,255,255,.04);color:var(--ink);font:500 10px var(--mono);letter-spacing:.065em;text-transform:uppercase;transition:transform .24s cubic-bezier(.2,.75,.25,1),background-color .24s ease,border-color .24s ease,box-shadow .24s ease,color .24s ease}
+.project-main .project-link::before{display:none}
+.project-main .project-link span{margin:0;color:var(--accent);font-size:14px;line-height:1;transition:transform .24s ease,color .24s ease}
+.project-main .project-link:is(:hover,:focus-visible){transform:translateY(-2px);border-color:var(--accent);background:var(--accent);box-shadow:0 13px 30px rgba(0,0,0,.22);color:#18140e;text-shadow:none}
+.project-main .project-link:is(:hover,:focus-visible) span{transform:translate(2px,-2px);color:inherit}
+.project-main .project-link:active{transform:translateY(0) scale(.985)}
+@media(max-width:620px){.project-main .project-link{width:min(100%,310px);min-height:50px;padding:14px 17px 14px 19px}}
+@media(prefers-reduced-motion:reduce){.project-main .project-link,.project-main .project-link span{transition:none}.project-main .project-link:is(:hover,:focus-visible){transform:none}.project-main .project-link:is(:hover,:focus-visible) span{transform:none}}
+
 body .contact-link:is(:hover,:focus-visible) span{color:inherit}
 body .theme-toggle:is(:hover,:focus-visible){color:#18140e;transform:none;background:var(--accent);border-color:var(--accent);box-shadow:0 5px 16px rgba(0,0,0,.17)}
 body .theme-toggle:is(:hover,:focus-visible) .theme-icon{color:inherit}
