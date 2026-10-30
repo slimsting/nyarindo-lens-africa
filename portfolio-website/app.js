@@ -93,8 +93,7 @@ const revealSelectors = [
   '.working-definitions',
   '.coherence-theory-cta',
   '.social-footer-head',
-  '.social-links',
-  '.ucp-details'
+  '.social-links'
 ];
 
 if (!reducedMotion && 'IntersectionObserver' in window) {
@@ -127,6 +126,17 @@ if (!reducedMotion && 'IntersectionObserver' in window) {
   }, { threshold: .18, rootMargin: '0px 0px -10%' });
   revealTargets.forEach(element => motionObserver.observe(element));
 }
+
+const signoffDetails = document.querySelector('.ucp-details');
+signoffDetails?.addEventListener('toggle', () => {
+  if (!signoffDetails.open) return;
+  requestAnimationFrame(() => {
+    document.querySelector('.ucp-copy')?.scrollIntoView({
+      block: 'nearest',
+      behavior: reducedMotion ? 'auto' : 'smooth'
+    });
+  });
+});
 
 function makeField(canvas, closing = false) {
   const ctx = canvas.getContext('2d', { alpha: true, desynchronized: true });
