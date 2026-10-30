@@ -1,0 +1,55 @@
+.brand-mark picture {
+  display: block;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%
+}
+
+.brand-mark{
+  position:relative;
+  flex:0 0 auto;
+  overflow:hidden;
+  padding:0;
+  border-radius:50%;
+  background:#d8d4c7
+}
+
+.brand-mark img{
+  display:block;
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  border-radius:50%;
+  object-fit:cover;
+  object-position:center 30%
+}
+
+.brand:focus-visible{
+  outline:2px solid var(--accent, #d2a36d);
+  outline-offset:5px
+}
+
+@media (max-width: 620px) {
+  .brand {
+    gap: 9px;
+    min-width: 0
+  }
+
+  .brand-mark {
+    width: 34px;
+    height: 34px;
+    border-width: 2px;
+    box-shadow: 0 0 0 4px rgba(88, 181, 116, .09),
+                0 0 18px rgba(88, 181, 116, .18)
+  }
+
+  .brand > span:last-child {
+    min-width: 0;
+    max-width: 170px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap
+  }
+}

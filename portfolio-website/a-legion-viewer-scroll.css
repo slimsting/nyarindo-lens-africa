@@ -1,0 +1,51 @@
+.viewer-stage{
+  display:block;
+  overflow:auto;
+  overscroll-behavior:contain;
+  touch-action:none;
+  cursor:grab;
+  padding:18px;
+  text-align:center;
+  scrollbar-color:rgba(210,163,109,.65) rgba(255,255,255,.06);
+  scrollbar-width:thin
+}
+
+.viewer-stage.is-dragging{
+  cursor:grabbing
+}
+
+.viewer-stage img{
+  display:block;
+  width:auto;
+  height:auto;
+  max-width:none;
+  max-height:none;
+  margin:auto;
+  transform:none;
+  user-select:none;
+  -webkit-user-drag:none
+}
+
+.viewer-toolbar{
+  max-width:calc(100vw - 30px);
+  flex-wrap:wrap;
+  justify-content:center
+}
+
+.viewer-help{
+  padding:0 8px;
+  color:#aeb9ac;
+  font:8px var(--mono);
+  letter-spacing:.02em;
+  white-space:nowrap
+}
+
+@media(max-width:620px){
+  .viewer-stage{
+    padding:10px
+  }
+
+  .viewer-help{
+    display:none
+  }
+}

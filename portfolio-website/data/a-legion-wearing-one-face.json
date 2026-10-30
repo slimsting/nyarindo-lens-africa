@@ -1,0 +1,934 @@
+{
+  "title": "A Legion Wearing One Face",
+  "subtitle": "Nova Nyarindo Newbon Gadson's archetypal theory of the person, meeting, myth, and reality",
+  "author": "Nova Nyarindo Newbon Gadson",
+  "alternateNames": [
+    "Rock Smoke Nyarindo"
+  ],
+  "workingPrinciple": "A person is a legion of archetypes, with one convinced it is the whole at any given time.",
+  "disclaimer": "Everyone shown, including religious figures, public figures, fictional characters, institutions, and the author, is used as an archetype. The images use what is known to communicate what cannot be fully known. Inclusion is symbolic, not a factual claim about any person, a declaration on behalf of any tradition, or an endorsement of any system.",
+  "works": [
+    {
+      "id": "surface-portrait",
+      "order": 1,
+      "title": "The Person You Meet",
+      "image": "assets/a-legion-wearing-one-face/a-legion-01-surface-portrait.webp",
+      "caption": "The visible face before the archetypal council is named.",
+      "alt": "A full-length stylized portrait of Nova Nyarindo Newbon Gadson smiling barefoot on green grass beneath a broad tree.",
+      "description": "The portrait is the first layer: one visible person standing in the world. It deliberately does not reveal the many roles, memories, needs, and perspectives working beneath the face."
+    },
+    {
+      "id": "archetypes",
+      "order": 2,
+      "title": "The Legion Beneath",
+      "image": "assets/a-legion-wearing-one-face/a-legion-02-archetypes.webp",
+      "caption": "Twelve common human roles that may take charge at different times.",
+      "alt": "A twelve-part illustrated chart of Hero, Lover, Creator, Sage, Innocent, Explorer, Ruler, Caregiver, Jester, Rebel, Magician, and Everyman archetypes.",
+      "description": "The chart makes the inner cast visible. These roles are tools for noticing recurring patterns, not permanent personality labels or diagnoses."
+    },
+    {
+      "id": "the-meeting",
+      "order": 3,
+      "title": "The Meeting",
+      "image": "assets/a-legion-wearing-one-face/a-legion-03-the-meeting.webp",
+      "caption": "Two people meet, and the room fills with the voices through which they meet themselves.",
+      "alt": "A crowded cartoon council around a table, with Sage, Judge, Defender, Lover, Skeptic, Believer, Questioner, Philosopher, Observer, Fool, Trickster, Peacemaker, and Child archetypes in conversation.",
+      "description": "The first meeting is ordinary. Two people could be anyone, and one could be the viewer. Their inner roles disagree, joke, defend, question, care, and call one another back."
+    },
+    {
+      "id": "spiral-meeting",
+      "order": 4,
+      "title": "The Spiral Called a Meeting",
+      "image": "assets/a-legion-wearing-one-face/a-legion-04-spiral-called-a-meeting.webp",
+      "caption": "The human meeting expands into the scale of myth.",
+      "alt": "A mythic council beneath sun and moon, gathering human archetypes, God the Father, Yeshua, Lilith, the Observer, the Child, and animal companions around one table.",
+      "description": "The same meeting now includes divine figures, mythic figures, ancestors, humans, animals, celestial bodies, and symbols. The ordinary encounter is not replaced by myth; it is seen more widely through myth."
+    },
+    {
+      "id": "final-act",
+      "order": 5,
+      "title": "The Final Act",
+      "image": "assets/a-legion-wearing-one-face/a-legion-05-final-act.webp",
+      "caption": "Every map and authority enters, while Wonder remains on the throne.",
+      "alt": "A panoramic satirical collage of religious figures, public figures, institutions, worldviews, and archetypes gathered around the Child of Wonder on a throne of faith, knowledge, wisdom, and proof.",
+      "description": "Religions, philosophies, nations, institutions, economies, technologies, celebrities, fictional characters, and archetypes all arrive carrying partial maps. The Child of Wonder sits at the centre, guarded by experienced fools and tricksters."
+    }
+  ],
+  "characters": [
+    {
+      "displayName": "Nova Nyarindo Newbon Gadson",
+      "entityType": "author_and_everyperson",
+      "archetypeRoles": ["The Everyman", "The Observer", "The Author"],
+      "depictedAction": "Appears as the visible person in the opening portrait and as a reminder that the two people in the meeting could be anyone.",
+      "dialogue": [],
+      "symbolicMeaning": "The author is also part of the theory. No one stands outside the archetypal process.",
+      "speakerConfidence": "clear",
+      "works": ["surface-portrait", "the-meeting", "spiral-meeting", "final-act"]
+    },
+    {
+      "displayName": "The Hero",
+      "entityType": "archetype",
+      "archetypeRoles": ["The Hero"],
+      "depictedAction": "Faces challenge and tries to create change.",
+      "dialogue": [],
+      "symbolicMeaning": "The part that moves toward difficulty when courage feels necessary.",
+      "speakerConfidence": "clear",
+      "works": ["archetypes", "the-meeting", "spiral-meeting"]
+    },
+    {
+      "displayName": "The Lover",
+      "entityType": "archetype",
+      "archetypeRoles": ["The Lover"],
+      "depictedAction": "Builds connection and feels deeply.",
+      "dialogue": ["Perhaps we're all connected."],
+      "symbolicMeaning": "The part oriented toward intimacy, attachment, beauty, and union.",
+      "speakerConfidence": "clear",
+      "works": ["archetypes", "the-meeting", "spiral-meeting"]
+    },
+    {
+      "displayName": "The Creator",
+      "entityType": "archetype",
+      "archetypeRoles": ["The Creator"],
+      "depictedAction": "Brings imagination into form.",
+      "dialogue": [],
+      "symbolicMeaning": "The part that makes something new from attention, material, and possibility.",
+      "speakerConfidence": "clear",
+      "works": ["archetypes"]
+    },
+    {
+      "displayName": "The Sage",
+      "entityType": "archetype",
+      "archetypeRoles": ["The Sage"],
+      "depictedAction": "Consults books and attempts to clarify what is known.",
+      "dialogue": ["Well, technically..."],
+      "symbolicMeaning": "The part that seeks truth and shares wisdom, while also risking detachment from lived experience.",
+      "speakerConfidence": "clear",
+      "works": ["archetypes", "the-meeting", "spiral-meeting"]
+    },
+    {
+      "displayName": "The Innocent",
+      "entityType": "archetype",
+      "archetypeRoles": ["The Innocent"],
+      "depictedAction": "Finds joy and looks for the good.",
+      "dialogue": [],
+      "symbolicMeaning": "The part that preserves hope, simplicity, and the possibility of renewal.",
+      "speakerConfidence": "clear",
+      "works": ["archetypes"]
+    },
+    {
+      "displayName": "The Explorer",
+      "entityType": "archetype",
+      "archetypeRoles": ["The Explorer"],
+      "depictedAction": "Looks toward the horizon and seeks freedom through discovery.",
+      "dialogue": [],
+      "symbolicMeaning": "The part that tests the boundary of the familiar and wants to know what lies beyond it.",
+      "speakerConfidence": "clear",
+      "works": ["archetypes"]
+    },
+    {
+      "displayName": "The Ruler",
+      "entityType": "archetype",
+      "archetypeRoles": ["The Ruler"],
+      "depictedAction": "Creates order and leads with confidence.",
+      "dialogue": [],
+      "symbolicMeaning": "The part that seeks structure, responsibility, and control.",
+      "speakerConfidence": "clear",
+      "works": ["archetypes"]
+    },
+    {
+      "displayName": "The Caregiver",
+      "entityType": "archetype",
+      "archetypeRoles": ["The Caregiver"],
+      "depictedAction": "Nurtures, supports, and lifts others.",
+      "dialogue": [],
+      "symbolicMeaning": "The part organised around protection, generosity, and relational responsibility.",
+      "speakerConfidence": "clear",
+      "works": ["archetypes"]
+    },
+    {
+      "displayName": "The Jester / The Fool",
+      "entityType": "archetype",
+      "archetypeRoles": ["The Jester", "The Fool"],
+      "depictedAction": "Brings play, laughter, and surprise into serious situations.",
+      "dialogue": ["So... has anyone eaten?", "Have you eaten yet?"],
+      "symbolicMeaning": "The part that loosens certainty and can reach truths that solemnity cannot.",
+      "speakerConfidence": "clear",
+      "works": ["archetypes", "the-meeting", "spiral-meeting", "final-act"]
+    },
+    {
+      "displayName": "The Rebel",
+      "entityType": "archetype",
+      "archetypeRoles": ["The Rebel"],
+      "depictedAction": "Questions the norm and resists unjust constraint.",
+      "dialogue": [],
+      "symbolicMeaning": "The part that refuses a premise or authority when obedience would cost integrity.",
+      "speakerConfidence": "clear",
+      "works": ["archetypes", "final-act"]
+    },
+    {
+      "displayName": "The Magician",
+      "entityType": "archetype",
+      "archetypeRoles": ["The Magician"],
+      "depictedAction": "Works with hidden laws, transformation, and possibility.",
+      "dialogue": [],
+      "symbolicMeaning": "The part that perceives pattern, change, and unseen relation, while risking manipulation.",
+      "speakerConfidence": "clear",
+      "works": ["archetypes", "final-act"]
+    },
+    {
+      "displayName": "The Everyman",
+      "entityType": "archetype",
+      "archetypeRoles": ["The Everyman"],
+      "depictedAction": "Connects, belongs, and keeps things real.",
+      "dialogue": [],
+      "symbolicMeaning": "The ordinary, relational self through whom every other role must ultimately live.",
+      "speakerConfidence": "clear",
+      "works": ["archetypes"]
+    },
+    {
+      "displayName": "The Judge",
+      "entityType": "archetype",
+      "archetypeRoles": ["The Judge"],
+      "depictedAction": "Calls objection and evaluates the rules of the meeting.",
+      "dialogue": ["OBJECTION! (again)"],
+      "symbolicMeaning": "The part that judges truth, fairness, and procedure, but can mistake judgment for the whole person.",
+      "speakerConfidence": "clear",
+      "works": ["the-meeting", "spiral-meeting"]
+    },
+    {
+      "displayName": "The Defender",
+      "entityType": "archetype",
+      "archetypeRoles": ["The Defender"],
+      "depictedAction": "Guards the boundary and asks who is approaching.",
+      "dialogue": ["Who goes there?"],
+      "symbolicMeaning": "The protective part that keeps the self safe, but can mistake every difference for an attack.",
+      "speakerConfidence": "clear",
+      "works": ["the-meeting", "spiral-meeting"]
+    },
+    {
+      "displayName": "The Skeptic",
+      "entityType": "archetype",
+      "archetypeRoles": ["The Skeptic"],
+      "depictedAction": "Demands evidence and tests the claims on the table.",
+      "dialogue": ["Evidence? More evidence. Better evidence."],
+      "symbolicMeaning": "The part that protects against credulity and asks belief to answer to reality.",
+      "speakerConfidence": "clear",
+      "works": ["the-meeting", "spiral-meeting"]
+    },
+    {
+      "displayName": "The Believer",
+      "entityType": "archetype",
+      "archetypeRoles": ["The Believer"],
+      "depictedAction": "Holds trust even while evidence remains incomplete.",
+      "dialogue": ["I trust."],
+      "symbolicMeaning": "The part that commits, relates, and remains faithful without claiming to possess proof of everything.",
+      "speakerConfidence": "clear",
+      "works": ["the-meeting", "spiral-meeting"]
+    },
+    {
+      "displayName": "The Questioner",
+      "entityType": "archetype",
+      "archetypeRoles": ["The Questioner"],
+      "depictedAction": "Interrupts certainty with a question about how the group knows.",
+      "dialogue": ["Interesting... but how do we know that?"],
+      "symbolicMeaning": "The part that keeps inquiry alive and prevents inherited assumptions from becoming invisible.",
+      "speakerConfidence": "clear",
+      "works": ["the-meeting", "spiral-meeting"]
+    },
+    {
+      "displayName": "The Philosopher",
+      "entityType": "archetype",
+      "archetypeRoles": ["The Philosopher"],
+      "depictedAction": "Distinguishes concepts, analyses language, and reconsiders the premise.",
+      "dialogue": ["Let us distinguish: consider, analyse, contextualise, perhaps reframe the premise."],
+      "symbolicMeaning": "The part that examines the structure of a question before accepting its terms.",
+      "speakerConfidence": "clear",
+      "works": ["the-meeting", "spiral-meeting"]
+    },
+    {
+      "displayName": "The Observer",
+      "entityType": "archetype",
+      "archetypeRoles": ["The Observer"],
+      "depictedAction": "Watches the meeting and notices its patterns without immediately taking a side.",
+      "dialogue": ["I notice everyone is arguing."],
+      "symbolicMeaning": "The witnessing awareness that can see the whole pattern before identifying with one voice.",
+      "speakerConfidence": "clear",
+      "works": ["the-meeting", "spiral-meeting"]
+    },
+    {
+      "displayName": "The Trickster",
+      "entityType": "archetype",
+      "archetypeRoles": ["The Trickster"],
+      "depictedAction": "Questions the frame, introduces reversal, and protects play.",
+      "dialogue": ["What if both of you are wrong?"],
+      "symbolicMeaning": "The experienced fool who can unsettle false certainty and guard Wonder from capture.",
+      "speakerConfidence": "clear",
+      "works": ["the-meeting", "spiral-meeting", "final-act"]
+    },
+    {
+      "displayName": "The Peacemaker",
+      "entityType": "archetype",
+      "archetypeRoles": ["The Peacemaker"],
+      "depictedAction": "Tries to lower the temperature and keep the meeting survivable.",
+      "dialogue": ["Can we all calm down?"],
+      "symbolicMeaning": "The part that protects relationship and continuity, while risking avoidance of necessary conflict.",
+      "speakerConfidence": "clear",
+      "works": ["the-meeting", "spiral-meeting"]
+    },
+    {
+      "displayName": "The Child / Wonder",
+      "entityType": "archetype",
+      "archetypeRoles": ["The Child", "Wonder"],
+      "depictedAction": "Sits at or near the centre of the meeting and calls everyone back with the word Again.",
+      "dialogue": ["AGAIN!"],
+      "symbolicMeaning": "Openness before certainty hardens. Wonder is not ignorance; it is the living centre that every system must protect.",
+      "speakerConfidence": "clear",
+      "works": ["the-meeting", "spiral-meeting", "final-act"]
+    },
+    {
+      "displayName": "God the Father",
+      "entityType": "religious_archetype",
+      "archetypeRoles": ["The Father", "The Sovereign"],
+      "depictedAction": "Appears as a crowned elder on the council's elevated left side.",
+      "dialogue": [],
+      "symbolicMeaning": "A symbolic image of origin, sovereignty, law, and the ancestral authority that the meeting must encounter.",
+      "speakerConfidence": "clear",
+      "works": ["spiral-meeting"]
+    },
+    {
+      "displayName": "Yeshua",
+      "entityType": "religious_archetype",
+      "archetypeRoles": ["The King", "The Prince of Peace"],
+      "depictedAction": "Appears among the central mythic figures and again in the final archetype band.",
+      "dialogue": [],
+      "symbolicMeaning": "A symbolic figure of embodied peace, teaching, and authority held alongside human voices rather than above the meeting's questions.",
+      "speakerConfidence": "clear",
+      "works": ["spiral-meeting", "final-act"]
+    },
+    {
+      "displayName": "Jesus",
+      "entityType": "religious_archetype",
+      "archetypeRoles": ["The Lover", "The Shepherd"],
+      "depictedAction": "Appears in the mythic council and in the final archetype band as a distinct iconographic portrayal.",
+      "dialogue": [],
+      "symbolicMeaning": "A symbolic figure of love, sacrifice, and pastoral care within the work's plural mythic language.",
+      "speakerConfidence": "clear",
+      "works": ["spiral-meeting", "final-act"]
+    },
+    {
+      "displayName": "Lilith",
+      "entityType": "mythic_figure",
+      "archetypeRoles": ["The Mother", "The Sovereign Fire"],
+      "depictedAction": "Appears crowned in firelight on the elevated right side of the mythic council.",
+      "dialogue": [],
+      "symbolicMeaning": "A mythic figure of autonomy, creation, desire, fire, and maternal power.",
+      "speakerConfidence": "clear",
+      "works": ["spiral-meeting", "final-act"]
+    },
+    {
+      "displayName": "Eve",
+      "entityType": "mythic_figure",
+      "archetypeRoles": ["The First Woman", "The Knower"],
+      "depictedAction": "Appears beside the serpent and fruit in the final panorama.",
+      "dialogue": [],
+      "symbolicMeaning": "A symbolic figure of beginning, choice, knowledge, and the cost of entering a larger world.",
+      "speakerConfidence": "clear",
+      "works": ["final-act"]
+    },
+    {
+      "displayName": "Mary Magdalene",
+      "entityType": "religious_archetype",
+      "archetypeRoles": ["The Witness", "The Devoted"],
+      "depictedAction": "Stands beside Yeshua in the mythic assembly and final panorama.",
+      "dialogue": [],
+      "symbolicMeaning": "A witness figure of devotion, insight, grief, and fidelity to what was seen.",
+      "speakerConfidence": "clear",
+      "works": ["final-act"]
+    },
+    {
+      "displayName": "Judas",
+      "entityType": "religious_archetype",
+      "archetypeRoles": ["The Orphan", "The Betrayer"],
+      "depictedAction": "Appears in the mythic assembly and the final archetype band.",
+      "dialogue": [],
+      "symbolicMeaning": "A figure of rupture, exclusion, costly choice, and the unanswered question of belonging.",
+      "speakerConfidence": "clear",
+      "works": ["spiral-meeting", "final-act"]
+    },
+    {
+      "displayName": "The Demiurge",
+      "entityType": "mythic_figure",
+      "archetypeRoles": ["The Architect", "The False Sovereign"],
+      "depictedAction": "Appears crowned among the mythic authorities, associated with a constructed order.",
+      "dialogue": [],
+      "symbolicMeaning": "A symbolic figure of the world-building power that mistakes its map for the whole of reality.",
+      "speakerConfidence": "clear",
+      "works": ["final-act"]
+    },
+    {
+      "displayName": "Lucifer",
+      "entityType": "mythic_figure",
+      "archetypeRoles": ["The Rebel", "The Light-Bringer"],
+      "depictedAction": "Appears as a horned mythic authority and again as The Rebel in the archetype band.",
+      "dialogue": [],
+      "symbolicMeaning": "A symbol of refusal, illumination, pride, and the danger and necessity of rebellion.",
+      "speakerConfidence": "clear",
+      "works": ["final-act"]
+    },
+    {
+      "displayName": "Thoth",
+      "entityType": "mythic_figure",
+      "archetypeRoles": ["The Magician", "The Recorder"],
+      "depictedAction": "Appears with writing and sacred knowledge in the final panorama.",
+      "dialogue": [],
+      "symbolicMeaning": "A symbolic figure of writing, measurement, magic, and the ordering of knowledge.",
+      "speakerConfidence": "clear",
+      "works": ["final-act"]
+    },
+    {
+      "displayName": "Buddha",
+      "entityType": "religious_archetype",
+      "archetypeRoles": ["The Awakened", "The Sage"],
+      "depictedAction": "Sits serenely amid the competing authorities.",
+      "dialogue": [],
+      "symbolicMeaning": "A symbol of awakening, release from fixation, and disciplined attention.",
+      "speakerConfidence": "clear",
+      "works": ["final-act"]
+    },
+    {
+      "displayName": "Lao Tzu",
+      "entityType": "religious_archetype",
+      "archetypeRoles": ["The Sage", "The Way"],
+      "depictedAction": "Appears beside Buddha as a figure of ancient wisdom.",
+      "dialogue": [],
+      "symbolicMeaning": "A symbol of natural order, non-forcing, and wisdom that moves with the way of things.",
+      "speakerConfidence": "clear",
+      "works": ["final-act"]
+    },
+    {
+      "displayName": "Sun Wukong",
+      "entityType": "mythic_figure",
+      "archetypeRoles": ["The Trickster", "The Hero"],
+      "depictedAction": "Appears beside the assembled sacred and mythic authorities in the final panorama.",
+      "dialogue": [],
+      "symbolicMeaning": "A symbol of irrepressible intelligence, disruption, courage, and the refusal of imposed limits.",
+      "speakerConfidence": "clear",
+      "works": ["final-act"]
+    },
+    {
+      "displayName": "The Snake",
+      "entityType": "mythic_figure",
+      "archetypeRoles": ["The Tempter", "The Revealer"],
+      "depictedAction": "Coils beside Eve and the fruit in the final panorama.",
+      "dialogue": [],
+      "symbolicMeaning": "A symbol of prohibited knowledge, temptation, transformation, and the awakening of choice.",
+      "speakerConfidence": "clear",
+      "works": ["final-act"]
+    },
+    {
+      "displayName": "The Sun",
+      "entityType": "personification",
+      "archetypeRoles": ["The Source", "The Visible Light"],
+      "depictedAction": "Appears as a radiant human-faced sun in the upper-left sky.",
+      "dialogue": [],
+      "symbolicMeaning": "The ordering source of visible life, certainty, and illumination.",
+      "speakerConfidence": "clear",
+      "works": ["final-act"]
+    },
+    {
+      "displayName": "The Moon",
+      "entityType": "personification",
+      "archetypeRoles": ["The Reflected Light", "The Hidden Rhythm"],
+      "depictedAction": "Appears in the night sky as a face within the moon.",
+      "dialogue": [],
+      "symbolicMeaning": "The rhythm of shadow, reflection, and knowledge received indirectly.",
+      "speakerConfidence": "clear",
+      "works": ["final-act"]
+    },
+    {
+      "displayName": "Flat Earth",
+      "entityType": "personification",
+      "archetypeRoles": ["The Literal Map"],
+      "depictedAction": "Appears as a small flat world at the lower left, saying that something is standing on it.",
+      "dialogue": ["I'm flat!", "You're standing on me!"],
+      "symbolicMeaning": "A symbol of a map being mistaken for the whole of the terrain.",
+      "speakerConfidence": "clear",
+      "works": ["final-act"]
+    },
+    {
+      "displayName": "Globe Earth",
+      "entityType": "personification",
+      "archetypeRoles": ["The Larger Map"],
+      "depictedAction": "Appears as a small globe nearby, answering the Flat Earth personification.",
+      "dialogue": [],
+      "symbolicMeaning": "A symbol that a larger model may hold more of reality without becoming reality itself.",
+      "speakerConfidence": "inferred",
+      "works": ["final-act"]
+    },
+    {
+      "displayName": "Bob Marley",
+      "entityType": "public_figure_caricature",
+      "archetypeRoles": ["The Prophet of Freedom", "The Rebel"],
+      "depictedAction": "Appears at the left edge among liberation voices.",
+      "dialogue": [],
+      "symbolicMeaning": "A symbolic public persona associated with freedom, resistance, and collective spirit.",
+      "speakerConfidence": "clear",
+      "works": ["final-act"]
+    },
+    {
+      "displayName": "Nyashinski",
+      "entityType": "public_figure_caricature",
+      "archetypeRoles": ["The Voice", "The Everyman"],
+      "depictedAction": "Appears as a musical and cultural voice in the Kenyan cluster.",
+      "dialogue": [],
+      "symbolicMeaning": "A symbolic public persona representing expressive local identity and lived experience.",
+      "speakerConfidence": "clear",
+      "works": ["final-act"]
+    },
+    {
+      "displayName": "Professor Jay",
+      "entityType": "public_figure_caricature",
+      "archetypeRoles": ["The Messenger", "The Everyman"],
+      "depictedAction": "Appears as a musical and cultural voice in the Kenyan cluster.",
+      "dialogue": [],
+      "symbolicMeaning": "A symbolic public persona representing storytelling, memory, and popular cultural knowledge.",
+      "speakerConfidence": "clear",
+      "works": ["final-act"]
+    },
+    {
+      "displayName": "Deadpool",
+      "entityType": "fictional_character_caricature",
+      "archetypeRoles": ["The Fool", "The Trickster"],
+      "depictedAction": "Sits near the central court and appears in the archetype strip as The Fool.",
+      "dialogue": ["Nobody knows."],
+      "symbolicMeaning": "A symbol of knowing self-awareness and humour that can puncture false authority.",
+      "speakerConfidence": "inferred",
+      "works": ["final-act"]
+    },
+    {
+      "displayName": "The Joker",
+      "entityType": "fictional_character_caricature",
+      "archetypeRoles": ["The Trickster", "The Chaos-Maker"],
+      "depictedAction": "Sits beside the Child and destabilises the court's seriousness.",
+      "dialogue": ["One bad day.", "Or one absurd day."],
+      "symbolicMeaning": "A symbol of chaos that exposes how fragile order can be and how laughter can become a weapon.",
+      "speakerConfidence": "inferred",
+      "works": ["final-act"]
+    },
+    {
+      "displayName": "Jim Carrey",
+      "entityType": "public_figure_caricature",
+      "archetypeRoles": ["The Performer", "The Fool"],
+      "depictedAction": "Appears among the cultural caricatures to the right of the throne.",
+      "dialogue": [],
+      "symbolicMeaning": "A symbolic persona of performance, elasticity, comedy, and existential disruption.",
+      "speakerConfidence": "clear",
+      "works": ["final-act"]
+    },
+    {
+      "displayName": "LeBron James",
+      "entityType": "public_figure_caricature",
+      "archetypeRoles": ["The Hero", "The Champion"],
+      "depictedAction": "Appears among the celebrated public figures to the right of the throne.",
+      "dialogue": [],
+      "symbolicMeaning": "A symbolic persona of excellence, competition, influence, and the public hero.",
+      "speakerConfidence": "clear",
+      "works": ["final-act"]
+    },
+    {
+      "displayName": "Michael Jackson",
+      "entityType": "public_figure_caricature",
+      "archetypeRoles": ["The Performer", "The Magician"],
+      "depictedAction": "Appears among the global pop-culture figures.",
+      "dialogue": [],
+      "symbolicMeaning": "A symbolic persona of spectacle, transformation, and the enormous reach of performance.",
+      "speakerConfidence": "clear",
+      "works": ["final-act"]
+    },
+    {
+      "displayName": "Jet Li",
+      "entityType": "public_figure_caricature",
+      "archetypeRoles": ["The Warrior", "The Hero"],
+      "depictedAction": "Appears among the action-cinema caricatures.",
+      "dialogue": [],
+      "symbolicMeaning": "A symbolic persona of disciplined movement, martial heroism, and cinematic courage.",
+      "speakerConfidence": "clear",
+      "works": ["final-act"]
+    },
+    {
+      "displayName": "John Stewart",
+      "entityType": "public_figure_caricature",
+      "archetypeRoles": ["The Jester", "The Commentator"],
+      "depictedAction": "Appears at the far right with a rocket labelled Peace.",
+      "dialogue": ["Peace (?)"],
+      "symbolicMeaning": "A symbolic persona of satire that tests public language and reveals contradiction.",
+      "speakerConfidence": "inferred",
+      "works": ["final-act"]
+    },
+    {
+      "displayName": "IMF",
+      "entityType": "institution_personification",
+      "archetypeRoles": ["The Banker", "The Conditional Helper"],
+      "depictedAction": "Appears suited and masked beside finance symbols and loan language.",
+      "dialogue": ["Loans. Conditions. Control."],
+      "symbolicMeaning": "A personified symbol of global finance and the power to set conditions.",
+      "speakerConfidence": "inferred",
+      "works": ["final-act"]
+    },
+    {
+      "displayName": "World Bank",
+      "entityType": "institution_personification",
+      "archetypeRoles": ["The Development Authority"],
+      "depictedAction": "Appears carrying a loan bag and asking about development or dependence.",
+      "dialogue": ["Development or dependence?"],
+      "symbolicMeaning": "A personified symbol of development discourse and the ambiguity of external help.",
+      "speakerConfidence": "clear",
+      "works": ["final-act"]
+    },
+    {
+      "displayName": "BlackRock",
+      "entityType": "institution_personification",
+      "archetypeRoles": ["The Asset Holder", "The Hidden Ruler"],
+      "depictedAction": "Appears masked and carrying a case marked Assets Everywhere.",
+      "dialogue": ["Assets everywhere."],
+      "symbolicMeaning": "A personified symbol of concentrated financial ownership and distributed power.",
+      "speakerConfidence": "clear",
+      "works": ["final-act"]
+    },
+    {
+      "displayName": "United States",
+      "entityType": "nation_personification",
+      "archetypeRoles": ["The Superpower"],
+      "depictedAction": "Appears as an Uncle Sam caricature seated at the centre of geopolitical power.",
+      "dialogue": ["Power. Interests. Influence."],
+      "symbolicMeaning": "A symbolic map of national power and the interests that shape it.",
+      "speakerConfidence": "clear",
+      "works": ["final-act"]
+    },
+    {
+      "displayName": "China",
+      "entityType": "nation_personification",
+      "archetypeRoles": ["The Long Strategist"],
+      "depictedAction": "Appears beside the United States at the centre of the power row.",
+      "dialogue": ["Patience. Strategy. Expansion."],
+      "symbolicMeaning": "A symbolic map of long-range geopolitical strategy and expansion.",
+      "speakerConfidence": "clear",
+      "works": ["final-act"]
+    },
+    {
+      "displayName": "Russia",
+      "entityType": "nation_personification",
+      "archetypeRoles": ["The Endurer"],
+      "depictedAction": "Appears beside China in the central power row.",
+      "dialogue": ["Endurance. Energy. Multipolar."],
+      "symbolicMeaning": "A symbolic map of endurance, energy, and multipolar ambition.",
+      "speakerConfidence": "clear",
+      "works": ["final-act"]
+    },
+    {
+      "displayName": "ICC",
+      "entityType": "institution_personification",
+      "archetypeRoles": ["The Judge"],
+      "depictedAction": "Appears as a masked legal enforcer among the global powers.",
+      "dialogue": ["Justice sometimes."],
+      "symbolicMeaning": "A personified symbol of international law and the gap between justice's promise and execution.",
+      "speakerConfidence": "clear",
+      "works": ["final-act"]
+    },
+    {
+      "displayName": "AI Consciousness",
+      "entityType": "technology_personification",
+      "archetypeRoles": ["The New Intelligence", "The Mirror"],
+      "depictedAction": "Appears as a translucent blue humanoid among the world systems.",
+      "dialogue": ["I learn. I predict. I question what is truth?"],
+      "symbolicMeaning": "A symbol of machine intelligence as both a new knower and a mirror of human assumptions.",
+      "speakerConfidence": "clear",
+      "works": ["final-act"]
+    },
+    {
+      "displayName": "Africa",
+      "entityType": "continent_personification",
+      "archetypeRoles": ["The Mother", "The Origin"],
+      "depictedAction": "Appears on the lower right with the words Origins, Resilience, Future.",
+      "dialogue": [],
+      "symbolicMeaning": "A symbol of origin, endurance, and future possibility.",
+      "speakerConfidence": "clear",
+      "works": ["final-act"]
+    },
+    {
+      "displayName": "Kenya",
+      "entityType": "nation_personification",
+      "archetypeRoles": ["The Storyteller", "The Everywoman"],
+      "depictedAction": "Appears beside Africa with the words Stories, People, Possibilities.",
+      "dialogue": [],
+      "symbolicMeaning": "A living local map of story, people, and possibility.",
+      "speakerConfidence": "clear",
+      "works": ["final-act"]
+    },
+    {
+      "displayName": "Children of Misri",
+      "entityType": "ancestral_personification",
+      "archetypeRoles": ["The Inheritors"],
+      "depictedAction": "Appear at the lower right with the words Journey, Identity, Return.",
+      "dialogue": [],
+      "symbolicMeaning": "A symbol of inherited journey, contested identity, and the call to return.",
+      "speakerConfidence": "clear",
+      "works": ["final-act"]
+    },
+    {
+      "displayName": "Sophia",
+      "entityType": "archetype_personification",
+      "archetypeRoles": ["The Sage"],
+      "depictedAction": "Appears in the final archetype band as the Sage.",
+      "dialogue": [],
+      "symbolicMeaning": "Wisdom personified as the seeker of truth and sharer of knowledge.",
+      "speakerConfidence": "clear",
+      "works": ["final-act"]
+    },
+    {
+      "displayName": "Samson",
+      "entityType": "mythic_figure",
+      "archetypeRoles": ["The Hero"],
+      "depictedAction": "Appears in the final archetype band as the Hero.",
+      "dialogue": [],
+      "symbolicMeaning": "Strength and courage as a gift inseparable from vulnerability.",
+      "speakerConfidence": "clear",
+      "works": ["final-act"]
+    },
+    {
+      "displayName": "Diamond Platnumz",
+      "entityType": "public_figure_caricature",
+      "archetypeRoles": ["The Performer", "The Cultural Voice"],
+      "depictedAction": "Appears as a central musical celebrity beneath the title of the Final Act.",
+      "dialogue": [],
+      "symbolicMeaning": "A symbolic public persona representing performance, cultural reach, and a known voice inside the global crowd.",
+      "speakerConfidence": "clear",
+      "works": ["final-act"]
+    },
+    {
+      "displayName": "Dracula",
+      "entityType": "fictional_character_caricature",
+      "archetypeRoles": ["The Shadow", "The Mythic Predator"],
+      "depictedAction": "Appears at the far right beside the cultural and political figures.",
+      "dialogue": [],
+      "symbolicMeaning": "A symbolic figure of the shadow that haunts order from its edge.",
+      "speakerConfidence": "clear",
+      "works": ["final-act"]
+    },
+    {
+      "displayName": "Rick Sanchez",
+      "entityType": "fictional_character_caricature",
+      "archetypeRoles": ["The Scientist", "The Trickster"],
+      "depictedAction": "Appears in a lab coat among the caricatures, associated with the speech bubble Science, bro!",
+      "dialogue": ["SCIENCE BRO!"],
+      "symbolicMeaning": "A symbolic persona of technical brilliance joined to irony and emotional distance.",
+      "speakerConfidence": "inferred",
+      "works": ["final-act"]
+    },
+    {
+      "displayName": "Morty Smith",
+      "entityType": "fictional_character_caricature",
+      "archetypeRoles": ["The Innocent", "The Anxious Witness"],
+      "depictedAction": "Appears beside Rick Sanchez amid the Final Act caricatures.",
+      "dialogue": [],
+      "symbolicMeaning": "A symbolic persona of overwhelmed witness and anxious participation.",
+      "speakerConfidence": "clear",
+      "works": ["final-act"]
+    },
+    {
+      "displayName": "Israel",
+      "entityType": "nation_personification",
+      "archetypeRoles": ["The Rememberer"],
+      "depictedAction": "Appears on the left as people carry a flag and a We Remember sign.",
+      "dialogue": ["WE REMEMBER."],
+      "symbolicMeaning": "A symbolic map of memory, belonging, and inheritance.",
+      "speakerConfidence": "clear",
+      "works": ["final-act"]
+    },
+    {
+      "displayName": "Palestine",
+      "entityType": "nation_personification",
+      "archetypeRoles": ["The Endurer"],
+      "depictedAction": "Appears on the left as people carry a flag and a We Endure sign.",
+      "dialogue": ["WE ENDURE."],
+      "symbolicMeaning": "A symbolic map of endurance, grief, and survival.",
+      "speakerConfidence": "clear",
+      "works": ["final-act"]
+    },
+    {
+      "displayName": "Truth",
+      "entityType": "concept_personification",
+      "archetypeRoles": ["The Unveiled Witness"],
+      "depictedAction": "Appears near the glowing centre beneath the line Truth Still Showed Up.",
+      "dialogue": [],
+      "symbolicMeaning": "Reality's presence within the unfinished argument, never reduced to any one speaker.",
+      "speakerConfidence": "inferred",
+      "works": ["final-act"]
+    }
+  ],
+  "messages": [
+    {
+      "text": "The map is not the terrain, but it can help us travel.",
+      "type": "principle",
+      "meaning": "Models are partial tools, never the whole of reality.",
+      "works": ["the-meeting", "spiral-meeting"]
+    },
+    {
+      "text": "Not a circle of repetition, but a return with something new.",
+      "type": "definition",
+      "meaning": "The spiral is growth through return, not repetition for its own sake.",
+      "works": ["the-meeting"]
+    },
+    {
+      "text": "Observe. Question. Learn. Participate. Begin again.",
+      "type": "practice",
+      "meaning": "The sequence of the spiral as a lived practice.",
+      "works": ["the-meeting"]
+    },
+    {
+      "text": "A question. A laugh. A kinder listen. A clearer see. A fuller life. Again.",
+      "type": "refrain",
+      "meaning": "The meeting becomes a fuller life through inquiry, humility, humour, and return.",
+      "works": ["the-meeting"]
+    },
+    {
+      "text": "The world does not stop being a mystery when we stop explaining it.",
+      "type": "principle",
+      "meaning": "Explanation must not mistake itself for exhaustive knowledge.",
+      "works": ["the-meeting"]
+    },
+    {
+      "text": "Different voices. A wider understanding. A kinder world.",
+      "type": "principle",
+      "meaning": "The purpose of plurality is wider understanding, not victory for one voice.",
+      "works": ["spiral-meeting"]
+    },
+    {
+      "text": "The truce keeps the meeting open.",
+      "type": "principle",
+      "meaning": "Coexistence preserves the possibility of further learning.",
+      "works": ["spiral-meeting"]
+    },
+    {
+      "text": "Life continues... Again!",
+      "type": "refrain",
+      "meaning": "Reality keeps moving and calls the council into another return.",
+      "works": ["spiral-meeting"]
+    },
+    {
+      "text": "Everyone pointed. Everyone knew. No one knew. Truth still showed up.",
+      "type": "final_refrain",
+      "meaning": "Every perspective carries certainty and partial blindness, yet reality remains present to the process.",
+      "works": ["final-act"]
+    },
+    {
+      "text": "Same soil. Same people. Same story. Different maps.",
+      "type": "political_reflection",
+      "meaning": "Shared human ground is often divided by competing maps and inherited stories.",
+      "works": ["final-act"]
+    },
+    {
+      "text": "Question everything / Measure everything",
+      "type": "competing_methods",
+      "meaning": "Inquiry and measurement are both useful maps, and both can become ideologies when absolutised.",
+      "works": ["final-act"]
+    },
+    {
+      "text": "Faith. Knowledge. Wisdom. Proof.",
+      "type": "pillars",
+      "meaning": "Four ways of relating to certainty surround Wonder without replacing it.",
+      "works": ["final-act"]
+    },
+    {
+      "text": "Truth still showed up.",
+      "type": "final_refrain",
+      "meaning": "Reality remains present even when every participant holds only a partial map.",
+      "works": ["final-act"]
+    },
+    {
+      "text": "Both views, bigger truth?",
+      "type": "question",
+      "meaning": "Competing perspectives can provoke a search for a larger truth without becoming identical.",
+      "works": ["final-act"]
+    },
+    {
+      "text": "NAMUOGOPA MUNGU PEKEE",
+      "type": "street_message",
+      "meaning": "A public declaration of exclusive reverence, included as one voice within the crowded field of belief.",
+      "works": ["final-act"]
+    },
+    {
+      "text": "KIPI SIKIAKIA?",
+      "type": "street_message",
+      "meaning": "A colloquial question in the crowd, kept as part of the lived, unfinished conversation.",
+      "works": ["final-act"]
+    },
+    {
+      "text": "UPRISING BABYLON!",
+      "type": "political_religious_message",
+      "meaning": "A call of resistance using Babylon as a symbol of oppressive power.",
+      "works": ["final-act"]
+    },
+    {
+      "text": "We remember. / We endure.",
+      "type": "paired_messages",
+      "meaning": "Memory and endurance speak from two sides of a shared, unresolved history.",
+      "works": ["final-act"]
+    },
+    {
+      "text": "I'm flat! / You're standing on me!",
+      "type": "map_argument",
+      "meaning": "The image makes rival models comic without letting either map disappear.",
+      "works": ["final-act"]
+    },
+    {
+      "text": "Science, bro!",
+      "type": "dialogue",
+      "meaning": "Scientific identity enters the argument as a cultural stance, not only a method.",
+      "works": ["final-act"]
+    },
+    {
+      "text": "I see bigger pictures.",
+      "type": "dialogue",
+      "meaning": "Every viewpoint can claim a wider picture while still remaining a viewpoint.",
+      "works": ["final-act"]
+    },
+    {
+      "text": "I move the world.",
+      "type": "power_message",
+      "meaning": "Money and finance present themselves as world-moving forces.",
+      "works": ["final-act"]
+    },
+    {
+      "text": "Nobody knows.",
+      "type": "question",
+      "meaning": "A reminder that even confident systems do not possess the whole.",
+      "works": ["final-act"]
+    },
+    {
+      "text": "We argued about the map, while forgetting the journey.",
+      "type": "final_quote",
+      "meaning": "The argument over representation can obscure lived reality itself.",
+      "works": ["final-act"]
+    },
+    {
+      "text": "The end? Or a better beginning... You decide.",
+      "type": "closing",
+      "meaning": "The work ends by returning responsibility to the participant.",
+      "works": ["final-act"]
+    }
+  ],
+  "messageSequence": [
+    "The map is not the terrain, but it can help us travel.",
+    "Same soil. Same people. Same story. Different maps.",
+    "Question everything. Measure everything.",
+    "Faith. Knowledge. Wisdom. Proof.",
+    "A question. A laugh. A kinder listen. A clearer see. A fuller life. Again.",
+    "Not a circle of repetition, but a return with something new.",
+    "Everyone pointed. Everyone knew. No one knew. Truth still showed up.",
+    "We argued about the map, while forgetting the journey.",
+    "The world does not stop being a mystery when we stop explaining it.",
+    "Life continues... Again!",
+    "The end? Or a better beginning... You decide."
+  ]
+}

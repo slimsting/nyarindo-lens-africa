@@ -1,0 +1,25 @@
+# Canonical home
+/ /portfolio-website/ 301
+/portfolio-website /portfolio-website/ 301
+
+# Portfolio and theory pages
+/portfolio-website/ /portfolio-website/index.html 200
+/portfolio-website/index.html /portfolio-website/index.html 200
+/portfolio-website/a-legion-wearing-one-face.html /portfolio-website/a-legion-wearing-one-face.html 200
+/portfolio-website/lens-of-everything.html /portfolio-website/lens-of-everything.html 200
+/portfolio-website/peace-pon-eye-and-eye.html /portfolio-website/peace-pon-eye-and-eye.html 200
+/portfolio-website/science-and-religion.html /portfolio-website/science-and-religion.html 200
+/portfolio-website/the-aperture.html /portfolio-website/the-aperture.html 200
+/portfolio-website/the-threshold-rule.html /portfolio-website/the-threshold-rule.html 200
+
+# Browser projects
+/drift /drift/ 301
+/drift/ /drift/index.html 200
+/drift/index.html /drift/index.html 200
+/drift/artist.html /drift/artist.html 200
+/memory-app /memory-app/ 301
+/memory-app/ /memory-app/index.html 200
+/memory-app/index.html /memory-app/index.html 200
+/semantic-field-extension /semantic-field-extension/ 301
+/semantic-field-extension/ /semantic-field-extension/index.html 200
+/semantic-field-extension/index.html /semantic-field-extension/index.html 200

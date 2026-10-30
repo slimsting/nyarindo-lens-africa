@@ -1,0 +1,68 @@
+body::before,
+body::after {
+  content: "";
+  position: fixed;
+  inset: -22vmax;
+  z-index: 4;
+  pointer-events: none;
+  transform-origin: 50% 50%;
+  will-change: transform
+}
+
+body::before {
+  background:
+    radial-gradient(circle at 24% 32%, rgba(68, 222, 148, .34) 0, rgba(68, 222, 148, .12) 21%, transparent 44%),
+    radial-gradient(circle at 77% 24%, rgba(228, 172, 105, .3) 0, rgba(228, 172, 105, .1) 18%, transparent 41%),
+    radial-gradient(circle at 63% 76%, rgba(78, 145, 205, .3) 0, rgba(78, 145, 205, .09) 20%, transparent 43%),
+    radial-gradient(circle at 18% 82%, rgba(194, 81, 75, .18) 0, transparent 32%);
+  opacity: .72;
+  mix-blend-mode: soft-light;
+  animation: lens-atmosphere-drift-a 24s ease-in-out infinite alternate
+}
+
+body::after {
+  background:
+    radial-gradient(ellipse at 70% 55%, rgba(95, 240, 168, .23) 0, transparent 28%),
+    radial-gradient(ellipse at 35% 22%, rgba(241, 189, 108, .22) 0, transparent 26%),
+    radial-gradient(ellipse at 42% 80%, rgba(126, 126, 231, .18) 0, transparent 29%);
+  opacity: .44;
+  mix-blend-mode: screen;
+  animation: lens-atmosphere-drift-b 37s ease-in-out infinite alternate
+}
+
+@keyframes lens-atmosphere-drift-a {
+  from { transform: translate3d(-2.5%, 1.5%, 0) rotate(-1.5deg) scale(1.02) }
+  to { transform: translate3d(3%, -2%, 0) rotate(1.5deg) scale(1.07) }
+}
+
+@keyframes lens-atmosphere-drift-b {
+  from { transform: translate3d(2%, -1%, 0) rotate(1deg) scale(1.06) }
+  to { transform: translate3d(-3%, 2.5%, 0) rotate(-1deg) scale(1.02) }
+}
+
+html[data-theme="light"] body::before {
+  opacity: .9
+}
+
+html[data-theme="light"] body::after {
+  opacity: .5;
+  mix-blend-mode: multiply
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body::before,
+  body::after {
+    animation: none;
+    transform: none
+  }
+}
+
+@media (max-width: 700px) {
+  body::after {
+    opacity: .28
+  }
+
+  html[data-theme="light"] body::after {
+    opacity: .24
+  }
+}

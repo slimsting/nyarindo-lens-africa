@@ -1,0 +1,52 @@
+.eye-key{
+  padding:64px 8vw;
+  background:#dfe8dc;
+  color:#263a2d;
+  text-align:center;
+  border-top:1px solid rgba(43,72,50,.13);
+  border-bottom:1px solid rgba(43,72,50,.13)
+}
+
+.eye-key h2{
+  margin:16px auto 12px;
+  font:clamp(44px,6.5vw,84px)/.95 var(--serif);
+  font-weight:400;
+  letter-spacing:-.04em
+}
+
+.eye-key h2 em{
+  color:#3d835a;
+  font-weight:400
+}
+
+.eye-same{
+  margin:0;
+  color:#596b5e;
+  font:19px/1.65 var(--serif)
+}
+
+.pon-key{
+  margin:19px auto 0;
+  color:#3e5d48;
+  font:13px/1.7 var(--mono)
+}
+
+.pon-key strong{
+  color:#8c5d32;
+  font-weight:500;
+  letter-spacing:.08em
+}
+
+@media(max-width:620px){
+  .eye-key{
+    padding:54px 7vw
+  }
+
+  .eye-same{
+    font-size:17px
+  }
+
+  .pon-key{
+    font-size:11px
+  }
+}

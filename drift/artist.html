@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#090a08">
+    <link rel="stylesheet" href="styles.css">
+    <title>Upload to Drift</title>
+  </head>
+  <body>
+    <main class="app-shell artist-shell">
+      <header class="topbar">
+        <a class="wordmark" href="index.html">drift<span>.</span></a>
+        <a class="back-link" href="index.html">← Listener view</a>
+      </header>
+      <section class="artist-intro">
+        <p class="eyebrow">ARTIST SPACE</p>
+        <h1>Put your music<br>into the <em>current.</em></h1>
+        <p>Your music is discovered through real listening—not ads or paid placement.</p>
+        <p class="artist-prototype-note">Artist workspace preview · uploads and payouts are not connected yet.</p>
+      </section>
+      <form class="upload-form" id="uploadForm">
+        <section>
+          <p class="eyebrow">01 — THE SONG</p>
+          <label for="audio">Audio file</label>
+          <input class="file-input" id="audio" type="file" accept="audio/*" required>
+          <div class="field-grid">
+            <div><label for="title">Song title</label><input id="title" required placeholder="Song title"></div>
+            <div><label for="artist">Artist name</label><input id="artist" required placeholder="Artist name"></div>
+            <div><label for="album">Album <span>(optional)</span></label><input id="album" placeholder="Album or release"></div>
+            <div><label for="genre">Genre</label><input id="genre" required placeholder="e.g. alt-soul"></div>
+          </div>
+        </section>
+        <section>
+          <p class="eyebrow">02 — COVER &amp; WORDS</p>
+          <label for="cover">Cover image</label>
+          <input class="file-input" id="cover" type="file" accept="image/*" required>
+          <label for="lyrics">Lyrics</label>
+          <textarea id="lyrics" rows="7" placeholder="Paste your lyrics exactly as you want listeners to read them."></textarea>
+          <label class="check-row"><input id="instrumental" type="checkbox"> This song is instrumental / has no lyrics</label>
+        </section>
+        <section>
+          <p class="eyebrow">03 — SUPPORT</p>
+          <label class="check-row tip-row"><input id="artistTips" type="checkbox" checked> <span><b>Tip other artists</b><small>On by default. Listeners can support other artists directly.</small></span></label>
+          <p class="payment-note">Your payout details stay with your payment provider, not Drift.</p>
+          <button class="connect-button" id="connectButton" type="button">Connect my payout account →</button>
+        </section>
+        <section>
+          <p class="eyebrow">04 — SHARE</p>
+          <label class="check-row"><input id="rights" type="checkbox" required> I own or have permission to share this music and its lyrics on Drift.</label>
+          <button class="publish-button" type="submit">Add song to Drift →</button>
+        </section>
+      </form>
+    </main>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="artist.js"></script>
+  </body>
+</html>

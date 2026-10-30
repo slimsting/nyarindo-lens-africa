@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#090a08">
+    <meta name="description" content="Drift — music that moves because people love it.">
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="icon" href="assets/drift-app-icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="assets/drift-app-icon.svg">
+    <link rel="stylesheet" href="styles.css">
+    <title>Drift</title>
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="topbar">
+        <div class="topbar-start">
+          <a class="wordmark" href="#top" aria-label="Drift home">drift<span>.</span></a>
+          <a class="home-button" href="../portfolio-website/index.html" aria-label="Back to Nyarindo Lens Africa home"><span class="home-icon" aria-hidden="true"></span><span>Home</span></a>
+        </div>
+        <div class="header-actions"><button class="theme-button" id="themeButton" type="button" aria-label="Use light mode">☼</button><button class="profile-button" id="profileButton" type="button" aria-label="Open profile"><span id="profileInitial">D</span></button></div>
+      </header>
+
+      <section class="welcome" id="top">
+        <p class="eyebrow" id="greeting">YOUR LISTENING SPACE</p>
+        <h1>Where do you want to <em>drift?</em></h1>
+        <p class="intro">No ads. No paid placement. Just music moving through people and possibility.</p>
+      </section>
+
+      <section class="modes" aria-label="Choose listening direction">
+        <button class="mode mode-familiar" data-mode="familiar" type="button"><b>Familiar</b><small>Only songs you know</small></button>
+        <button class="mode mode-genre" data-mode="genre" type="button"><b>Within genre</b><small>New ground, close to home</small></button>
+        <button class="mode mode-balance selected" data-mode="balance" type="button"><b>Balance</b><small>Trust + gentle discovery</small></button>
+        <button class="mode mode-explore" data-mode="explore" type="button"><b>Explore</b><small>Take me somewhere new</small></button>
+      </section>
+
+      <section class="now-playing" aria-live="polite">
+        <div class="art art-1" id="artwork" aria-hidden="true"><span></span><span></span><span></span></div>
+        <div class="track-info">
+          <p class="eyebrow">NOW DRIFTING</p>
+          <h2 id="trackTitle">Sunrise in Mombasa</h2>
+          <p id="trackArtist">Amani &amp; The Sea</p>
+          <p class="album" id="trackAlbum">from Coastline Letters</p>
+          <p class="prototype-note">Prototype preview · sample tracks · no music streaming yet</p>
+          <p class="path" id="trackPath">Maya drifted here from Nia Archives</p>
+        </div>
+      </section>
+
+      <section class="transport" aria-label="Player controls">
+        <button id="previousTrack" type="button" aria-label="Previous song">↶<span>Previous</span></button>
+        <button class="transport-play" id="transportPlay" type="button" aria-label="Play">▶</button>
+        <button id="nextTrack" type="button" aria-label="Next song"><span>Next</span>↷</button>
+        <button class="repeat-button" id="repeatButton" type="button" aria-pressed="false">Whole playlist ↻</button>
+        <button class="screen-button" id="fullscreenButton" type="button" aria-pressed="false">Large screen ⛶</button>
+      </section>
+
+      <section class="actions" aria-label="Listening actions">
+        <button class="return-button" id="returnButton" type="button" aria-label="Return to the first song in this drift">↺ Return to drift start</button>
+        <button class="drift-button" id="driftButton" type="button">Drift again <span>→</span></button>
+      </section>
+
+      <section class="direction-panel" id="directionPanel" hidden aria-label="Choose a new approach">
+        <p class="eyebrow">CHANGE THE CURRENT</p>
+        <div class="directions">
+          <button data-direction="softer" type="button">Softer <small>same feeling, calmer sound</small></button>
+          <button data-direction="deeper" type="button">Deeper <small>less obvious, more underground</small></button>
+          <button data-direction="angle" type="button">Different angle <small>same mood, another world</small></button>
+          <button data-direction="people" type="button">Closer to my people <small>follow their listening trail</small></button>
+          <button data-direction="surprise" type="button">Surprise me <small>break the pattern</small></button>
+        </div>
+      </section>
+
+      <section class="reason">
+        <p class="eyebrow">WHY THIS SONG</p>
+        <p id="reasonText">It holds the warm, open rhythm you’ve been saving—and Maya loved it too.</p>
+      </section>
+
+      <section class="lyrics-section" aria-label="Song lyrics">
+        <div class="lyrics-heading"><button class="lyrics-toggle" id="lyricsToggle" type="button" aria-expanded="false">Lyrics <span>+</span></button></div>
+        <div class="lyrics" id="lyrics" hidden>
+          <p class="eyebrow">ARTIST-PROVIDED LYRICS</p>
+          <div class="lyrics-window"><div class="lyrics-lines" id="lyricsText">Lyrics will appear here when the artist has shared them with Drift.</div></div>
+        </div>
+      </section>
+
+      <section class="support" aria-label="Support options">
+        <button id="artistTip" type="button">♡ Tip artist</button>
+        <button id="driftSupport" type="button">Support Drift</button>
+      </section>
+    </main>
+
+    <dialog id="profileDialog">
+      <form method="dialog" class="profile-form" id="profileForm">
+        <button class="close" value="cancel" formnovalidate aria-label="Close">×</button>
+        <p class="eyebrow">YOUR DRIFT</p>
+        <h2>Choose your name</h2>
+        <label for="username">Username</label>
+        <input id="username" name="username" maxlength="20" autocomplete="username" placeholder="your name" required>
+        <p class="form-note">This prototype saves your display name on this device. No account is created.</p>
+        <button class="save-profile" value="save">Enter Drift</button>
+        <a class="artist-link" href="artist.html">I’m an artist →</a>
+      </form>
+    </dialog>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,26 @@
+.hero>*{
+  min-width:0
+}
+
+@media(max-width:800px){
+  .hero h1{
+    font-size:clamp(60px,17vw,105px)
+  }
+
+  .aperture-mark{
+    width:100%;
+    max-width:360px;
+    justify-self:center
+  }
+
+  .act-four::before{
+    left:0;
+    right:0
+  }
+}
+
+@media(max-width:400px){
+  .hero h1{
+    font-size:clamp(56px,16.4vw,68px)
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "name": "Drift — Ad-free music discovery",
+  "short_name": "Drift",
+  "description": "Music that moves because people love it.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#090a08",
+  "theme_color": "#090a08",
+  "icons": [{ "src": "assets/drift-app-icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }]
+}

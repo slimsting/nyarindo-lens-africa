@@ -1,0 +1,2412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NYARINDO SEMANTIC FIELD.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;1,300&family=IBM+Plex+Sans:wght@300;400&display=swap" rel="stylesheet">
+<meta name="theme-color" content="#0c0d0e">
+<script>try{const saved=localStorage.getItem('nyarindo-theme');if(saved==='light'||saved==='dark')document.documentElement.dataset.theme=saved;else if(matchMedia('(prefers-color-scheme: light)').matches)document.documentElement.dataset.theme='light';}catch{}</script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --app-header-height: 66px;
+    --database-frame-pad: clamp(14px, 2.2vw, 30px);
+    --bg:       #0c0d0e;
+    --surface:  #141618;
+    --surface2: #1a1c1f;
+    --border:   rgba(255,255,255,0.07);
+    --border2:  rgba(255,255,255,0.12);
+    --text:     #d4d1ca;
+    --muted:    #5a5854;
+    --dim:      #3a3835;
+    --accent:   #c8b89a;
+    --blue:     #4a9eff;
+    --red:      #ff5f5f;
+    --green:    #5fc97a;
+    --purple:   #a78bfa;
+    --amber:    #f59e0b;
+  }
+
+  html, body {
+    min-height: 100%;
+    height: auto;
+    overflow-x: hidden;
+    overflow-y: auto;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-weight: 300;
+    min-height: 100vh;
+    height: auto;
+  }
+
+  /* ── HEADER ── */
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 0 clamp(18px, 4vw, 56px);
+    height: var(--app-header-height);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 30;
+    background: var(--surface);
+    box-shadow: 0 8px 28px rgba(0,0,0,.12);
+  }
+  .header-left { display: flex; align-items: baseline; gap: 12px; flex-shrink: 0; }
+  .logo {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  .logo-sub {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    font-weight: 300;
+    font-style: italic;
+    color: var(--muted);
+  }
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    color: var(--dim);
+    letter-spacing: 0.08em;
+    flex-shrink: 0;
+  }
+  .page-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(12px, 1.4vw, 20px);
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+    white-space: nowrap;
+  }
+  .page-nav::-webkit-scrollbar { display: none; }
+  .page-nav a {
+    flex-shrink: 0;
+    padding: 8px 0;
+    border-bottom: 1px solid transparent;
+    color: var(--text);
+    font: 400 13px 'IBM Plex Sans', sans-serif;
+    letter-spacing: 0;
+    transition: color .2s, border-color .2s;
+  }
+  .page-nav a:hover, .page-nav a:focus-visible { color: var(--accent); border-color: var(--accent); }
+  .page-nav .page-home {
+    padding: 8px 12px;
+    border: 1px solid var(--border2);
+    border-radius: 3px;
+    color: var(--text);
+  }
+
+  /* ── LAYOUT ── */
+  .database-frame {
+    height: calc(100vh - var(--app-header-height));
+    height: calc(100svh - var(--app-header-height));
+    min-height: 430px;
+    padding: var(--database-frame-pad);
+    background: var(--bg);
+  }
+  .main {
+    display: flex;
+    flex: none;
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    border: 1px solid var(--border2);
+    border-radius: 10px;
+    background: var(--surface);
+    box-shadow: 0 16px 44px rgba(0,0,0,.2);
+    overflow: hidden;
+  }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    width: 256px;
+    flex-shrink: 0;
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-width: thin;
+    scrollbar-color: var(--dim) transparent;
+  }
+  .sidebar::-webkit-scrollbar { width: 3px; }
+  .sidebar::-webkit-scrollbar-thumb { background: var(--dim); border-radius: 2px; }
+
+  .section {
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .section:last-child { border-bottom: none; }
+
+  .sec-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  textarea {
+    width: 100%;
+    height: 110px;
+    resize: none;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 8px 10px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    line-height: 1.7;
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  textarea:focus { border-color: var(--border2); }
+  textarea::placeholder { color: var(--muted); font-style: italic; }
+
+  input[type="text"] {
+    width: 100%;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 7px 10px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  input[type="text"]:focus { border-color: var(--border2); }
+  input[type="text"]::placeholder { color: var(--muted); font-style: italic; }
+
+  .btn {
+    width: 100%;
+    padding: 8px 0;
+    background: transparent;
+    border: 1px solid var(--border2);
+    border-radius: 4px;
+    color: var(--text);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s, color 0.15s;
+  }
+  .btn:hover { background: var(--surface2); border-color: rgba(255,255,255,0.2); }
+  .btn:active { transform: scale(0.98); }
+  .btn.primary {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  .btn.primary:hover { background: var(--accent); color: var(--bg); }
+  .btn.inject {
+    border-color: var(--purple);
+    color: var(--purple);
+  }
+  .btn.inject:hover { background: var(--purple); color: var(--bg); }
+
+  .note {
+    font-size: 9px;
+    color: var(--muted);
+    font-style: italic;
+    line-height: 1.5;
+  }
+
+  /* sliders */
+  .slider-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .slider-row label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    width: 72px;
+    flex-shrink: 0;
+  }
+  .slider-row input[type=range] {
+    flex: 1;
+    appearance: none;
+    height: 1px;
+    background: var(--border2);
+    border-radius: 1px;
+    outline: none;
+    cursor: pointer;
+  }
+  .slider-row input[type=range]::-webkit-slider-thumb {
+    appearance: none;
+    width: 9px; height: 9px;
+    border-radius: 50%;
+    background: var(--accent);
+    cursor: pointer;
+  }
+  .slider-row span {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--text);
+    min-width: 32px;
+    text-align: right;
+  }
+
+  /* status panel */
+  .status-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+  }
+  .status-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .status-key {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .phase-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--muted);
+    transition: background 0.4s;
+  }
+  .status-val {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    font-weight: 500;
+    color: var(--text);
+    transition: color 0.3s;
+  }
+  .stab-wrap {
+    height: 2px;
+    background: var(--border);
+    border-radius: 1px;
+    overflow: hidden;
+    margin-top: 2px;
+  }
+  .stab-fill {
+    height: 100%;
+    border-radius: 1px;
+    background: var(--green);
+    transition: width 0.25s, background 0.25s;
+  }
+  .stab-detail {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    color: var(--muted);
+    margin-top: 3px;
+  }
+
+  /* telemetry grid */
+  .tele-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5px;
+  }
+  .tele-cell {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 6px 8px;
+  }
+  .tele-n {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 1;
+  }
+  .tele-l {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    color: var(--muted);
+    margin-top: 3px;
+    letter-spacing: 0.04em;
+  }
+
+  /* legend */
+  .legend { display: flex; flex-direction: column; gap: 5px; }
+  .leg-row { display: flex; align-items: center; gap: 7px; }
+  .leg-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .leg-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+  }
+
+  /* ── FIELD ── */
+  .field-wrap { flex: 1; position: relative; overflow: hidden; }
+  canvas { display: block; width: 100%; height: 100%; cursor: crosshair; }
+
+  .field-tag {
+    position: absolute;
+    bottom: 14px;
+    right: 18px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: rgba(255,255,255,0.08);
+    letter-spacing: 0.14em;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  /* tooltip */
+  .tooltip {
+    position: absolute;
+    pointer-events: none;
+    background: rgba(20,22,24,0.96);
+    border: 1px solid var(--border2);
+    border-radius: 5px;
+    padding: 10px 12px;
+    display: none;
+    min-width: 160px;
+    z-index: 20;
+    backdrop-filter: blur(8px);
+  }
+  .tip-word {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+  .tip-row {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+  .tip-bar-wrap { height: 2px; background: var(--border); border-radius: 1px; margin: 4px 0; }
+  .tip-bar-fill { height: 100%; border-radius: 1px; }
+  .tip-divider { border-top: 1px solid var(--border); margin: 6px 0; }
+  .tip-state {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    margin-top: 2px;
+  }
+
+  /* log */
+  #log {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    font-style: italic;
+    min-height: 14px;
+    line-height: 1.5;
+  }
+  #log.err { color: var(--red); font-style: normal; }
+
+  /* ── TABS ── */
+  .tab-bar {
+    display: flex;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+  .tab-btn {
+    flex: 1;
+    padding: 9px 4px;
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid transparent;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    cursor: pointer;
+    transition: color 0.15s, border-color 0.15s;
+  }
+  .tab-btn:hover { color: var(--text); }
+  .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: flex; flex-direction: column; }
+
+  /* ── RESULTS PANEL ── */
+  .results-pane {
+    width: 260px;
+    flex-shrink: 0;
+    border-left: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .results-header {
+    padding: 10px 14px 8px;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .results-title {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .results-query {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--accent);
+    font-style: italic;
+  }
+  .results-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 10px 12px;
+    scrollbar-width: thin;
+    scrollbar-color: var(--dim) transparent;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .results-body::-webkit-scrollbar { width: 3px; }
+  .results-body::-webkit-scrollbar-thumb { background: var(--dim); }
+  .results-empty {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--dim);
+    font-style: italic;
+    text-align: center;
+    margin-top: 32px;
+    line-height: 2;
+  }
+  .result-card {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 10px 10px 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  .result-card.deep { border-color: rgba(95,201,122,0.35); }
+  .result-card.loose { border-color: rgba(245,158,11,0.25); }
+  .result-card.proximity { border-color: rgba(255,95,95,0.18); }
+  .result-key {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .result-sim {
+    font-size: 10px;
+    font-weight: 400;
+  }
+  .result-sim.deep { color: var(--green); }
+  .result-sim.loose { color: var(--amber); }
+  .result-sim.proximity { color: var(--red); }
+  .result-bond {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    color: var(--muted);
+    letter-spacing: 0.04em;
+  }
+  .result-payload {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--text);
+    line-height: 1.55;
+    background: rgba(255,255,255,0.03);
+    border-radius: 3px;
+    padding: 6px 7px;
+    border: 1px solid var(--border);
+    word-break: break-word;
+    white-space: pre-wrap;
+  }
+  .result-no-payload {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    color: var(--dim);
+    font-style: italic;
+  }
+  .result-bar-wrap { height: 2px; background: var(--border); border-radius: 1px; margin-top: 2px; }
+  .result-bar-fill { height: 100%; border-radius: 1px; }
+  .result-card.deep .result-bar-fill { background: var(--green); }
+  .result-card.loose .result-bar-fill { background: var(--amber); }
+  .result-card.proximity .result-bar-fill { background: var(--red); }
+
+  .results-meta {
+    padding: 8px 12px;
+    border-top: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+  .results-meta-text {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    color: var(--muted);
+  }
+
+  /* payload count badge */
+  .payload-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(200,184,154,0.12);
+    border: 1px solid rgba(200,184,154,0.2);
+    border-radius: 3px;
+    padding: 1px 6px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    color: var(--accent);
+    letter-spacing: 0.04em;
+  }
+
+  /* export/import small buttons */
+  .btn-sm {
+    flex: 1;
+    padding: 6px 0;
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    color: var(--muted);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+  }
+  .btn-sm:hover { background: var(--surface2); color: var(--text); }
+  .io-row { display: flex; gap: 6px; }
+
+  /* confidence slider label */
+  .conf-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    border-top: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+  .conf-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .conf-val {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--text);
+    min-width: 30px;
+    text-align: right;
+  }
+
+  html[data-theme="light"] {
+    color-scheme: light;
+    --bg: #f2f0e9;
+    --surface: #fbfaf5;
+    --surface2: #e8e6de;
+    --border: rgba(35,38,32,0.12);
+    --border2: rgba(35,38,32,0.22);
+    --text: #2b2d28;
+    --muted: #62645e;
+    --dim: #85877f;
+    --accent: #8a612f;
+    --blue: #2866ad;
+    --red: #b73b3b;
+    --green: #2e784a;
+    --purple: #704ba3;
+    --amber: #9b6000;
+  }
+  html.theme-transition *, html.theme-transition *::before, html.theme-transition *::after {
+    transition-duration: 800ms !important;
+    transition-timing-function: cubic-bezier(.2,.75,.25,1) !important;
+  }
+  body, header, .sidebar, .results-pane, .section, .tele-cell, .result-card, textarea, input[type="text"],
+  .field-story, .story-shell, .story-key-group, .story-callout {
+    transition: background-color 800ms ease, color 800ms ease, border-color 800ms ease;
+  }
+  .header-right { display:flex; align-items:center; gap:14px; }
+  .theme-toggle {
+    display:inline-flex; align-items:center; gap:7px; padding:6px 9px;
+    color:var(--text); background:transparent; border:1px solid var(--border2);
+    border-radius:3px; cursor:pointer; font:11px 'IBM Plex Mono',monospace;
+    letter-spacing:.06em; transition:background-color .2s,border-color .2s,color .2s;
+  }
+  .theme-toggle:hover { background:var(--surface2); border-color:var(--accent); }
+  .theme-icon { color:var(--accent); font-size:14px; }
+  html[data-theme="light"] .tooltip { background:rgba(250,249,243,.97); }
+  html[data-theme="light"] .result-payload { background:rgba(28,32,26,.035); }
+  html[data-theme="light"] .tele-cell { background:rgba(35,38,32,.035); }
+  html[data-theme="light"] .field-tag { color:rgba(31,36,29,.22); }
+  html[data-theme="light"] .note { color:#62645e; }
+
+  /* Slightly larger working text keeps labels and data readable at normal zoom. */
+  .logo { font-size:12px; }
+  .logo-sub,.header-right { font-size:11px; }
+  .sec-label,.tab-btn,.btn,.status-key,.status-val,.slider-row label,.slider-row span,
+  .leg-label,.tip-row,.result-bond,.results-query,.result-sim,.payload-badge { font-size:11px; }
+  textarea,input[type="text"] { font-size:13px; }
+  .note,.stab-detail,.result-no-payload,.results-meta-text,.results-empty,.results-title,
+  .conf-label,.btn-sm,.tele-l,.field-tag { font-size:11px; }
+  .tele-l,.tip-row { line-height:1.55; }
+  .result-key { font-size:13px; }
+  .result-payload { font-size:11px; }
+  .tip-word { font-size:14px; }
+  .tab-btn { letter-spacing:.06em; }
+  @media(max-width:760px) {
+    :root { --app-header-height: 88px; --database-frame-pad: 12px; }
+    header { flex-wrap:wrap; align-content:center; gap:7px 10px; padding:7px 12px; }
+    .header-left { order:1; }
+    .header-right { order:2; gap:8px; margin-left:auto; }
+    .header-right #headerPayloadCount { display:none; }
+    .page-nav { order:3; flex:0 0 100%; justify-content:flex-start; gap:16px; }
+    .page-nav a { font-size:12px; }
+    .theme-toggle { padding:5px 7px; font-size:10px; }
+    .logo-sub { display:none; }
+  }
+  .page-nav a:focus-visible, .story-link:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 4px;
+  }
+  .field-story {
+    padding: clamp(30px, 6vw, 84px) clamp(14px, 6vw, 84px) clamp(58px, 8vw, 116px);
+    color: var(--text);
+    background: var(--bg);
+  }
+  .story-shell {
+    width: min(100%, 1200px);
+    margin: 0 auto;
+    overflow: clip;
+    border: 1px solid var(--border2);
+    border-left: 3px solid var(--accent);
+    border-radius: 7px;
+    background: var(--surface);
+    box-shadow: 0 24px 80px rgba(0,0,0,.16);
+  }
+  .story-intro { padding: clamp(25px, 5vw, 64px) clamp(18px, 6vw, 76px) 30px; }
+  .story-kicker {
+    color: var(--accent);
+    font: 10px/1.6 'IBM Plex Mono', monospace;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+  }
+  .story-intro h1 {
+    max-width: 850px;
+    margin: 16px 0 18px;
+    color: var(--text);
+    font: 400 clamp(36px, 6vw, 72px)/1.04 Georgia, 'Times New Roman', serif;
+    letter-spacing: -.045em;
+  }
+  .story-lede {
+    max-width: 76ch;
+    margin: 0;
+    color: var(--text);
+    font-size: clamp(17px, 1.7vw, 21px);
+    line-height: 1.8;
+  }
+  .story-content { padding: 8px clamp(18px, 6vw, 76px) 42px; }
+  .story-section {
+    max-width: 78ch;
+    padding: clamp(26px, 4vw, 46px) 0;
+    border-bottom: 1px solid var(--border);
+    scroll-margin-top: calc(var(--app-header-height) + 14px);
+  }
+  .story-section:last-child { border-bottom: 0; }
+  .story-section h2 {
+    margin: 0 0 18px;
+    color: var(--text);
+    font: 400 clamp(25px, 3.2vw, 37px)/1.16 Georgia, 'Times New Roman', serif;
+    letter-spacing: -.025em;
+  }
+  .story-section h3 {
+    margin: 28px 0 10px;
+    color: var(--accent);
+    font: 500 12px/1.5 'IBM Plex Mono', monospace;
+    letter-spacing: .09em;
+    text-transform: uppercase;
+  }
+  .story-section p, .story-section li {
+    color: var(--muted);
+    font-size: clamp(15px, 1.35vw, 17px);
+    line-height: 1.9;
+  }
+  .story-section p + p { margin-top: 15px; }
+  .story-section strong { color: var(--text); font-weight: 400; }
+  .story-section ul, .story-section ol { padding-left: 22px; }
+  .story-section li + li { margin-top: 8px; }
+  .story-callout {
+    margin: 24px 0;
+    padding: 20px 22px;
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--amber);
+    border-radius: 4px;
+    background: var(--surface2);
+  }
+  .story-callout p:last-child { margin-bottom: 0; }
+  .story-keys {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+    margin: 20px 0 0;
+  }
+  .story-key-group { padding: 17px; border: 1px solid var(--border); border-radius: 4px; background: var(--surface2); }
+  .story-key-group h3 { margin: 0 0 12px; }
+  .story-key-list { display: grid; gap: 9px; }
+  .story-key { display: flex; align-items: center; gap: 10px; color: var(--muted); font-size: 14px; line-height: 1.5; }
+  .motion-mark { width: 9px; height: 9px; flex: 0 0 9px; border-radius: 50%; background: var(--key-color); }
+  .bond-mark { width: 20px; height: 0; flex: 0 0 20px; border-top: 2px solid var(--key-color); }
+  .story-links { display:flex; flex-wrap:wrap; gap:12px; margin-top:20px; }
+  .story-link {
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    padding:11px 14px;
+    border:1px solid var(--border2);
+    border-radius:4px;
+    color:var(--text);
+    font:10px 'IBM Plex Mono',monospace;
+    letter-spacing:.05em;
+    transition:background-color .2s,border-color .2s,color .2s;
+  }
+  .story-link:hover { border-color:var(--accent); background:var(--surface2); color:var(--accent); }
+  @media(max-width:760px) {
+    .field-story { padding: 22px 10px 52px; }
+    .story-shell { border-radius:5px; }
+    .story-intro { padding: 27px 20px 24px; }
+    .story-content { padding: 0 20px 28px; }
+    .story-keys { grid-template-columns: 1fr; gap:11px; }
+  }
+  @media(prefers-reduced-motion:reduce) { html { scroll-behavior:auto; } }
+  button:not(:disabled) { transition: filter .2s ease, box-shadow .2s ease, border-color .2s ease, transform .2s ease; }
+  button:not(:disabled):hover { filter: brightness(1.1); box-shadow: 0 5px 16px rgba(200,184,154,.12); }
+  button:not(:disabled):active { transform: translateY(1px) scale(.985); }
+  button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  @media(prefers-reduced-motion:reduce) { button:not(:disabled) { transition:none; } button:not(:disabled):active { transform:none; } }
+</style>
+<link rel="stylesheet" href="styles.css?v=semantic-book-citations-3">
+</head>
+<body>
+
+<header>
+  <div class="header-left">
+    <div class="logo">NYARINDO SEMANTIC FIELD.</div>
+  </div>
+  <nav class="page-nav" aria-label="Page and article navigation">
+    <a href="#how-it-works">How it works</a>
+    <a href="#formation-and-reuse">Training &amp; reuse</a>
+    <a href="#equilibrium">Equilibrium</a>
+    <a href="#how-to-use">How to use</a>
+    <a href="#limits">Limits</a>
+    <a href="#directions">Possible directions</a>
+    <a class="book-reference" href="/portfolio-website/index.html#book-07">Book Seven <span class="book-citation">(book 7, pages 8–15)</span></a>
+    <a class="page-home" href="/portfolio-website/index.html#home"><span class="back-home-icon" aria-hidden="true"></span><span>Back home</span></a>
+  </nav>
+  <div class="header-right"><span id="headerPayloadCount">semantic db — 0 records</span><button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch to light mode" aria-pressed="false"><span class="theme-icon" aria-hidden="true">☼</span><span id="themeLabel">DARK</span></button></div>
+</header>
+
+<div class="database-frame" role="region" aria-label="Semantic Field database workspace">
+<div class="main">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+
+    <!-- TAB BAR -->
+    <div class="tab-bar">
+      <button class="tab-btn active" onclick="switchTab('train')">train</button>
+      <button class="tab-btn" onclick="switchTab('write')">write</button>
+      <button class="tab-btn" onclick="switchTab('read')">read</button>
+      <button class="tab-btn" onclick="switchTab('store')">store</button>
+    </div>
+
+    <!-- TRAIN TAB -->
+    <div class="tab-panel active" id="tab-train">
+      <div class="section">
+        <div class="sec-label">training data</div>
+        <textarea id="inp" placeholder="lion&#10;tiger&#10;justice&#10;law&#10;ocean&#10;river&#10;war&#10;peace&#10;container&#10;pulse&#10;balance&#10;fog"></textarea>
+        <button class="btn primary" onclick="startTraining()">train field</button>
+        <div style="display:flex;gap:6px;margin-top:4px;">
+          <button class="btn-sm" id="btnStop" onclick="stopTraining()" style="color:var(--red);border-color:rgba(255,95,95,0.3);">stop</button>
+          <button class="btn-sm" id="btnProceed" onclick="proceedTraining()" style="color:var(--green);border-color:rgba(95,201,122,0.3);">proceed</button>
+        </div>
+        <div class="note">stop pauses training. proceed resumes or forces stale.</div>
+      </div>
+
+      <div class="section">
+        <div class="sec-label">inject node</div>
+        <input type="text" id="newItem" placeholder="e.g. wisdom" />
+        <button class="btn inject" onclick="injectData()">inject → wake local nodes</button>
+        <div class="note">wakes only semantic neighbours. rest of field stays stale.</div>
+      </div>
+    </div>
+
+    <!-- WRITE TAB -->
+    <div class="tab-panel" id="tab-write">
+      <div class="section">
+        <div class="sec-label">single insert</div>
+        <input type="text" id="writeKey" placeholder="key — e.g. equilibrium" />
+        <textarea id="writeVal" style="height:80px" placeholder="value — any text, JSON, definition…"></textarea>
+        <button class="btn primary" onclick="dbInsert()">insert record</button>
+        <div class="note">key is embedded into the field. value travels with the node as payload.</div>
+      </div>
+
+      <div class="section">
+        <div class="sec-label">batch insert</div>
+        <textarea id="batchInput" style="height:120px" placeholder="key :: value&#10;dot :: the still center of any system&#10;pulse :: the movement every system makes&#10;container :: the context that gives pulse its meaning"></textarea>
+        <button class="btn primary" onclick="dbBatchInsert()">insert all</button>
+        <div class="note">one record per line. separator: " :: "</div>
+      </div>
+
+      <div class="section">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
+          <div class="sec-label">records</div>
+          <span class="payload-badge" id="recordCount">0</span>
+        </div>
+        <div id="recordList" style="display:flex;flex-direction:column;gap:4px;max-height:180px;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--dim) transparent;">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--dim);font-style:italic;">no records yet</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- READ TAB -->
+    <div class="tab-panel" id="tab-read">
+      <div class="section">
+        <div class="sec-label">query</div>
+        <input type="text" id="queryKey" placeholder="e.g. awareness" />
+        <button class="btn inject" onclick="dbQuery()">query → wake neighbourhood</button>
+        <div class="note">query node is ephemeral — it locates the neighbourhood and is removed. field returns to stale.</div>
+      </div>
+      <div class="section">
+        <div class="sec-label">result depth</div>
+        <div class="slider-row">
+          <label>neighbours</label>
+          <input type="range" min="1" max="12" step="1" value="5" id="queryN"
+            oninput="document.getElementById('queryNV').textContent=this.value">
+          <span id="queryNV">5</span>
+        </div>
+        <div class="note">how many nearest neighbours to wake and return</div>
+      </div>
+    </div>
+
+    <!-- STORE TAB -->
+    <div class="tab-panel" id="tab-store">
+      <div class="section">
+        <div class="sec-label">vocabulary upload</div>
+        <div style="display:flex;gap:8px;margin-bottom:6px;">
+          <label style="display:flex;align-items:center;gap:5px;font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);cursor:pointer;">
+            <input type="radio" name="vocabMode" value="overwrite" checked style="accent-color:var(--accent)"> overwrite
+          </label>
+          <label style="display:flex;align-items:center;gap:5px;font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);cursor:pointer;">
+            <input type="radio" name="vocabMode" value="extend" style="accent-color:var(--accent)"> extend
+          </label>
+        </div>
+        <button class="btn primary" onclick="triggerVocabUpload()">upload vocabulary JSON</button>
+        <input type="file" id="vocabFile" accept=".json" style="display:none" onchange="loadVocabJSON(event)">
+        <div class="note">JSON format: {"words":[{"label":"x","vector":[...],"payload":"optional"}]}</div>
+        <div class="note">overwrite replaces all nodes. extend adds to existing field — vectors must match current dimensionality.</div>
+      </div>
+
+      <div class="section">
+        <div class="sec-label">persist field</div>
+        <div class="io-row">
+          <button class="btn-sm" onclick="exportDB()">export JSON</button>
+          <button class="btn-sm" onclick="triggerImport()">import JSON</button>
+        </div>
+        <input type="file" id="importFile" accept=".json" style="display:none" onchange="importDB(event)">
+        <div class="note">export saves the stale field state + all payloads. import restores a previous session.</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="sec-label">container physics</div>
+      <div style="display:flex;flex-direction:column;gap:9px">
+        <div class="slider-row">
+          <label>attraction</label>
+          <input type="range" min="0.1" max="3" step="0.1" value="2.2" id="att"
+            oninput="document.getElementById('attV').textContent=parseFloat(this.value).toFixed(1)">
+          <span id="attV">2.2</span>
+        </div>
+        <div class="slider-row">
+          <label>repulsion</label>
+          <input type="range" min="0.1" max="3" step="0.1" value="1.0" id="rep"
+            oninput="document.getElementById('repV').textContent=parseFloat(this.value).toFixed(1)">
+          <span id="repV">1.0</span>
+        </div>
+        <div class="slider-row">
+          <label>damping</label>
+          <input type="range" min="0.80" max="0.99" step="0.01" value="0.84" id="damp"
+            oninput="document.getElementById('dampV').textContent=parseFloat(this.value).toFixed(2)">
+          <span id="dampV">0.84</span>
+        </div>
+      </div>
+      <div class="note">high attraction + low damping → deeper equilibrium</div>
+    </div>
+
+    <div class="section">
+      <div class="sec-label">equilibrium detection</div>
+      <div class="slider-row">
+        <label>stable ticks</label>
+        <input type="range" min="30" max="2000" step="10" value="300" id="stableTicks"
+          oninput="document.getElementById('stableTicksV').textContent=this.value; stableRequired=parseInt(this.value)">
+        <span id="stableTicksV">300</span>
+      </div>
+      <div class="note">ticks green must hold unchanged before the field goes stale. lower = faster, higher = deeper pattern.</div>
+    </div>
+
+    <div class="section">
+      <div class="sec-label">system status</div>
+      <div class="status-panel">
+        <div class="status-row">
+          <div class="status-key">
+            <div class="phase-dot" id="phaseDot"></div>
+            phase
+          </div>
+          <div class="status-val" id="phaseVal">waiting</div>
+        </div>
+        <div class="status-row">
+          <div class="status-key">stale nodes</div>
+          <div class="status-val" id="staleVal" style="color:var(--amber)">—</div>
+        </div>
+        <div class="status-row">
+          <div class="status-key">awake nodes</div>
+          <div class="status-val" id="wakeVal" style="color:var(--purple)">—</div>
+        </div>
+        <div class="status-row">
+          <div class="status-key">active dims</div>
+          <div class="status-val" id="dimVal" style="color:var(--accent)">—</div>
+        </div>
+        <div>
+          <div style="display:flex;justify-content:space-between">
+            <div class="status-key">green stability</div>
+            <div class="status-val" id="stabPct" style="font-size:10px">—</div>
+          </div>
+          <div class="stab-wrap"><div class="stab-fill" id="stabFill" style="width:0%"></div></div>
+          <div class="stab-detail" id="stabDetail">—</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="sec-label">telemetry</div>
+      <div class="tele-grid">
+        <div class="tele-cell">
+          <div class="tele-n" id="sB" style="color:var(--blue)">0</div>
+          <div class="tele-l">expanding</div>
+        </div>
+        <div class="tele-cell">
+          <div class="tele-n" id="sR" style="color:var(--red)">0</div>
+          <div class="tele-l">contracting</div>
+        </div>
+        <div class="tele-cell">
+          <div class="tele-n" id="sG" style="color:var(--green)">0</div>
+          <div class="tele-l">equilibrium</div>
+        </div>
+        <div class="tele-cell">
+          <div class="tele-n" id="sT">0</div>
+          <div class="tele-l">ticks</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="sec-label">legend</div>
+      <div class="legend">
+        <div class="leg-row"><div class="leg-dot" style="background:var(--blue)"></div><div class="leg-label">expanding</div></div>
+        <div class="leg-row"><div class="leg-dot" style="background:var(--red)"></div><div class="leg-label">contracting</div></div>
+        <div class="leg-row"><div class="leg-dot" style="background:var(--green)"></div><div class="leg-label">equilibrium</div></div>
+        <div class="leg-row"><div class="leg-dot" style="background:var(--purple)"></div><div class="leg-label">woken by injection</div></div>
+        <div class="leg-row">
+          <div class="leg-dot" style="background:transparent;border:1px dashed #666"></div>
+          <div class="leg-label">outside vocabulary</div>
+        </div>
+        <div class="leg-row">
+          <div style="width:6px;height:1px;background:var(--green);flex-shrink:0"></div>
+          <div class="leg-label">deep semantic bond</div>
+        </div>
+        <div class="leg-row">
+          <div style="width:6px;height:1px;background:var(--amber);flex-shrink:0"></div>
+          <div class="leg-label">loose bond</div>
+        </div>
+        <div class="leg-row">
+          <div style="width:6px;height:1px;background:var(--red);opacity:0.5;flex-shrink:0"></div>
+          <div class="leg-label">proximity only</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <button class="btn" onclick="resetField()">reset field</button>
+      <div id="log">ready</div>
+    </div>
+
+  </div>
+
+  <!-- FIELD -->
+  <div class="field-wrap">
+    <canvas id="c"></canvas>
+    <div class="field-tag">NYARINDO / SEMANTIC DATABASE</div>
+    <div class="tooltip" id="tip">
+      <div class="tip-word" id="tipWord"></div>
+      <div class="tip-row" id="tipNearest"></div>
+      <div class="tip-bar-wrap"><div class="tip-bar-fill" id="tipBar"></div></div>
+      <div class="tip-row" id="tipSim"></div>
+      <div class="tip-divider"></div>
+      <div class="tip-row">node state</div>
+      <div class="tip-state" id="tipState"></div>
+      <div class="tip-row" style="margin-top:3px" id="tipBond"></div>
+      <div class="tip-divider" id="tipPayloadDivider" style="display:none"></div>
+      <div class="tip-row" id="tipPayloadLabel" style="display:none">payload</div>
+      <div class="tip-row" id="tipPayload" style="margin-top:2px;font-size:10px;color:var(--text);max-width:200px;word-break:break-word;white-space:pre-wrap;display:none"></div>
+    </div>
+  </div>
+
+  <!-- RESULTS PANE -->
+  <div class="results-pane" id="resultsPane">
+    <div class="results-header">
+      <div class="results-title">query results</div>
+      <div class="results-query" id="resultsQueryLabel">—</div>
+    </div>
+    <div class="conf-row">
+      <div class="conf-label">min sim</div>
+      <input type="range" min="0" max="0.99" step="0.01" value="0.50" id="confThreshold" style="flex:1;appearance:none;height:1px;background:var(--border2);outline:none;cursor:pointer;"
+        oninput="document.getElementById('confV').textContent=parseFloat(this.value).toFixed(2)">
+      <span class="conf-val" id="confV">0.50</span>
+    </div>
+    <div class="results-body" id="resultsBody">
+      <div class="results-empty">run a query on the<br>read tab to see results</div>
+    </div>
+    <div class="results-meta">
+      <div class="results-meta-text" id="resultsMeta">—</div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<article class="field-story" aria-labelledby="storyTitle">
+  <div class="story-shell">
+    <div class="story-intro">
+      <p class="story-kicker">FROM PARTICLES TO MEANING · AN OPEN EXPERIMENT</p>
+      <h1 id="storyTitle">A field that learns its shape.</h1>
+      <p class="story-lede">Many information systems depend on explicit schemas, indexes, and retrieval logic. The Semantic Field explores another route: label the data, give each word a vector, and let relationships form through interaction. The work of forming the field is intensive. The promise is a durable structure that can be saved, revisited, and used again.</p>
+      <p class="story-source-note">The particle premise comes from <a class="book-reference" href="/portfolio-website/index.html#book-07"><em>The Vacuum Experiment</em></a> <a class="book-citation" href="/portfolio-website/index.html#book-07">(book 7, page 15)</a>. The dot, pulse, container, and blue/red/green vocabulary comes from <a class="book-reference" href="/portfolio-website/index.html#book-01"><em>The Nyarindo Lens</em></a> <a class="book-citation" href="/portfolio-website/index.html#book-01">(book 1, pages 7–10)</a>.</p>
+    </div>
+    <div class="story-divider" aria-hidden="true"><img src="assets/story-divider-pulse-orbit.svg" alt=""></div>
+
+    <div class="story-content">
+      <section class="story-section" id="how-it-works" aria-labelledby="storyHowTitle">
+        <p class="story-kicker">01 · THE IDEA</p>
+        <h2 id="storyHowTitle">How the field finds its shape</h2>
+        <p>This is a single-file browser experiment that runs locally without a server. Each word becomes a node carrying a vector: either from the hand-coded six-dimensional set or from an uploaded GloVe vocabulary. Cosine similarity influences how strongly two nodes attract. A Lennard-Jones-style force pushes nodes apart when they get too close.</p>
+        <p>You do not manually place every relationship. Training lets the nodes negotiate positions through attraction and repulsion. Clusters and bonds emerge from those interactions. The display begins in two dimensions and can climb to another dimension when doing so improves the green count.</p>
+        <p>The experiment makes the negotiation visible through two different color languages. Motion-state colors describe what nodes are doing; bond colors describe the relationship between nodes. A dot and a line carry different meanings even when they share a color.</p>
+        <div class="story-keys" aria-label="Separate legends for motion state and bond strength">
+          <div class="story-key-group">
+            <h3>Motion state · dots</h3>
+            <div class="story-key-list">
+              <div class="story-key"><span class="motion-mark" style="--key-color:var(--blue)"></span><span>Blue · expanding</span></div>
+              <div class="story-key"><span class="motion-mark" style="--key-color:var(--red)"></span><span>Red · contracting</span></div>
+              <div class="story-key"><span class="motion-mark" style="--key-color:var(--green)"></span><span>Green · settled state</span></div>
+              <div class="story-key"><span class="motion-mark" style="--key-color:var(--purple)"></span><span>Purple · woken by a query or injection</span></div>
+            </div>
+          </div>
+          <div class="story-key-group">
+            <h3>Bond strength · lines</h3>
+            <div class="story-key-list">
+              <div class="story-key"><span class="bond-mark" style="--key-color:var(--green)"></span><span>Green · deep semantic bond</span></div>
+              <div class="story-key"><span class="bond-mark" style="--key-color:var(--amber)"></span><span>Amber · loose bond</span></div>
+              <div class="story-key"><span class="bond-mark" style="--key-color:var(--red)"></span><span>Red · proximity only</span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <div class="story-divider" aria-hidden="true"><img src="assets/story-divider-pulse-orbit.svg" alt=""></div>
+
+      <section class="story-section" id="formation-and-reuse" aria-labelledby="storyFormationTitle">
+        <p class="story-kicker">02 · FORMATION AND RETURN</p>
+        <h2 id="storyFormationTitle">The aluminium idea: intensive once, durable after</h2>
+        <p>Think of aluminium. Its first extraction is expensive and energy-intensive. Once formed, the metal is durable and can serve again and again. The analogy is the shape of the cost: a demanding first formation, followed by repeated use of something that has already been made. <a class="book-citation" href="/portfolio-website/index.html#book-02">(book 2, page 13)</a></p>
+        <div class="story-callout">
+          <p><strong>Training is the extraction.</strong> For the same vocabulary and configuration, the field can be trained, saved, and loaded again without paying the full training cost for every read. The settled positions and payloads travel in the exported field.</p>
+          <p>This does not make retrieval free. New or changed data can require more work, and each query still performs computation. The aim is to make the expensive formation reusable rather than repeat it for every encounter.</p>
+        </div>
+        <p>A query is meant to disturb only a small part of the field. In the design described here, a temporary query node locates related words, wakes its neighbourhood, and is removed when the field settles again. This local-return idea is the direction of the experiment; the current browser implementation still has a wider query pass, described under <a href="#limits">Honest limits</a>.</p>
+      </section>
+      <div class="story-divider" aria-hidden="true"><img src="assets/story-divider-field-constellation.svg" alt=""></div>
+
+      <section class="story-section" id="equilibrium" aria-labelledby="storyEquilibriumTitle">
+        <p class="story-kicker">03 · THE NYARINDO LENS <a class="book-citation" href="/portfolio-website/index.html#book-07">(book 7, pages 8–13)</a></p>
+        <h2 id="storyEquilibriumTitle">Deep equilibrium and the stillness that only looks deep</h2>
+        <p>Book Seven, <em>The Vacuum Experiment</em>, returns to a question that matters here: what does it mean for a field to settle? In the book’s particle simulations, very different systems could show green on the equilibrium counter. The counter alone could not tell whether a structure was deeply held or merely appeared still. <a class="book-citation" href="/portfolio-website/index.html#book-07">(book 7, page 8)</a></p>
+        <p>The distinction emerged under pressure. When density increased and particles were brought closer, some apparently settled structures broke apart. More strongly bound structures held. In the book, deep equilibrium is not simply the absence of visible movement; it is a balance formed through relationship that can endure a changed container. <a class="book-citation" href="/portfolio-website/index.html#book-07">(book 7, pages 8–9)</a></p>
+        <p>That gives the Semantic Field a useful question to carry forward. A stable green count or a stale field is a sign that the simulation has paused; it is not, by itself, proof of deep equilibrium. A stronger test would ask whether useful relationships persist as the vocabulary grows, the field is revisited, and its conditions change. <a class="book-citation" href="/portfolio-website/index.html#book-07">(book 7, page 9)</a></p>
+        <p>The book’s vacuum experiment and this semantic database are separate simulations. The connection is conceptual: the Lens asks us to look beneath apparent stillness and test what holds when the container changes. This browser database has not yet demonstrated the book’s stress test. <a class="book-citation" href="/portfolio-website/index.html#book-07">(book 7, page 13)</a></p>
+        <div class="story-links">
+          <a class="story-link book-reference" href="/portfolio-website/index.html#book-07">Open The Vacuum Experiment <span class="book-citation">(book 7, pages 8–15)</span> <span aria-hidden="true">↗</span></a>
+          <a class="story-link" href="/portfolio-website/index.html#home">Back to the portfolio home <span aria-hidden="true">↗</span></a>
+        </div>
+      </section>
+      <div class="story-divider" aria-hidden="true"><img src="assets/story-divider-return-arc.svg" alt=""></div>
+
+      <section class="story-section" id="how-to-use" aria-labelledby="storyUseTitle">
+        <p class="story-kicker">04 · IN PRACTICE</p>
+        <h2 id="storyUseTitle">Train, write, read, store</h2>
+        <ul>
+          <li><strong>Train:</strong> Enter words and train the field. Watch the motion-state colors move as the nodes negotiate. Inject a word to wake nearby nodes.</li>
+          <li><strong>Write:</strong> Insert a key with a value. The key is embedded as a node and the value travels with it as payload. Batch insert accepts one <code>key :: value</code> pair per line. Vocabulary upload can overwrite or extend the field.</li>
+          <li><strong>Read:</strong> Query a word already in the field, choose how many neighbours to return, and review similarity scores. The minimum-similarity control filters weaker matches. A word the field does not contain returns no result instead of a guess.</li>
+          <li><strong>Store:</strong> Export saves the settled field, its positions, and payloads as JSON. Import restores a saved field.</li>
+        </ul>
+      </section>
+      <div class="story-divider story-divider-reverse" aria-hidden="true"><img src="assets/story-divider-pulse-orbit.svg" alt=""></div>
+
+      <section class="story-section" id="limits" aria-labelledby="storyLimitsTitle">
+        <p class="story-kicker">05 · WHAT THE EXPERIMENT DOES AND DOES NOT SHOW</p>
+        <h2 id="storyLimitsTitle">Honest limits</h2>
+        <ul>
+          <li>Training is O(n²) per tick. The field can take real work to form.</li>
+          <li>Retrieval is not O(1). The current code checks for an exact label, scores all current nodes by cosine similarity, sorts them, and then wakes the selected results. Scoring is linear in node count; sorting adds work. The local physics then runs for the woken nodes.</li>
+          <li>The current code uses a matching node already in the field; it does not yet create and remove a separate temporary query node. The temporary-node and local-only query model described above is a direction to implement.</li>
+          <li>The supplied project description reports testing close to 500 nodes in the browser. That is a reported test size, not an independent benchmark here.</li>
+          <li>GloVe represents co-occurrence patterns; that is not the same as grounded meaning. Browser words outside the vocabulary can be hash-placed, which does not give them a semantically grounded vector.</li>
+          <li>The hand-coded six-dimensional vocabulary is limited to its authored entries. An uploaded embedding brings its own coverage and assumptions.</li>
+        </ul>
+        <p>These limits shape the next experiment. A field that looks settled should be tested under added data and changed conditions. A query that wakes a few nodes may still have done work across the whole field to rank them.</p>
+      </section>
+      <div class="story-divider" aria-hidden="true"><img src="assets/story-divider-field-constellation.svg" alt=""></div>
+
+      <section class="story-section" id="directions" aria-labelledby="storyDirectionsTitle">
+        <p class="story-kicker">06 · POSSIBLE DIRECTIONS</p>
+        <h2 id="storyDirectionsTitle">Where the field could lead</h2>
+        <h3>A memory that deepens on return</h3>
+        <p>Conversations, notes, and stories could become semantic nodes. Each return could add a new observation and strengthen links to earlier material, while keeping the raw report distinguishable from the story built around it. A memory system could retrieve a bounded neighbourhood to help form a context window, rather than repeatedly passing the whole archive. Bounded prompt size is a design goal; constant retrieval cost has not been demonstrated. Privacy, user control, and the ability to inspect or remove stored material would be essential.</p>
+        <h3>AI training and data preparation</h3>
+        <p>A field might help arrange related examples, reveal clusters, or select material for training. Whether that improves training quality, cost, or efficiency would need to be tested against other approaches.</p>
+        <h3>A semantic operating system</h3>
+        <p>Payloads could eventually hold programs, commands, or other fields and help route work by relationship. That is one possible path toward a new operating-system architecture. This prototype stores and displays payloads; it is not an operating system and does not execute them.</p>
+        <p>The Semantic Field is an experiment in making relationships visible and reusable. Its future depends on what survives careful testing, repeated return, and the pressure of a larger field.</p>
+      </section>
+    </div>
+  </div>
+</article>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════
+   NYARINDO SEMANTIC FIELD
+   Training algorithm: Lennard-Jones physics + green stability
+   detection + stale state + local wake on injection
+   Colors preserved through stale. Status on dashboard only.
+═══════════════════════════════════════════════════════════════ */
+
+const canvas = document.getElementById('c');
+const ctx    = canvas.getContext('2d');
+const tip    = document.getElementById('tip');
+
+let pts = [], ticks = 0, rafId = null, hovered = null;
+let systemPhase = 'waiting';
+let stableRequired = 300;
+let greenStableCount = 0;
+let lastGreenCount = -1;
+
+const WALL = 26, R0 = 48, MAX_F = 2.8, DT = 0.87;
+
+/* ── UTILS ── */
+function log(m, err=false) {
+  const el = document.getElementById('log');
+  el.textContent = m; el.className = err ? 'err' : '';
+}
+
+const PHASE = {
+  waiting:     { label:'waiting',                    col:'#5a5854', dot:'#5a5854' },
+  training:    { label:'training',                   col:'#4a9eff', dot:'#4a9eff' },
+  stale:       { label:'stale — pattern compressed', col:'#5fc97a', dot:'#5fc97a' },
+  integrating: { label:'integrating',                col:'#34d3b5', dot:'#34d3b5' },
+  paused:      { label:'paused',                     col:'#f59e0b', dot:'#f59e0b' },
+};
+function setPhase(p) {
+  systemPhase = p;
+  const m = PHASE[p] || PHASE.waiting;
+  const lightColors = { waiting:'#74766f', training:'#2866ad', stale:'#2e784a', integrating:'#147b71', paused:'#9b6000' };
+  document.getElementById('phaseVal').textContent = m.label;
+  document.getElementById('phaseVal').style.color = document.documentElement.dataset.theme === 'light' ? (lightColors[p] || lightColors.waiting) : m.col;
+  document.getElementById('phaseDot').style.background = document.documentElement.dataset.theme === 'light' ? (lightColors[p] || lightColors.waiting) : m.dot;
+}
+
+function updateStatus(gc, sc, wc, stabCount, stabReq) {
+  document.getElementById('staleVal').textContent = sc > 0 ? sc : '—';
+  document.getElementById('wakeVal').textContent  = wc > 0 ? wc : '—';
+  const dimEl = document.getElementById('dimVal');
+  if (dimEl && pts.length > 0) {
+    const dim = pts[0].vec ? pts[0].vec.length : '—';
+    dimEl.textContent = incrTraining
+      ? `${currentTrainDim}D / ${maxVocabDim}D`
+      : `${dim}D`;
+  }
+  if (systemPhase === 'stale') {
+    document.getElementById('stabPct').textContent   = '100%';
+    document.getElementById('stabFill').style.width  = '100%';
+    document.getElementById('stabFill').style.background = document.documentElement.dataset.theme === 'light' ? '#2e784a' : '#5fc97a';
+    document.getElementById('stabDetail').textContent = `locked — green=${gc}`;
+  } else if (systemPhase === 'waiting') {
+    document.getElementById('stabPct').textContent   = '—';
+    document.getElementById('stabFill').style.width  = '0%';
+    document.getElementById('stabDetail').textContent = '—';
+  } else {
+    const pct = Math.min(100, Math.round((stabCount / stabReq) * 100));
+    document.getElementById('stabPct').textContent   = pct + '%';
+    document.getElementById('stabFill').style.width  = pct + '%';
+    document.getElementById('stabFill').style.background =
+      pct < 40 ? '#ff5f5f' : pct < 80 ? '#f59e0b' : '#5fc97a';
+    document.getElementById('stabDetail').textContent =
+      `green=${gc}, stable ${stabCount}/${stabReq} ticks`;
+  }
+}
+
+/* ── CANVAS ── */
+function resize() {
+  const p = canvas.parentElement;
+  canvas.width  = Math.floor(p.clientWidth)  || 600;
+  canvas.height = Math.floor(p.clientHeight) || 500;
+}
+resize();
+window.addEventListener('resize', () => { resize(); if (!pts.length) draw(); });
+
+/* ── VOCABULARY: 6D vectors [animate, nature, abstract, social, force, scale] ── */
+const VOCAB = {
+  lion:[0.95,0.80,0.0,0.1,0.7,0.6],      tiger:[0.95,0.80,0.0,0.1,0.75,0.6],
+  leopard:[0.95,0.78,0.0,0.1,0.7,0.5],   wolf:[0.90,0.78,0.0,0.3,0.65,0.55],
+  dog:[0.90,0.65,0.0,0.6,0.3,0.35],      cat:[0.88,0.60,0.0,0.5,0.25,0.3],
+  elephant:[0.92,0.82,0.0,0.2,0.5,0.85], whale:[0.92,0.85,0.0,0.1,0.4,0.95],
+  bird:[0.88,0.75,0.0,0.1,0.3,0.3],      fish:[0.85,0.75,0.0,0.1,0.2,0.3],
+  animal:[0.88,0.72,0.0,0.1,0.4,0.5],    human:[0.95,0.5,0.3,0.8,0.5,0.6],
+  person:[0.95,0.45,0.25,0.8,0.45,0.55], child:[0.95,0.45,0.1,0.75,0.25,0.3],
+  tree:[0.3,0.92,0.0,0.05,0.1,0.7],      forest:[0.4,0.95,0.0,0.05,0.15,0.8],
+  plant:[0.25,0.88,0.0,0.05,0.05,0.4],   flower:[0.2,0.85,0.1,0.15,0.05,0.25],
+  ocean:[0.1,0.95,0.0,0.05,0.6,0.95],    sea:[0.1,0.93,0.0,0.05,0.55,0.9],
+  river:[0.1,0.90,0.0,0.1,0.45,0.7],     lake:[0.1,0.88,0.0,0.1,0.3,0.65],
+  water:[0.05,0.85,0.0,0.1,0.35,0.6],    mountain:[0.05,0.92,0.0,0.05,0.3,0.95],
+  earth:[0.05,0.90,0.1,0.1,0.4,1.0],     sky:[0.05,0.88,0.1,0.05,0.2,0.9],
+  sun:[0.0,0.85,0.1,0.05,0.9,0.95],      fire:[0.0,0.7,0.1,0.1,0.95,0.6],
+  wind:[0.0,0.75,0.1,0.05,0.7,0.6],      stone:[0.0,0.80,0.0,0.05,0.1,0.5],
+  banana:[0.0,0.80,0.0,0.2,0.0,0.2],     fruit:[0.0,0.78,0.0,0.2,0.0,0.25],
+  food:[0.1,0.5,0.0,0.4,0.0,0.3],
+  justice:[0.0,0.0,0.95,0.75,0.5,0.7],   law:[0.0,0.0,0.90,0.8,0.55,0.65],
+  rule:[0.0,0.0,0.85,0.75,0.5,0.55],     order:[0.0,0.05,0.82,0.7,0.5,0.6],
+  ethics:[0.0,0.0,0.92,0.7,0.45,0.65],   morality:[0.0,0.0,0.93,0.65,0.45,0.65],
+  truth:[0.0,0.0,0.95,0.6,0.5,0.7],      freedom:[0.1,0.1,0.88,0.7,0.6,0.75],
+  rights:[0.0,0.0,0.85,0.75,0.5,0.65],   democracy:[0.0,0.0,0.85,0.9,0.5,0.8],
+  politics:[0.0,0.0,0.75,0.95,0.6,0.75], power:[0.0,0.1,0.7,0.75,0.85,0.8],
+  government:[0.0,0.0,0.7,0.95,0.65,0.8],war:[0.1,0.1,0.5,0.8,0.95,0.85],
+  peace:[0.05,0.1,0.7,0.8,0.1,0.65],     conflict:[0.1,0.05,0.55,0.75,0.9,0.75],
+  violence:[0.2,0.05,0.35,0.5,0.95,0.7], love:[0.3,0.2,0.6,0.85,0.2,0.55],
+  hate:[0.1,0.05,0.55,0.6,0.85,0.6],     fear:[0.4,0.1,0.5,0.55,0.7,0.5],
+  joy:[0.3,0.2,0.6,0.7,0.15,0.5],        grief:[0.2,0.05,0.65,0.6,0.3,0.45],
+  pain:[0.3,0.05,0.55,0.5,0.7,0.45],     harmony:[0.05,0.2,0.72,0.55,0.1,0.55],
+  mind:[0.1,0.0,0.9,0.5,0.4,0.65],       thought:[0.05,0.0,0.92,0.45,0.35,0.55],
+  awareness:[0.1,0.0,0.95,0.4,0.3,0.6],  consciousness:[0.1,0.0,0.97,0.35,0.3,0.7],
+  perception:[0.1,0.0,0.90,0.4,0.35,0.6],attention:[0.1,0.0,0.85,0.45,0.4,0.55],
+  memory:[0.1,0.0,0.88,0.45,0.3,0.55],
+  container:[0.0,0.1,0.7,0.3,0.4,0.6],   boundary:[0.0,0.1,0.75,0.3,0.45,0.55],
+  field:[0.0,0.2,0.72,0.3,0.5,0.7],      pulse:[0.1,0.2,0.7,0.25,0.65,0.45],
+  expansion:[0.0,0.1,0.75,0.2,0.8,0.7],  contraction:[0.0,0.1,0.72,0.2,0.75,0.6],
+  balance:[0.0,0.1,0.80,0.35,0.3,0.55],  equilibrium:[0.0,0.1,0.82,0.3,0.25,0.55],
+  resonance:[0.0,0.2,0.78,0.3,0.6,0.55], rhythm:[0.1,0.25,0.7,0.4,0.55,0.5],
+  pattern:[0.0,0.1,0.75,0.35,0.4,0.5],   fog:[0.0,0.4,0.6,0.15,0.2,0.4],
+  clarity:[0.0,0.1,0.8,0.35,0.35,0.5],   signal:[0.0,0.0,0.72,0.4,0.6,0.5],
+  noise:[0.0,0.1,0.55,0.25,0.5,0.4],     force:[0.0,0.15,0.6,0.2,0.95,0.7],
+  energy:[0.0,0.2,0.65,0.2,0.9,0.7],     wave:[0.0,0.3,0.6,0.15,0.7,0.55],
+  particle:[0.0,0.1,0.6,0.1,0.5,0.2],    matter:[0.0,0.2,0.6,0.1,0.4,0.5],
+  space:[0.0,0.3,0.7,0.1,0.3,0.95],      time:[0.0,0.1,0.8,0.15,0.4,0.9],
+  void:[0.0,0.1,0.7,0.05,0.05,0.8],      emptiness:[0.0,0.1,0.72,0.05,0.05,0.75],
+  silence:[0.0,0.2,0.7,0.1,0.05,0.55],   stillness:[0.0,0.15,0.72,0.1,0.05,0.5],
+  motion:[0.1,0.2,0.55,0.15,0.8,0.55],   change:[0.0,0.1,0.7,0.3,0.65,0.6],
+  flow:[0.05,0.4,0.6,0.2,0.6,0.6],       structure:[0.0,0.1,0.7,0.35,0.35,0.65],
+  system:[0.0,0.05,0.72,0.4,0.4,0.7],    network:[0.0,0.0,0.65,0.6,0.5,0.65],
+  connection:[0.05,0.1,0.7,0.6,0.4,0.55],separation:[0.0,0.1,0.68,0.35,0.55,0.55],
+  unity:[0.05,0.1,0.78,0.6,0.3,0.65],    division:[0.0,0.05,0.68,0.5,0.6,0.6],
+  whole:[0.05,0.15,0.75,0.45,0.3,0.7],   part:[0.0,0.1,0.6,0.3,0.3,0.4],
+  self:[0.3,0.0,0.75,0.5,0.3,0.5],       other:[0.2,0.05,0.65,0.55,0.3,0.5],
+  god:[0.0,0.1,0.92,0.5,0.8,0.95],       spirit:[0.0,0.1,0.90,0.45,0.6,0.8],
+  soul:[0.1,0.05,0.88,0.5,0.45,0.7],     religion:[0.0,0.05,0.82,0.75,0.5,0.75],
+  faith:[0.0,0.05,0.85,0.65,0.4,0.65],   science:[0.0,0.05,0.85,0.55,0.55,0.75],
+  knowledge:[0.0,0.0,0.88,0.5,0.45,0.7], wisdom:[0.05,0.05,0.90,0.55,0.4,0.7],
+  learning:[0.1,0.0,0.80,0.6,0.4,0.6],   growth:[0.1,0.3,0.7,0.4,0.55,0.6],
+  decay:[0.05,0.3,0.55,0.2,0.45,0.55],   birth:[0.5,0.3,0.5,0.4,0.4,0.4],
+  death:[0.2,0.15,0.65,0.35,0.5,0.55],   life:[0.5,0.4,0.5,0.5,0.4,0.6],
+  red:[0.0,0.1,0.3,0.2,0.8,0.4],         blue:[0.0,0.3,0.35,0.3,0.4,0.5],
+  green:[0.0,0.5,0.25,0.25,0.2,0.45],
+  nyarindo:[0.1,0.1,0.90,0.35,0.5,0.65], dot:[0.0,0.1,0.6,0.2,0.3,0.2],
+  lens:[0.0,0.0,0.78,0.3,0.45,0.4],      attending:[0.05,0.05,0.80,0.4,0.3,0.45],
+  grammar:[0.0,0.0,0.75,0.5,0.35,0.5],   ontology:[0.0,0.0,0.88,0.4,0.4,0.65],
+  coherence:[0.0,0.05,0.85,0.4,0.3,0.65],integration:[0.0,0.05,0.78,0.4,0.45,0.6],
+  compression:[0.0,0.0,0.72,0.3,0.4,0.55],protocol:[0.0,0.0,0.70,0.45,0.5,0.55],
+  metabolism:[0.1,0.2,0.6,0.2,0.4,0.5],  mycelium:[0.1,0.85,0.2,0.1,0.3,0.4],
+  kernel:[0.0,0.0,0.6,0.25,0.45,0.45],   stale:[0.0,0.05,0.65,0.2,0.1,0.4],
+};
+
+/* ── VECTOR UTILS ── */
+function cosineSim(a, b) {
+  if (!a || !b || a.length !== b.length) return 0;
+  let d=0,ma=0,mb=0;
+  for (let i=0;i<a.length;i++) { d+=a[i]*b[i]; ma+=a[i]*a[i]; mb+=b[i]*b[i]; }
+  return d / (Math.sqrt(ma) * Math.sqrt(mb) || 1);
+}
+function getVector(word) {
+  const w = word.toLowerCase().trim();
+  // 1. check existing field nodes — primary source for uploaded vocabularies
+  const fieldNode = pts.find(p => p.label.toLowerCase() === w);
+  if (fieldNode) return fieldNode.vec;
+  // 2. determine target dimensionality from field
+  const dim = pts.length > 0 ? pts[0].vec.length : 6;
+  // 3. fallback to hardcoded 6D vocab only if field is empty and word exists there
+  if (dim === 6 && VOCAB[w]) return VOCAB[w];
+  // 4. hash to field dimensionality
+  const chars = w.split('');
+  const v = new Array(dim).fill(0);
+  chars.forEach((c,i) => { v[i % dim] += c.charCodeAt(0) / 122 / chars.length; });
+  const mag = Math.sqrt(v.reduce((s,x) => s+x*x, 0)) || 1;
+  return v.map(x => x / mag * 0.5);
+}
+function pca2d(vecs) {
+  const n=vecs.length, d=vecs[0].length;
+  const mean = new Array(d).fill(0);
+  vecs.forEach(v => v.forEach((x,i) => mean[i] += x/n));
+  const C = vecs.map(v => v.map((x,i) => x-mean[i]));
+  function dot(a,b){let s=0;for(let i=0;i<a.length;i++)s+=a[i]*b[i];return s;}
+  function norm(v){const m=Math.sqrt(dot(v,v))||1;return v.map(x=>x/m);}
+  function powerIter(mat,iters=80){
+    let u=new Array(d).fill(0); u[0]=1;
+    for(let k=0;k<iters;k++){
+      const w=new Array(d).fill(0);
+      mat.forEach(r=>{const s=dot(r,u);r.forEach((x,j)=>w[j]+=x*s);});
+      u=norm(w);
+    }
+    return u;
+  }
+  const u1=powerIter(C);
+  const D=C.map(v=>{const s=dot(v,u1);return v.map((x,j)=>x-s*u1[j]);});
+  const u2=powerIter(D);
+  return C.map(v=>({x:dot(v,u1), y:dot(v,u2)}));
+}
+
+/* ── SPAWN ── */
+function spawn(labels, rawVecs, coords) {
+  const W=canvas.width, H=canvas.height, pad=72;
+  const xs=coords.map(c=>c.x), ys=coords.map(c=>c.y);
+  const mnX=Math.min(...xs), mxX=Math.max(...xs);
+  const mnY=Math.min(...ys), mxY=Math.max(...ys);
+  const rX=mxX-mnX||1, rY=mxY-mnY||1;
+  pts = labels.map((lbl,i) => ({
+    label: lbl,
+    vec: rawVecs[i],
+    inVocab: !!VOCAB[lbl.toLowerCase().trim()],
+    x: WALL+pad + ((coords[i].x-mnX)/rX)*(W-WALL*2-pad*2),
+    y: WALL+pad + ((coords[i].y-mnY)/rY)*(H-WALL*2-pad*2),
+    vx: (Math.random()-0.5)*0.3,
+    vy: (Math.random()-0.5)*0.3,
+    prevSpd: 0,
+    state: 'exp',
+    frozenState: 'exp',  // color preserved through stale
+    stale: false,
+    woken: false,
+    nearestIdx: -1,
+    nearestSim: 0,
+  }));
+  updateNearest();
+}
+function updateNearest() {
+  for (let i=0;i<pts.length;i++) {
+    let bestSim=-1, bestJ=-1;
+    for (let j=0;j<pts.length;j++) {
+      if (i===j) continue;
+      const s = cosineSim(pts[i].vec, pts[j].vec);
+      if (s>bestSim) { bestSim=s; bestJ=j; }
+    }
+    pts[i].nearestIdx = bestJ;
+    pts[i].nearestSim = bestSim;
+  }
+}
+
+/* ── PHYSICS ── */
+function lj(r, att, rep) {
+  if (r<1) r=1;
+  const s6=Math.pow(R0/r,6), s12=s6*s6;
+  return (rep*0.5*12*s12/r) - (att*0.07*6*s6/r);
+}
+
+/* ── EQUILIBRIUM DETECTION: green count stability ── */
+function checkEquilibrium(gc) {
+  if (systemPhase!=='training' && systemPhase!=='integrating') return;
+  if (gc === lastGreenCount) greenStableCount++;
+  else greenStableCount = 0;
+  lastGreenCount = gc;
+  if (greenStableCount >= stableRequired) {
+    pts.filter(p=>!p.stale).forEach(p => {
+      p.frozenState = p.state;
+      p.stale = true;
+      p.woken = false;
+      p.vx = 0; p.vy = 0;
+    });
+    setPhase('stale');
+    greenStableCount = 0;
+    lastGreenCount = -1;
+    cancelAnimationFrame(rafId); rafId = null;
+    if (incrTraining) {
+      checkDimensionStep();
+    } else {
+      log(`equilibrium — green locked at ${gc}. inject to continue.`);
+    }
+  }
+}
+
+/* ── TICK ── */
+function tick() {
+  const W=canvas.width, H=canvas.height;
+  const att  = parseFloat(document.getElementById('att').value);
+  const rep  = parseFloat(document.getElementById('rep').value);
+  const damp = parseFloat(document.getElementById('damp').value);
+  const n = pts.length; if (!n) return;
+
+  const ax=new Float32Array(n), ay=new Float32Array(n);
+  for (let i=0;i<n;i++) {
+    if (pts[i].stale) continue;
+    for (let j=i+1;j<n;j++) {
+      if (pts[j].stale) continue;
+      const dx=pts[j].x-pts[i].x, dy=pts[j].y-pts[i].y;
+      const r=Math.sqrt(dx*dx+dy*dy)||0.1;
+      const f=Math.max(-MAX_F, Math.min(MAX_F, lj(r,att,rep)));
+      const nx=dx/r, ny=dy/r;
+      ax[i]+=f*nx; ay[i]+=f*ny;
+      ax[j]-=f*nx; ay[j]-=f*ny;
+    }
+  }
+
+  let bc=0,rc=0,gc=0,sc=0,wc=0;
+  for (let i=0;i<n;i++) {
+    const p=pts[i];
+    if (p.stale) { sc++; continue; }
+    if (p.woken) wc++;
+    p.vx=(p.vx+ax[i]*DT)*damp;
+    p.vy=(p.vy+ay[i]*DT)*damp;
+    const sp=Math.sqrt(p.vx*p.vx+p.vy*p.vy);
+    if (sp>3) { p.vx*=3/sp; p.vy*=3/sp; }
+    p.state = sp<0.06 ? 'eq' : sp>p.prevSpd ? 'exp' : 'con';
+    p.prevSpd=sp;
+    p.x+=p.vx*DT; p.y+=p.vy*DT;
+    if(p.x<WALL){p.x=WALL;p.vx=Math.abs(p.vx)*0.5;}
+    if(p.x>W-WALL){p.x=W-WALL;p.vx=-Math.abs(p.vx)*0.5;}
+    if(p.y<WALL){p.y=WALL;p.vy=Math.abs(p.vy)*0.5;}
+    if(p.y>H-WALL){p.y=H-WALL;p.vy=-Math.abs(p.vy)*0.5;}
+    if(p.state==='exp')bc++; else if(p.state==='con')rc++; else gc++;
+  }
+  ticks++;
+  checkEquilibrium(gc);
+  updateStatus(gc,sc,wc,greenStableCount,stableRequired);
+  document.getElementById('sB').textContent=bc;
+  document.getElementById('sR').textContent=rc;
+  document.getElementById('sG').textContent=gc;
+  document.getElementById('sT').textContent=ticks;
+}
+
+/* ── DRAW ── */
+const COL = { exp:[74,158,255], con:[255,95,95], eq:[95,201,122] };
+const WOKEN = [167,139,250];
+
+function draw() {
+  const W=canvas.width, H=canvas.height;
+  const lightTheme = document.documentElement.dataset.theme === 'light';
+  ctx.clearRect(0,0,W,H);
+  ctx.fillStyle=lightTheme ? '#f2f0e9' : '#0c0d0e';
+  ctx.fillRect(0,0,W,H);
+
+  // subtle grid
+  ctx.strokeStyle=lightTheme ? 'rgba(35,38,32,0.07)' : 'rgba(255,255,255,0.025)';
+  ctx.lineWidth=0.5;
+  const gs=90;
+  for(let x=0;x<W;x+=gs){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,H);ctx.stroke();}
+  for(let y=0;y<H;y+=gs){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}
+
+  // container wall
+  ctx.strokeStyle=lightTheme ? 'rgba(138,97,47,0.24)' : 'rgba(200,184,154,0.1)';
+  ctx.lineWidth=0.5;
+  ctx.setLineDash([2,8]);
+  ctx.strokeRect(WALL,WALL,W-WALL*2,H-WALL*2);
+  ctx.setLineDash([]);
+
+  // bond lines — all pairs within draw range
+  for (let i=0;i<pts.length;i++) {
+    for (let j=i+1;j<pts.length;j++) {
+      const pi=pts[i], pj=pts[j];
+      const dx=pj.x-pi.x, dy=pj.y-pi.y;
+      const dist=Math.sqrt(dx*dx+dy*dy);
+      const maxDraw = pts.length > 150 ? R0*2.2 : R0*3.6;
+      if (dist>maxDraw) continue;
+      const bothStale = pi.stale && pj.stale;
+      const bothActive = !pi.stale && !pj.stale;
+      if (!bothStale && !bothActive) continue;
+      const sim = cosineSim(pi.vec, pj.vec);
+      const prox = 1-dist/maxDraw;
+      const baseA = bothStale ? 0.08 : prox*0.28;
+      let r,g,b;
+      if (sim>0.85)      { r=lightTheme?46:95;  g=lightTheme?120:201; b=lightTheme?74:122; }
+      else if (sim>0.65) { r=lightTheme?155:245; g=lightTheme?96:158; b=lightTheme?0:11; }
+      else               { r=lightTheme?183:255; g=lightTheme?59:80;  b=lightTheme?59:70; }
+      const eq = !bothStale && pi.state==='eq' && pj.state==='eq';
+      ctx.beginPath();
+      ctx.moveTo(pi.x,pi.y); ctx.lineTo(pj.x,pj.y);
+      ctx.strokeStyle=`rgba(${r},${g},${b},${(baseA*(eq?2.0:1)).toFixed(3)})`;
+      ctx.lineWidth = bothStale ? 0.35 : eq ? 0.9 : 0.4;
+      ctx.stroke();
+    }
+  }
+
+  // nodes
+  const lightCOL = { exp:[40,99,163], con:[183,59,59], eq:[46,120,74] };
+  const lightWOKEN = [112,75,163];
+  const renderedNodes = [];
+  for (const p of pts) {
+    const isHov = p===hovered;
+    const cs = p.stale ? p.frozenState : (p.woken ? 'woken' : p.state);
+    const [r,g,b] = cs==='woken' ? (lightTheme ? lightWOKEN : WOKEN) : ((lightTheme ? lightCOL[cs] : COL[cs]) || (lightTheme ? lightCOL.eq : COL.eq));
+    const coreAlpha = p.stale ? 0.52 : 0.92;
+
+    // glow — only on hover at high node counts
+    if (isHov || pts.length < 100) {
+      ctx.beginPath(); ctx.arc(p.x,p.y,isHov?8:4,0,Math.PI*2);
+      ctx.fillStyle=`rgba(${r},${g},${b},${isHov?0.18:(p.stale?0.04:0.08)})`;
+      ctx.fill();
+    }
+
+    // core dot
+    ctx.beginPath(); ctx.arc(p.x,p.y,isHov?3:1.5,0,Math.PI*2);
+    ctx.fillStyle=`rgba(${r},${g},${b},${coreAlpha})`;
+    ctx.fill();
+
+    // stale ring
+    if (p.stale && pts.length < 150) {
+      ctx.beginPath(); ctx.arc(p.x,p.y,5,0,Math.PI*2);
+      ctx.strokeStyle=`rgba(${r},${g},${b},0.18)`;
+      ctx.lineWidth=0.7; ctx.setLineDash([1.5,3]); ctx.stroke(); ctx.setLineDash([]);
+    }
+
+    // unknown vocab ring
+    if (!p.inVocab && pts.length < 150) {
+      ctx.beginPath(); ctx.arc(p.x,p.y,p.stale?6:4,0,Math.PI*2);
+      ctx.strokeStyle=`rgba(${r},${g},${b},0.22)`;
+      ctx.lineWidth=0.4; ctx.setLineDash([2,2]); ctx.stroke(); ctx.setLineDash([]);
+    }
+
+    renderedNodes.push({ p, r, g, b, isHov });
+  }
+
+  // labels — readable rounded bubbles; avoid collisions when the field is small
+  const placedLabels = [];
+  const labelHeight = 24;
+  const labelGap = 4;
+  ctx.font = '600 12px "IBM Plex Mono", monospace';
+  ctx.textBaseline = 'middle';
+
+  function roundedRectPath(x, y, w, h, radius) {
+    ctx.beginPath();
+    ctx.moveTo(x + radius, y);
+    ctx.arcTo(x + w, y, x + w, y + h, radius);
+    ctx.arcTo(x + w, y + h, x, y + h, radius);
+    ctx.arcTo(x, y + h, x, y, radius);
+    ctx.arcTo(x, y, x + w, y, radius);
+    ctx.closePath();
+  }
+
+  function overlapsPlacedLabel(candidate) {
+    return placedLabels.some(box =>
+      candidate.x < box.x + box.w + labelGap &&
+      candidate.x + candidate.w + labelGap > box.x &&
+      candidate.y < box.y + box.h + labelGap &&
+      candidate.y + candidate.h + labelGap > box.y
+    );
+  }
+
+  for (const { p, r, g, b, isHov } of renderedNodes) {
+    if (!isHov && pts.length > 60) continue;
+    const width = Math.ceil(ctx.measureText(p.label).width) + 14;
+    const candidates = [
+      { x:p.x+8, y:p.y-labelHeight/2, w:width, h:labelHeight },
+      { x:p.x-width-8, y:p.y-labelHeight/2, w:width, h:labelHeight },
+      { x:p.x-width/2, y:p.y-labelHeight-12, w:width, h:labelHeight },
+      { x:p.x-width/2, y:p.y+12, w:width, h:labelHeight }
+    ];
+    const bubble = candidates.find(box =>
+      box.x >= WALL &&
+      box.y >= WALL &&
+      box.x + box.w <= W-WALL &&
+      box.y + box.h <= H-WALL &&
+      !overlapsPlacedLabel(box)
+    ) || candidates[0];
+
+    placedLabels.push(bubble);
+    roundedRectPath(bubble.x, bubble.y, bubble.w, bubble.h, 8);
+    ctx.fillStyle = lightTheme
+      ? (p.stale ? 'rgba(242,240,233,.78)' : 'rgba(248,246,239,.94)')
+      : (p.stale ? 'rgba(15,17,17,.72)' : 'rgba(12,14,14,.9)');
+    ctx.fill();
+    ctx.strokeStyle = `rgba(${r},${g},${b},${isHov ? .82 : p.stale ? .28 : .48})`;
+    ctx.lineWidth = isHov ? 1.2 : .75;
+    ctx.stroke();
+
+    ctx.fillStyle = lightTheme
+      ? (p.stale ? 'rgba(70,72,65,.82)' : 'rgba(35,38,32,.96)')
+      : (p.stale ? 'rgba(187,184,175,.78)' : 'rgba(235,232,224,.98)');
+    ctx.fillText(p.label, bubble.x + 7, bubble.y + bubble.h / 2 + .5);
+  }
+  ctx.textBaseline = 'alphabetic';
+
+  // cluster labels — only when stale and above 80 nodes
+  if (systemPhase === 'stale' && pts.length > 80) {
+    computeClusterLabels();
+  }
+}
+
+/* ── CLUSTER LABELS ── */
+function computeClusterLabels() {
+  if (!pts.length) return;
+
+  // count deep bonds (sim > 0.85) per node
+  const deepBonds = new Array(pts.length).fill(0);
+  for (let i=0;i<pts.length;i++) {
+    for (let j=i+1;j<pts.length;j++) {
+      const sim = cosineSim(pts[i].vec, pts[j].vec);
+      if (sim > 0.85) { deepBonds[i]++; deepBonds[j]++; }
+    }
+  }
+
+  // identify cluster representatives using spatial proximity grouping
+  const visited = new Array(pts.length).fill(false);
+  const clusterRadius = R0 * 2.8;
+
+  ctx.font = '600 12px "IBM Plex Mono", monospace';
+  ctx.textBaseline = 'middle';
+
+  for (let i=0;i<pts.length;i++) {
+    if (visited[i] || deepBonds[i] === 0) continue;
+
+    // find all nodes within spatial radius
+    const cluster = [i];
+    for (let j=0;j<pts.length;j++) {
+      if (i===j) continue;
+      const dx=pts[j].x-pts[i].x, dy=pts[j].y-pts[i].y;
+      if (Math.sqrt(dx*dx+dy*dy) < clusterRadius) cluster.push(j);
+    }
+
+    if (cluster.length < 3) continue;
+
+    // find node with most deep bonds within this cluster
+    let bestIdx = cluster[0];
+    let bestCount = -1;
+    for (const idx of cluster) {
+      if (deepBonds[idx] > bestCount) { bestCount = deepBonds[idx]; bestIdx = idx; }
+    }
+
+    // mark all in cluster visited
+    cluster.forEach(idx => visited[idx] = true);
+
+    // draw cluster label at representative node position
+    const rep = pts[bestIdx];
+    const cs = rep.frozenState || 'eq';
+    const [r,g,b] = COL[cs] || COL.eq;
+
+    const lw = ctx.measureText(rep.label).width;
+    const bubbleX = rep.x - 7;
+    const bubbleY = rep.y - 18;
+    const bubbleW = lw + 14;
+    const bubbleH = 24;
+    ctx.beginPath();
+    ctx.roundRect(bubbleX, bubbleY, bubbleW, bubbleH, 8);
+    ctx.fillStyle = 'rgba(12,13,14,0.82)';
+    ctx.fill();
+    ctx.strokeStyle = `rgba(${r},${g},${b},0.62)`;
+    ctx.lineWidth = .8;
+    ctx.stroke();
+
+    ctx.fillStyle = 'rgba(236,233,226,0.96)';
+    ctx.fillText(rep.label, bubbleX + 7, bubbleY + bubbleH / 2 + .5);
+  }
+
+  ctx.font = '10px "IBM Plex Mono", monospace';
+  ctx.textBaseline = 'alphabetic';
+}
+
+function loop() { tick(); draw(); rafId = requestAnimationFrame(loop); }
+
+/* ── HOVER ── */
+canvas.addEventListener('mousemove', e => {
+  const rect = canvas.getBoundingClientRect();
+  const mx = (e.clientX-rect.left)*(canvas.width/rect.width);
+  const my = (e.clientY-rect.top)*(canvas.height/rect.height);
+  let found=null, best=999;
+  for (const p of pts) {
+    const d = Math.sqrt((p.x-mx)**2+(p.y-my)**2);
+    if (d<24 && d<best) { best=d; found=p; }
+  }
+  hovered = found;
+  if (found && found.nearestIdx>=0) {
+    const nearest = pts[found.nearestIdx];
+    const sim = found.nearestSim;
+    const ds = found.stale ? found.frozenState : found.state;
+    let stateLabel, stateCol;
+    if (found.stale) {
+      stateLabel = `stale — earned ${ds}`;
+      stateCol = ds==='eq'?'#5fc97a' : ds==='exp'?'#4a9eff' : '#ff5f5f';
+    } else if (found.woken) {
+      stateLabel='woken — integrating'; stateCol='#a78bfa';
+    } else if (found.state==='exp') {
+      stateLabel='expanding — blue'; stateCol='#4a9eff';
+    } else if (found.state==='con') {
+      stateLabel='contracting — red'; stateCol='#ff5f5f';
+    } else {
+      stateLabel='equilibrium — green'; stateCol='#5fc97a';
+    }
+    const bondLabel = sim>0.92?'deep semantic bond':sim>0.78?'semantic bond':sim>0.60?'loose semantic':'proximity only';
+    document.getElementById('tipWord').textContent    = found.label+(found.inVocab?'':' *');
+    document.getElementById('tipNearest').textContent = 'nearest: '+nearest.label+' ('+sim.toFixed(2)+')';
+    document.getElementById('tipBar').style.width     = Math.round(sim*100)+'%';
+    document.getElementById('tipBar').style.background= stateCol;
+    document.getElementById('tipSim').textContent     = (sim*100).toFixed(0)+'% cosine similarity';
+    document.getElementById('tipState').textContent   = stateLabel;
+    document.getElementById('tipState').style.color   = stateCol;
+    document.getElementById('tipBond').textContent    = bondLabel;
+    tooltipShowPayload(found.label);
+    const fx=e.clientX-rect.left, fy=e.clientY-rect.top;
+    tip.style.left = (fx>canvas.clientWidth/2 ? fx-186 : fx+14)+'px';
+    tip.style.top  = Math.max(4, fy-72)+'px';
+    tip.style.display='block';
+  } else {
+    tip.style.display='none';
+  }
+});
+canvas.addEventListener('mouseleave', () => { hovered=null; tip.style.display='none'; });
+
+/* ── CONTROLS ── */
+function stopTraining() {
+  if (!rafId) { log('nothing running', true); return; }
+  cancelAnimationFrame(rafId); rafId = null;
+  log('training paused — press proceed to resume or force stale');
+  setPhase('paused');
+}
+
+function proceedTraining() {
+  if (systemPhase === 'stale') { log('field already stale', true); return; }
+  if (systemPhase === 'waiting') { log('train the field first', true); return; }
+  if (rafId) {
+    // force stale now
+    pts.forEach(p => {
+      p.stale = true; p.woken = false;
+      p.frozenState = p.state;
+      p.vx = 0; p.vy = 0;
+    });
+    cancelAnimationFrame(rafId); rafId = null;
+    setPhase('stale');
+    log('forced stale — structure committed as-is');
+  } else {
+    // resume from pause
+    if (!rafId) loop();
+    setPhase('integrating');
+    log('resumed');
+  }
+}
+
+function startTraining() {
+  const raw = document.getElementById('inp').value.trim();
+  if (!raw) { log('add items first', true); return; }
+  const labels = [...new Set(raw.split('\n').map(s=>s.trim().replace(/[,.]$/,'')).filter(Boolean))];
+  if (labels.length<2) { log('need at least 2 items', true); return; }
+  if (labels.length>500) { log('max 500 items', true); return; }
+  if (rafId) { cancelAnimationFrame(rafId); rafId=null; }
+  pts=[]; ticks=0; greenStableCount=0; lastGreenCount=-1;
+  ['sB','sR','sG','sT'].forEach(id=>document.getElementById(id).textContent='0');
+  updateStatus(0,0,0,0,stableRequired);
+  const vecs   = labels.map(l=>getVector(l));
+  const coords = pca2d(vecs);
+  spawn(labels, vecs, coords);
+  setPhase('training');
+  log(`training ${labels.length} nodes — watching green stability…`);
+  loop();
+}
+
+function injectData() {
+  const raw = document.getElementById('newItem').value.trim();
+  if (!raw) { log('enter a word to inject', true); return; }
+  if (systemPhase==='waiting') { log('train field first', true); return; }
+  const label = raw.replace(/[,.]$/,'');
+  const vec = getVector(label);
+  const sims = pts.map((p,i)=>({i, sim:cosineSim(vec,p.vec)}));
+  sims.sort((a,b)=>b.sim-a.sim);
+  const topN = Math.min(3, sims.length);
+  const neighbours = sims.slice(0,topN).map(s=>s.i);
+  const anchor = pts[neighbours[0]];
+  pts.push({
+    label, vec,
+    inVocab: !!VOCAB[label.toLowerCase()],
+    x: anchor.x+(Math.random()-0.5)*44,
+    y: anchor.y+(Math.random()-0.5)*44,
+    vx:(Math.random()-0.5)*0.5, vy:(Math.random()-0.5)*0.5,
+    prevSpd:0, state:'exp', frozenState:'exp',
+    stale:false, woken:true,
+    nearestIdx:-1, nearestSim:0,
+  });
+  neighbours.forEach(i => {
+    pts[i].stale=false; pts[i].woken=true;
+    pts[i].vx=(Math.random()-0.5)*0.4; pts[i].vy=(Math.random()-0.5)*0.4;
+    pts[i].state='exp'; pts[i].frozenState='exp';
+  });
+  updateNearest();
+  greenStableCount=0; lastGreenCount=-1;
+  setPhase('integrating');
+  log(`"${label}" injected — woke: ${neighbours.map(i=>pts[i].label).join(', ')}`);
+  if (!rafId) loop();
+}
+
+function resetField() {
+  if (rafId) { cancelAnimationFrame(rafId); rafId=null; }
+  pts=[]; ticks=0; greenStableCount=0; lastGreenCount=-1; hovered=null;
+  tip.style.display='none';
+  ['sB','sR','sG','sT'].forEach(id=>document.getElementById(id).textContent='0');
+  updateStatus(0,0,0,0,stableRequired);
+  setPhase('waiting');
+  log('ready');
+  draw();
+  // reset results pane
+  document.getElementById('resultsQueryLabel').textContent = '—';
+  document.getElementById('resultsBody').innerHTML = '<div class="results-empty">run a query on the<br>read tab to see results</div>';
+  document.getElementById('resultsMeta').textContent = '—';
+}
+
+/* ── DATABASE LAYER ── */
+// payload map: label (lowercase) → arbitrary string value
+const payloadDB = new Map();
+
+function dbPayloadCount() { return payloadDB.size; }
+
+function updateHeaderCount() {
+  const target = document.getElementById('headerPayloadCount');
+  if (!target) return;
+  const n = dbPayloadCount();
+  target.textContent =
+    `semantic db — ${n} record${n===1?'':'s'}`;
+}
+
+function updateRecordList() {
+  const count = payloadDB.size;
+  document.getElementById('recordCount').textContent = count;
+  const list = document.getElementById('recordList');
+  if (count === 0) {
+    list.innerHTML = '<div style="font-family:\'IBM Plex Mono\',monospace;font-size:10px;color:var(--dim);font-style:italic;">no records yet</div>';
+    return;
+  }
+  list.innerHTML = '';
+  for (const [k, v] of payloadDB) {
+    const row = document.createElement('div');
+    row.style.cssText = 'display:flex;align-items:flex-start;gap:6px;padding:4px 6px;background:var(--surface2);border:1px solid var(--border);border-radius:3px;';
+    const keyEl = document.createElement('div');
+    keyEl.style.cssText = 'font-family:"IBM Plex Mono",monospace;font-size:10px;color:var(--accent);flex-shrink:0;min-width:70px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;';
+    keyEl.textContent = k;
+    const valEl = document.createElement('div');
+    valEl.style.cssText = 'font-family:"IBM Plex Mono",monospace;font-size:9px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;';
+    valEl.textContent = v;
+    row.appendChild(keyEl);
+    row.appendChild(valEl);
+    list.appendChild(row);
+  }
+  updateHeaderCount();
+}
+
+/* ── WRITE API ── */
+function dbInsert(keyOverride, valueOverride) {
+  const key   = (keyOverride   !== undefined) ? keyOverride   : document.getElementById('writeKey').value.trim();
+  const value = (valueOverride !== undefined) ? valueOverride : document.getElementById('writeVal').value.trim();
+  if (!key) { log('key required', true); return false; }
+  if (systemPhase === 'waiting') { log('train the field first', true); return false; }
+
+  const label = key.replace(/[,.]$/,'');
+  payloadDB.set(label.toLowerCase(), value);
+
+  // inject node into field
+  const vec = getVector(label);
+  const sims = pts.map((p,i)=>({i, sim:cosineSim(vec,p.vec)}));
+  sims.sort((a,b)=>b.sim-a.sim);
+  const topN = Math.min(3, sims.length);
+  const neighbours = sims.slice(0,topN).map(s=>s.i);
+  const anchor = pts[neighbours[0]];
+
+  // check if this key already has a node in the field
+  const existing = pts.findIndex(p=>p.label.toLowerCase()===label.toLowerCase());
+  if (existing >= 0) {
+    // update payload only, node already placed
+    updateRecordList();
+    log(`payload updated: "${label}"`);
+    return true;
+  }
+
+  pts.push({
+    label, vec,
+    inVocab: !!VOCAB[label.toLowerCase()],
+    x: anchor.x+(Math.random()-0.5)*44,
+    y: anchor.y+(Math.random()-0.5)*44,
+    vx:(Math.random()-0.5)*0.5, vy:(Math.random()-0.5)*0.5,
+    prevSpd:0, state:'exp', frozenState:'exp',
+    stale:false, woken:true,
+    nearestIdx:-1, nearestSim:0,
+  });
+  neighbours.forEach(i => {
+    pts[i].stale=false; pts[i].woken=true;
+    pts[i].vx=(Math.random()-0.5)*0.4; pts[i].vy=(Math.random()-0.5)*0.4;
+    pts[i].state='exp'; pts[i].frozenState='exp';
+  });
+  updateNearest();
+  greenStableCount=0; lastGreenCount=-1;
+  setPhase('integrating');
+  if (!rafId) loop();
+
+  updateRecordList();
+  log(`inserted: "${label}" → woke ${neighbours.map(i=>pts[i].label).join(', ')}`);
+  if (keyOverride === undefined) {
+    document.getElementById('writeKey').value = '';
+    document.getElementById('writeVal').value = '';
+  }
+  return true;
+}
+
+function dbBatchInsert() {
+  const raw = document.getElementById('batchInput').value.trim();
+  if (!raw) { log('paste key :: value pairs first', true); return; }
+  const lines = raw.split('\n').map(l=>l.trim()).filter(Boolean);
+  let inserted = 0, skipped = 0;
+  for (const line of lines) {
+    const sep = line.indexOf(' :: ');
+    if (sep < 0) { skipped++; continue; }
+    const k = line.slice(0, sep).trim();
+    const v = line.slice(sep + 4).trim();
+    if (k) { dbInsert(k, v); inserted++; }
+    else skipped++;
+  }
+  document.getElementById('batchInput').value = '';
+  log(`batch: ${inserted} inserted, ${skipped} skipped`);
+}
+
+/* ── READ API ── */
+function dbQuery() {
+  if (systemPhase === 'waiting') { log('train the field first', true); return; }
+  const raw = document.getElementById('queryKey').value.trim();
+  if (!raw) { log('enter a query key', true); return; }
+
+  const queryLabel = raw.replace(/[,.]$/,'').toLowerCase();
+
+  // check if word exists in field — do not hash absent words
+  const fieldNode = pts.find(p => p.label.toLowerCase() === queryLabel);
+  if (!fieldNode) {
+    renderResults(queryLabel, []);
+    document.getElementById('resultsMeta').textContent = `"${queryLabel}" not in field — no results`;
+    log(`"${queryLabel}" not found in field`, true);
+    return;
+  }
+
+  const queryVec = fieldNode.vec;
+  const topN = parseInt(document.getElementById('queryN').value) || 5;
+  const threshold = parseFloat(document.getElementById('confThreshold').value) || 0;
+
+  // Rank all current nodes by similarity to query vector
+  const ranked = pts
+    .map((p, i) => ({ i, label: p.label, sim: cosineSim(queryVec, p.vec) }))
+    .filter(r => r.sim >= threshold)
+    .sort((a, b) => b.sim - a.sim)
+    .slice(0, topN);
+
+  if (ranked.length === 0) {
+    renderResults(queryLabel, []);
+    log(`query "${queryLabel}" — no results above threshold ${threshold.toFixed(2)}`);
+    return;
+  }
+
+  // Wake the top neighbours (visual only)
+  ranked.forEach(r => {
+    const p = pts[r.i];
+    p.stale = false; p.woken = true;
+    p.vx=(Math.random()-0.5)*0.3; p.vy=(Math.random()-0.5)*0.3;
+    p.state='exp'; p.frozenState='exp';
+  });
+  updateNearest();
+  greenStableCount = 0; lastGreenCount = -1;
+  setPhase('integrating');
+  if (!rafId) loop();
+
+  // Build result set
+  const results = ranked.map(r => ({
+    label: r.label,
+    sim: r.sim,
+    payload: payloadDB.get(r.label.toLowerCase()) || null,
+    bondType: r.sim > 0.85 ? 'deep' : r.sim > 0.65 ? 'loose' : 'proximity',
+  }));
+
+  renderResults(queryLabel, results);
+  log(`query "${queryLabel}" — ${results.length} result${results.length===1?'':'s'}`);
+  document.getElementById('queryKey').value = '';
+}
+
+function renderResults(queryLabel, results) {
+  document.getElementById('resultsQueryLabel').textContent = '«' + queryLabel + '»';
+  const body = document.getElementById('resultsBody');
+  const meta = document.getElementById('resultsMeta');
+
+  if (results.length === 0) {
+    body.innerHTML = '<div class="results-empty">no results above<br>confidence threshold</div>';
+    meta.textContent = `threshold: ${parseFloat(document.getElementById('confThreshold').value).toFixed(2)}`;
+    return;
+  }
+
+  body.innerHTML = '';
+  for (const r of results) {
+    const card = document.createElement('div');
+    card.className = `result-card ${r.bondType}`;
+
+    const simPct = (r.sim * 100).toFixed(0);
+    const bondLabel = r.bondType === 'deep' ? 'deep semantic bond'
+                    : r.bondType === 'loose' ? 'loose semantic bond'
+                    : 'proximity only';
+
+    card.innerHTML = `
+      <div class="result-key">
+        <span>${r.label}</span>
+        <span class="result-sim ${r.bondType}">${simPct}%</span>
+      </div>
+      <div class="result-bar-wrap"><div class="result-bar-fill" style="width:${simPct}%"></div></div>
+      <div class="result-bond">${bondLabel}</div>
+      ${r.payload
+        ? `<div class="result-payload">${escapeHtml(r.payload)}</div>`
+        : `<div class="result-no-payload">no payload</div>`
+      }
+    `;
+    body.appendChild(card);
+  }
+
+  const withPayload = results.filter(r=>r.payload).length;
+  const threshold = parseFloat(document.getElementById('confThreshold').value).toFixed(2);
+  meta.textContent = `${results.length} results · ${withPayload} with payload · min sim ${threshold}`;
+}
+
+function escapeHtml(str) {
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+/* ── TOOLTIP PAYLOAD ── */
+// Patch the hover handler to also show payload in tooltip
+function tooltipShowPayload(label) {
+  const payload = payloadDB.get(label.toLowerCase());
+  const divider = document.getElementById('tipPayloadDivider');
+  const lbl = document.getElementById('tipPayloadLabel');
+  const val = document.getElementById('tipPayload');
+  if (payload) {
+    divider.style.display = ''; lbl.style.display = ''; val.style.display = '';
+    val.textContent = payload.length > 120 ? payload.slice(0,120)+'…' : payload;
+  } else {
+    divider.style.display='none'; lbl.style.display='none'; val.style.display='none';
+  }
+}
+
+/* ── EXPORT / IMPORT ── */
+function exportDB() {
+  if (!pts.length) { log('nothing to export', true); return; }
+  const data = {
+    version: 1,
+    phase: systemPhase,
+    payloads: Object.fromEntries(payloadDB),
+    nodes: pts.map(p => ({
+      label: p.label,
+      vec: p.vec,
+      inVocab: p.inVocab,
+      x: p.x, y: p.y,
+      frozenState: p.frozenState,
+      stale: p.stale,
+      nearestIdx: p.nearestIdx,
+      nearestSim: p.nearestSim,
+    })),
+  };
+  const blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'nyarindo-db.json';
+  a.click();
+  log(`exported ${pts.length} nodes, ${payloadDB.size} payloads`);
+}
+
+/* ── VOCABULARY UPLOAD ── */
+function triggerVocabUpload() {
+  document.getElementById('vocabFile').click();
+}
+
+function loadVocabJSON(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      const data = JSON.parse(e.target.result);
+      if (!data.words || !Array.isArray(data.words)) throw new Error('expected {words:[...]}');
+      if (!data.words.length) throw new Error('empty words array');
+
+      const firstVec = data.words[0].vector;
+      if (!Array.isArray(firstVec)) throw new Error('each word needs a vector array');
+      const incomingDim = firstVec.length;
+
+      const mode = document.querySelector('input[name="vocabMode"]:checked').value;
+
+      // extend mode — check dimension compatibility
+      if (mode === 'extend' && pts.length > 0) {
+        const existingDim = pts[0].vec.length;
+        if (incomingDim !== existingDim) {
+          log(`dimension mismatch: field is ${existingDim}D, upload is ${incomingDim}D — use overwrite or match dimensions`, true);
+          event.target.value = '';
+          return;
+        }
+      }
+
+      if (mode === 'overwrite') {
+        if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
+        pts = [];
+        payloadDB.clear();
+        ticks = 0; greenStableCount = 0; lastGreenCount = -1;
+        currentTrainDim = 2;
+      }
+
+      const W = canvas.width, H = canvas.height;
+      let added = 0, skipped = 0;
+
+      for (const entry of data.words) {
+        if (!entry.label || !Array.isArray(entry.vector)) { skipped++; continue; }
+        const label = entry.label.trim();
+        if (!label) { skipped++; continue; }
+
+        // skip duplicates in extend mode
+        if (mode === 'extend' && pts.find(p => p.label.toLowerCase() === label.toLowerCase())) {
+          skipped++; continue;
+        }
+
+        if (entry.payload) payloadDB.set(label.toLowerCase(), entry.payload);
+
+        pts.push({
+          label,
+          vec: entry.vector,
+          inVocab: true,
+          x: WALL + Math.random() * (W - WALL*2),
+          y: WALL + Math.random() * (H - WALL*2),
+          vx: (Math.random()-0.5)*0.5,
+          vy: (Math.random()-0.5)*0.5,
+          prevSpd: 0,
+          state: 'exp', frozenState: 'exp',
+          stale: false, woken: false,
+          nearestIdx: -1, nearestSim: 0,
+        });
+        added++;
+      }
+
+      updateNearest();
+      updateRecordList();
+      setPhase('training');
+      log(`loaded ${added} nodes (${incomingDim}D vectors)${skipped ? `, ${skipped} skipped` : ''} — starting incremental training`);
+      updateDimDisplay(currentTrainDim, incomingDim);
+
+      // start incremental dimensional training
+      startIncrementalTraining(incomingDim);
+
+    } catch(err) {
+      log('vocab load failed: ' + err.message, true);
+    }
+    event.target.value = '';
+  };
+  reader.readAsText(file);
+}
+
+/* ── INCREMENTAL DIMENSIONAL TRAINING ── */
+let currentTrainDim = 2;
+let prevGreenCount  = 0;
+let dimStableTicks  = 0;
+let incrTraining    = false;
+let maxVocabDim     = 2;
+
+function updateDimDisplay(current, max) {
+  const el = document.getElementById('dimVal');
+  if (el) el.textContent = `${current}D / ${max}D`;
+}
+
+function startIncrementalTraining(maxDim) {
+  maxVocabDim     = maxDim;
+  currentTrainDim = 2;
+  prevGreenCount  = 0;
+  dimStableTicks  = 0;
+  incrTraining    = true;
+  greenStableCount = 0;
+  lastGreenCount   = -1;
+  stableRequired   = parseInt(document.getElementById('stableTicks').value) || 300;
+
+  // Project all vectors to starting 2D for physics
+  projectNodesToDim(currentTrainDim);
+  updateDimDisplay(currentTrainDim, maxVocabDim);
+  if (!rafId) loop();
+}
+
+function projectNodesToDim(dim) {
+  // Physics uses p.x/p.y for 2D spatial position
+  // Semantic vec stays full-dimensional for cosine similarity
+  // This function reseeds velocities when dimension steps up
+  pts.forEach(p => {
+    p.vx = (Math.random()-0.5)*0.3;
+    p.vy = (Math.random()-0.5)*0.3;
+    p.state = 'exp';
+    p.frozenState = 'exp';
+    p.stale = false;
+    p.woken = false;
+  });
+  greenStableCount = 0;
+  lastGreenCount   = -1;
+}
+
+function checkDimensionStep() {
+  if (!incrTraining) return;
+  // Called when field goes stale — check if we should step up
+  const gc = pts.filter(p => p.frozenState === 'eq').length;
+
+  if (currentTrainDim >= maxVocabDim) {
+    // reached full dimensionality — done
+    incrTraining = false;
+    updateDimDisplay(currentTrainDim, maxVocabDim);
+    log(`incremental training complete at ${currentTrainDim}D — ${gc}/${pts.length} green`);
+    return;
+  }
+
+  if (gc <= prevGreenCount && currentTrainDim > 2) {
+    // no improvement — stop here
+    incrTraining = false;
+    updateDimDisplay(currentTrainDim, maxVocabDim);
+    log(`no improvement at ${currentTrainDim+1}D — settled at ${currentTrainDim}D | ${gc}/${pts.length} green`);
+    return;
+  }
+
+  // improvement found or first step — extend dimension
+  prevGreenCount = gc;
+  currentTrainDim = Math.min(currentTrainDim + 1, maxVocabDim);
+  updateDimDisplay(currentTrainDim, maxVocabDim);
+  log(`dim ${currentTrainDim-1}D → ${currentTrainDim}D | green ${gc}/${pts.length} — continuing`);
+
+  // reseed velocities for new dimension negotiation
+  projectNodesToDim(currentTrainDim);
+  setPhase('training');
+  if (!rafId) loop();
+}
+
+function triggerImport() {
+  document.getElementById('importFile').click();
+}
+
+function importDB(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      const data = JSON.parse(e.target.result);
+      if (!data.nodes || !Array.isArray(data.nodes)) throw new Error('invalid format');
+      if (rafId) { cancelAnimationFrame(rafId); rafId=null; }
+      pts = data.nodes.map(n => ({
+        ...n,
+        vx:0, vy:0, prevSpd:0,
+        state: n.frozenState || 'eq',
+        woken: false,
+      }));
+      payloadDB.clear();
+      if (data.payloads) {
+        for (const [k,v] of Object.entries(data.payloads)) payloadDB.set(k,v);
+      }
+      updateNearest();
+      setPhase(data.phase || 'stale');
+      ticks = 0; greenStableCount = 0; lastGreenCount = -1;
+      updateRecordList();
+      draw();
+      log(`imported ${pts.length} nodes, ${payloadDB.size} payloads`);
+    } catch(err) {
+      log('import failed: ' + err.message, true);
+    }
+    event.target.value = '';
+  };
+  reader.readAsText(file);
+}
+
+/* ── TABS ── */
+function switchTab(name) {
+  document.querySelectorAll('.tab-btn').forEach((b,i) => {
+    const names = ['train','write','read','store'];
+    b.classList.toggle('active', names[i] === name);
+  });
+  document.querySelectorAll('.tab-panel').forEach(p => {
+    p.classList.toggle('active', p.id === 'tab-' + name);
+  });
+}
+
+const themeToggle = document.getElementById('themeToggle');
+const themeRoot = document.documentElement;
+let themeTransitionTimer;
+function applySemanticTheme(theme, animate=true) {
+  const light = theme === 'light';
+  if (animate && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    themeRoot.classList.add('theme-transition');
+    clearTimeout(themeTransitionTimer);
+    themeTransitionTimer = setTimeout(() => themeRoot.classList.remove('theme-transition'), 950);
+  }
+  themeRoot.dataset.theme = light ? 'light' : 'dark';
+  themeToggle.setAttribute('aria-pressed', String(light));
+  themeToggle.setAttribute('aria-label', `Switch to ${light ? 'dark' : 'light'} mode`);
+  document.getElementById('themeLabel').textContent = light ? 'LIGHT' : 'DARK';
+  themeToggle.querySelector('.theme-icon').textContent = light ? '☾' : '☼';
+  document.querySelector('meta[name="theme-color"]').content = light ? '#f2f0e9' : '#0c0d0e';
+  try { localStorage.setItem('nyarindo-theme', light ? 'light' : 'dark'); } catch {}
+  setPhase(systemPhase);
+  draw();
+}
+themeToggle.addEventListener('click', () => {
+  applySemanticTheme(themeRoot.dataset.theme === 'light' ? 'dark' : 'light');
+});
+applySemanticTheme(themeRoot.dataset.theme === 'light' ? 'light' : 'dark', false);
+
+/* ── INIT ── */
+setPhase('waiting');
+updateStatus(0,0,0,0,stableRequired);
+updateRecordList();
+draw();
+</script>
+</body>
+</html>

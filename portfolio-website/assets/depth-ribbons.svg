@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 900" role="img" aria-labelledby="title desc">
+  <title id="title">Luminous depth ribbons</title>
+  <desc id="desc">Translucent green, gold, blue, and rose ribbons curl through a dark field, suggesting depth and movement.</desc>
+  <defs>
+    <radialGradient id="halo" cx="50%" cy="48%" r="55%">
+      <stop offset="0" stop-color="#4aff9c" stop-opacity=".22"/>
+      <stop offset=".45" stop-color="#188f68" stop-opacity=".1"/>
+      <stop offset="1" stop-color="#07120d" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="ribbonA" x1="10%" y1="15%" x2="90%" y2="82%">
+      <stop offset="0" stop-color="#46f4a5"/>
+      <stop offset=".43" stop-color="#83c9ff"/>
+      <stop offset="1" stop-color="#f1b96d"/>
+    </linearGradient>
+    <linearGradient id="ribbonB" x1="15%" y1="90%" x2="85%" y2="8%">
+      <stop offset="0" stop-color="#a771f5"/>
+      <stop offset=".5" stop-color="#54d8cf"/>
+      <stop offset="1" stop-color="#f59182"/>
+    </linearGradient>
+    <linearGradient id="ribbonC" x1="0%" y1="50%" x2="100%" y2="50%">
+      <stop offset="0" stop-color="#f0c46d" stop-opacity=".15"/>
+      <stop offset=".48" stop-color="#fff4ca" stop-opacity=".9"/>
+      <stop offset="1" stop-color="#53e8a2" stop-opacity=".12"/>
+    </linearGradient>
+    <filter id="softGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="14"/>
+    </filter>
+    <filter id="wideGlow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="34"/>
+    </filter>
+  </defs>
+  <rect width="1400" height="900" fill="url(#halo)"/>
+  <g fill="none" stroke-linecap="round">
+    <path d="M-110 650C170 520 230 165 530 210c282 42 123 485 447 416 240-51 258-330 520-256"
+      stroke="#145b3d" stroke-width="96" opacity=".34" filter="url(#wideGlow)"/>
+    <path d="M-110 650C170 520 230 165 530 210c282 42 123 485 447 416 240-51 258-330 520-256"
+      stroke="url(#ribbonA)" stroke-width="22" opacity=".48"/>
+    <path d="M-70 205c204 22 285 352 528 306 263-50 276-369 507-298 178 54 223 289 498 338"
+      stroke="#16523e" stroke-width="80" opacity=".28" filter="url(#wideGlow)"/>
+    <path d="M-70 205c204 22 285 352 528 306 263-50 276-369 507-298 178 54 223 289 498 338"
+      stroke="url(#ribbonB)" stroke-width="18" opacity=".42"/>
+    <path d="M375 96c-148 84-118 207 10 245 123 37 225-74 150-173-72-96-243-57-267 84-27 164 207 230 341 127"
+      stroke="url(#ribbonC)" stroke-width="12" opacity=".7"/>
+    <path d="M1000 128c-98 41-83 147 18 165 104 19 145-122 51-166-110-52-228 79-164 184"
+      stroke="#78d8ff" stroke-width="7" opacity=".34" filter="url(#softGlow)"/>
+  </g>
+  <g fill="#dfffea">
+    <circle cx="532" cy="213" r="3"/>
+    <circle cx="977" cy="626" r="2.5"/>
+    <circle cx="380" cy="434" r="2"/>
+    <circle cx="1118" cy="303" r="2.5"/>
+  </g>
+</svg>
