@@ -20,11 +20,12 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script>try{const savedTheme=localStorage.getItem('nyarindo-theme');document.documentElement.dataset.theme=savedTheme==='light'?'light':'dark';const savedPalette=localStorage.getItem('nyarindo-palette');const palettes=['forest','ocean','amethyst','ember','rose','slate'];document.documentElement.dataset.palette=palettes.includes(savedPalette)?savedPalette:'forest';}catch{document.documentElement.dataset.theme='dark';document.documentElement.dataset.palette='forest';}</script>
-    <link rel="stylesheet" href="styles.css?v=mobile-visibility-1">
+    <link rel="stylesheet" href="styles.css?v=interaction-feedback-1">
     <link rel="stylesheet" href="brand-portrait.css?v=brand-portrait-3">
     <link rel="stylesheet" href="lens-atmosphere.css?v=lens-atmosphere-3">
     <link rel="stylesheet" href="palette-themes.css?v=palette-themes-3">
     <link rel="stylesheet" href="ucp-signoff.css?v=signoff-compact-3">
+    <link rel="stylesheet" href="tap-feedback.css?v=tap-feedback-1">
   </head>
   <body>
     <div class="theme-wash" aria-hidden="true"></div>
@@ -170,7 +171,7 @@
         </ol>
         <div class="book-spiral-core" aria-hidden="true"><span class="book-spiral-pulse"></span><span class="book-spiral-words">RETURN<br>NOTICE<br>LOOK AGAIN</span></div>
         </div>
-        <div class="book-actions"><p>Want to read the spiral?</p><div class="book-action-links"><a class="book-cta" href="https://substack.com/@newbonnyarindogadsonslimstingrs" target="_blank" rel="noopener noreferrer">Follow my writing on Substack ↗</a><button class="book-cta" type="button" disabled>Purchase the books</button></div><div class="support-invite"><picture><source srcset="assets/newbon-nyarindo-gadson-whimsy-portrait.avif?v=hd-2" type="image/avif"><img class="support-avatar" src="assets/newbon-nyarindo-gadson-whimsy-portrait.webp?v=hd-2" alt="Newbon Nyarindo Gadson smiling in green sunglasses" width="640" height="768" loading="eager" decoding="async"></picture><button class="support-cta" type="button" disabled title="The tip link is coming next">Buy me a coffee · take me out · bribe me ☕ 😂🤗☺️</button><a class="book-cta book-cta-outline" href="https://drive.google.com/open?id=1vVEtwMBR1gsnjCHoJC4WzAvs3np3PUFP" target="_blank" rel="noopener noreferrer">Download the collection ↗</a></div><small>The collection download is live. Purchase and tip routes are being connected next.</small></div>
+        <div class="book-actions"><p>Want to read the spiral?</p><div class="book-action-links"><a class="book-cta" href="https://substack.com/@newbonnyarindogadsonslimstingrs" target="_blank" rel="noopener noreferrer">Follow my writing on Substack ↗</a><button class="book-cta" type="button" disabled>Purchase the books</button></div><div class="support-invite"><picture><source srcset="assets/newbon-nyarindo-gadson-whimsy-portrait.avif?v=hd-2" type="image/avif"><img class="support-avatar" src="assets/newbon-nyarindo-gadson-whimsy-portrait.webp?v=hd-2" alt="Newbon Nyarindo Gadson smiling in green sunglasses" width="640" height="768" loading="eager" decoding="async"></picture><button class="support-cta" type="button" aria-haspopup="dialog" aria-controls="supportSetupDialog" title="The support account is being set up">Buy me a coffee · take me out · bribe me ☕ 😂🤗☺️</button><a class="book-cta book-cta-outline" href="https://drive.google.com/open?id=1vVEtwMBR1gsnjCHoJC4WzAvs3np3PUFP" target="_blank" rel="noopener noreferrer">Download the collection ↗</a></div><small>The collection download is live. Purchase and tip routes are being connected next.</small></div>
       </section>
 
       <section class="both-hats" id="science-and-religion" aria-labelledby="bothHatsTitle">
@@ -233,6 +234,14 @@
         </div>
       </details>
     </footer>
+    <dialog id="supportSetupDialog" class="support-setup-dialog" aria-labelledby="supportSetupTitle">
+      <form method="dialog" class="support-setup-card">
+        <p class="eyebrow">SUPPORT · COMING SOON</p>
+        <h2 id="supportSetupTitle">The account is being set up.</h2>
+        <p>The support link is not live yet. Please check back soon.</p>
+        <button class="support-setup-close" type="submit">Got it</button>
+      </form>
+    </dialog>
     <dialog id="bookSourcePreview" class="book-source-preview" aria-labelledby="bookSourceTitle">
       <form method="dialog" class="book-preview-close-form"><button id="bookPreviewClose" class="book-preview-close" type="submit" aria-label="Close book preview">×</button></form>
       <div class="book-preview-layout">
@@ -243,7 +252,7 @@
           <p id="bookPreviewDescription"></p>
           <p class="book-preview-note">Opened from a source citation in Return.</p>
             <a class="book-preview-return" href="../memory-app/index.html?v=hd-2">Return to the practice ↗</a>
-          <div class="preview-support-invite"><div class="support-invite"><picture><source srcset="assets/newbon-nyarindo-gadson-whimsy-portrait.avif?v=hd-2" type="image/avif"><img class="support-avatar" src="assets/newbon-nyarindo-gadson-whimsy-portrait.webp?v=hd-2" alt="Newbon Nyarindo Gadson smiling in green sunglasses" width="640" height="768" loading="eager" decoding="async"></picture><button class="support-cta" type="button" disabled title="The tip link is coming next">Buy me a coffee · take me out · bribe me ☕ 😂🤗☺️</button><a class="book-cta book-cta-outline" href="https://drive.google.com/open?id=1vVEtwMBR1gsnjCHoJC4WzAvs3np3PUFP" target="_blank" rel="noopener noreferrer">Download the collection ↗</a></div></div>
+          <div class="preview-support-invite"><div class="support-invite"><picture><source srcset="assets/newbon-nyarindo-gadson-whimsy-portrait.avif?v=hd-2" type="image/avif"><img class="support-avatar" src="assets/newbon-nyarindo-gadson-whimsy-portrait.webp?v=hd-2" alt="Newbon Nyarindo Gadson smiling in green sunglasses" width="640" height="768" loading="eager" decoding="async"></picture><button class="support-cta" type="button" aria-haspopup="dialog" aria-controls="supportSetupDialog" title="The support account is being set up">Buy me a coffee · take me out · bribe me ☕ 😂🤗☺️</button><a class="book-cta book-cta-outline" href="https://drive.google.com/open?id=1vVEtwMBR1gsnjCHoJC4WzAvs3np3PUFP" target="_blank" rel="noopener noreferrer">Download the collection ↗</a></div></div>
         </div>
       </div>
     </dialog>
@@ -268,6 +277,7 @@
         "knowsAbout": ["Consulting", "Full-stack software development", "Artificial intelligence", "Product design", "The Nyarindo Lens", "Playems"]
       }
     </script>
-    <script src="app.js?v=signoff-visibility-2"></script>
+    <script src="tap-feedback.js?v=tap-feedback-1"></script>
+    <script src="app.js?v=interaction-feedback-1"></script>
   </body>
 </html>

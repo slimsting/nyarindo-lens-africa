@@ -404,3 +404,22 @@ bookSourcePreview.addEventListener('click', event => {
 });
 window.addEventListener('hashchange', openBookSourceFromHash);
 requestAnimationFrame(openBookSourceFromHash);
+
+const supportSetupDialog = document.getElementById('supportSetupDialog');
+const supportButtons = [...document.querySelectorAll('.support-cta')];
+
+supportButtons.forEach(button => {
+  button.addEventListener('click', () => {
+    if (bookSourcePreview.open) bookSourcePreview.close();
+    if (!supportSetupDialog) return;
+    if (typeof supportSetupDialog.showModal !== 'function') {
+      window.alert('The support account is being set up. Please check back soon.');
+      return;
+    }
+    if (!supportSetupDialog.open) supportSetupDialog.showModal();
+  });
+});
+
+supportSetupDialog?.addEventListener('click', event => {
+  if (event.target === supportSetupDialog) supportSetupDialog.close();
+});

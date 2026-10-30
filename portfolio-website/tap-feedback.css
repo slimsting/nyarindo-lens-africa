@@ -1,0 +1,40 @@
+@media (hover: none), (pointer: coarse), (any-pointer: coarse) {
+  a,
+  button,
+  summary,
+  [role="button"],
+  input[type="button"],
+  input[type="submit"] {
+    --tap-feedback-color: var(--accent, #7bd9a6);
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+
+  .tap-feedback-active {
+    outline: 2px solid var(--tap-feedback-color) !important;
+    outline-offset: 3px !important;
+    filter: brightness(1.18) saturate(1.12);
+  }
+
+  .tap-feedback-clicked {
+    animation: tap-feedback-confirm 260ms ease-out;
+  }
+}
+
+@keyframes tap-feedback-confirm {
+  0% {
+    outline-color: var(--tap-feedback-color, #7bd9a6);
+    outline-offset: 2px;
+  }
+
+  100% {
+    outline-color: transparent;
+    outline-offset: 8px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tap-feedback-clicked {
+    animation: none;
+  }
+}
