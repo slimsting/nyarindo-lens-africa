@@ -119,9 +119,13 @@ if (!reducedMotion && 'IntersectionObserver' in window) {
 
   const motionObserver = new IntersectionObserver(entries => {
     entries.forEach(entry => {
-      if (!entry.isIntersecting) return;
+      const contextualVector = entry.target.matches('.project-visual, .approach-art');
+      if (!entry.isIntersecting) {
+        if (contextualVector) entry.target.removeAttribute('data-motion-inview');
+        return;
+      }
       entry.target.dataset.motionInview = '';
-      motionObserver.unobserve(entry.target);
+      if (!contextualVector) motionObserver.unobserve(entry.target);
     });
   }, { threshold: .18, rootMargin: '0px 0px -10%' });
   revealTargets.forEach(element => motionObserver.observe(element));

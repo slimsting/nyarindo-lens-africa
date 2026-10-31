@@ -33,6 +33,7 @@
     <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script>try{const savedTheme=localStorage.getItem('nyarindo-theme');document.documentElement.dataset.theme=savedTheme==='light'?'light':'dark';const savedPalette=localStorage.getItem('nyarindo-palette');const palettes=['forest','ocean','amethyst','ember','rose','slate'];document.documentElement.dataset.palette=palettes.includes(savedPalette)?savedPalette:'forest';}catch{document.documentElement.dataset.theme='dark';document.documentElement.dataset.palette='forest';}</script>
     <link rel="stylesheet" href="styles.css?v=page-buttons-1">
+    <link rel="stylesheet" href="context-motion.css?v=context-motion-2">
     <link rel="stylesheet" href="brand-portrait.css?v=brand-portrait-3">
     <link rel="stylesheet" href="lens-atmosphere.css?v=lens-atmosphere-3">
     <link rel="stylesheet" href="palette-themes.css?v=palette-themes-3">
@@ -85,7 +86,41 @@
               <p>What if finding music felt like following a friend’s trail? Drift explores a quieter kind of discovery: no ads, no paid placement, just songs moving through people and possibility.</p>
               <a class="project-link" href="../drift/index.html?v=hd-2">Step into Drift <span>↗</span></a>
             </div>
-            <div class="project-visual drift-visual" aria-hidden="true"><div class="vinyl"><div></div></div><span class="visual-note">A SOFTER CURRENT</span></div>
+            <div class="project-visual drift-visual context-vector-scene" aria-hidden="true">
+              <svg class="context-vector" viewBox="0 0 420 190" preserveAspectRatio="xMidYMid meet" role="presentation">
+                <defs>
+                  <linearGradient id="drift-current-green" x1="0" y1="0" x2="1" y2="0">
+                    <stop offset="0" stop-color="#8eb5a2" stop-opacity=".08"/>
+                    <stop offset=".48" stop-color="#8eb5a2" stop-opacity=".8"/>
+                    <stop offset="1" stop-color="#d2a36d" stop-opacity=".08"/>
+                  </linearGradient>
+                  <linearGradient id="drift-current-gold" x1="0" y1="0" x2="1" y2="0">
+                    <stop offset="0" stop-color="#d2a36d" stop-opacity=".06"/>
+                    <stop offset=".5" stop-color="#d2a36d" stop-opacity=".7"/>
+                    <stop offset="1" stop-color="#8eb5a2" stop-opacity=".06"/>
+                  </linearGradient>
+                </defs>
+                <path class="drift-bed" d="M-18 150 C72 116 112 166 204 137 S352 111 438 146"/>
+                <path class="drift-bed drift-bed-two" d="M-18 54 C84 86 116 31 221 58 S354 84 438 43"/>
+                <path class="drift-current drift-current-one" d="M-30 118 C75 62 128 151 227 101 S349 67 450 112"/>
+                <path class="drift-current drift-current-two" d="M-30 84 C66 130 144 51 242 91 S352 136 450 75"/>
+                <path class="drift-current drift-current-three" d="M-30 160 C80 124 129 178 229 143 S350 125 450 157"/>
+                <g class="drift-buoys">
+                  <circle cx="83" cy="105" r="4"/>
+                  <circle cx="166" cy="119" r="3"/>
+                  <circle cx="266" cy="91" r="4"/>
+                  <circle cx="337" cy="117" r="3"/>
+                </g>
+                <g class="drift-listener">
+                  <circle class="drift-listener-halo" cx="211" cy="96" r="34"/>
+                  <circle class="drift-listener-ring" cx="211" cy="96" r="24"/>
+                  <circle class="drift-listener-core" cx="211" cy="96" r="8"/>
+                  <path d="M211 78v36M193 96h36"/>
+                </g>
+                <text class="vector-caption" x="20" y="177">LISTEN · RELEASE · FIND THE NEXT CURRENT</text>
+              </svg>
+              <span class="visual-note">A SOFTER CURRENT</span>
+            </div>
             <details class="project-about" open><summary>Project explanation · design and Lens</summary><div class="about-grid"><div><h4>Design process</h4><p>Begin with the listener’s intended direction: stay, explore, transform, contrast, or surprise. Make each recommendation explain its path, so discovery feels like a human trail rather than a black box.</p></div><div><h4>Through the Lens</h4><p>A listening mood is a container; the pulse can expand into unfamiliar music or contract toward the familiar. The prototype makes that choice visible. Its sample tracks and tones are placeholders, not a connected music catalogue.</p></div></div></details>
           </article>
 
@@ -96,7 +131,33 @@
               <p>A gentle space to notice what is happening, keep the context around it, and return with a little more understanding. The teachings become a practice, not a lecture.</p>
               <a class="project-link" href="../memory-app/index.html?v=hd-2">Try the early practice <span>↗</span></a>
             </div>
-            <div class="project-visual memory-visual" aria-hidden="true"><div class="memory-orbit orbit-one"></div><div class="memory-orbit orbit-two"></div><div class="memory-dot"></div><span class="memory-word">notice<br>· return ·</span></div>
+            <div class="project-visual memory-visual context-vector-scene" aria-hidden="true">
+              <svg class="context-vector memory-vector" viewBox="0 0 420 190" preserveAspectRatio="xMidYMid meet" role="presentation">
+                <g class="memory-connections">
+                  <path class="memory-thread thread-one" d="M84 76 L156 47 L211 95"/>
+                  <path class="memory-thread thread-two" d="M156 47 L267 58 L328 84"/>
+                  <path class="memory-thread thread-three" d="M211 95 L267 58"/>
+                  <path class="memory-thread thread-four" d="M211 95 L232 143 L328 84"/>
+                  <path class="memory-thread thread-five" d="M84 76 L120 135 L232 143"/>
+                  <path class="memory-thread thread-six" d="M120 135 L180 108 L232 143"/>
+                </g>
+                <g class="memory-nodes">
+                  <g class="memory-node node-one" style="--dx:5px;--dy:-7px;--dur:6.4s;--delay:-1.2s"><circle r="7"/><circle class="memory-node-core" r="2.5"/></g>
+                  <g class="memory-node node-two" style="--dx:-8px;--dy:5px;--dur:7.2s;--delay:-3.1s"><circle r="5"/><circle class="memory-node-core" r="2"/></g>
+                  <g class="memory-node node-three" style="--dx:7px;--dy:8px;--dur:5.8s;--delay:-2.4s"><circle r="7"/><circle class="memory-node-core" r="2.5"/></g>
+                  <g class="memory-node node-four" style="--dx:-6px;--dy:-6px;--dur:8.1s;--delay:-4.3s"><circle r="5"/><circle class="memory-node-core" r="2"/></g>
+                  <g class="memory-node node-five" style="--dx:8px;--dy:-4px;--dur:6.8s;--delay:-.7s"><circle r="6"/><circle class="memory-node-core" r="2"/></g>
+                  <g class="memory-node node-six" style="--dx:-5px;--dy:7px;--dur:7.6s;--delay:-5.4s"><circle r="5"/><circle class="memory-node-core" r="2"/></g>
+                </g>
+                <g class="memory-return">
+                  <circle cx="211" cy="95" r="37"/>
+                  <circle cx="211" cy="95" r="28"/>
+                  <path d="M211 59a36 36 0 0 1 35 28"/>
+                </g>
+                <text class="vector-caption" x="20" y="177">A MOMENT · A CONTEXT · A RETURN</text>
+              </svg>
+              <span class="memory-word">notice<br>· return ·</span>
+            </div>
             <details class="project-about" open><summary>Project explanation · design and Lens</summary><div class="about-grid"><div><h4>Design process</h4><p>Begin with attention, then separate what was observed from what it might mean. Keep the surrounding context beside the memory, and leave room for one small application. Returning matters more than building a streak.</p></div><div><h4>Through the Lens</h4><p>The person is not reduced to a label. A moment is held with its context, and its meaning remains open to revision. The early practice stays on this device and offers reflection prompts; it does not diagnose or prescribe.</p></div></div></details>
           </article>
 
@@ -107,14 +168,67 @@
               <p>Can information find its own shape? This browser experiment explores how simple attraction and repulsion rules can make relationships visible across a field of ideas.</p>
               <a class="project-link" href="/semantic-field-extension/index.html?v=mobile-visibility-1">Explore the field <span>↗</span></a>
             </div>
-            <div class="project-visual field-visual" aria-hidden="true"><span>dot</span><span>memory</span><span>story</span><span>attention</span><span>relation</span><span>signal</span></div>
+            <div class="project-visual field-visual context-vector-scene" aria-hidden="true">
+              <svg class="context-vector semantic-vector" viewBox="0 0 420 190" preserveAspectRatio="xMidYMid meet" role="presentation">
+                <g class="semantic-relations">
+                  <path d="M43 54 Q128 5 210 82"/>
+                  <path d="M210 82 Q250 10 350 47"/>
+                  <path d="M210 82 Q148 120 67 139"/>
+                  <path d="M210 82 Q272 129 351 127"/>
+                  <path d="M104 154 Q210 138 313 153"/>
+                </g>
+                <g class="semantic-chip" transform="translate(20 38)"><g class="chip-inner" style="--dx:9px;--dy:-5px;--dur:5.8s;--delay:-1s"><rect width="70" height="30" rx="15"/><text x="35" y="20">dot</text></g></g>
+                <g class="semantic-chip chip-gold" transform="translate(145 25)"><g class="chip-inner" style="--dx:-10px;--dy:7px;--dur:6.7s;--delay:-4s"><rect width="94" height="30" rx="15"/><text x="47" y="20">memory</text></g></g>
+                <g class="semantic-chip" transform="translate(305 31)"><g class="chip-inner" style="--dx:6px;--dy:10px;--dur:7.1s;--delay:-2.5s"><rect width="82" height="30" rx="15"/><text x="41" y="20">story</text></g></g>
+                <g class="semantic-chip chip-gold" transform="translate(292 111)"><g class="chip-inner" style="--dx:-7px;--dy:-8px;--dur:6.2s;--delay:-3.6s"><rect width="108" height="30" rx="15"/><text x="54" y="20">attention</text></g></g>
+                <g class="semantic-chip" transform="translate(25 122)"><g class="chip-inner" style="--dx:11px;--dy:4px;--dur:7.8s;--delay:-1.8s"><rect width="88" height="30" rx="15"/><text x="44" y="20">relation</text></g></g>
+                <g class="semantic-chip chip-gold" transform="translate(168 142)"><g class="chip-inner" style="--dx:-5px;--dy:-9px;--dur:5.5s;--delay:-4.7s"><rect width="78" height="30" rx="15"/><text x="39" y="20">signal</text></g></g>
+                <g class="semantic-core"><circle cx="210" cy="83" r="8"/><circle cx="210" cy="83" r="18"/></g>
+              </svg>
+            </div>
             <details class="project-about" open><summary>Project explanation · design and Lens</summary><div class="about-grid"><div><h4>Design process</h4><p>The experiment grows from Book Seven’s vacuum simulation: particles move under simple attraction and repulsion, so clusters can emerge without being assigned. The semantic prototype gives information nodes vectors, then lets the field negotiate their positions.</p></div><div><h4>Through the Lens</h4><p>Structure is explored as something that can emerge through relationship. The later Semantic Field OS specification extends this idea into a retrieval architecture; this browser experiment demonstrates only an earlier, smaller part of that direction.</p></div></div></details>
           </article>
         </div>
       </section>
 
       <section class="approach" id="approach">
-        <div class="approach-art"><div class="ring ring-a"></div><div class="ring ring-b"></div><div class="ring ring-c"></div><div class="approach-core">attention<br><span>comes first</span></div><span class="orbit-label label-a">THE DOT</span><span class="orbit-label label-b">THE PULSE</span><span class="orbit-label label-c">THE CONTAINER</span></div>
+        <div class="approach-art context-vector-scene" aria-hidden="true">
+          <svg class="approach-vector" viewBox="0 0 480 440" preserveAspectRatio="xMidYMid meet" role="presentation">
+            <defs>
+              <radialGradient id="approach-core-glow">
+                <stop offset="0" stop-color="#d2a36d" stop-opacity=".78"/>
+                <stop offset=".28" stop-color="#d2a36d" stop-opacity=".22"/>
+                <stop offset="1" stop-color="#8eb5a2" stop-opacity="0"/>
+              </radialGradient>
+            </defs>
+            <circle class="approach-boundary" cx="240" cy="220" r="206"/>
+            <g class="approach-orbit orbit-one">
+              <ellipse cx="240" cy="220" rx="202" ry="69" transform="rotate(-18 240 220)"/>
+              <circle class="electron electron-a" cx="438" cy="151" r="5"/>
+              <circle class="electron electron-b" cx="42" cy="289" r="3.5"/>
+            </g>
+            <g class="approach-orbit orbit-two">
+              <ellipse cx="240" cy="220" rx="151" ry="151" transform="rotate(31 240 220)"/>
+              <circle class="electron electron-c" cx="369" cy="293" r="4.5"/>
+              <circle class="electron electron-d" cx="111" cy="147" r="3"/>
+            </g>
+            <g class="approach-orbit orbit-three">
+              <ellipse cx="240" cy="220" rx="108" ry="45" transform="rotate(64 240 220)"/>
+              <circle class="electron electron-e" cx="312" cy="323" r="4"/>
+            </g>
+            <circle class="approach-glow" cx="240" cy="220" r="113" fill="url(#approach-core-glow)"/>
+            <g class="approach-pulse">
+              <circle class="pulse-ring pulse-ring-out" cx="240" cy="220" r="72"/>
+              <circle class="pulse-ring pulse-ring-in" cx="240" cy="220" r="50"/>
+              <circle class="pulse-core" cx="240" cy="220" r="12"/>
+            </g>
+            <text class="approach-word" x="240" y="214">ATTENTION</text>
+            <text class="approach-subword" x="240" y="236">comes first</text>
+            <text class="approach-tag tag-dot" x="92" y="45">THE DOT</text>
+            <text class="approach-tag tag-pulse" x="361" y="192">THE PULSE</text>
+            <text class="approach-tag tag-container" x="82" y="392">THE CONTAINER</text>
+          </svg>
+        </div>
         <div class="approach-copy">
           <p class="eyebrow">THE WAY I WORK</p>
           <h2>Start with what<br>is <em>actually here.</em></h2>
@@ -294,7 +408,7 @@
       }
     </script>
     <script src="tap-feedback.js?v=tap-feedback-1"></script>
-    <script src="app.js?v=interaction-feedback-1"></script>
+    <script src="app.js?v=context-vectors-1"></script>
       <nav class="site-map" aria-label="Nyarindo Lens Africa site map">
       <div class="site-map-intro">
         <p class="site-map-eyebrow">THE WHOLE NYARINDO LENS</p>
