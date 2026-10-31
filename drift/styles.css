@@ -1,6 +1,9 @@
 :root { --ink:#f7f7f1; --night:#090a08; --muted:#9b9d93; --line:#262820; --red:#eb4b3c; --earth:#8d623c; --green:#62b36e; --yellow:#f1d04e; --track-glow:#245c49; }
-body.light { --ink:#161914; --night:#f4f3eb; --muted:#5b6258; --line:#d5d6ca; --track-glow:#b8dbbc; }
+body.light,
+html[data-theme="light"] body { --ink:#161914; --night:#f4f3eb; --muted:#5b6258; --line:#d5d6ca; --track-glow:#b8dbbc; }
 body.light .mode.selected { color:#f7f7f1; } body.light .mode.selected small { color:#d5d7ce; }
+html[data-theme="light"] .mode.selected { color:#f7f7f1; }
+html[data-theme="light"] .mode.selected small { color:#d5d7ce; }
 * { box-sizing:border-box; }
 body { margin:0; min-height:100vh; overflow-x:hidden; background:var(--night); color:var(--ink); font-family:Arial, Helvetica, sans-serif; }
 button, input { font:inherit; } button { cursor:pointer; } .app-shell { width:min(100%,720px); margin:auto; padding:22px 20px 42px; overflow:hidden; }

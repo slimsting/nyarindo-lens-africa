@@ -1,6 +1,12 @@
 User-agent: *
 Allow: /
 
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
 User-agent: GPTBot
 Allow: /
 
@@ -24,3 +30,8 @@ Allow: /
 
 User-agent: Applebot-Extended
 Allow: /
+
+User-agent: CCBot
+Allow: /
+
+Sitemap: https://nyarindo-lens-africa.netlify.app/sitemap.xml

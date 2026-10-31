@@ -1,0 +1,21 @@
+{
+  "name": "Nyarindo Lens Africa",
+  "short_name": "Nyarindo Lens",
+  "description": "The portfolio, theories, books, and browser projects of Newbon Nyarindo Gadson.",
+  "start_url": "/portfolio-website/",
+  "display": "standalone",
+  "background_color": "#10110f",
+  "theme_color": "#10110f",
+  "icons": [
+    {
+      "src": "/portfolio-website/assets/favicon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/portfolio-website/assets/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ]
+}

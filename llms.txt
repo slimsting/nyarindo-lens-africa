@@ -1,0 +1,26 @@
+# Nyarindo Lens Africa
+
+> Nyarindo Lens Africa is the portfolio and linked browser projects of Newbon Nyarindo Gadson: writer, consultant, designer, builder, and full-stack developer. The central creative framework is The Nyarindo Lens, a way of noticing pulse, container, relationship, attention, and return.
+
+## Primary pages
+
+- [Portfolio home](https://nyarindo-lens-africa.netlify.app/portfolio-website/index.html): Author profile, selected work, books, and the full theory sequence.
+- [The Lens of Everything](https://nyarindo-lens-africa.netlify.app/portfolio-website/lens-of-everything.html): A working description of reality as process and regulation.
+- [A Legion Wearing One Face](https://nyarindo-lens-africa.netlify.app/portfolio-website/a-legion-wearing-one-face.html): An illustrated theory of personhood, archetypes, meetings, and myth.
+- [The Threshold Rule](https://nyarindo-lens-africa.netlify.app/portfolio-website/the-threshold-rule.html): A lens for communication, dissent, repair, and fidelity.
+- [Peace Pon Eye and Eye](https://nyarindo-lens-africa.netlify.app/portfolio-website/peace-pon-eye-and-eye.html): A prayer-lens of peace, attention, contradiction, and connection.
+- [When Science and Faith Share a Bench](https://nyarindo-lens-africa.netlify.app/portfolio-website/science-and-religion.html): A conversation about evidence, faith, curiosity, and attention.
+- [The Aperture](https://nyarindo-lens-africa.netlify.app/portfolio-website/the-aperture.html): The final theory, presented as a four-act play and key artwork.
+
+## Browser projects
+
+- [Drift](https://nyarindo-lens-africa.netlify.app/drift/): A music discovery prototype based on listening and shared taste.
+- [Drift artist workspace](https://nyarindo-lens-africa.netlify.app/drift/artist.html): A preview of the artist upload and support experience.
+- [Return](https://nyarindo-lens-africa.netlify.app/memory-app/): A private, device-local journaling and returning practice.
+- [Semantic Field](https://nyarindo-lens-africa.netlify.app/semantic-field-extension/): A browser-based semantic mapping prototype.
+
+## Usage notes
+
+- The theory pages are presented as authored frameworks, stories, and observations rather than settled scientific claims.
+- Page content and project descriptions are suitable for indexing and retrieval.
+- Private journaling entries are stored only in the visitor's browser and are not available to crawlers.

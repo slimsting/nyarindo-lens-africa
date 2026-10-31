@@ -1,0 +1,597 @@
+/* Shared light/dark treatments for the theory pages. */
+html[data-page] body {
+  transition: background-color 0.45s ease, color 0.45s ease;
+}
+
+/* A Legion Wearing One Face */
+html[data-theme="dark"][data-page="legion"] {
+  --paper: #0d1410;
+  --paper2: #17221b;
+  --ink: #edf0e7;
+  --muted: #acb8ad;
+  --soft: #89978d;
+  --gold: #d2a36d;
+  --gold-light: #e2b77f;
+  --green: #85d6a3;
+  --line: rgba(230, 238, 226, 0.16);
+}
+
+html[data-theme="dark"][data-page="legion"] body,
+html[data-theme="dark"][data-page="legion"] .chapter-three {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+html[data-theme="dark"][data-page="legion"] .hero {
+  background:
+    radial-gradient(circle at 80% 30%, rgba(210, 163, 109, 0.15), transparent 25%),
+    radial-gradient(circle at 18% 80%, rgba(84, 139, 103, 0.18), transparent 30%),
+    linear-gradient(150deg, #0b120e, #17221b);
+}
+
+html[data-theme="dark"][data-page="legion"] :is(
+  .hero-deck,
+  .hero blockquote p,
+  .use-note p,
+  .chapter-intro,
+  .closing > p:not(.eyebrow)
+) {
+  color: #bdc8bd;
+}
+
+html[data-theme="dark"][data-page="legion"] .chapter-one {
+  background: #111a15;
+}
+
+html[data-theme="dark"][data-page="legion"] :is(
+  .use-note,
+  .reading-guide,
+  .character-entry,
+  .message-entry,
+  .wonder-callout
+) {
+  background: rgba(255, 255, 255, 0.045);
+  border-color: rgba(230, 238, 226, 0.16);
+}
+
+html[data-theme="dark"][data-page="legion"] :is(
+  .guide-content,
+  .wonder-callout > p:last-of-type
+) {
+  color: #b9c5ba;
+}
+
+html[data-theme="dark"][data-page="legion"] :is(
+  .character-entry h5,
+  .message-entry h5
+) {
+  color: #eef1e8;
+}
+
+html[data-theme="dark"][data-page="legion"] .closing {
+  background: #e8ecdf;
+  color: #24342b;
+}
+
+html[data-theme="dark"][data-page="legion"] .chapter-two,
+html[data-theme="dark"][data-page="legion"] .messages {
+  background: #132018;
+}
+
+/* The Lens of Everything */
+html[data-theme="light"][data-page="lens"] {
+  --night: #eef0e7;
+  --ink: #24352b;
+  --muted: #627064;
+  --gold: #9a6636;
+  --line: rgba(39, 57, 43, 0.18);
+}
+
+html[data-theme="light"][data-page="lens"] body {
+  background: var(--night);
+  color: var(--ink);
+}
+
+html[data-theme="light"][data-page="lens"] .theory-intro {
+  background: #f8f5ec;
+}
+
+html[data-theme="light"][data-page="lens"] .quote-section {
+  background:
+    radial-gradient(circle at 85% 6%, rgba(137, 94, 189, 0.12), transparent 26%),
+    radial-gradient(circle at 12% 70%, rgba(45, 151, 125, 0.14), transparent 28%),
+    #e4e9df;
+  color: #24352b;
+}
+
+html[data-theme="light"][data-page="lens"] .quote-note {
+  color: #5f6c62;
+}
+
+html[data-theme="light"][data-page="lens"] .closing {
+  background: #f4f1e8;
+  color: #24352b;
+}
+
+html[data-theme="light"][data-page="lens"] .closing h2 em {
+  color: #386e53;
+}
+
+html[data-theme="light"][data-page="lens"] .secondary-link {
+  border-color: rgba(36, 53, 43, 0.3);
+  color: #24352b;
+}
+
+/* The Threshold Rule */
+html[data-theme="dark"][data-page="threshold"] {
+  --paper: #0d1510;
+  --paper2: #17221b;
+  --ink: #edf0e7;
+  --muted: #aab7ad;
+  --line: rgba(230, 238, 226, 0.16);
+  --green: #85d6a3;
+  --green-light: #68b181;
+  --gold: #d2a36d;
+  --gold-light: #d2a36d;
+}
+
+html[data-theme="dark"][data-page="threshold"] body,
+html[data-theme="dark"][data-page="threshold"] .practice-section {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+html[data-theme="dark"][data-page="threshold"] .hero {
+  background:
+    radial-gradient(circle at 84% 30%, rgba(105, 166, 122, 0.16), transparent 31%),
+    radial-gradient(circle at 16% 75%, rgba(210, 163, 109, 0.13), transparent 30%),
+    linear-gradient(145deg, #0d1510, #17221b);
+}
+
+html[data-theme="dark"][data-page="threshold"] :is(
+  .hero-deck,
+  .fidelity-copy > p:last-child,
+  .practice-steps p
+) {
+  color: #b9c5ba;
+}
+
+html[data-theme="dark"][data-page="threshold"] :is(
+  .theory-section,
+  .fidelity-section
+) {
+  background: #111b15;
+}
+
+html[data-theme="dark"][data-page="threshold"] :is(
+  .threshold-core,
+  .threshold-node,
+  .verbatim-theory,
+  .fidelity-cards article,
+  .practice-steps article
+) {
+  background: rgba(255, 255, 255, 0.045);
+  border-color: rgba(230, 238, 226, 0.16);
+  color: #edf0e7;
+}
+
+html[data-theme="dark"][data-page="threshold"] :is(
+  .verbatim-theory p,
+  .fidelity-cards p
+) {
+  color: #d6ded5;
+}
+
+/* Peace Pon Eye and Eye */
+html[data-theme="dark"][data-page="peace"] {
+  --paper: #0d1510;
+  --paper2: #18231b;
+  --ink: #edf0e7;
+  --muted: #acb8ad;
+  --line: rgba(230, 238, 226, 0.16);
+  --green: #85d6a3;
+  --gold: #d2a36d;
+}
+
+html[data-theme="dark"][data-page="peace"] body {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+html[data-theme="dark"][data-page="peace"] .hero {
+  background:
+    radial-gradient(circle at 78% 42%, rgba(82, 153, 111, 0.18), transparent 28%),
+    radial-gradient(circle at 16% 77%, rgba(210, 163, 109, 0.12), transparent 28%),
+    linear-gradient(145deg, #0d1510, #18231b);
+}
+
+html[data-theme="dark"][data-page="peace"] :is(
+  .hero-deck,
+  .section-heading > p:last-child,
+  .agreement-copy p,
+  .agreement-copy p:last-child,
+  .movement-grid p
+) {
+  color: #b9c5ba;
+}
+
+html[data-theme="dark"][data-page="peace"] :is(
+  .movements,
+  .agreement
+) {
+  background: #111b15;
+}
+
+html[data-theme="dark"][data-page="peace"] .movement-grid article {
+  background: rgba(255, 255, 255, 0.045);
+  border-color: rgba(230, 238, 226, 0.16);
+}
+
+html[data-theme="dark"][data-page="peace"] .eye {
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.12),
+    rgba(90, 143, 102, 0.14) 58%,
+    rgba(255, 255, 255, 0.02)
+  );
+}
+
+/* When Science and Faith Share a Bench */
+html[data-theme="dark"][data-page="both-hats"] {
+  --paper: #0d1510;
+  --paper-deep: #17231b;
+  --ink: #edf0e7;
+  --muted: #aab6ac;
+  --line: rgba(230, 238, 226, 0.16);
+  --gold: #d2a36d;
+  --gold-light: #d2a36d;
+  --green: #85d6a3;
+}
+
+html[data-theme="dark"][data-page="both-hats"] body {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+html[data-theme="dark"][data-page="both-hats"] .hero {
+  background:
+    radial-gradient(circle at 83% 32%, rgba(210, 163, 109, 0.14), transparent 24%),
+    linear-gradient(145deg, #0d1510, #17231b);
+}
+
+html[data-theme="dark"][data-page="both-hats"] :is(
+  .intro,
+  .section-copy > p:last-child,
+  .attention-copy > p:last-of-type,
+  .agreement-section p
+) {
+  color: #b9c5ba;
+}
+
+html[data-theme="dark"][data-page="both-hats"] :is(
+  .bench-section,
+  .attention-section,
+  .agreement-section
+) {
+  background: #111b15;
+}
+
+html[data-theme="dark"][data-page="both-hats"] :is(
+  .hat-label,
+  .attention-seal
+) {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(230, 238, 226, 0.2);
+  color: #edf0e7;
+}
+
+html[data-theme="dark"][data-page="both-hats"] .attention-copy h2 em {
+  color: #85d6a3;
+}
+
+/* The Aperture */
+html[data-theme="light"][data-page="aperture"] {
+  --night: #f2efe5;
+  --night2: #e5e9df;
+  --ink: #203128;
+  --muted: #617066;
+  --line: rgba(36, 54, 43, 0.17);
+  --green: #32714f;
+  --gold: #9a6435;
+}
+
+html[data-theme="light"][data-page="aperture"] body {
+  background: var(--night);
+  color: var(--ink);
+}
+
+html[data-theme="light"][data-page="aperture"] .hero {
+  background:
+    radial-gradient(circle at 74% 48%, rgba(70, 142, 98, 0.15), transparent 30%),
+    radial-gradient(circle at 15% 20%, rgba(98, 72, 122, 0.09), transparent 30%),
+    #f2efe5;
+}
+
+html[data-theme="light"][data-page="aperture"] .hero-tagline,
+html[data-theme="light"][data-page="aperture"] .stage-direction {
+  color: #5e6e63;
+}
+
+html[data-theme="light"][data-page="aperture"] .cast {
+  background: #e6ebe0;
+  border-color: var(--line);
+}
+
+html[data-theme="light"][data-page="aperture"] .cast article {
+  background: rgba(255, 255, 255, 0.52);
+  border-color: var(--line);
+}
+
+html[data-theme="light"][data-page="aperture"] .cast p,
+html[data-theme="light"][data-page="aperture"] .dialogue .delivery {
+  color: #617066;
+}
+
+html[data-theme="light"][data-page="aperture"] .dialogue p {
+  color: #304239;
+}
+
+html[data-theme="light"][data-page="aperture"] .closing {
+  background:
+    radial-gradient(circle at 50% 40%, rgba(62, 149, 91, 0.12), transparent 32%),
+    #e9ede4;
+  color: #203128;
+}
+
+html[data-theme="light"][data-page="aperture"] .closing > p:not(.eyebrow) {
+  color: #58685e;
+}
+
+html[data-theme="light"][data-page="aperture"] .secondary-link {
+  border-color: rgba(32, 49, 40, 0.28);
+}
+
+/* Aperture hero art and shared zoom viewer */
+[data-page="aperture"] .hero {
+  grid-template-columns: minmax(0, 0.92fr) minmax(380px, 1.08fr);
+}
+
+[data-page="aperture"] .hero h1 {
+  font-size: clamp(64px, 8.2vw, 132px);
+  line-height: 0.8;
+  letter-spacing: -0.07em;
+}
+
+[data-page="aperture"] .aperture-artwork {
+  width: 100%;
+  max-width: 760px;
+  margin: 0;
+  justify-self: center;
+  align-self: center;
+}
+
+[data-page="aperture"] .aperture-artwork .artwork-trigger {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  cursor: zoom-in;
+}
+
+[data-page="aperture"] .aperture-artwork img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid rgba(210, 163, 109, 0.25);
+  border-radius: 18px;
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.36);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+[data-page="aperture"] .aperture-artwork .artwork-trigger:is(:hover, :focus-visible) img {
+  transform: translateY(-4px);
+  box-shadow: 0 38px 105px rgba(0, 0, 0, 0.44);
+}
+
+[data-page="aperture"] .aperture-artwork .artwork-trigger > span {
+  display: block;
+  margin-top: 12px;
+  color: var(--gold);
+  font: 9px var(--mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+[data-page="aperture"] .aperture-artwork figcaption {
+  padding-top: 10px;
+  color: var(--muted);
+  font: 10px/1.55 var(--mono);
+}
+
+[data-page="aperture"] .artwork-viewer {
+  width: calc(100vw - 24px);
+  height: calc(100vh - 24px);
+  max-width: none;
+  max-height: none;
+  padding: 0;
+  border: 1px solid rgba(210, 163, 109, 0.45);
+  border-radius: 14px;
+  background: #0c120f;
+  color: #f0f1e9;
+  overflow: hidden;
+}
+
+[data-page="aperture"] .artwork-viewer::backdrop {
+  background: rgba(3, 6, 4, 0.9);
+}
+
+[data-page="aperture"] .viewer-close-form {
+  position: absolute;
+  z-index: 4;
+  right: 15px;
+  top: 15px;
+  margin: 0;
+}
+
+[data-page="aperture"] .viewer-close {
+  width: 42px;
+  height: 42px;
+  border: 1px solid rgba(239, 242, 232, 0.35);
+  border-radius: 50%;
+  background: #101713;
+  color: #fff;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+[data-page="aperture"] .viewer-head {
+  position: absolute;
+  z-index: 3;
+  left: 22px;
+  right: 80px;
+  top: 18px;
+  display: flex;
+  align-items: end;
+  gap: 30px;
+  justify-content: space-between;
+  pointer-events: none;
+}
+
+[data-page="aperture"] .viewer-head h2 {
+  margin: 5px 0 0;
+  font: 25px var(--serif);
+  font-weight: 400;
+}
+
+[data-page="aperture"] .viewer-head > p {
+  max-width: 520px;
+  margin: 0;
+  color: #bcc6bb;
+  font-size: 11px;
+  line-height: 1.6;
+  text-align: right;
+}
+
+[data-page="aperture"] .viewer-toolbar {
+  position: absolute;
+  z-index: 4;
+  left: 50%;
+  bottom: 18px;
+  display: flex;
+  max-width: calc(100vw - 30px);
+  align-items: center;
+  gap: 6px;
+  padding: 7px;
+  border: 1px solid rgba(239, 242, 232, 0.2);
+  border-radius: 999px;
+  background: rgba(10, 16, 12, 0.88);
+  transform: translateX(-50%);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+[data-page="aperture"] .viewer-toolbar button {
+  min-width: 36px;
+  height: 34px;
+  padding: 0 11px;
+  border: 1px solid rgba(239, 242, 232, 0.18);
+  border-radius: 999px;
+  background: #18221b;
+  color: #fff;
+  font: 10px var(--mono);
+  cursor: pointer;
+}
+
+[data-page="aperture"] .viewer-toolbar button:is(:hover, :focus-visible) {
+  background: #d2a36d;
+  color: #17140e;
+}
+
+[data-page="aperture"] .viewer-toolbar span {
+  min-width: 52px;
+  text-align: center;
+  color: #d7ddcf;
+  font: 9px var(--mono);
+}
+
+[data-page="aperture"] .viewer-help {
+  padding: 0 8px;
+  color: #aeb9ac;
+  font: 8px var(--mono);
+  white-space: nowrap;
+}
+
+[data-page="aperture"] .viewer-stage {
+  position: absolute;
+  inset: 88px 20px 76px;
+  display: block;
+  overflow: auto;
+  overscroll-behavior: contain;
+  touch-action: none;
+  cursor: grab;
+  padding: 18px;
+  text-align: center;
+  scrollbar-color: rgba(210, 163, 109, 0.65) rgba(255, 255, 255, 0.06);
+  scrollbar-width: thin;
+}
+
+[data-page="aperture"] .viewer-stage.is-dragging {
+  cursor: grabbing;
+}
+
+[data-page="aperture"] .viewer-stage img {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: none;
+  max-height: none;
+  margin: auto;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+[data-page="aperture"] body.viewer-open {
+  overflow: hidden;
+}
+
+@media (max-width: 800px) {
+  [data-page="aperture"] .hero h1 {
+    font-size: clamp(58px, 17vw, 92px);
+  }
+
+  [data-page="aperture"] .aperture-artwork {
+    max-width: 620px;
+  }
+
+  [data-page="aperture"] .viewer-head {
+    left: 14px;
+    top: 66px;
+    display: block;
+  }
+
+  [data-page="aperture"] .viewer-head > p {
+    margin-top: 9px;
+    text-align: left;
+  }
+
+  [data-page="aperture"] .viewer-stage {
+    inset: 128px 8px 76px;
+    padding: 10px;
+  }
+
+  [data-page="aperture"] .viewer-toolbar {
+    bottom: 12px;
+  }
+
+  [data-page="aperture"] .viewer-close-form {
+    right: 10px;
+    top: 10px;
+  }
+
+  [data-page="aperture"] .viewer-help {
+    display: none;
+  }
+}

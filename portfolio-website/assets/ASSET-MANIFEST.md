@@ -11,13 +11,13 @@ runtime:
 ## Optimization result
 
 - Original active media payload: approximately 24.72 MB
-- Logical active media count: 37 assets
-- Delivery formats: each of the 24 raster assets has an AVIF primary file and
+- Logical active media count: 38 assets
+- Delivery formats: each of the 25 raster assets has an AVIF primary file and
   a WebP fallback; the other 9 assets are SVG vectors
-- AVIF set: 4,640,536 bytes
-- WebP fallback set: 6,620,598 bytes
-- Current formats: 24 AVIF, 24 WebP, 10 SVG, and 3 PNG favicon files
-- Files stored for all 37 logical assets: 61
+- AVIF set: 4,793,576 bytes
+- WebP fallback set: 6,810,728 bytes
+- Current formats: 25 AVIF, 25 WebP, 10 SVG, and 3 PNG favicon files
+- Files stored for all 38 logical assets: 63
 - Broken asset requests after the HD rebuild: 0
 
 Original raster files and the superseded montage are retained outside the public
@@ -101,6 +101,7 @@ The seven thumbnails are 480 × 647. Full book covers are 880 × 1187.
 - `a-legion-wearing-one-face/a-legion-03-the-meeting.avif/.webp` — 1080 × 720
 - `a-legion-wearing-one-face/a-legion-04-spiral-called-a-meeting.avif/.webp` — 1536 × 1024
 - `a-legion-wearing-one-face/a-legion-05-final-act.avif/.webp` — 1536 × 1024
+- `the-aperture/the-aperture-key-art.avif/.webp` — 1599 × 1066
 - `lens-of-everything-serenity.svg`
 - `landscapes/playem-landscape.svg`
 

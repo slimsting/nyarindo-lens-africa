@@ -1,18 +1,63 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-page="drift-artist">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="theme-color" content="#090a08">
     <link rel="stylesheet" href="styles.css">
     <title>Upload to Drift</title>
+
+    <script src="../portfolio-website/site-theme-init.js?v=site-theme-1"></script>
+    <meta name="description" content="Drift's artist workspace preview for sharing music, lyrics, discovery preferences, and direct artist support.">
+    <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+    <meta name="author" content="Newbon Nyarindo Gadson">
+    <meta name="application-name" content="Nyarindo Lens Africa">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://nyarindo-lens-africa.netlify.app/portfolio-website/assets/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://nyarindo-lens-africa.netlify.app/portfolio-website/assets/apple-touch-icon.png">
+    <link rel="canonical" href="https://nyarindo-lens-africa.netlify.app/drift/artist.html">
+    <link rel="sitemap" type="application/xml" title="Sitemap" href="https://nyarindo-lens-africa.netlify.app/sitemap.xml">
+    <link rel="manifest" href="/drift/manifest.webmanifest">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Nyarindo Lens Africa">
+    <meta property="og:url" content="https://nyarindo-lens-africa.netlify.app/drift/artist.html">
+    <meta property="og:title" content="Upload to Drift">
+    <meta property="og:description" content="Drift's artist workspace preview for sharing music, lyrics, discovery preferences, and direct artist support.">
+    <meta property="og:image" content="https://nyarindo-lens-africa.netlify.app/drift/assets/drift-app-icon.svg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Upload to Drift">
+    <meta name="twitter:description" content="Drift's artist workspace preview for sharing music, lyrics, discovery preferences, and direct artist support.">
+    <meta name="twitter:image" content="https://nyarindo-lens-africa.netlify.app/drift/assets/drift-app-icon.svg">
+    <link rel="stylesheet" href="../portfolio-website/site-theme.css?v=site-theme-1">
     <link rel="stylesheet" href="tap-feedback.css?v=tap-feedback-1">
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Upload to Drift",
+        "description": "Drift's artist workspace preview for sharing music, lyrics, discovery preferences, and direct artist support.",
+        "url": "https://nyarindo-lens-africa.netlify.app/drift/artist.html",
+        "image": "https://nyarindo-lens-africa.netlify.app/drift/assets/drift-app-icon.svg",
+        "author": {
+          "@type": "Person",
+          "name": "Newbon Nyarindo Gadson",
+          "url": "https://nyarindo-lens-africa.netlify.app/portfolio-website/index.html"
+        },
+        "applicationCategory": "BrowserApplication",
+        "operatingSystem": "Any",
+        "browserRequirements": "Requires JavaScript and a modern browser."
+      }
+    </script>
+      <link rel="stylesheet" href="/portfolio-website/site-map.css?v=site-map-1">
   </head>
   <body>
     <main class="app-shell artist-shell">
       <header class="topbar">
         <a class="wordmark" href="index.html">drift<span>.</span></a>
-        <a class="back-link" href="index.html">← Listener view</a>
+        <div class="header-actions">
+          <a class="back-link" href="index.html">← Listener view</a>
+          <button class="site-theme-toggle" type="button" aria-label="Switch to light mode" aria-pressed="false" data-theme-light="#f4f3eb" data-theme-dark="#090a08"><span class="theme-icon" aria-hidden="true">☼</span><span class="theme-label">DARK</span></button>
+        </div>
       </header>
       <section class="artist-intro">
         <p class="eyebrow">ARTIST SPACE</p>
@@ -56,5 +101,40 @@
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
     <script src="artist.js"></script>
   <script src="tap-feedback.js?v=tap-feedback-1"></script>
+    <script src="../portfolio-website/site-theme-control.js?v=site-theme-1"></script>
+      <nav class="site-map" aria-label="Nyarindo Lens Africa site map">
+      <div class="site-map-intro">
+        <p class="site-map-eyebrow">THE WHOLE NYARINDO LENS</p>
+        <h2>Every page, one connected field.</h2>
+        <p>Move through the complete theory sequence, the books and portfolio, and the browser projects built from the same Lens.</p>
+        <a class="site-map-index" href="/sitemap.xml">Machine-readable site map ↗</a>
+      </div>
+      <div class="site-map-groups">
+        <section aria-labelledby="siteMapTheories">
+          <h3 id="siteMapTheories">The theories</h3>
+          <a href="/portfolio-website/index.html#home">Portfolio home</a>
+          <a href="/portfolio-website/lens-of-everything.html">The Lens of Everything</a>
+          <a href="/portfolio-website/a-legion-wearing-one-face.html">A Legion Wearing One Face</a>
+          <a href="/portfolio-website/the-threshold-rule.html">The Threshold Rule</a>
+          <a href="/portfolio-website/peace-pon-eye-and-eye.html">Peace Pon Eye and Eye</a>
+          <a href="/portfolio-website/science-and-religion.html">When Science and Faith Share a Bench</a>
+          <a href="/portfolio-website/the-aperture.html">The Aperture</a>
+        </section>
+        <section aria-labelledby="siteMapProjects">
+          <h3 id="siteMapProjects">Browser projects</h3>
+          <a href="/drift/">Drift</a>
+          <a href="/drift/artist.html">Drift artist workspace</a>
+          <a href="/memory-app/">Return</a>
+          <a href="/semantic-field-extension/">Semantic Field</a>
+        </section>
+        <section aria-labelledby="siteMapBooks">
+          <h3 id="siteMapBooks">Books and discovery</h3>
+          <a href="/portfolio-website/index.html#books">The seven-book collection</a>
+          <a href="/portfolio-website/index.html#coherence-theory">The coherence sequence</a>
+          <a href="/llms.txt">AI-readable site guide</a>
+          <a href="/robots.txt">Crawler permissions</a>
+        </section>
+      </div>
+    </nav>
   </body>
 </html>
