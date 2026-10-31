@@ -558,11 +558,16 @@ html[data-theme="light"][data-page="aperture"] .secondary-link {
 }
 
 @media (max-width: 800px) {
+  [data-page="aperture"] .hero {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
   [data-page="aperture"] .hero h1 {
     font-size: clamp(58px, 17vw, 92px);
   }
 
   [data-page="aperture"] .aperture-artwork {
+    width: 100%;
     max-width: 620px;
   }
 
