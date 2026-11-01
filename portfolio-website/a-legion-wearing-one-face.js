@@ -4,7 +4,8 @@ const viewerTitle = document.getElementById('viewerTitle');
 const viewerCaption = document.getElementById('viewerCaption');
 const viewerStage = document.getElementById('viewerStage');
 const viewerZoomLabel = document.getElementById('viewerZoomLabel');
-const guideDataUrl = 'data/a-legion-wearing-one-face.json?v=asset-opt-1';
+const viewerPlayLink = document.getElementById('viewerPlayLink');
+const guideDataUrl = 'data/a-legion-wearing-one-face.json?v=legion-plays-2';
 
 let artworkData = null;
 let scale = 1;
@@ -70,8 +71,18 @@ function openArtwork(workId) {
   const trigger = document.querySelector(`.artwork-trigger[data-artwork="${workId}"]`);
   const image = trigger?.querySelector('img');
   if (!trigger || !image) return;
-  viewerTitle.textContent = meta?.title || trigger.closest('figure')?.querySelector('figcaption')?.textContent.trim() || 'Artwork';
+  const artworkTitle = meta?.title || trigger.dataset.playTitle || trigger.closest('figure')?.querySelector('figcaption')?.textContent.trim() || 'Artwork';
+  const artworkSubtitle = meta?.subtitle || trigger.dataset.playSubtitle || '';
+  viewerTitle.textContent = artworkSubtitle ? `${artworkTitle} · ${artworkSubtitle}` : artworkTitle;
   viewerCaption.textContent = meta?.caption || '';
+  const playUrl = meta?.playUrl || trigger.dataset.playUrl || '';
+  if (playUrl) {
+    viewerPlayLink.href = playUrl;
+    viewerPlayLink.hidden = false;
+  } else {
+    viewerPlayLink.removeAttribute('href');
+    viewerPlayLink.hidden = true;
+  }
   viewerImage.style.width = '';
   viewerImage.src = image.currentSrc || image.src;
   viewerImage.alt = meta?.alt || image.alt;

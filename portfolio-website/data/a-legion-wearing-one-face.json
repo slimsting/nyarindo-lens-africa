@@ -29,29 +29,33 @@
     {
       "id": "the-meeting",
       "order": 3,
-      "title": "The Meeting",
+      "title": "The Spiral Called a Meeting",
       "image": "assets/a-legion-wearing-one-face/a-legion-03-the-meeting.webp",
       "caption": "Two people meet, and the room fills with the voices through which they meet themselves.",
       "alt": "A crowded cartoon council around a table, with Sage, Judge, Defender, Lover, Skeptic, Believer, Questioner, Philosopher, Observer, Fool, Trickster, Peacemaker, and Child archetypes in conversation.",
-      "description": "The first meeting is ordinary. Two people could be anyone, and one could be the viewer. Their inner roles disagree, joke, defend, question, care, and call one another back."
+      "description": "The first meeting is ordinary. Two people could be anyone, and one could be the viewer. Their inner roles disagree, joke, defend, question, care, and call one another back.",
+      "playUrl": "https://newbonnyarindogadsonslimstingrs.substack.com/p/the-spiral-called-a-meeting?utm_source=share&utm_medium=android&r=6o0b1s"
     },
     {
       "id": "spiral-meeting",
       "order": 4,
-      "title": "The Spiral Called a Meeting",
+      "title": "The Spiral Called Another Meeting",
       "image": "assets/a-legion-wearing-one-face/a-legion-04-spiral-called-a-meeting.webp",
       "caption": "The human meeting expands into the scale of myth.",
       "alt": "A mythic council beneath sun and moon, gathering human archetypes, God the Father, Yeshua, Lilith, the Observer, the Child, and animal companions around one table.",
-      "description": "The same meeting now includes divine figures, mythic figures, ancestors, humans, animals, celestial bodies, and symbols. The ordinary encounter is not replaced by myth; it is seen more widely through myth."
+      "description": "The same meeting now includes divine figures, mythic figures, ancestors, humans, animals, celestial bodies, and symbols. The ordinary encounter is not replaced by myth; it is seen more widely through myth.",
+      "playUrl": "https://newbonnyarindogadsonslimstingrs.substack.com/p/the-spiral-called-another-meeting?utm_source=share&utm_medium=android&r=6o0b1s"
     },
     {
       "id": "final-act",
       "order": 5,
       "title": "The Final Act",
+      "subtitle": "The Court of the Missing Eden",
       "image": "assets/a-legion-wearing-one-face/a-legion-05-final-act.webp",
       "caption": "Every map and authority enters, while Wonder remains on the throne.",
       "alt": "A panoramic satirical collage of religious figures, public figures, institutions, worldviews, and archetypes gathered around the Child of Wonder on a throne of faith, knowledge, wisdom, and proof.",
-      "description": "Religions, philosophies, nations, institutions, economies, technologies, celebrities, fictional characters, and archetypes all arrive carrying partial maps. The Child of Wonder sits at the centre, guarded by experienced fools and tricksters."
+      "description": "Religions, philosophies, nations, institutions, economies, technologies, celebrities, fictional characters, and archetypes all arrive carrying partial maps. The Child of Wonder sits at the centre, guarded by experienced fools and tricksters.",
+      "playUrl": "https://newbongadsonnyarindoslimstingrs.substack.com/p/the-final-act?utm_source=share&utm_medium=android&r=6o0b1s"
     }
   ],
   "characters": [
