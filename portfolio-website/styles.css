@@ -383,3 +383,21 @@ main>.coherence-theory{box-shadow:inset 0 180px 155px -160px rgba(94,185,126,.22
 .motion-enabled .hero .text-link{animation:hero-motion-rich .9s .48s cubic-bezier(.16,.75,.22,1) both}
 .motion-enabled .hero-art{animation:hero-motion-rich 1.1s .28s cubic-bezier(.16,.75,.22,1) both}
 .motion-enabled .hero-foot{animation:hero-motion-rich .9s .56s cubic-bezier(.16,.75,.22,1) both}
+
+/* The opening guide keeps the full Nyarindo Lens context available without crowding the hero. */
+.hero-lens-guide{max-width:620px;margin:18px 0 0;color:var(--muted)}
+.hero-lens-guide summary{display:inline-flex;align-items:center;justify-content:space-between;gap:16px;min-height:36px;padding:8px 12px 8px 14px;border:1px solid color-mix(in srgb,var(--accent) 45%,transparent);border-radius:999px;background:color-mix(in srgb,var(--surface) 80%,transparent);color:var(--ink);font:9px/1.4 var(--mono);letter-spacing:.065em;text-transform:uppercase;cursor:pointer;list-style:none;transition:transform .22s ease,background-color .22s ease,border-color .22s ease,box-shadow .22s ease}
+.hero-lens-guide summary::-webkit-details-marker{display:none}
+.hero-lens-guide summary::marker{content:""}
+.hero-lens-guide summary i{display:grid;place-items:center;width:18px;height:18px;flex:none;border-radius:50%;background:var(--accent);color:var(--bg);font:16px/1 var(--sans);font-style:normal;transition:transform .25s ease}
+.hero-lens-guide summary:is(:hover,:focus-visible){transform:translateY(-2px);border-color:var(--accent);background:color-mix(in srgb,var(--accent) 12%,var(--surface));box-shadow:0 7px 22px rgba(0,0,0,.15)}
+.hero-lens-guide summary:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
+.hero-lens-guide[open] summary i{transform:rotate(45deg)}
+.hero-lens-guide-copy{margin-top:11px;padding:20px 22px 18px;border-left:2px solid var(--accent);border-radius:0 14px 14px 0;background:color-mix(in srgb,var(--surface) 88%,transparent);box-shadow:0 18px 45px rgba(0,0,0,.15)}
+.hero-lens-guide-copy p{margin:0;color:var(--muted);font-size:12.5px;line-height:1.78}
+.hero-lens-guide-copy p+p{margin-top:12px}
+.hero-lens-guide[open]+h1{margin-top:28px}
+.hero:has(.hero-lens-guide[open]){height:auto;min-height:900px}
+.hero:has(.hero-lens-guide[open]) .hero-copy{padding-bottom:26px}
+html[data-theme=light] .hero-lens-guide-copy{background:rgba(255,255,255,.62);box-shadow:0 18px 45px rgba(54,48,35,.11)}
+@media(max-width:620px){.hero-lens-guide{width:100%;max-width:370px;margin-top:15px}.hero-lens-guide summary{width:100%;min-height:42px;text-align:left}.hero-lens-guide-copy{padding:17px 16px;border-radius:0 10px 10px 0}.hero-lens-guide-copy p{font-size:12px;line-height:1.72}.hero:has(.hero-lens-guide[open]){min-height:0;padding-bottom:54px}}
