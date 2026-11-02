@@ -1,0 +1,80 @@
+# Secrets and local configuration
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+*.p12
+*.pfx
+*.jks
+*.keystore
+*.kdbx
+*.ppk
+secrets/
+credentials/
+.netrc
+.npmrc
+.pypirc
+.git-credentials
+
+# Client-specific and confidential material
+clients/
+client-data/
+client-files/
+customer-data/
+confidential/
+contracts/
+agreements/
+invoices/
+billing/
+finance/
+payroll/
+proposals/
+briefs/
+correspondence/
+meetings/
+crm/
+analytics-exports/
+account-management/
+
+# Dependencies and local tool state
+node_modules/
+vendor/
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+.codex/
+.claude/
+.cursor/
+.continue/
+.aider/
+*.log
+
+# Deployment state
+.netlify/
+.vercel/
+.wrangler/
+.firebase/
+
+# Browser, session, database, and opaque archive material
+browser-profiles/
+User Data/
+*.sqlite
+*.sqlite3
+*.db
+*.zip
+*.7z
+*.rar
+*.tar
+*.tgz
+*.gz
+
+# Private project process records
+AGENTS.md
+CHANGELOG.md
+PROJECT-CHARTER.md
+DEPLOYMENT.md
+001-*.md
+002-*.md
+PROPOSAL*.md
