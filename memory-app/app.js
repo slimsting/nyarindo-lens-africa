@@ -152,7 +152,7 @@ async function writeEntries(entries) {
 
 const storageEncoder = new TextEncoder();
 const STORAGE_AAD = storageEncoder.encode('nyarindo-return-journal-v1');
-const PBKDF2_ITERATIONS = 310000;
+const PBKDF2_ITERATIONS = 600000;
 
 function bytesToBase64(bytes) {
   let binary = '';
@@ -1106,7 +1106,15 @@ async function unlockSavedEntries() {
   try {
     const result = await decryptStorageEnvelope(storageEnvelope, passphrase);
     entriesCache = result.entries;
-    storageKey = result.key;
+    const oldIterations = Number(storageEnvelope.iterations);
+    if (!Number.isFinite(oldIterations) || oldIterations < PBKDF2_ITERATIONS) {
+      const upgraded = await createStorageEnvelope(entriesCache, passphrase);
+      storageEnvelope = upgraded.envelope;
+      storageKey = upgraded.key;
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(storageEnvelope));
+    } else {
+      storageKey = result.key;
+    }
     storageLocked = false;
     setMemoryFormEnabled(true);
     startBeginning();
