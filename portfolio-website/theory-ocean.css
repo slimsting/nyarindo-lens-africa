@@ -251,7 +251,7 @@
 }
 
 html[data-theme="light"][data-page="lens"] .hero {
-  background: linear-gradient(180deg, #dceef0 0%, #eff3e8 46%, #f3cda9 64%, #8eb8bd 100%);
+  background: linear-gradient(180deg, #64b8e5 0%, #a8dcf1 38%, #e8f2ec 52%, #f4cda8 65%, #7bb1bd 100%);
 }
 
 html[data-theme="light"][data-page="lens"] .theory-stars {
@@ -262,6 +262,21 @@ html[data-theme="light"][data-page="lens"] .theory-stars {
 html[data-theme="light"][data-page="lens"] .theory-clouds,
 html[data-theme="light"][data-page="lens"] .theory-birds {
   opacity: 1;
+}
+
+html[data-theme="light"][data-page="lens"] .theory-cloud {
+  background: rgba(255, 255, 255, .8);
+  box-shadow: 0 12px 34px rgba(43, 91, 123, .13);
+}
+
+html[data-theme="light"][data-page="lens"] .theory-cloud::before,
+html[data-theme="light"][data-page="lens"] .theory-cloud::after {
+  background: inherit;
+}
+
+html[data-theme="light"][data-page="lens"] .theory-bird {
+  stroke: rgba(27, 54, 69, .84);
+  filter: drop-shadow(0 3px 5px rgba(255, 255, 255, .35));
 }
 
 html[data-theme="light"][data-page="lens"] .theory-sun {
