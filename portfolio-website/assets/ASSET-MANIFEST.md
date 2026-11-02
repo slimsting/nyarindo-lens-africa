@@ -84,6 +84,15 @@ The font files are loaded by `portfolio-website/local-fonts.css` with
 - `newbon-nyarindo-gadson-brand-portrait.avif/.webp` — 600 × 800
 - `newbon-nyarindo-gadson-portrait.avif/.webp` — 674 × 1600
 - `newbon-nyarindo-gadson-whimsy-portrait.avif/.webp` — 640 × 768
+- `avatar-smile.webp` — 256 × 256 face-focused crop
+- `avatar-laugh.webp` — 256 × 256 face-focused crop
+- `avatar-wave.webp` — 256 × 256 smiling frame used with the animated waving-hand overlay
+- `avatar-peek.webp` — 256 × 256 close crop for the peeking state
+- `avatar-lookaway.webp` — 256 × 256 mirrored crop for the alternate-heading state
+
+The five small WebP portrait crops are deterministic derivatives of the three authored
+portraits above. They are loaded only by the navigation-avatar animation and do not replace
+the source portraits.
 - `universal-coherence-protocol.avif/.webp` — 1460 × 1460, transparent
 - `depth-ribbons.svg` — responsive luminous depth artwork
 - `favicon-32.png` — browser-tab icon using the support portrait and green ring

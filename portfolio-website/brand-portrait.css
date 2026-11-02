@@ -6,13 +6,17 @@
   height: 100%
 }
 
-.brand-mark{
+.brand .brand-mark{
   position:relative;
   flex:0 0 auto;
+  width:46px;
+  height:46px;
   overflow:hidden;
   padding:0;
+  border:2px solid rgba(210,163,109,.58);
   border-radius:50%;
-  background:#d8d4c7
+  background:#d8d4c7;
+  box-shadow:0 0 0 4px rgba(88,181,116,.08),0 0 18px rgba(88,181,116,.16)
 }
 
 .brand-mark img{
@@ -26,6 +30,25 @@
   object-position:center 30%
 }
 
+.brand-avatar-canvas{
+  position:absolute;
+  inset:0;
+  display:block;
+  width:100%;
+  height:100%;
+  border-radius:50%;
+  opacity:0;
+  transition:opacity .28s ease
+}
+
+.brand-avatar-live .brand-avatar-canvas{
+  opacity:1
+}
+
+.brand-avatar-live img{
+  opacity:0
+}
+
 .brand:focus-visible{
   outline:2px solid var(--accent, #d2a36d);
   outline-offset:5px
@@ -37,9 +60,9 @@
     min-width: 0
   }
 
-  .brand-mark {
-    width: 34px;
-    height: 34px;
+  .brand .brand-mark {
+    width: 40px;
+    height: 40px;
     border-width: 2px;
     box-shadow: 0 0 0 4px rgba(88, 181, 116, .09),
                 0 0 18px rgba(88, 181, 116, .18)
@@ -51,5 +74,11 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap
+  }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .brand-avatar-canvas{
+    display:none
   }
 }
