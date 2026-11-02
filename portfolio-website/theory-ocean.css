@@ -43,6 +43,123 @@
     0 0 36px rgba(255, 198, 119, .62),
     0 0 110px rgba(238, 132, 83, .38);
   transform: translateY(-50%);
+  transition: opacity .35s ease, transform .35s ease;
+}
+
+[data-page="lens"] .theory-moon {
+  position: absolute;
+  top: 43%;
+  right: 13%;
+  width: clamp(94px, 11vw, 150px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  opacity: 0;
+  background:
+    radial-gradient(circle at 32% 29%, rgba(170, 180, 178, .3) 0 5%, transparent 6%),
+    radial-gradient(circle at 64% 38%, rgba(162, 175, 173, .26) 0 7%, transparent 8%),
+    radial-gradient(circle at 43% 67%, rgba(157, 169, 167, .22) 0 4%, transparent 5%),
+    radial-gradient(circle at 42% 38%, #fffef2 0%, #e8eadb 62%, #cbd1c8 100%);
+  box-shadow:
+    0 0 28px rgba(240, 245, 226, .38),
+    0 0 88px rgba(194, 219, 210, .22);
+  transform: translateY(-50%) scale(.88);
+  transition: opacity .35s ease, transform .35s ease;
+}
+
+[data-page="lens"] .theory-clouds,
+[data-page="lens"] .theory-birds {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity .35s ease;
+}
+
+[data-page="lens"] .theory-cloud {
+  position: absolute;
+  width: 150px;
+  height: 34px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .52);
+  box-shadow: 0 12px 32px rgba(255, 255, 255, .16);
+}
+
+[data-page="lens"] .theory-cloud::before,
+[data-page="lens"] .theory-cloud::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  background: inherit;
+}
+
+[data-page="lens"] .theory-cloud::before {
+  width: 62px;
+  height: 62px;
+  left: 22px;
+  bottom: 0;
+}
+
+[data-page="lens"] .theory-cloud::after {
+  width: 82px;
+  height: 82px;
+  right: 18px;
+  bottom: 0;
+}
+
+[data-page="lens"] .cloud-one {
+  top: 15%;
+  left: 9%;
+  transform: scale(.72);
+  animation: theory-cloud-drift 19s ease-in-out infinite alternate;
+}
+
+[data-page="lens"] .cloud-two {
+  top: 27%;
+  left: 55%;
+  width: 190px;
+  opacity: .72;
+  transform: scale(.92);
+  animation: theory-cloud-drift 24s ease-in-out infinite alternate-reverse;
+}
+
+[data-page="lens"] .cloud-three {
+  top: 39%;
+  left: 23%;
+  width: 128px;
+  opacity: .5;
+  transform: scale(.54);
+  animation: theory-cloud-drift 16s ease-in-out infinite alternate;
+}
+
+[data-page="lens"] .theory-bird {
+  position: absolute;
+  width: 42px;
+  height: auto;
+  fill: none;
+  stroke: rgba(48, 73, 72, .78);
+  stroke-width: 2;
+  stroke-linecap: round;
+  filter: drop-shadow(0 3px 5px rgba(255, 255, 255, .26));
+}
+
+[data-page="lens"] .bird-one {
+  top: 22%;
+  right: 31%;
+  transform: rotate(-5deg) scale(.84);
+  animation: theory-bird-float 6.5s ease-in-out infinite alternate;
+}
+
+[data-page="lens"] .bird-two {
+  top: 26%;
+  right: 25%;
+  transform: rotate(4deg) scale(.58);
+  animation: theory-bird-float 8s ease-in-out 1s infinite alternate-reverse;
+}
+
+[data-page="lens"] .bird-three {
+  top: 18%;
+  right: 39%;
+  transform: rotate(-8deg) scale(.46);
+  animation: theory-bird-float 7.2s ease-in-out .5s infinite alternate;
 }
 
 [data-page="lens"] .theory-horizon {
@@ -142,6 +259,11 @@ html[data-theme="light"][data-page="lens"] .theory-stars {
   animation: none;
 }
 
+html[data-theme="light"][data-page="lens"] .theory-clouds,
+html[data-theme="light"][data-page="lens"] .theory-birds {
+  opacity: 1;
+}
+
 html[data-theme="light"][data-page="lens"] .theory-sun {
   top: 50%;
   right: 14%;
@@ -149,6 +271,20 @@ html[data-theme="light"][data-page="lens"] .theory-sun {
   box-shadow:
     0 0 34px rgba(255, 223, 157, .64),
     0 0 100px rgba(247, 183, 108, .28);
+}
+
+html[data-theme="dark"][data-page="lens"] .theory-sun {
+  opacity: 0;
+  transform: translateY(-50%) scale(.82);
+}
+
+html[data-theme="dark"][data-page="lens"] .theory-moon {
+  opacity: 1;
+  transform: translateY(-50%) scale(1);
+}
+
+html[data-theme="light"][data-page="lens"] .theory-moon {
+  opacity: 0;
 }
 
 html[data-theme="light"][data-page="lens"] .theory-horizon {
@@ -254,6 +390,16 @@ html[data-theme="dark"][data-page="lens"] body::after {
   to { transform: translateX(2.5%); opacity: .9; }
 }
 
+@keyframes theory-cloud-drift {
+  from { translate: -10px 0; }
+  to { translate: 18px -3px; }
+}
+
+@keyframes theory-bird-float {
+  from { translate: -7px 0; }
+  to { translate: 10px -5px; }
+}
+
 @media (max-width: 800px) {
   [data-page="lens"] .theory-sun {
     right: 8%;
@@ -270,7 +416,9 @@ html[data-theme="dark"][data-page="lens"] body::after {
 
 @media (prefers-reduced-motion: reduce) {
   [data-page="lens"] .theory-stars,
-  [data-page="lens"] .theory-wave {
+  [data-page="lens"] .theory-wave,
+  [data-page="lens"] .theory-cloud,
+  [data-page="lens"] .theory-bird {
     animation: none;
   }
 }
