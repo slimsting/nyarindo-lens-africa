@@ -18,6 +18,7 @@ runtime:
 - WebP fallback set: 6,810,728 bytes
 - Current formats: 25 AVIF, 25 WebP, 10 SVG, and 3 PNG favicon files
 - Files stored for all 38 logical assets: 63
+- Self-hosted typography: 9 WOFF2 files, 202,604 bytes
 - Broken asset requests after the HD rebuild: 0
 
 Original raster files and the superseded montage are retained outside the public
@@ -41,6 +42,24 @@ asset tree at:
 - Viewport-critical images use async decoding; off-screen images retain native
   lazy loading.
 - No image is embedded as base64 in HTML, CSS, or JavaScript.
+- The required font families are self-hosted. Public pages make no Google Fonts
+  or other third-party typography requests.
+
+## Shared typography assets
+
+- `fonts/dm-mono-400.woff2`
+- `fonts/dm-mono-500.woff2`
+- `fonts/dm-sans-var.woff2`
+- `fonts/manrope-var.woff2`
+- `fonts/ibm-plex-mono-300.woff2`
+- `fonts/ibm-plex-mono-300-italic.woff2`
+- `fonts/ibm-plex-mono-400.woff2`
+- `fonts/ibm-plex-mono-500.woff2`
+- `fonts/ibm-plex-sans-var.woff2`
+- `fonts/FONT-NOTICES.md`
+
+The font files are loaded by `portfolio-website/local-fonts.css` with
+`font-display: swap` and a one-year immutable cache policy in `_headers`.
 
 ## Shared application assets
 
