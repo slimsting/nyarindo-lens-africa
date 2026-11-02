@@ -60,8 +60,8 @@
       context.font = `${Math.max(15, size * 0.42)}px "Segoe UI Emoji", sans-serif`;
       context.textAlign = "center";
       context.textBaseline = "middle";
-      context.translate(size * 0.76, size * 0.73);
-      context.rotate((-17 + Math.sin(performance.now() / 180) * 12) * Math.PI / 180);
+      context.translate(size * 0.24, size * 0.73);
+      context.rotate((17 - Math.sin(performance.now() / 180) * 12) * Math.PI / 180);
       context.fillText("👋", 0, 0);
       context.restore();
     }
