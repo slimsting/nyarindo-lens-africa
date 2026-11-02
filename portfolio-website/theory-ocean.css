@@ -1,0 +1,276 @@
+[data-page="lens"] .hero {
+  background: linear-gradient(180deg, #071827 0%, #15324a 48%, #d39a70 68%, #183643 100%);
+}
+
+[data-page="lens"] .theory-ocean {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+[data-page="lens"] .theory-stars {
+  position: absolute;
+  inset: 0 0 45%;
+  opacity: 0.88;
+  background-image:
+    radial-gradient(circle at 8% 18%, rgba(255,255,238,.9) 0 1px, transparent 1.8px),
+    radial-gradient(circle at 17% 34%, rgba(255,255,238,.58) 0 1px, transparent 1.7px),
+    radial-gradient(circle at 29% 12%, rgba(255,255,238,.76) 0 1.2px, transparent 2px),
+    radial-gradient(circle at 38% 28%, rgba(255,255,238,.54) 0 1px, transparent 1.8px),
+    radial-gradient(circle at 47% 8%, rgba(255,255,238,.88) 0 1px, transparent 1.8px),
+    radial-gradient(circle at 56% 21%, rgba(255,255,238,.6) 0 1px, transparent 1.7px),
+    radial-gradient(circle at 65% 11%, rgba(255,255,238,.82) 0 1.1px, transparent 1.9px),
+    radial-gradient(circle at 74% 31%, rgba(255,255,238,.58) 0 1px, transparent 1.8px),
+    radial-gradient(circle at 84% 16%, rgba(255,255,238,.9) 0 1.2px, transparent 2px),
+    radial-gradient(circle at 94% 36%, rgba(255,255,238,.62) 0 1px, transparent 1.7px),
+    radial-gradient(circle at 13% 57%, rgba(255,255,238,.45) 0 1px, transparent 1.8px),
+    radial-gradient(circle at 35% 49%, rgba(255,255,238,.55) 0 1px, transparent 1.7px),
+    radial-gradient(circle at 71% 52%, rgba(255,255,238,.5) 0 1px, transparent 1.8px),
+    radial-gradient(circle at 92% 58%, rgba(255,255,238,.62) 0 1px, transparent 1.8px);
+  animation: theory-stars-breathe 7s ease-in-out infinite alternate;
+}
+
+[data-page="lens"] .theory-sun {
+  position: absolute;
+  top: 44%;
+  right: 12%;
+  width: clamp(112px, 14vw, 190px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle at 42% 38%, #fff4c3 0%, #ffc974 45%, #ef8758 76%, #c85a45 100%);
+  box-shadow:
+    0 0 36px rgba(255, 198, 119, .62),
+    0 0 110px rgba(238, 132, 83, .38);
+  transform: translateY(-50%);
+}
+
+[data-page="lens"] .theory-horizon {
+  position: absolute;
+  inset: 59% 0 auto;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 226, 171, .72), transparent);
+  box-shadow: 0 -18px 50px rgba(255, 173, 107, .23);
+}
+
+[data-page="lens"] .theory-water {
+  position: absolute;
+  inset: 59% 0 0;
+  overflow: hidden;
+  background:
+    linear-gradient(90deg, transparent 49.7%, rgba(255, 205, 138, .2) 50%, transparent 50.3%),
+    linear-gradient(180deg, rgba(18, 55, 68, .62), rgba(4, 19, 27, .98));
+}
+
+[data-page="lens"] .theory-wave {
+  position: absolute;
+  left: -12%;
+  width: 124%;
+  height: 44%;
+  border-radius: 48% 52% 0 0 / 24% 22% 0 0;
+  transform-origin: 50% 100%;
+}
+
+[data-page="lens"] .theory-wave::before {
+  content: "";
+  position: absolute;
+  left: -4%;
+  right: -4%;
+  top: 4%;
+  height: 30px;
+  border-radius: 50%;
+  border-top: 2px solid rgba(196, 235, 225, .4);
+  box-shadow: 0 -7px 26px rgba(115, 199, 194, .18);
+}
+
+[data-page="lens"] .wave-far {
+  top: 4%;
+  background: linear-gradient(180deg, rgba(107, 155, 164, .4), rgba(24, 69, 80, .2));
+  animation: theory-wave-roll-far 14s ease-in-out infinite alternate;
+}
+
+[data-page="lens"] .wave-middle {
+  top: 17%;
+  left: -8%;
+  width: 116%;
+  background: linear-gradient(180deg, rgba(54, 108, 118, .72), rgba(7, 35, 45, .56));
+  animation: theory-wave-roll-middle 11s ease-in-out infinite alternate;
+}
+
+[data-page="lens"] .wave-middle::before {
+  border-top-color: rgba(205, 241, 232, .54);
+  box-shadow: 0 -8px 28px rgba(115, 199, 194, .24);
+}
+
+[data-page="lens"] .wave-near {
+  top: 35%;
+  left: -16%;
+  width: 132%;
+  background: linear-gradient(180deg, rgba(24, 70, 81, .9), rgba(5, 25, 34, .98));
+  animation: theory-wave-roll-near 8s ease-in-out infinite alternate;
+}
+
+[data-page="lens"] .wave-near::before {
+  border-top-width: 3px;
+  border-top-color: rgba(227, 245, 236, .68);
+  box-shadow: 0 -10px 34px rgba(126, 210, 201, .28);
+}
+
+[data-page="lens"] .wave-glint {
+  top: 0;
+  height: 12%;
+  background: linear-gradient(90deg, transparent 12%, rgba(255, 213, 151, .25) 42%, rgba(255, 232, 182, .38) 50%, rgba(255, 213, 151, .2) 58%, transparent 88%);
+  animation: theory-glint-shift 9s ease-in-out infinite alternate;
+}
+
+[data-page="lens"] .wave-glint::before {
+  display: none;
+}
+
+[data-page="lens"] .hero-shade {
+  background:
+    linear-gradient(90deg, rgba(3, 12, 17, .94) 0%, rgba(4, 17, 22, .72) 42%, rgba(4, 15, 18, .08) 72%),
+    linear-gradient(0deg, rgba(4, 13, 17, .7), transparent 52%);
+}
+
+html[data-theme="light"][data-page="lens"] .hero {
+  background: linear-gradient(180deg, #dceef0 0%, #eff3e8 46%, #f3cda9 64%, #8eb8bd 100%);
+}
+
+html[data-theme="light"][data-page="lens"] .theory-stars {
+  opacity: 0;
+  animation: none;
+}
+
+html[data-theme="light"][data-page="lens"] .theory-sun {
+  top: 50%;
+  right: 14%;
+  background: radial-gradient(circle at 42% 38%, #fffbe3 0%, #ffe6a7 50%, #f8b26d 78%, #de7b55 100%);
+  box-shadow:
+    0 0 34px rgba(255, 223, 157, .64),
+    0 0 100px rgba(247, 183, 108, .28);
+}
+
+html[data-theme="light"][data-page="lens"] .theory-horizon {
+  background: linear-gradient(90deg, transparent, rgba(178, 115, 67, .5), transparent);
+  box-shadow: 0 -14px 44px rgba(246, 184, 116, .24);
+}
+
+html[data-theme="light"][data-page="lens"] .theory-water {
+  background:
+    linear-gradient(90deg, transparent 49.7%, rgba(255, 255, 255, .24) 50%, transparent 50.3%),
+    linear-gradient(180deg, rgba(92, 145, 151, .68), rgba(35, 91, 107, .94));
+}
+
+html[data-theme="light"][data-page="lens"] .wave-far {
+  background: linear-gradient(180deg, rgba(173, 211, 209, .58), rgba(74, 135, 143, .2));
+}
+
+html[data-theme="light"][data-page="lens"] .wave-far::before {
+  border-top-color: rgba(255, 255, 255, .52);
+}
+
+html[data-theme="light"][data-page="lens"] .wave-middle {
+  background: linear-gradient(180deg, rgba(101, 166, 171, .74), rgba(43, 108, 120, .5));
+}
+
+html[data-theme="light"][data-page="lens"] .wave-middle::before {
+  border-top-color: rgba(245, 255, 251, .7);
+}
+
+html[data-theme="light"][data-page="lens"] .wave-near {
+  background: linear-gradient(180deg, rgba(50, 119, 133, .86), rgba(23, 78, 94, .98));
+}
+
+html[data-theme="light"][data-page="lens"] .wave-near::before {
+  border-top-color: rgba(236, 255, 250, .82);
+}
+
+html[data-theme="light"][data-page="lens"] .hero-shade {
+  background:
+    linear-gradient(90deg, rgba(246, 248, 239, .93) 0%, rgba(246, 248, 239, .66) 42%, rgba(246, 248, 239, .04) 74%),
+    linear-gradient(0deg, rgba(246, 248, 239, .26), transparent 50%);
+}
+
+html[data-theme="light"][data-page="lens"] .hero h1 {
+  color: #17332f;
+  text-shadow: 0 10px 34px rgba(255, 255, 255, .38);
+}
+
+html[data-theme="light"][data-page="lens"] .hero h1 em {
+  color: #a36b35;
+}
+
+html[data-theme="light"][data-page="lens"] .hero-copy > p:last-of-type {
+  color: #293f39;
+}
+
+html[data-theme="light"][data-page="lens"] .back-link {
+  color: #29413a;
+}
+
+html[data-theme="light"][data-page="lens"] .site-head {
+  border-bottom-color: rgba(33, 61, 49, .16);
+}
+
+html[data-theme="light"][data-page="lens"] .brand {
+  color: #29413a;
+}
+
+html[data-theme="light"][data-page="lens"] .scroll-link {
+  color: #29413a;
+  border-color: rgba(33, 61, 49, .28);
+}
+
+html[data-theme="light"][data-page="lens"] body::before,
+html[data-theme="light"][data-page="lens"] body::after,
+html[data-theme="dark"][data-page="lens"] body::before,
+html[data-theme="dark"][data-page="lens"] body::after {
+  display: none;
+}
+
+@keyframes theory-stars-breathe {
+  from { opacity: .68; transform: translateY(0); }
+  to { opacity: .96; transform: translateY(-4px); }
+}
+
+@keyframes theory-wave-roll-far {
+  from { transform: translateX(-2.2%) scaleY(.94); }
+  to { transform: translateX(2.4%) scaleY(1.03); }
+}
+
+@keyframes theory-wave-roll-middle {
+  from { transform: translateX(2.7%) rotate(.25deg); }
+  to { transform: translateX(-2.8%) rotate(-.25deg); }
+}
+
+@keyframes theory-wave-roll-near {
+  from { transform: translateX(-1.6%) translateY(1%); }
+  to { transform: translateX(2%) translateY(-1.2%); }
+}
+
+@keyframes theory-glint-shift {
+  from { transform: translateX(-2.5%); opacity: .55; }
+  to { transform: translateX(2.5%); opacity: .9; }
+}
+
+@media (max-width: 800px) {
+  [data-page="lens"] .theory-sun {
+    right: 8%;
+  }
+
+  [data-page="lens"] .theory-water {
+    inset-block-start: 61%;
+  }
+
+  [data-page="lens"] .theory-horizon {
+    top: 61%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-page="lens"] .theory-stars,
+  [data-page="lens"] .theory-wave {
+    animation: none;
+  }
+}
