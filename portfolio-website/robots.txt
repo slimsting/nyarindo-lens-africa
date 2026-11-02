@@ -34,4 +34,4 @@ Allow: /
 User-agent: CCBot
 Allow: /
 
-Sitemap: https://nyarindo-lens-africa.netlify.app/sitemap.xml
+Sitemap: https://nyarindolens.com/sitemap.xml

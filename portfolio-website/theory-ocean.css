@@ -416,6 +416,11 @@ html[data-theme="dark"][data-page="lens"] body::after {
 }
 
 @media (max-width: 800px) {
+  [data-page="lens"] .hero {
+    align-items: flex-start;
+    padding: 132px 7vw 70px;
+  }
+
   [data-page="lens"] .theory-sun {
     right: 8%;
   }
