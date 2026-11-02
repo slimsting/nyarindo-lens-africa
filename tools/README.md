@@ -47,7 +47,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\tools\Install-ReleaseGuard
   -RepositoryPath . `
   -Profile PublicAllowlist `
   -PublicPathPrefixes portfolio-website/,drift/,memory-app/,semantic-field-extension/,tools/ `
-  -PublicFiles _redirects,robots.txt,sitemap.xml,site.webmanifest,llms.txt,googleb73ea63473c1dc60.html,.gitignore
+  -PublicFiles _headers,_redirects,robots.txt,sitemap.xml,site.webmanifest,llms.txt,googleb73ea63473c1dc60.html,.gitignore
 ```
 
 Add known client names or project codenames only to the local
@@ -61,6 +61,16 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\tools\Test-ReleaseGuard.ps
 
 The tests create disposable repositories under the operating system temporary directory and
 remove them after verification.
+
+## Test the public-site security boundary
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File .\tools\Test-SiteSecurity.ps1
+```
+
+This verifies required response headers, strict script CSP, JSON-LD hash coverage, absence of
+inline executable scripts and event handlers, same-origin font delivery, and removal of
+dynamic JavaScript execution sinks.
 
 ## Limit
 

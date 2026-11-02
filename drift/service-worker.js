@@ -1,5 +1,5 @@
-const CACHE = 'drift-v10';
-const ASSETS = ['./', './index.html', './artist.html', './styles.css', './app.js', './artist.js', './manifest.webmanifest', './assets/drift-app-icon.svg', './assets/back-home-arrow.svg'];
+const CACHE = 'drift-v11';
+const ASSETS = ['./', './index.html', './artist.html', './styles.css', './app.js?v=security-1', './artist.js', './manifest.webmanifest', './assets/drift-app-icon.svg', './assets/back-home-arrow.svg'];
 self.addEventListener('install', event => event.waitUntil(
   caches.open(CACHE)
     .then(cache => cache.addAll(ASSETS))

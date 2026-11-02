@@ -276,3 +276,7 @@ html[data-theme="light"] .witness-dialog{background:#eeeae0;border-color:rgba(15
 html[data-theme="light"] .witness-field textarea{background:rgba(255,255,255,.62);color:var(--ink)}
 @media(max-width:680px){.journaling-type-grid{grid-template-columns:1fr}.journaling-types-heading h2,.practice-section-intro h2{font-size:34px}.witness-dialog form{padding:21px}.witness-dialog-head h2{font-size:28px}.witness-field textarea{min-height:250px}.witness-dialog-foot{align-items:stretch;flex-direction:column}.witness-dialog-foot>div{flex-direction:column}.witness-secondary,.witness-close-action{width:100%}}
 @keyframes witness-dialog-in{from{opacity:0;transform:translateY(12px) scale(.98)}to{opacity:1;transform:none}}
+
+.storage-security{border:1px solid rgba(210,163,109,.42);border-radius:999px;padding:8px 11px;background:rgba(210,163,109,.06);color:var(--ink);font:9px var(--mono);letter-spacing:.05em;cursor:pointer}
+.storage-security:hover,.storage-security:focus-visible{border-color:var(--accent);background:rgba(210,163,109,.14)}
+.storage-locked-note{padding:18px;border:1px solid var(--line);background:rgba(255,255,255,.025);color:var(--muted);font-size:12px;line-height:1.75}

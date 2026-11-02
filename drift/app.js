@@ -32,7 +32,15 @@ function render(remember = false) {
   title.textContent = track.title; artist.textContent = track.artist; album.textContent = track.album ? `from ${track.album}` : ''; album.hidden = !track.album; path.textContent = track.path; reason.textContent = track.reason;
   art.className = `art ${track.art}`; transportPlay.setAttribute('aria-label', `Play ${track.title}`);
   document.documentElement.style.setProperty('--track-glow', track.art === 'art-2' ? '#77352c' : track.art === 'art-3' ? '#765226' : track.art === 'art-4' ? '#164b3a' : '#245c49');
-  $('lyricsText').innerHTML = track.lyrics.map((line, lineIndex) => `<div class="lyric-line${lineIndex === 0 ? ' active' : ''}">${line}</div>`).join(''); lyricIndex = 0;
+  const lyricLines = document.createDocumentFragment();
+  track.lyrics.forEach((line, lineIndex) => {
+    const lyric = document.createElement('div');
+    lyric.className = `lyric-line${lineIndex === 0 ? ' active' : ''}`;
+    lyric.textContent = line;
+    lyricLines.append(lyric);
+  });
+  $('lyricsText').replaceChildren(lyricLines);
+  lyricIndex = 0;
   document.querySelectorAll('.mode').forEach(b => b.classList.toggle('selected', b.dataset.mode === mode));
   localStorage.setItem('drift-mode', mode); localStorage.setItem('drift-index', index);
 }
@@ -58,8 +66,8 @@ transportPlay.addEventListener('click', toggleTone);
 $('nextTrack').addEventListener('click', () => { history.push({ mode, index }); const atEnd = index % tracks[mode].length === tracks[mode].length - 1; if (!repeatOne || !atEnd) index++; render(); toast(repeatOne && atEnd ? 'Repeating this song.' : 'Next song.'); });
 $('previousTrack').addEventListener('click', () => { const previous = history.pop(); if (previous) { mode = previous.mode; index = previous.index; } else { index = (index - 1 + tracks[mode].length) % tracks[mode].length; } render(); toast('Previous song.'); });
 const dialog = $('profileDialog'); $('profileButton').addEventListener('click', () => dialog.showModal());
-$('profileForm').addEventListener('submit', (event) => { if (event.submitter.value !== 'save') return; const name = $('username').value.trim(); if (!name) return; localStorage.setItem('drift-user', name); updateUser(); toast(`Welcome to Drift, ${name}.`); });
-function updateUser() { const name = localStorage.getItem('drift-user'); if (!name) return; $('profileInitial').textContent = name[0].toUpperCase(); $('greeting').textContent = `${name.toUpperCase()}'S LISTENING SPACE`; }
+$('profileForm').addEventListener('submit', (event) => { if (event.submitter.value !== 'save') return; const name = $('username').value.trim(); if (!name) return; sessionStorage.setItem('drift-user', name); localStorage.removeItem('drift-user'); updateUser(); toast(`Welcome to Drift, ${name}.`); });
+function updateUser() { const name = sessionStorage.getItem('drift-user'); if (!name) return; $('profileInitial').textContent = name[0].toUpperCase(); $('greeting').textContent = `${name.toUpperCase()}'S LISTENING SPACE`; }
 let timeout; function toast(message) { const el = $('toast'); el.textContent = message; el.classList.add('show'); clearTimeout(timeout); timeout = setTimeout(() => el.classList.remove('show'), 2300); }
 ['artistTip','driftSupport'].forEach(id => $(id).addEventListener('click', () => toast(id === 'artistTip' ? 'Artist tips are a preview—payments are not connected.' : 'Support options are a preview—no payment is collected.')));
 $('lyricsToggle').addEventListener('click', () => { const panel = $('lyrics'); const open = panel.hidden; panel.hidden = !open; $('lyricsToggle').setAttribute('aria-expanded', String(open)); $('lyricsToggle').querySelector('span').textContent = open ? '−' : '+'; });

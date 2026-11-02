@@ -14,13 +14,6 @@ let dragStart = null;
 let pinchStart = null;
 const pointers = new Map();
 
-const escapeHtml = (value = '') => String(value)
-  .replaceAll('&', '&amp;')
-  .replaceAll('<', '&lt;')
-  .replaceAll('>', '&gt;')
-  .replaceAll('"', '&quot;')
-  .replaceAll("'", '&#039;');
-
 function centerViewer() {
   viewerStage.scrollLeft = Math.max(0, (viewerStage.scrollWidth - viewerStage.clientWidth) / 2);
   viewerStage.scrollTop = Math.max(0, (viewerStage.scrollHeight - viewerStage.clientHeight) / 2);
@@ -101,24 +94,45 @@ function closeViewer() {
 }
 
 function renderCharacterEntry(character) {
-  const dialogue = character.dialogue?.length
-    ? `<p><strong>Says:</strong> ${character.dialogue.map(line => `“${escapeHtml(line)}”`).join(' ')}</p>`
-    : '';
-  return `<article class="character-entry">
-    <span class="entry-meta">${escapeHtml(character.entityType?.replaceAll('_', ' ') || 'archetype')}${character.speakerConfidence === 'inferred' ? ' · interpretation inferred' : ''}</span>
-    <h5>${escapeHtml(character.displayName)}${character.archetypeRoles?.length ? ` · ${escapeHtml(character.archetypeRoles.join(' / '))}` : ''}</h5>
-    <p>${escapeHtml(character.depictedAction)}</p>
-    ${dialogue}
-    <p><strong>In this work:</strong> ${escapeHtml(character.symbolicMeaning)}</p>
-  </article>`;
+  const article = document.createElement('article');
+  article.className = 'character-entry';
+  const meta = document.createElement('span');
+  meta.className = 'entry-meta';
+  meta.textContent = `${character.entityType?.replaceAll('_', ' ') || 'archetype'}${character.speakerConfidence === 'inferred' ? ' · interpretation inferred' : ''}`;
+  const heading = document.createElement('h5');
+  heading.textContent = `${character.displayName}${character.archetypeRoles?.length ? ` · ${character.archetypeRoles.join(' / ')}` : ''}`;
+  const action = document.createElement('p');
+  action.textContent = character.depictedAction;
+  article.append(meta, heading, action);
+
+  if (character.dialogue?.length) {
+    const dialogue = document.createElement('p');
+    const lead = document.createElement('strong');
+    lead.textContent = 'Says:';
+    dialogue.append(lead, ` ${character.dialogue.map(line => `“${line}”`).join(' ')}`);
+    article.append(dialogue);
+  }
+
+  const meaning = document.createElement('p');
+  const meaningLead = document.createElement('strong');
+  meaningLead.textContent = 'In this work:';
+  meaning.append(meaningLead, ` ${character.symbolicMeaning}`);
+  article.append(meaning);
+  return article;
 }
 
 function renderMessageEntry(message) {
-  return `<article class="message-entry">
-    <span class="entry-meta">${escapeHtml(message.type || 'message')}</span>
-    <h5>“${escapeHtml(message.text)}”</h5>
-    <p>${escapeHtml(message.meaning)}</p>
-  </article>`;
+  const article = document.createElement('article');
+  article.className = 'message-entry';
+  const meta = document.createElement('span');
+  meta.className = 'entry-meta';
+  meta.textContent = message.type || 'message';
+  const heading = document.createElement('h5');
+  heading.textContent = `“${message.text}”`;
+  const meaning = document.createElement('p');
+  meaning.textContent = message.meaning;
+  article.append(meta, heading, meaning);
+  return article;
 }
 
 function renderGuides() {
@@ -130,16 +144,26 @@ function renderGuides() {
     const characters = artworkData.characters.filter(character => character.works?.includes(workId));
     const messages = artworkData.messages.filter(message => message.works?.includes(workId));
     const content = guide.querySelector('.guide-content');
-    content.innerHTML = `<p>${escapeHtml(work.description)}</p>
-      ${characters.length ? `<section class="guide-group"><h4>Characters and archetypes</h4><div class="character-list">${characters.map(renderCharacterEntry).join('')}</div></section>` : ''}
-      ${messages.length ? `<section class="guide-group"><h4>Messages in this artwork</h4><div class="message-list">${messages.map(renderMessageEntry).join('')}</div></section>` : ''}`;
+    content.replaceChildren();
+    const description = document.createElement('p');
+    description.textContent = work.description;
+    content.append(description);
+    if (characters.length) content.append(createGuideGroup('Characters and archetypes', characters, 'character-list'));
+    if (messages.length) content.append(createGuideGroup('Messages in this artwork', messages, 'message-list'));
   });
 
   const sequence = document.getElementById('messageSequence');
   if (sequence && artworkData.messageSequence?.length) {
-    sequence.innerHTML = artworkData.messageSequence.map((message, index) =>
-      `<article><span>${String(index + 1).padStart(2, '0')}</span><p>${escapeHtml(message)}</p></article>`
-    ).join('');
+    sequence.replaceChildren();
+    artworkData.messageSequence.forEach((message, index) => {
+      const item = document.createElement('article');
+      const number = document.createElement('span');
+      number.textContent = String(index + 1).padStart(2, '0');
+      const copy = document.createElement('p');
+      copy.textContent = message;
+      item.append(number, copy);
+      sequence.append(item);
+    });
   }
 
   const fullGuide = document.getElementById('fullGuideContent');
@@ -152,16 +176,47 @@ function renderGuides() {
         groups.get(id).push(character);
       });
     });
-    fullGuide.innerHTML = artworkData.works.map(work => {
+    fullGuide.replaceChildren();
+    artworkData.works.forEach(work => {
       const characters = groups.get(work.id) || [];
       const messages = artworkData.messages.filter(message => message.works?.includes(work.id));
-      return `<section class="guide-group"><h4>${escapeHtml(work.title)}</h4>
-        <p>${escapeHtml(work.description)}</p>
-        ${characters.length ? `<div class="character-list">${characters.map(renderCharacterEntry).join('')}</div>` : ''}
-        ${messages.length ? `<h4>Messages</h4><div class="message-list">${messages.map(renderMessageEntry).join('')}</div>` : ''}
-      </section>`;
-    }).join('');
+      const section = document.createElement('section');
+      section.className = 'guide-group';
+      const title = document.createElement('h4');
+      title.textContent = work.title;
+      const description = document.createElement('p');
+      description.textContent = work.description;
+      section.append(title, description);
+      if (characters.length) section.append(createEntryList(characters, 'character-list', renderCharacterEntry));
+      if (messages.length) {
+        const messageTitle = document.createElement('h4');
+        messageTitle.textContent = 'Messages';
+        section.append(messageTitle, createEntryList(messages, 'message-list', renderMessageEntry));
+      }
+      fullGuide.append(section);
+    });
   }
+}
+
+function createEntryList(items, className, renderer) {
+  const list = document.createElement('div');
+  list.className = className;
+  items.forEach(item => list.append(renderer(item)));
+  return list;
+}
+
+function createGuideGroup(titleText, items, listClass) {
+  const section = document.createElement('section');
+  section.className = 'guide-group';
+  const title = document.createElement('h4');
+  title.textContent = titleText;
+  const list = createEntryList(
+    items,
+    listClass,
+    listClass === 'character-list' ? renderCharacterEntry : renderMessageEntry,
+  );
+  section.append(title, list);
+  return section;
 }
 
 fetch(guideDataUrl)
@@ -176,7 +231,11 @@ fetch(guideDataUrl)
   .catch(error => {
     console.error(error);
     const fullGuide = document.getElementById('fullGuideContent');
-    if (fullGuide) fullGuide.innerHTML = '<p>The structured guide could not be loaded. The visible summaries remain available.</p>';
+    if (fullGuide) {
+      const message = document.createElement('p');
+      message.textContent = 'The structured guide could not be loaded. The visible summaries remain available.';
+      fullGuide.replaceChildren(message);
+    }
   });
 
 document.querySelectorAll('.artwork-trigger').forEach(trigger => {

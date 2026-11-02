@@ -10,8 +10,8 @@
     <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
     <meta name="author" content="Newbon Nyarindo Gadson">
     <meta name="application-name" content="Nyarindo Lens Africa">
-    <link rel="icon" type="image/png" sizes="32x32" href="https://nyarindo-lens-africa.netlify.app/portfolio-website/assets/favicon-32.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="https://nyarindo-lens-africa.netlify.app/portfolio-website/assets/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/portfolio-website/assets/favicon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/portfolio-website/assets/apple-touch-icon.png">
     <link rel="canonical" href="https://nyarindo-lens-africa.netlify.app/memory-app/index.html">
     <link rel="sitemap" type="application/xml" title="Sitemap" href="https://nyarindo-lens-africa.netlify.app/sitemap.xml">
     <link rel="manifest" href="/site.webmanifest">
@@ -20,16 +20,13 @@
     <meta property="og:url" content="https://nyarindo-lens-africa.netlify.app/memory-app/index.html">
     <meta property="og:title" content="Return — a memory practice">
     <meta property="og:description" content="Two private journaling practices: a clearing page without witness, and a structured returning journal for rereading patterns over time.">
-    <meta property="og:image" content="https://nyarindo-lens-africa.netlify.app/portfolio-website/assets/newbon-nyarindo-gadson-brand-portrait.webp">
+    <meta property="og:image" content="/portfolio-website/assets/newbon-nyarindo-gadson-brand-portrait.webp">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Return — a memory practice">
     <meta name="twitter:description" content="Two private journaling practices: a clearing page without witness, and a structured returning journal for rereading patterns over time.">
-    <meta name="twitter:image" content="https://nyarindo-lens-africa.netlify.app/portfolio-website/assets/newbon-nyarindo-gadson-brand-portrait.webp">
-    <script>try{const saved=localStorage.getItem('nyarindo-theme');if(saved==='light'||saved==='dark')document.documentElement.dataset.theme=saved;else if(matchMedia('(prefers-color-scheme: light)').matches)document.documentElement.dataset.theme='light';}catch{}</script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css?v=memory-two-journals-1">
+    <meta name="twitter:image" content="/portfolio-website/assets/newbon-nyarindo-gadson-brand-portrait.webp">
+    <script src="../portfolio-website/site-theme-init.js?v=security-1"></script>
+    <link rel="stylesheet" href="styles.css?v=memory-security-1">
     <link rel="stylesheet" href="tap-feedback.css?v=tap-feedback-1">
 
     <script type="application/ld+json">
@@ -39,7 +36,7 @@
         "name": "Return — a memory practice",
         "description": "Two private journaling practices: a clearing page without witness, and a structured returning journal for rereading patterns over time.",
         "url": "https://nyarindo-lens-africa.netlify.app/memory-app/index.html",
-        "image": "https://nyarindo-lens-africa.netlify.app/portfolio-website/assets/newbon-nyarindo-gadson-brand-portrait.webp",
+        "image": "/portfolio-website/assets/newbon-nyarindo-gadson-brand-portrait.webp",
         "author": {
           "@type": "Person",
           "name": "Newbon Nyarindo Gadson",
@@ -51,6 +48,8 @@
       }
     </script>
       <link rel="stylesheet" href="/portfolio-website/site-map.css?v=site-map-1">
+    <link rel="stylesheet" href="/portfolio-website/local-fonts.css?v=fonts-1">
+
   </head>
   <body>
     <header class="topbar"><a class="wordmark" href="../portfolio-website/index.html#home" aria-label="Back to Nyarindo Lens Africa home"><img src="assets/return-wordmark-spiral.svg" alt="" aria-hidden="true"><span>return</span></a><div class="topbar-actions"><span class="privacy-mark"><i></i> ON THIS DEVICE</span><button id="themeToggle" class="theme-toggle" type="button" aria-label="Switch to light mode" aria-pressed="false"><span class="theme-icon" aria-hidden="true">☼</span><span class="theme-label">LIGHT</span></button></div></header>
@@ -152,11 +151,11 @@
           <label class="writing-field"><span><b>04</b> What else is in the story? · <a class="book-reference" href="../portfolio-website/index.html#book-06">O(n)</a> <a class="book-citation" href="../portfolio-website/index.html#book-06">(book 6, pages 15, 20)</a></span><small>Memories, loops, or context connected to this moment.</small><textarea name="context" rows="3" maxlength="1200" placeholder="Add context if it helps…"></textarea></label>
           <label class="writing-field"><span><b>05</b> A small practice, if one arises</span><small>Application can be small. You can leave this blank.</small><textarea name="practice" rows="3" maxlength="800" placeholder="A next step, a pause, or no action…"></textarea></label>
         </div>
-        <div class="save-row"><p>This returning-journal entry stays in this browser on this device. It does not sync or encrypt. The private clearing page above is never saved here.</p><button type="submit" id="saveButton">Save this entry <span>↗</span></button></div>
+        <div class="save-row"><p id="storageNote">This returning-journal entry stays in this browser on this device. It does not sync or encrypt. The private clearing page above is never saved here.</p><button type="submit" id="saveButton">Save this entry <span>↗</span></button></div>
       </form>
 
       <section class="memory-shelf" aria-labelledby="shelfTitle">
-        <div class="shelf-head"><div><p class="eyebrow">JOURNAL · ACCUMULATE · RETURN</p><h2 id="shelfTitle">Your spiral of notes.</h2></div><div class="shelf-actions"><button id="compareAllReports" class="compare-all-reports" type="button" aria-expanded="false" aria-controls="globalComparison" hidden>Analyze entries</button><button id="clearMemories" class="clear-button" type="button" hidden>Clear saved entries</button></div></div>
+        <div class="shelf-head"><div><p class="eyebrow">JOURNAL · ACCUMULATE · RETURN</p><h2 id="shelfTitle">Your spiral of notes.</h2></div><div class="shelf-actions"><button id="storageSecurity" class="storage-security" type="button" hidden>Protect entries</button><button id="unlockEntries" class="storage-security" type="button" hidden>Unlock entries</button><button id="compareAllReports" class="compare-all-reports" type="button" aria-expanded="false" aria-controls="globalComparison" hidden>Analyze entries</button><button id="clearMemories" class="clear-button" type="button" hidden>Clear saved entries</button></div></div>
         <section id="globalComparison" class="comparison-panel global-comparison" aria-live="polite" hidden></section>
         <p class="empty-note" id="emptyNote">Returning-journal entries gather here over time. They can be revisited and compared without turning today’s writing into a verdict.</p>
         <div id="memoryList" class="memory-list" aria-live="polite"></div>
@@ -184,7 +183,7 @@
     </section>
     <footer><span>RETURN · A PRACTICE, NOT A PRESCRIPTION</span><a href="../portfolio-website/index.html#book-01">ABOUT THE LENS (book 1, page 12) ↗</a></footer>
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
-    <script src="app.js?v=memory-two-journals-1"></script>
+    <script src="app.js?v=memory-security-1"></script>
   <script src="tap-feedback.js?v=tap-feedback-1"></script>
       <nav class="site-map" aria-label="Nyarindo Lens Africa site map">
       <div class="site-map-intro">

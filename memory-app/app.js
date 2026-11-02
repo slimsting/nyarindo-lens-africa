@@ -17,12 +17,19 @@ const witnessDialog = document.getElementById('witnessDialog');
 const witnessText = document.getElementById('witnessText');
 const clearWitness = document.getElementById('clearWitness');
 const themeToggle = document.getElementById('themeToggle');
+const storageNote = document.getElementById('storageNote');
+const storageSecurity = document.getElementById('storageSecurity');
+const unlockEntriesButton = document.getElementById('unlockEntries');
 const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 let toastTimer;
 let themeTimer;
 let formMode = 'beginning';
 let activeEntryId = null;
 let selectedStoryId = null;
+let entriesCache = [];
+let storageEnvelope = null;
+let storageKey = null;
+let storageLocked = false;
 
 function applyTheme(theme, animate = true) {
   const isLight = theme === 'light';
@@ -118,17 +125,114 @@ const bookTitles = {
   7: 'The Vacuum Experiment'
 };
 
-function readEntries() {
-  try {
-    const value = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-    return Array.isArray(value) ? value.filter(entry => entry && typeof entry.id === 'string') : [];
-  } catch {
-    return [];
-  }
+function normalizeEntries(value) {
+  return Array.isArray(value) ? value.filter(entry => entry && typeof entry.id === 'string') : [];
 }
 
-function writeEntries(entries) {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(entries));
+function readEntries() {
+  return entriesCache;
+}
+
+async function writeEntries(entries) {
+  entriesCache = normalizeEntries(entries);
+  if (storageEnvelope && storageKey) {
+    const salt = base64ToBytes(storageEnvelope.salt);
+    const envelope = await encryptEntriesWithKey(
+      entriesCache,
+      storageKey,
+      salt,
+      storageEnvelope.iterations
+    );
+    storageEnvelope = envelope;
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(envelope));
+    return;
+  }
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(entriesCache));
+}
+
+const storageEncoder = new TextEncoder();
+const STORAGE_AAD = storageEncoder.encode('nyarindo-return-journal-v1');
+const PBKDF2_ITERATIONS = 310000;
+
+function bytesToBase64(bytes) {
+  let binary = '';
+  const chunkSize = 0x8000;
+  for (let index = 0; index < bytes.length; index += chunkSize) {
+    binary += String.fromCharCode(...bytes.subarray(index, index + chunkSize));
+  }
+  return btoa(binary);
+}
+
+function base64ToBytes(value) {
+  const binary = atob(value);
+  const bytes = new Uint8Array(binary.length);
+  for (let index = 0; index < binary.length; index += 1) {
+    bytes[index] = binary.charCodeAt(index);
+  }
+  return bytes;
+}
+
+async function deriveStorageKey(passphrase, salt, iterations) {
+  const material = await crypto.subtle.importKey(
+    'raw',
+    storageEncoder.encode(passphrase),
+    'PBKDF2',
+    false,
+    ['deriveKey']
+  );
+  return crypto.subtle.deriveKey(
+    { name: 'PBKDF2', salt, iterations, hash: 'SHA-256' },
+    material,
+    { name: 'AES-GCM', length: 256 },
+    false,
+    ['encrypt', 'decrypt']
+  );
+}
+
+async function encryptEntriesWithKey(entries, key, salt, iterations) {
+  const iv = crypto.getRandomValues(new Uint8Array(12));
+  const plaintext = storageEncoder.encode(JSON.stringify(entries));
+  const encrypted = await crypto.subtle.encrypt(
+    { name: 'AES-GCM', iv, additionalData: STORAGE_AAD },
+    key,
+    plaintext
+  );
+  return {
+    version: 1,
+    encrypted: true,
+    cipher: 'AES-GCM-256',
+    kdf: 'PBKDF2-SHA256',
+    iterations,
+    salt: bytesToBase64(salt),
+    iv: bytesToBase64(iv),
+    data: bytesToBase64(new Uint8Array(encrypted))
+  };
+}
+
+async function createStorageEnvelope(entries, passphrase) {
+  const salt = crypto.getRandomValues(new Uint8Array(16));
+  const key = await deriveStorageKey(passphrase, salt, PBKDF2_ITERATIONS);
+  const envelope = await encryptEntriesWithKey(entries, key, salt, PBKDF2_ITERATIONS);
+  return { envelope, key };
+}
+
+async function decryptStorageEnvelope(envelope, passphrase) {
+  const iterations = Number(envelope.iterations);
+  if (!Number.isFinite(iterations) || iterations < 100000) {
+    throw new Error('Unsupported encrypted storage parameters.');
+  }
+  const salt = base64ToBytes(envelope.salt);
+  const iv = base64ToBytes(envelope.iv);
+  const key = await deriveStorageKey(passphrase, salt, iterations);
+  const plaintext = await crypto.subtle.decrypt(
+    { name: 'AES-GCM', iv, additionalData: STORAGE_AAD },
+    key,
+    base64ToBytes(envelope.data)
+  );
+  return {
+    entries: normalizeEntries(JSON.parse(new TextDecoder().decode(plaintext))),
+    key
+  };
 }
 
 function makeId() {
@@ -835,7 +939,13 @@ function makeReturnButton(entry) {
   button.type = 'button';
   button.className = 'spiral-return';
   button.setAttribute('aria-label', `Return to journal entry from ${formatDate(entry.createdAt)}`);
-  button.innerHTML = '<img src="assets/return-spiral-mark.svg" alt="" aria-hidden="true"><span>Return</span>';
+  const image = document.createElement('img');
+  image.src = 'assets/return-spiral-mark.svg';
+  image.alt = '';
+  image.setAttribute('aria-hidden', 'true');
+  const label = document.createElement('span');
+  label.textContent = 'Return';
+  button.append(image, label);
   button.addEventListener('click', () => startReturn(entry.id));
   return button;
 }
@@ -915,9 +1025,9 @@ function renderEntries(openReturnId = null) {
     remove.type = 'button';
     remove.className = 'remove-entry';
     remove.textContent = 'Remove this entry';
-    remove.addEventListener('click', () => {
+    remove.addEventListener('click', async () => {
       try {
-        writeEntries(readEntries().filter(item => item.id !== entry.id));
+        await writeEntries(readEntries().filter(item => item.id !== entry.id));
         renderEntries();
         showToast('Entry removed from this device.');
       } catch {
@@ -927,7 +1037,100 @@ function renderEntries(openReturnId = null) {
     card.append(remove);
     memoryList.append(card);
   });
+  updateStorageUi(entries.length);
 }
+
+const defaultStorageNote = 'This returning-journal entry stays in this browser on this device. It does not sync or encrypt. The private clearing page above is never saved here.';
+const encryptedStorageNote = 'This returning-journal entry is encrypted at rest with your passphrase. It stays in this browser, does not sync, and must be unlocked again after this session.';
+
+function setMemoryFormEnabled(enabled) {
+  [...form.elements].forEach(control => {
+    control.disabled = !enabled;
+  });
+}
+
+function updateStorageUi(entryCount) {
+  const cryptoReady = Boolean(globalThis.crypto?.subtle);
+  unlockEntriesButton.hidden = !storageLocked;
+  storageSecurity.hidden = storageLocked || entryCount === 0 || !cryptoReady;
+  storageSecurity.textContent = storageEnvelope ? 'Lock now' : 'Protect entries';
+  storageNote.textContent = storageEnvelope ? encryptedStorageNote : defaultStorageNote;
+}
+
+function renderLockedState() {
+  setMemoryFormEnabled(false);
+  emptyNote.hidden = true;
+  memoryList.replaceChildren();
+  const note = document.createElement('p');
+  note.className = 'storage-locked-note';
+  note.textContent = 'Saved entries are encrypted. Unlock them with your passphrase to read, add, or remove entries.';
+  memoryList.append(note);
+  clearButton.hidden = true;
+  compareAllButton.hidden = true;
+  storageSecurity.hidden = true;
+  unlockEntriesButton.hidden = false;
+  storageNote.textContent = 'Your saved entries are encrypted and locked for this session.';
+}
+
+async function protectExistingEntries() {
+  if (!entriesCache.length) {
+    showToast('There are no saved entries to encrypt yet.');
+    return;
+  }
+  if (!globalThis.crypto?.subtle) {
+    showToast('This browser cannot provide application-level encryption on this page.');
+    return;
+  }
+  const passphrase = window.prompt('Create a passphrase of at least 10 characters. There is no recovery if you forget it.');
+  if (passphrase === null) return;
+  if (passphrase.length < 10) {
+    showToast('Use a passphrase with at least 10 characters.');
+    return;
+  }
+  try {
+    const result = await createStorageEnvelope(entriesCache, passphrase);
+    storageEnvelope = result.envelope;
+    storageKey = result.key;
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(storageEnvelope));
+    renderEntries();
+    showToast('Saved entries are now encrypted. You will unlock them again after this session.');
+  } catch {
+    showToast('The entries could not be encrypted. Nothing was changed.');
+  }
+}
+
+async function unlockSavedEntries() {
+  if (!storageEnvelope) return;
+  const passphrase = window.prompt('Enter the passphrase for the encrypted journal.');
+  if (passphrase === null) return;
+  try {
+    const result = await decryptStorageEnvelope(storageEnvelope, passphrase);
+    entriesCache = result.entries;
+    storageKey = result.key;
+    storageLocked = false;
+    setMemoryFormEnabled(true);
+    startBeginning();
+    renderEntries();
+    showToast('Encrypted entries unlocked for this session.');
+  } catch {
+    showToast('That passphrase did not unlock the saved entries.');
+  }
+}
+
+storageSecurity.addEventListener('click', async () => {
+  if (storageEnvelope && storageKey) {
+    if (!window.confirm('Lock the encrypted journal now?')) return;
+    storageKey = null;
+    entriesCache = [];
+    storageLocked = true;
+    renderLockedState();
+    showToast('Encrypted entries locked.');
+    return;
+  }
+  await protectExistingEntries();
+});
+
+unlockEntriesButton.addEventListener('click', unlockSavedEntries);
 
 compareAllButton.addEventListener('click', () => {
   if (globalComparison.hidden) {
@@ -967,8 +1170,37 @@ function renderAnchor(entry) {
 function setFieldText(id, label, hint) {
   const labelNode = document.getElementById(`${id}Label`);
   const hintNode = document.getElementById(`${id}Hint`);
-  if (labelNode) labelNode.innerHTML = label;
+  if (labelNode) {
+    labelNode.replaceChildren();
+    if (label instanceof Node) labelNode.append(label);
+    else labelNode.textContent = label;
+  }
   if (hintNode) hintNode.textContent = hint;
+}
+
+function createFieldLabel(number, text, concept) {
+  const fragment = document.createDocumentFragment();
+  const marker = document.createElement('b');
+  marker.textContent = number;
+  const conceptLink = document.createElement('a');
+  conceptLink.className = 'book-reference';
+  conceptLink.href = getBookHref(6);
+  conceptLink.textContent = concept;
+  fragment.append(
+    marker,
+    ` ${text} · `,
+    conceptLink,
+    ' ',
+    createBookCitation(6, 'pages 15, 20')
+  );
+  return fragment;
+}
+
+function setSaveButton(label) {
+  const button = document.getElementById('saveButton');
+  const arrow = document.createElement('span');
+  arrow.textContent = '↗';
+  button.replaceChildren(`${label} `, arrow);
 }
 
 function setModeEyebrow(prefix, bookNumber, bookLabel, pageLabel) {
@@ -990,9 +1222,9 @@ function startBeginning() {
   setModeEyebrow('RETURNING JOURNAL · ENTRY 01', 6, 'BOOK SIX', 'pages 20–22');
   document.getElementById('journalTitle').textContent = 'Begin the returning journal.';
   document.getElementById('journalInstructions').textContent = 'Write the raw report first, then the first story attached to it, then a wider memory if one arises. This entry is kept locally and is meant to be reread over time, not analyzed into a conclusion today.';
-  setFieldText('observation', '<b>02</b> Raw report · <a class="book-reference" href="../portfolio-website/index.html#book-06">O(0)</a> <a class="book-citation" href="../portfolio-website/index.html#book-06">(book 6, pages 15, 20)</a>', 'What can you notice directly—in your body, surroundings, or actions—before explaining it? Use one or more defaults if they fit, and type anything else you want to add in your own words.');
-  setFieldText('meaning', '<b>03</b> First story · <a class="book-reference" href="../portfolio-website/index.html#book-06">O(1)</a> <a class="book-citation" href="../portfolio-website/index.html#book-06">(book 6, pages 15, 20)</a>', 'What meaning, emotion, or explanation arrived? This is a story you can revisit, not a verdict.');
-  document.getElementById('saveButton').innerHTML = 'Save this entry <span>↗</span>';
+  setFieldText('observation', createFieldLabel('02', 'Raw report', 'O(0)'), 'What can you notice directly—in your body, surroundings, or actions—before explaining it? Use one or more defaults if they fit, and type anything else you want to add in your own words.');
+  setFieldText('meaning', createFieldLabel('03', 'First story', 'O(1)'), 'What meaning, emotion, or explanation arrived? This is a story you can revisit, not a verdict.');
+  setSaveButton('Save this entry');
   form.reset();
   syncStatePresets();
   updateSelectedStory();
@@ -1009,9 +1241,9 @@ function startReturn(entryId) {
   setModeEyebrow(`RETURN ${((entry.returns || []).length + 1).toString().padStart(2, '0')}`, 6, 'BOOK SIX', 'pages 20–22');
   document.getElementById('journalTitle').textContent = 'Set today beside the first note.';
   document.getElementById('journalInstructions').textContent = 'Start with what is directly here now. Then write the story that appears, if one does. The notes are kept beside the original report so you can read them across time.';
-  setFieldText('observation', '<b>01</b> Raw report now · <a class="book-reference" href="../portfolio-website/index.html#book-06">O(0)</a> <a class="book-citation" href="../portfolio-website/index.html#book-06">(book 6, pages 15, 20)</a>', 'What can you notice directly now, before you explain it? Your own words are always allowed.');
-  setFieldText('meaning', '<b>02</b> Story now · <a class="book-reference" href="../portfolio-website/index.html#book-06">O(1)</a> <a class="book-citation" href="../portfolio-website/index.html#book-06">(book 6, pages 15, 20)</a>', 'What meaning or explanation is here now? It may differ, repeat, or remain uncertain.');
-  document.getElementById('saveButton').innerHTML = 'Save this return <span>↗</span>';
+  setFieldText('observation', createFieldLabel('01', 'Raw report now', 'O(0)'), 'What can you notice directly now, before you explain it? Your own words are always allowed.');
+  setFieldText('meaning', createFieldLabel('02', 'Story now', 'O(1)'), 'What meaning or explanation is here now? It may differ, repeat, or remain uncertain.');
+  setSaveButton('Save this return');
   renderAnchor(entry);
   returnAnchor.hidden = false;
   updateSelectedStory();
@@ -1063,7 +1295,7 @@ document.querySelectorAll('.story-pick').forEach(button => {
   });
 });
 
-form.addEventListener('submit', event => {
+form.addEventListener('submit', async event => {
   event.preventDefault();
   const values = new FormData(form);
   const stateValue = String(values.get('state') || '')
@@ -1098,7 +1330,7 @@ form.addEventListener('submit', event => {
       return;
     }
     try {
-      writeEntries([entry, ...readEntries()]);
+      await writeEntries([entry, ...readEntries()]);
       selectedStoryId = null;
       document.querySelectorAll('.story-pick').forEach(item => {
         item.classList.remove('selected');
@@ -1128,7 +1360,7 @@ form.addEventListener('submit', event => {
     }
     if (!Array.isArray(entry.returns)) entry.returns = [];
     entry.returns.push(note);
-    writeEntries(entries);
+    await writeEntries(entries);
     renderEntries(note.id);
     renderAnchor(entry);
     returnAnchor.hidden = false;
@@ -1145,6 +1377,11 @@ clearButton.addEventListener('click', () => {
   if (!window.confirm('Remove all saved entries from this device? This cannot be undone here.')) return;
   try {
     localStorage.removeItem(STORAGE_KEY);
+    entriesCache = [];
+    storageEnvelope = null;
+    storageKey = null;
+    storageLocked = false;
+    setMemoryFormEnabled(true);
     renderEntries();
     showToast('Saved entries cleared from this device.');
   } catch {
@@ -1152,5 +1389,30 @@ clearButton.addEventListener('click', () => {
   }
 });
 
-startBeginning();
-renderEntries();
+async function initializeStorage() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (Array.isArray(parsed)) {
+        entriesCache = normalizeEntries(parsed);
+      } else if (parsed?.encrypted === true) {
+        storageEnvelope = parsed;
+        storageLocked = true;
+        entriesCache = [];
+      }
+    }
+  } catch {
+    entriesCache = [];
+  }
+
+  if (storageLocked) {
+    renderLockedState();
+    return;
+  }
+  setMemoryFormEnabled(true);
+  startBeginning();
+  renderEntries();
+}
+
+initializeStorage();

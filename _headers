@@ -1,0 +1,17 @@
+/*
+  Content-Security-Policy: default-src 'self'; base-uri 'none'; object-src 'none'; frame-ancestors 'none'; form-action 'self'; script-src 'self' 'sha256-13PT6GJp0zAD55GuywFl2yrYkqASlcEah8HgODKqAbk=' 'sha256-avhsgDEP2FqzKQ6eE3RkluhZjfT23Z9fAOco7GNcqlA=' 'sha256-c0qAYcgHjduOz/xcVqiHZwp/r9rCjAhketsKoRkEMVg=' 'sha256-Gdkg+xWYD7179aWj5VKhkCX4fyGlu1z3kMBrUaSVgCE=' 'sha256-gkpVSe7phEha1UUlB/bDVUHMyPBaAHoLb0fZ36c57AQ=' 'sha256-gQD8kapowMfts2Is8yMqoGJArcEu6lsd7xJQXFyaEd0=' 'sha256-I9Lg0fRdvh2Avw8pCa3Z4gwMJU2HiH0pCC2sPxtwLlY=' 'sha256-jItwyRTMEcabE+VETVAKc052ZDsn57LwDjqbeCDkayQ=' 'sha256-MDvnqmtxh945FYWxdzHGdW+ROOCapjH+sh/MN8lw2oA=' 'sha256-n0z9GWskDefXXeOsSV8E2//9tkWH7Bg/6YQrBV2hETc=' 'sha256-RESiForIGob90mNDPb27ope9GI6TWNabXh8pBe30AuM='; script-src-elem 'self' 'sha256-13PT6GJp0zAD55GuywFl2yrYkqASlcEah8HgODKqAbk=' 'sha256-avhsgDEP2FqzKQ6eE3RkluhZjfT23Z9fAOco7GNcqlA=' 'sha256-c0qAYcgHjduOz/xcVqiHZwp/r9rCjAhketsKoRkEMVg=' 'sha256-Gdkg+xWYD7179aWj5VKhkCX4fyGlu1z3kMBrUaSVgCE=' 'sha256-gkpVSe7phEha1UUlB/bDVUHMyPBaAHoLb0fZ36c57AQ=' 'sha256-gQD8kapowMfts2Is8yMqoGJArcEu6lsd7xJQXFyaEd0=' 'sha256-I9Lg0fRdvh2Avw8pCa3Z4gwMJU2HiH0pCC2sPxtwLlY=' 'sha256-jItwyRTMEcabE+VETVAKc052ZDsn57LwDjqbeCDkayQ=' 'sha256-MDvnqmtxh945FYWxdzHGdW+ROOCapjH+sh/MN8lw2oA=' 'sha256-n0z9GWskDefXXeOsSV8E2//9tkWH7Bg/6YQrBV2hETc=' 'sha256-RESiForIGob90mNDPb27ope9GI6TWNabXh8pBe30AuM='; script-src-attr 'none'; style-src 'self' 'unsafe-inline'; style-src-attr 'unsafe-inline'; img-src 'self'; font-src 'self'; connect-src 'self'; media-src 'self'; manifest-src 'self'; worker-src 'self'; frame-src 'none'
+  Cross-Origin-Opener-Policy: same-origin
+  Cross-Origin-Resource-Policy: same-origin
+  Permissions-Policy: accelerometer=(), camera=(), display-capture=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()
+  Referrer-Policy: strict-origin-when-cross-origin
+  Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  X-Permitted-Cross-Domain-Policies: none
+  X-XSS-Protection: 0
+
+/portfolio-website/assets/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/googleb73ea63473c1dc60.html
+  Cache-Control: no-cache
