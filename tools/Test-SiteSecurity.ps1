@@ -64,8 +64,77 @@ foreach ($requiredHeader in @(
     }
 }
 
-$htmlFiles = Get-ChildItem -LiteralPath $rootPath -Recurse -File -Filter '*.html'
+function Test-IsPublishCandidate {
+    param([Parameter(Mandatory = $true)][string]$FullName)
+
+    $relative = $FullName.Substring($rootPath.Length).TrimStart('\').Replace('\', '/')
+    return $relative -notmatch '^(?:\.git|\.review|node_modules|netlify-release-[^/]+)(?:/|$)'
+}
+
+$htmlFiles = @(Get-ChildItem -LiteralPath $rootPath -Recurse -File -Filter '*.html' |
+    Where-Object { Test-IsPublishCandidate -FullName $_.FullName })
 $jsonLdHashes = [System.Collections.Generic.HashSet[string]]::new()
+
+function Get-VirtualDirectory {
+    param([Parameter(Mandatory = $true)][string]$Path)
+
+    $normalized = if ($Path.StartsWith('/')) { $Path } else { '/' + $Path }
+    if ($normalized.EndsWith('/')) {
+        return $normalized.Trim('/')
+    }
+
+    $lastSlash = $normalized.LastIndexOf('/')
+    if ($lastSlash -le 0) {
+        return ''
+    }
+    return $normalized.Substring(1, $lastSlash - 1)
+}
+
+$redirectsPath = Join-Path $rootPath '_redirects'
+if (Test-Path -LiteralPath $redirectsPath -PathType Leaf) {
+    foreach ($redirectLine in Get-Content -LiteralPath $redirectsPath -Encoding utf8) {
+        if ($redirectLine -notmatch '^\s*(?<from>/\S*)\s+(?<to>/\S+)\s+200!?\s*$') {
+            continue
+        }
+
+        $from = $matches['from']
+        $to = $matches['to']
+        if ($from.Contains('*') -or $to.Contains(':') -or $to -notmatch '\.html$') {
+            continue
+        }
+
+        $fromDirectory = Get-VirtualDirectory -Path $from
+        $toDirectory = Get-VirtualDirectory -Path $to
+        if ($fromDirectory.Equals($toDirectory, [System.StringComparison]::OrdinalIgnoreCase)) {
+            continue
+        }
+
+        $destinationPath = Join-Path $rootPath $to.TrimStart('/').Replace('/', '\')
+        if (-not (Test-Path -LiteralPath $destinationPath -PathType Leaf)) {
+            $failures.Add("Rewrite destination is missing: $from -> $to")
+            continue
+        }
+
+        $destinationText = Get-Content -LiteralPath $destinationPath -Raw -Encoding utf8
+        foreach ($attribute in [regex]::Matches($destinationText, '(?is)\b(?<name>href|src|srcset|data-full-src|data-full-avif)\s*=\s*["''](?<value>[^"'']+)["'']')) {
+            $values = @($attribute.Groups['value'].Value)
+            if ($attribute.Groups['name'].Value -ieq 'srcset') {
+                $values = @($values[0] -split ',' | ForEach-Object { ($_ -split '\s+')[0] })
+            }
+
+            foreach ($value in $values) {
+                $candidate = $value.Trim()
+                if ([string]::IsNullOrWhiteSpace($candidate) -or
+                    $candidate.StartsWith('#') -or
+                    $candidate.StartsWith('/') -or
+                    $candidate -match '^[A-Za-z][A-Za-z0-9+.-]*:') {
+                    continue
+                }
+                $failures.Add("Directory-relative URL crosses a 200 rewrite boundary: $from serves $to; $($attribute.Groups['name'].Value)=$candidate")
+            }
+        }
+    }
+}
 
 foreach ($file in $htmlFiles) {
     $text = Get-Content -LiteralPath $file.FullName -Raw -Encoding utf8
@@ -120,7 +189,8 @@ foreach ($hash in $jsonLdHashes) {
     }
 }
 
-$jsFiles = Get-ChildItem -LiteralPath $rootPath -Recurse -File -Filter '*.js'
+$jsFiles = @(Get-ChildItem -LiteralPath $rootPath -Recurse -File -Filter '*.js' |
+    Where-Object { Test-IsPublishCandidate -FullName $_.FullName })
 foreach ($file in $jsFiles) {
     $text = Get-Content -LiteralPath $file.FullName -Raw -Encoding utf8
     $relative = $file.FullName.Substring($rootPath.Length).TrimStart('\').Replace('\', '/')

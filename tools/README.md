@@ -69,8 +69,11 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\tools\Test-SiteSecurity.ps
 ```
 
 This verifies required response headers, strict script CSP, JSON-LD hash coverage, absence of
-inline executable scripts and event handlers, same-origin font delivery, and removal of
-dynamic JavaScript execution sinks.
+inline executable scripts and event handlers, same-origin font delivery, removal of dynamic
+JavaScript execution sinks, and URL resolution across Netlify `200` rewrite boundaries. A
+rewrite that serves HTML from a different virtual directory must use root-absolute or fully
+qualified resource URL, so changing a canonical route cannot silently detach its CSS, scripts,
+images, or linked pages.
 
 ## Limit
 
