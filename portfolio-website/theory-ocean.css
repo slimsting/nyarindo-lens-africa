@@ -1,4 +1,6 @@
 [data-page="lens"] .hero {
+  min-height: 760px;
+  padding: 125px 9vw 55px;
   background: linear-gradient(180deg, #071827 0%, #15324a 48%, #d39a70 68%, #183643 100%);
 }
 
@@ -418,7 +420,8 @@ html[data-theme="dark"][data-page="lens"] body::after {
 @media (max-width: 800px) {
   [data-page="lens"] .hero {
     align-items: flex-start;
-    padding: 132px 7vw 70px;
+    min-height: auto;
+    padding: 132px 7vw 44px;
   }
 
   [data-page="lens"] .theory-sun {
