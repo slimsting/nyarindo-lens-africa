@@ -83,7 +83,7 @@
           <article class="journaling-type-card journaling-type-two">
             <p class="type-number">SECOND TYPE</p>
             <h3>The Returning Journal</h3>
-            <p>Structured writing that is kept, revisited, and accumulated over time. Each entry separates the raw report, first story, and wider memory.</p>
+            <p>Structured writing that is kept, revisited, and accumulated over time. Each entry asks the user to separate the bodily signal, their word-based signal report, and the interpretation or story attached afterward.</p>
             <ul>
               <li>Use timestamps and the same structure across entries.</li>
               <li>Write without forcing a conclusion.</li>
@@ -124,40 +124,80 @@
         <div class="journal-mode" id="journalMode">
           <p class="eyebrow" id="modeEyebrow">RETURNING JOURNAL · ENTRY 01 · <a class="book-reference" href="../portfolio-website/index.html#book-06">BOOK SIX (book 6, pages 20–22) ↗</a></p>
           <h2 id="journalTitle">Begin the returning journal.</h2>
-          <p id="journalInstructions">Write the raw report first, then the first story attached to it, then a wider memory if one arises. This entry is kept locally and is meant to be reread over time, not analyzed into a conclusion today.</p>
+          <p id="journalInstructions">Move through the spiral one turn at a time. Begin with what you choose to attend to, then notice the signal before deciding what it means. An interpretation can stay open. A return is where you read what followed in your own words.</p>
         </div>
         <div class="return-anchor" id="returnAnchor" hidden aria-live="polite"></div>
-        <fieldset class="state-field">
-          <legend><span>01</span> Before you write, what feels closest?</legend>
-          <p class="field-hint">Choose one or more defaults, then type anything else you want to add. This is your sense of the moment, not a label.</p>
-          <div class="state-options" role="group" aria-label="Default descriptions">
-            <button class="state-preset" type="button" data-state="Here enough" aria-pressed="false">Here enough</button>
-            <button class="state-preset" type="button" data-state="Stretched" aria-pressed="false">Stretched</button>
-            <button class="state-preset" type="button" data-state="Stuck or frozen" aria-pressed="false">Stuck or frozen</button>
-            <button class="state-preset" type="button" data-state="Trying to perform" aria-pressed="false">Trying to perform</button>
-            <button class="state-preset" type="button" data-state="Scattered" aria-pressed="false">Scattered</button>
-            <button class="state-preset" type="button" data-state="Not sure yet" aria-pressed="false">Not sure yet</button>
-          </div>
-          <label class="state-custom" for="stateCustom">
-            <span>Your own description</span>
-            <input id="stateCustom" name="state" type="text" maxlength="120" autocomplete="off" placeholder="Type how you feel in your own words…" aria-describedby="stateCustomHint">
-            <small id="stateCustomHint">Each default is added to this field with a comma. You can keep typing and add your own words at any time.</small>
-          </label>
-        </fieldset>
 
-        <div class="writing-grid">
-          <label class="writing-field"><span id="observationLabel"><b>02</b> Raw report · <a class="book-reference" href="../portfolio-website/index.html#book-06">O(0)</a> <a class="book-citation" href="../portfolio-website/index.html#book-06">(book 6, pages 15, 20)</a></span><small id="observationHint">What can you notice directly—in your body, surroundings, or actions—before explaining it? Use one or more defaults if they fit, and type anything else you want to add in your own words.</small><textarea name="observation" rows="4" maxlength="1200" placeholder="A few words are enough…"></textarea></label>
-          <label class="writing-field"><span id="meaningLabel"><b>03</b> First story · <a class="book-reference" href="../portfolio-website/index.html#book-06">O(1)</a> <a class="book-citation" href="../portfolio-website/index.html#book-06">(book 6, pages 15, 20)</a></span><small id="meaningHint">What meaning, emotion, or explanation arrived? This is a story you can revisit, not a verdict.</small><textarea name="meaning" rows="4" maxlength="1200" placeholder="An impression, a question, or nothing yet…"></textarea></label>
-          <label class="writing-field"><span><b>04</b> What else is in the story? · <a class="book-reference" href="../portfolio-website/index.html#book-06">O(n)</a> <a class="book-citation" href="../portfolio-website/index.html#book-06">(book 6, pages 15, 20)</a></span><small>Memories, loops, or context connected to this moment.</small><textarea name="context" rows="3" maxlength="1200" placeholder="Add context if it helps…"></textarea></label>
-          <label class="writing-field"><span><b>05</b> A small practice, if one arises</span><small>Application can be small. You can leave this blank.</small><textarea name="practice" rows="3" maxlength="800" placeholder="A next step, a pause, or no action…"></textarea></label>
+        <div class="spiral-stages" id="spiralStages">
+          <section class="spiral-stage" data-stage="return-observation" data-return-only data-stage-title="What followed">
+            <div class="spiral-stage-heading"><span class="spiral-stage-number">00</span><div><p class="eyebrow">THE SPIRAL TURNS</p><h3>Start with what followed.</h3></div></div>
+            <label class="writing-field"><span>What did you notice after your last chosen story and small action?</span><small>Return to the signal, interpretation, action, or ordinary life—not to a promised result. No visible change is also an observation.</small><textarea name="returnObservation" rows="4" maxlength="1600" placeholder="What happened next, if anything?…"></textarea></label>
+          </section>
+
+          <section class="spiral-stage" data-stage="attention" data-stage-title="Choose attention">
+            <div class="spiral-stage-heading"><span class="spiral-stage-number">01</span><div><p class="eyebrow">THE POINT OF ATTENTION</p><h3>Where will attention land?</h3></div></div>
+            <fieldset class="state-field">
+              <legend>Which feeling label seems closest?</legend>
+              <p class="field-hint">These are interpretations offered as starting points, not measurements of the signal. Choose none if none fit.</p>
+              <div class="state-options" role="group" aria-label="Default feeling descriptions">
+                <button class="state-preset" type="button" data-state="Here enough" aria-pressed="false">Here enough</button>
+                <button class="state-preset" type="button" data-state="Stretched" aria-pressed="false">Stretched</button>
+                <button class="state-preset" type="button" data-state="Stuck or frozen" aria-pressed="false">Stuck or frozen</button>
+                <button class="state-preset" type="button" data-state="Trying to perform" aria-pressed="false">Trying to perform</button>
+                <button class="state-preset" type="button" data-state="Scattered" aria-pressed="false">Scattered</button>
+                <button class="state-preset" type="button" data-state="Not sure yet" aria-pressed="false">Not sure yet</button>
+              </div>
+              <label class="state-custom" for="stateCustom">
+                <span>Your own description</span>
+                <input id="stateCustom" name="state" type="text" maxlength="120" autocomplete="off" placeholder="Type how you feel in your own words…" aria-describedby="stateCustomHint">
+                <small id="stateCustomHint">Each default is added to this field with a comma. You can add your own words at any time.</small>
+              </label>
+            </fieldset>
+            <label class="writing-field"><span id="attentionLabel">What are you choosing to attend to?</span><small id="attentionHint">Name the thing, place, sensation, question, memory, or action you are turning toward. This is your starting point, not a conclusion about it.</small><textarea name="attention" rows="3" maxlength="800" placeholder="I am turning toward…"></textarea></label>
+          </section>
+
+          <section class="spiral-stage" data-stage="signal" data-stage-title="Notice the signal">
+            <div class="spiral-stage-heading"><span class="spiral-stage-number">02</span><div><p class="eyebrow">THE RAW REPORT</p><h3>Notice before naming.</h3></div></div>
+            <label class="writing-field"><span id="observationLabel"><b></b> Signal report · <a class="book-reference" href="../portfolio-website/index.html#book-06">O(0)</a> <a class="book-citation" href="../portfolio-website/index.html#book-06">(book 6, pages 15, 20)</a></span><small id="observationHint">Describe what is actually present—pressure, heat, tingling, movement, stillness, sound, or anything else—before explaining it. These are your words for the signal, not the signal itself.</small><textarea name="observation" rows="4" maxlength="1200" placeholder="A few words are enough…"></textarea></label>
+          </section>
+
+          <section class="spiral-stage" data-stage="first-story" data-stage-title="Catch the story">
+            <div class="spiral-stage-heading"><span class="spiral-stage-number">03</span><div><p class="eyebrow">THE STORY ARRIVES</p><h3>Catch the first interpretation without believing it whole.</h3></div></div>
+            <label class="writing-field"><span id="meaningLabel"><b></b> First interpretation · <a class="book-reference" href="../portfolio-website/index.html#book-06">O(1)</a> <a class="book-citation" href="../portfolio-website/index.html#book-06">(book 6, pages 15, 20)</a></span><small id="meaningHint">What words, meaning, emotion, or explanation did your mind attach to the signal? Write the story as it arrived; it is not yet the story you have to keep.</small><textarea name="meaning" rows="4" maxlength="1200" placeholder="My mind added the story that…"></textarea></label>
+          </section>
+
+          <section class="spiral-stage" data-stage="pause" data-stage-title="Leave room">
+            <div class="spiral-stage-heading"><span class="spiral-stage-number">04</span><div><p class="eyebrow">THE PAUSE</p><h3>Let the first story wait.</h3></div></div>
+            <div class="spiral-pause-note"><p>You do not have to choose yet. The first story may be accurate, partly accurate, or only a familiar route. Let the signal remain unnamed for a breath.</p></div>
+            <label class="writing-field"><span>Another credible interpretation, or leave this blank</span><small>If another story is possible, write one that could also explain the evidence without denying danger, medical needs, or uncertainty.</small><textarea name="alternativeStory" rows="3" maxlength="1200" placeholder="Another possible story is…"></textarea></label>
+          </section>
+
+          <section class="spiral-stage" data-stage="choose" data-stage-title="Test and choose">
+            <div class="spiral-stage-heading"><span class="spiral-stage-number">05</span><div><p class="eyebrow">A STORY WORTH CARRYING</p><h3>Choose one account you can test.</h3></div></div>
+            <label class="writing-field"><span>A credible, supportive or workable story</span><small>This does not have to be positive. It needs to fit the evidence, protect what needs protecting, and leave room for correction.</small><textarea name="chosenStory" rows="3" maxlength="1200" placeholder="A story I can carry and test is…"></textarea></label>
+            <label class="writing-field"><span>What could confirm or disfavor it?</span><small>Name an observation, question, or check that would help you tell. Uncertainty can remain.</small><textarea name="evidence" rows="3" maxlength="800" placeholder="I will know it fits better if…"></textarea></label>
+          </section>
+
+          <section class="spiral-stage" data-stage="action" data-stage-title="Turn toward life">
+            <div class="spiral-stage-heading"><span class="spiral-stage-number">06</span><div><p class="eyebrow">BACK INTO THE WORLD</p><h3>Make the next turn small enough to take.</h3></div></div>
+            <label class="writing-field"><span>What else is part of this moment? · <a class="book-reference" href="../portfolio-website/index.html#book-06">O(n)</a> <a class="book-citation" href="../portfolio-website/index.html#book-06">(book 6, pages 15, 20)</a></span><small>Memories, context, or loops that belong with this moment.</small><textarea name="context" rows="3" maxlength="1200" placeholder="Add context if it helps…"></textarea></label>
+            <label class="writing-field"><span>One small next action, pause, or request for help</span><small>Action is not proof that a story worked. It is the next honest step you can take now.</small><textarea name="practice" rows="3" maxlength="800" placeholder="The next small turn is…"></textarea></label>
+            <p class="spiral-return-invite">Leave the entry here. The next turn will begin by asking what followed—not by asking you to prove a conclusion.</p>
+          </section>
         </div>
-        <div class="save-row"><p id="storageNote">This returning-journal entry stays in this browser on this device. It does not sync or encrypt. The private clearing page above is never saved here.</p><button type="submit" id="saveButton">Save this entry <span>↗</span></button></div>
+
+        <nav class="spiral-nav" aria-label="Returning journal steps">
+          <button id="previousStage" class="spiral-nav-button" type="button">← Back</button>
+          <p id="stageProgress" aria-live="polite">Step 1 of 6 · Choose attention</p>
+          <button id="nextStage" class="spiral-nav-button spiral-nav-next" type="button">Next: Notice the signal →</button>
+        </nav>
+        <div class="save-row"><p id="storageNote">This returning-journal entry stays in this browser on this device. It does not sync or encrypt. The private clearing page above is never saved here.</p><button type="submit" id="saveButton" hidden>Save this entry <span>↗</span></button></div>
       </form>
 
       <section class="memory-shelf" aria-labelledby="shelfTitle">
         <div class="shelf-head"><div><p class="eyebrow">JOURNAL · ACCUMULATE · RETURN</p><h2 id="shelfTitle">Your spiral of notes.</h2></div><div class="shelf-actions"><button id="storageSecurity" class="storage-security" type="button" hidden>Protect entries</button><button id="unlockEntries" class="storage-security" type="button" hidden>Unlock entries</button><button id="compareAllReports" class="compare-all-reports" type="button" aria-expanded="false" aria-controls="globalComparison" hidden>Analyze entries</button><button id="clearMemories" class="clear-button" type="button" hidden>Clear saved entries</button></div></div>
         <section id="globalComparison" class="comparison-panel global-comparison" aria-live="polite" hidden></section>
-        <p class="empty-note" id="emptyNote">Returning-journal entries gather here over time. They can be revisited and compared without turning today’s writing into a verdict.</p>
+        <p class="empty-note" id="emptyNote">Signal descriptions and the interpretations attached to them gather here over time. They can be revisited without turning today’s writing into a verdict.</p>
         <div id="memoryList" class="memory-list" aria-live="polite"></div>
       </section>
     </main>
@@ -176,14 +216,16 @@
       </form>
     </dialog>
     <aside class="care-note"><span>IF THIS FEELS LIKE TOO MUCH</span><p>Pause the exercise. Reach for a trusted person, a qualified professional, or something steady beneath your feet. You can come back another time.</p></aside>
-    <section class="attention-message" aria-labelledby="attentionTitle">
+    <section class="attention-message" id="attentionMessage" aria-labelledby="attentionTitle" hidden>
+      <p class="eyebrow">AFTER THE SPIRAL HAS TURNED</p>
       <div class="attention-orbit"><h2 id="attentionTitle"><a href="../portfolio-website/index.html#book-05" aria-label="Read Attention, Book Five">ATTENTION</a> <a class="book-citation" href="../portfolio-website/index.html#book-05">(book 5, page 12)</a></h2></div>
-      <p class="attention-copy">YOU CAN CHOOSE BETTER STORIES <a class="book-citation" href="../portfolio-website/index.html#book-03">(book 3, page 10)</a>, AND YOUR LIFE WILL GET BETTER. THE STORIES THAT KILL ARE THE REASON YOU FEEL STRESS <a class="book-citation" href="../portfolio-website/index.html#book-03">(book 3, page 10)</a>—LIVING IN THE PAST <a class="book-citation" href="../portfolio-website/index.html#book-04">(book 4, page 14)</a>. ANXIETY IS LIVING IN THE FUTURE <a class="book-citation" href="../portfolio-website/index.html#book-04">(book 4, page 33)</a>. THE BODY TAKES TIME TO GET USED TO THE PRESENT MOMENT <a class="book-citation" href="../portfolio-website/index.html#book-02">(book 2, page 13)</a> <a class="book-citation" href="../portfolio-website/index.html#book-05">(book 5, page 12)</a> AS WE SPIRAL BACK TO THE SAME DECISIONS <a class="book-citation" href="../portfolio-website/index.html#book-04">(book 4, page 14)</a>, EACH TIME DEEPER <a class="book-citation" href="../portfolio-website/index.html#book-06">(book 6, page 13)</a>.</p>
+      <p class="attention-progress" id="attentionProgress" aria-live="polite"></p>
+      <p class="attention-copy" id="attentionCopy"></p>
       <p class="attention-source">DRAWN FROM <a href="../portfolio-website/index.html#book-05">ATTENTION (book 5, page 12)</a>, <a href="../portfolio-website/index.html#book-03">THE STORIES WE TELL ABOUT THE PULSE (book 3, page 10)</a>, AND <a href="../portfolio-website/index.html#book-06">TEACHING THE WAVE MIND (book 6, pages 10–22)</a>.</p>
     </section>
     <footer><span>RETURN · A PRACTICE, NOT A PRESCRIPTION</span><a href="../portfolio-website/index.html#book-01">ABOUT THE LENS (book 1, page 12) ↗</a></footer>
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
-    <script src="app.js?v=theme-controls-1"></script>
+    <script src="app.js?v=attention-spiral-2"></script>
   <script src="tap-feedback.js?v=tap-feedback-1"></script>
       <nav class="site-map" aria-label="Nyarindo Lens Universal site map">
       <div class="site-map-intro">

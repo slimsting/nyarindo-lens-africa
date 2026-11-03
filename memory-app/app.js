@@ -20,11 +20,20 @@ const themeToggle = document.getElementById('themeToggle');
 const storageNote = document.getElementById('storageNote');
 const storageSecurity = document.getElementById('storageSecurity');
 const unlockEntriesButton = document.getElementById('unlockEntries');
+const attentionMessage = document.getElementById('attentionMessage');
+const attentionCopy = document.getElementById('attentionCopy');
+const attentionProgress = document.getElementById('attentionProgress');
+const spiralStages = [...document.querySelectorAll('.spiral-stage')];
+const previousStageButton = document.getElementById('previousStage');
+const nextStageButton = document.getElementById('nextStage');
+const stageProgress = document.getElementById('stageProgress');
+const saveButton = document.getElementById('saveButton');
 const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 let toastTimer;
 let themeTimer;
 let formMode = 'beginning';
 let activeEntryId = null;
+let activeStageIndex = 0;
 let selectedStoryId = null;
 let entriesCache = [];
 let storageEnvelope = null;
@@ -96,6 +105,39 @@ clearWitness.addEventListener('click', () => {
   witnessText.value = '';
   witnessText.focus();
 });
+
+function getVisibleSpiralStages() {
+  return spiralStages.filter(stage => formMode === 'return' || !stage.hasAttribute('data-return-only'));
+}
+
+function showSpiralStage(index, focus = false) {
+  const stages = getVisibleSpiralStages();
+  if (!stages.length) return;
+  activeStageIndex = Math.max(0, Math.min(index, stages.length - 1));
+  const activeStage = stages[activeStageIndex];
+  spiralStages.forEach(stage => {
+    const isActive = stage === activeStage;
+    stage.hidden = !isActive;
+    stage.classList.toggle('is-active', isActive);
+  });
+
+  previousStageButton.disabled = activeStageIndex === 0;
+  nextStageButton.hidden = activeStageIndex === stages.length - 1;
+  saveButton.hidden = activeStageIndex !== stages.length - 1;
+  stageProgress.textContent = `Step ${activeStageIndex + 1} of ${stages.length} · ${activeStage.dataset.stageTitle}`;
+  if (activeStageIndex < stages.length - 1) {
+    nextStageButton.textContent = `Next: ${stages[activeStageIndex + 1].dataset.stageTitle} →`;
+  }
+
+  if (focus) {
+    activeStage.focus({ preventScroll: true });
+    activeStage.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block: 'start' });
+  }
+}
+
+previousStageButton.addEventListener('click', () => showSpiralStage(activeStageIndex - 1, true));
+nextStageButton.addEventListener('click', () => showSpiralStage(activeStageIndex + 1, true));
+spiralStages.forEach(stage => stage.setAttribute('tabindex', '-1'));
 
 const storyTitles = {
   student: 'The student who stopped asking questions',
@@ -353,20 +395,23 @@ function createReview(entry, currentReturn = null) {
 
   const allReturns = returnsWithCurrent(entry, currentReturn);
   const reportCount = [entry.observation, ...allReturns.map(item => item.observation)].filter(Boolean).length;
-  const storyCount = [entry.meaning, ...allReturns.map(item => item.meaning)].filter(Boolean).length;
+  const interpretationCount = [entry.meaning, ...allReturns.map(item => item.meaning)].filter(Boolean).length;
+  const attentionCount = [entry.attention, ...allReturns.map(item => item.attention)].filter(Boolean).length;
+  const chosenStoryCount = [entry.chosenStory, ...allReturns.map(item => item.chosenStory)].filter(Boolean).length;
+  const returnObservationCount = allReturns.filter(item => item.returnObservation).length;
   const count = document.createElement('p');
-  count.textContent = `Across this entry, ${reportCount} raw report${reportCount === 1 ? '' : 's'} and ${storyCount} stor${storyCount === 1 ? 'y is' : 'ies are'} saved separately.`;
+  count.textContent = `Across this entry: ${attentionCount} chosen point${attentionCount === 1 ? '' : 's'} of attention, ${reportCount} signal report${reportCount === 1 ? '' : 's'}, ${interpretationCount} first interpretation${interpretationCount === 1 ? '' : 's'}, ${chosenStoryCount} tested story choice${chosenStoryCount === 1 ? '' : 's'}, and ${returnObservationCount} later observation${returnObservationCount === 1 ? '' : 's'}.`;
   review.append(count);
 
   if (!entry.observation) {
     const missing = document.createElement('p');
     missing.className = 'review-note';
-    missing.textContent = 'The original entry has no raw report. That absence stays visible; this return can be the first report if you choose.';
+    missing.textContent = 'The original entry has no signal report. That absence stays visible; this return can hold the first signal description if you choose.';
     review.append(missing);
   } else {
     const anchor = document.createElement('blockquote');
     anchor.className = 'review-anchor';
-    appendLinkedBookText(anchor, `Original raw report · O(0): “${entry.observation}”`);
+    appendLinkedBookText(anchor, `Original signal report · O(0): “${entry.observation}”`);
     review.append(anchor);
   }
 
@@ -374,13 +419,13 @@ function createReview(entry, currentReturn = null) {
   const echoNote = document.createElement('p');
   echoNote.className = 'review-note';
   echoNote.textContent = echoes.length
-    ? `Words appearing in more than one raw report: ${echoes.join(', ')}. This is only a word-level echo, not proof of a pattern or its cause.`
-    : 'No repeated content words stand out across the raw reports yet. Similar experiences can also be described in different words.';
+    ? `Words appearing in more than one signal report: ${echoes.join(', ')}. This is only a word-level echo, not proof of a pattern or its cause.`
+    : 'No repeated content words stand out across the signal reports yet. Similar experiences can also be described in different words.';
   review.append(echoNote);
 
   const question = document.createElement('p');
   question.className = 'review-question';
-  question.textContent = 'As you place the reports beside the stories attached to them, what—if anything—do you notice changing, returning, or remaining uncertain?';
+  question.textContent = 'Read the turns in order. Where did your attention go, which story did you choose to carry, what did you do, and what followed? The notes can show the sequence without deciding what it means.';
   review.append(question);
 
   const limit = document.createElement('small');
@@ -390,10 +435,11 @@ function createReview(entry, currentReturn = null) {
 }
 
 const portableJournalPrompts = [
+  'What did I choose to attend to before the signal became a story?',
   'What exactly did I notice before I began explaining it?',
-  'Which story returned to this report, and which one changed?',
-  'What could this report mean without deciding yet?',
-  'What would help me stay with the report for one more breath?'
+  'What did my mind say the signal meant, and could it have meant something else?',
+  'What story was credible, supportive, and still open to evidence?',
+  'What small action followed, and what did I observe on return?'
 ];
 
 function normalizeRawReport(value) {
@@ -459,7 +505,7 @@ function createComparison(entry) {
   const button = document.createElement('button');
   button.type = 'button';
   button.className = 'compare-reports';
-  button.textContent = 'Compare repeated reports';
+  button.textContent = 'Compare repeated signal reports';
   button.setAttribute('aria-expanded', 'false');
   button.setAttribute('aria-controls', panelId);
 
@@ -472,10 +518,10 @@ function createComparison(entry) {
   eyebrow.className = 'eyebrow';
   eyebrow.textContent = 'OPTIONAL REFLECTION';
   const title = document.createElement('h3');
-  title.textContent = 'The same report, beside the stories it gathered.';
+  title.textContent = 'The same wording, beside the interpretations it gathered.';
   const explanation = document.createElement('p');
   explanation.className = 'comparison-explanation';
-  explanation.textContent = 'Raw reports are the root of this comparison. They are grouped only by report wording after trimming extra spaces; attached stories never decide which reports belong together. A repeated wording is not proof that the underlying sensation, cause, or meaning was identical.';
+  explanation.textContent = 'The body reports a signal; the saved words are a human-language description of it. Reports are grouped only when their wording matches exactly after extra spaces are trimmed. Interpretations never decide which reports belong together. Repeated wording is not proof that the underlying sensation, cause, or meaning was identical.';
   panel.append(eyebrow, title, explanation);
 
   const repeatedGroups = getRepeatedReportGroups(entry);
@@ -494,7 +540,7 @@ function createComparison(entry) {
       const count = document.createElement('p');
       count.className = 'repeated-report-count';
       const storyCount = group.filter(item => item.story).length;
-      count.textContent = `${storyCount} stor${storyCount === 1 ? 'y' : 'ies'} attached to this exact report`;
+      count.textContent = `${storyCount} interpretation${storyCount === 1 ? '' : 's'} attached to this exact signal description`;
       const quote = document.createElement('blockquote');
       quote.textContent = group[0].report;
       const stories = document.createElement('div');
@@ -507,7 +553,7 @@ function createComparison(entry) {
         source.className = 'story-source';
         source.textContent = `${item.source} · ${formatDate(item.createdAt)}`;
         const storyText = document.createElement('p');
-        storyText.textContent = item.story || 'No story was written with this report.';
+        storyText.textContent = item.story ? 'Attached interpretation: ' + item.story : 'No interpretation was written with this signal report.';
         if (!item.story) storyText.classList.add('missing-story');
         story.append(source, storyText);
         stories.append(story);
@@ -520,7 +566,7 @@ function createComparison(entry) {
   } else {
     const empty = document.createElement('p');
     empty.className = 'comparison-empty';
-    empty.textContent = 'No exact raw report has repeated in this thread yet. The comparison can notice identical wording, but it cannot decide that differently worded reports describe the same sensation.';
+    empty.textContent = 'No exact signal description has repeated in this thread yet. The comparison can notice identical wording, but it cannot decide that differently worded reports describe the same sensation.';
     panel.append(empty);
   }
 
@@ -554,7 +600,7 @@ function createComparison(entry) {
   });
   const exampleNote = document.createElement('p');
   exampleNote.className = 'example-note';
-  exampleNote.textContent = 'The report stayed the same in this example; the stories around it changed. The comparison does not decide which story is true.';
+  exampleNote.textContent = 'The signal description stayed the same in this example; the interpretations around it changed. The comparison does not decide which interpretation is true.';
   exampleCopy.append(exampleLabel, exampleQuote, exampleStories, exampleNote);
   example.append(exampleSummary, exampleCopy);
 
@@ -583,7 +629,7 @@ function createComparison(entry) {
   button.addEventListener('click', () => {
     panel.hidden = !panel.hidden;
     button.setAttribute('aria-expanded', String(!panel.hidden));
-    button.textContent = panel.hidden ? 'Compare repeated reports' : 'Close comparison';
+    button.textContent = panel.hidden ? 'Compare repeated signal reports' : 'Close comparison';
   });
   wrapper.append(button, panel);
   return wrapper;
@@ -598,8 +644,14 @@ function getReportMoments(entries) {
         entryId: entry.id,
         source: 'Beginning',
         createdAt: entry.createdAt,
+        attention: String(entry.attention || '').trim(),
         report: beginningReport,
-        story: String(entry.meaning || '').trim()
+        story: String(entry.meaning || '').trim(),
+        alternativeStory: String(entry.alternativeStory || '').trim(),
+        chosenStory: String(entry.chosenStory || '').trim(),
+        evidence: String(entry.evidence || '').trim(),
+        action: String(entry.practice || '').trim(),
+        returnObservation: ''
       });
     }
 
@@ -610,8 +662,14 @@ function getReportMoments(entries) {
         entryId: entry.id,
         source: `Return ${String(index + 1).padStart(2, '0')}`,
         createdAt: item.createdAt,
+        attention: String(item.attention || '').trim(),
         report,
-        story: String(item.meaning || '').trim()
+        story: String(item.meaning || '').trim(),
+        alternativeStory: String(item.alternativeStory || '').trim(),
+        chosenStory: String(item.chosenStory || '').trim(),
+        evidence: String(item.evidence || '').trim(),
+        action: String(item.practice || '').trim(),
+        returnObservation: String(item.returnObservation || '').trim()
       });
     });
   });
@@ -649,13 +707,16 @@ function getSimilarReportGroups(moments) {
     let bestScore = 0;
 
     groups.forEach(group => {
-      group.moments.forEach(compareMoment => {
-        const comparison = compareReportWording(moment.report, compareMoment.report);
-        if (comparison.similar && comparison.score > bestScore) {
+      const comparisons = group.moments.map(compareMoment =>
+        compareReportWording(moment.report, compareMoment.report)
+      );
+      if (comparisons.every(comparison => comparison.similar)) {
+        const groupScore = Math.min(...comparisons.map(comparison => comparison.score));
+        if (groupScore > bestScore) {
           bestGroup = group;
-          bestScore = comparison.score;
+          bestScore = groupScore;
         }
-      });
+      }
     });
 
     if (bestGroup) {
@@ -666,7 +727,6 @@ function getSimilarReportGroups(moments) {
   });
 
   return groups
-    .filter(group => group.moments.length > 1)
     .map(group => {
       const wordingCounts = new Map();
       group.moments.forEach(moment => {
@@ -674,21 +734,15 @@ function getSimilarReportGroups(moments) {
         wordingCounts.set(wording, (wordingCounts.get(wording) || 0) + 1);
       });
       const normalizedReports = new Set(wordingCounts.keys());
-      const tokenCounts = new Map();
-      group.moments.forEach(moment => {
-        getReportTokens(moment.report).forEach(token => {
-          tokenCounts.set(token, (tokenCounts.get(token) || 0) + 1);
-        });
-      });
+      const sharedWords = group.moments
+        .map(moment => getReportTokens(moment.report))
+        .reduce((shared, tokens) => shared.filter(token => tokens.includes(token)))
+        .sort((a, b) => a.localeCompare(b));
       return {
         ...group,
         exact: normalizedReports.size === 1,
         mostFrequentWordingCount: Math.max(...wordingCounts.values()),
-        sharedWords: [...tokenCounts.entries()]
-          .filter(([, count]) => count > 1)
-          .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
-          .map(([word]) => word)
-          .slice(0, 6),
+        sharedWords,
         latestAt: Math.max(...group.moments.map(moment => moment.createdAt))
       };
     })
@@ -698,8 +752,11 @@ function getSimilarReportGroups(moments) {
 function getFrequentFeelings(entries) {
   const counts = new Map();
   entries.forEach(entry => {
+    const labelsInEntry = new Set();
     String(entry.state || '').split(',').map(value => value.trim()).filter(Boolean).forEach(value => {
       const key = value.toLocaleLowerCase();
+      if (labelsInEntry.has(key)) return;
+      labelsInEntry.add(key);
       const current = counts.get(key) || { label: value, count: 0 };
       current.count += 1;
       counts.set(key, current);
@@ -752,13 +809,13 @@ function createAnalysisGuide() {
   label.className = 'example-label';
   label.textContent = 'CONSTRUCTED EXAMPLE · NOT FROM YOUR ENTRIES';
   const title = document.createElement('h4');
-  title.textContent = 'One raw report, three different stories.';
+  title.textContent = 'One sensed signal, three different interpretations.';
   title.append(' ', createBookCitation(6, 'page 20'));
   const count = document.createElement('p');
   count.className = 'analysis-result-count';
-  count.textContent = 'Example result · 4 related reports · 3 exact repeats · 3 stories attached';
+  count.textContent = 'Example result · 4 related signal reports · 3 exact repeats · 3 interpretations attached';
   const quote = document.createElement('blockquote');
-  quote.textContent = 'My shoulders rose when the meeting began.';
+  quote.textContent = 'Signal description: My shoulders rose when the meeting began.';
 
   const stories = document.createElement('div');
   stories.className = 'report-story-list analysis-example-stories';
@@ -774,7 +831,7 @@ function createAnalysisGuide() {
     source.textContent = sourceLabel;
     source.append(' ', createBookCitation(6, 'page 20'));
     const storyText = document.createElement('p');
-    storyText.textContent = `Story: “${storyLabel}”`;
+    storyText.textContent = `Attached interpretation: “${storyLabel}”`;
     story.append(source, storyText);
     stories.append(story);
   });
@@ -784,9 +841,9 @@ function createAnalysisGuide() {
   const supports = document.createElement('ul');
   supports.className = 'analysis-points';
   [
-    'The raw report stayed stable enough to be grouped.',
-    'The attached stories changed across the saved moments.',
-    'The next useful question is what changed when the story changed.'
+    'The words used to describe the signal stayed similar enough to compare.',
+    'The interpretations attached to those words changed across the saved moments.',
+    'The next useful question is what changed when the interpretation changed.'
   ].forEach(point => {
     const item = document.createElement('li');
     item.textContent = point;
@@ -795,15 +852,128 @@ function createAnalysisGuide() {
 
   const limit = document.createElement('p');
   limit.className = 'analysis-example-limit';
-  limit.textContent = 'This example cannot show what caused the shoulders to rise, whether the sensation meant the same thing each time, or which story is true. It shows only what can be compared without going beyond the reports.';
+  limit.textContent = 'The body reports a signal; the words are an interpretation attached afterward. This example cannot show what caused the shoulders to rise, what the cells communicated, whether the sensation meant the same thing each time, or which interpretation is true. It shows only what can be compared without going beyond the saved descriptions.';
+
+  const userTitle = document.createElement('h5');
+  userTitle.textContent = 'What this means for you using the journal';
+  const userGuide = document.createElement('ul');
+  userGuide.className = 'analysis-points';
+  [
+    'The signal belongs to the body. It is not a sentence, diagnosis, or verdict.',
+    'You describe that signal in human words because the journal cannot record the cellular signal itself.',
+    'Your mind may then attach an interpretation or story. That language is part of the experience, but it is not the original signal.',
+    'The analysis can show repeated wording, dates, and interpretation changes. Only you can decide what those observations mean for you.'
+  ].forEach(point => {
+    const item = document.createElement('li');
+    item.textContent = point;
+    userGuide.append(item);
+  });
 
   const prompt = document.createElement('p');
   prompt.className = 'analysis-carry-question';
-  prompt.textContent = 'Question to carry: When the raw report stayed the same, what changed in the story—and what changed in what you did next?';
+  prompt.textContent = 'Question to carry: When the signal description stayed similar, what changed in the interpretation—and what changed in what you did next?';
 
-  body.append(label, title, count, quote, stories, supportsTitle, supports, limit, prompt);
+  body.append(label, title, count, quote, stories, supportsTitle, supports, limit, userTitle, userGuide, prompt);
   guide.append(summary, body);
   return guide;
+}
+
+function getAttentionTrailCycles(entries) {
+  const cycles = [];
+
+  entries.forEach(entry => {
+    const returns = [...(entry.returns || [])];
+    const turns = [
+      {
+        source: 'Beginning',
+        createdAt: entry.createdAt,
+        attention: String(entry.attention || '').trim(),
+        signal: String(entry.observation || '').trim(),
+        firstStory: String(entry.meaning || '').trim(),
+        alternativeStory: String(entry.alternativeStory || '').trim(),
+        chosenStory: String(entry.chosenStory || '').trim(),
+        evidence: String(entry.evidence || '').trim(),
+        action: String(entry.practice || '').trim()
+      },
+      ...returns.map((item, index) => ({
+        source: `Return ${String(index + 1).padStart(2, '0')}`,
+        createdAt: item.createdAt,
+        attention: String(item.attention || '').trim(),
+        signal: String(item.observation || '').trim(),
+        firstStory: String(item.meaning || '').trim(),
+        alternativeStory: String(item.alternativeStory || '').trim(),
+        chosenStory: String(item.chosenStory || '').trim(),
+        evidence: String(item.evidence || '').trim(),
+        action: String(item.practice || '').trim()
+      }))
+    ];
+
+    turns.forEach((turn, index) => {
+      turn.laterObservation = String(returns[index]?.returnObservation || '').trim();
+      cycles.push(turn);
+    });
+  });
+
+  return cycles.sort((a, b) => a.createdAt - b.createdAt);
+}
+
+function addTrailField(parent, label, value, emptyText = 'Not recorded in this turn.') {
+  const safeValue = String(value || '').trim();
+  addText(parent, label, safeValue || emptyText);
+}
+
+function createAttentionTrail(entries) {
+  const section = document.createElement('section');
+  section.className = 'attention-trail';
+  const title = document.createElement('h4');
+  title.className = 'global-section-title';
+  title.textContent = 'The path attention took';
+  title.append(' ', createBookCitation(5, 'page 12'), ' ', createBookCitation(6, 'pages 20–22'));
+  const explanation = document.createElement('p');
+  explanation.className = 'comparison-explanation';
+  explanation.textContent = 'These are your saved turns shown in order. Read where attention went, what story arrived first, what stayed open or changed, what you chose to carry, what you did, and what followed. The page does not score the sequence or supply the meaning.';
+  section.append(title, explanation);
+
+  const cycles = getAttentionTrailCycles(entries);
+  if (!cycles.length) {
+    const empty = document.createElement('p');
+    empty.className = 'comparison-empty';
+    empty.textContent = 'The trail will appear after the first returning-journal turn is saved.';
+    section.append(empty);
+    return section;
+  }
+
+  const list = document.createElement('div');
+  list.className = 'attention-trail-list';
+  cycles.forEach((cycle, index) => {
+    const details = document.createElement('details');
+    details.className = 'attention-trail-turn';
+    details.open = index === cycles.length - 1;
+    const summary = document.createElement('summary');
+    summary.textContent = `${cycle.source} · ${formatDate(cycle.createdAt)}`;
+    const body = document.createElement('div');
+    body.className = 'attention-trail-copy';
+    addTrailField(body, 'CHOSEN ATTENTION', cycle.attention, 'No point of attention was recorded.');
+    addTrailField(body, 'SIGNAL BEFORE STORY · O(0)', cycle.signal, 'No signal report was recorded.');
+    addTrailField(body, 'FIRST STORY THAT ARRIVED · O(1)', cycle.firstStory, 'No first interpretation was recorded.');
+    addTrailField(body, 'ALTERNATIVE OR LEFT OPEN', cycle.alternativeStory, 'No alternative was written; the meaning remained open.');
+    addTrailField(body, 'STORY CHOSEN TO CARRY', cycle.chosenStory, 'No story was chosen in this turn.');
+    addTrailField(body, 'TEST OR OBSERVATION', cycle.evidence, 'No test or observation was recorded.');
+    addTrailField(body, 'SMALL ACTION', cycle.action, 'No action was recorded.');
+    addTrailField(body, 'WHAT FOLLOWED', cycle.laterObservation, index === cycles.length - 1 ? 'This turn has not been returned to yet.' : 'No return observation was recorded after this turn.');
+    details.append(summary, body);
+    list.append(details);
+  });
+  section.append(list);
+
+  const completed = cycles.filter(cycle => cycle.laterObservation).length;
+  const question = document.createElement('p');
+  question.className = 'analysis-carry-question';
+  question.textContent = completed
+    ? `You have recorded ${completed} observation${completed === 1 ? '' : 's'} after a saved turn. Read the trail from beginning to end: where did attention seem to lead what you noticed, chose, did, or experienced next?`
+    : 'No turn has been returned to yet. The spiral has not reached the point where it can show what followed. Make a small next turn, then return and read what actually changed.';
+  section.append(question);
+  return section;
 }
 
 function renderGlobalComparison() {
@@ -811,6 +981,8 @@ function renderGlobalComparison() {
   const moments = getReportMoments(entries);
   const groups = getSimilarReportGroups(moments);
   const storyCount = moments.filter(moment => moment.story).length;
+  const attentionCount = moments.filter(moment => moment.attention).length;
+  const returnObservationCount = moments.filter(moment => moment.returnObservation).length;
   const feelings = getFrequentFeelings(entries);
   const reportWords = getFrequentReportWords(moments).map(([word, count]) => ({ word, count }));
 
@@ -823,23 +995,24 @@ function renderGlobalComparison() {
   title.textContent = 'What returns when the notes gather.';
   const summary = document.createElement('p');
   summary.className = 'comparison-summary';
-  summary.textContent = `${entries.length} saved journal${entries.length === 1 ? '' : 's'} · ${moments.length} raw report${moments.length === 1 ? '' : 's'} · ${storyCount} attached stor${storyCount === 1 ? 'y' : 'ies'}.`;
+  summary.textContent = `${entries.length} saved journal${entries.length === 1 ? '' : 's'} · ${attentionCount} chosen point${attentionCount === 1 ? '' : 's'} of attention · ${moments.length} signal report${moments.length === 1 ? '' : 's'} · ${storyCount} first interpretation${storyCount === 1 ? '' : 's'} · ${returnObservationCount} later observation${returnObservationCount === 1 ? '' : 's'}.`;
   const explanation = document.createElement('p');
   explanation.className = 'comparison-explanation';
-  explanation.textContent = 'Raw reports are the root of this comparison. Exact reports are grouped by wording after whitespace is normalized. Closely worded reports must share at least two significant words and 60% of their combined word set. Stories are listed beneath their reports but never determine the grouping. This shows textual overlap, not proof of an identical sensation or cause.';
+  explanation.textContent = 'The body reports a signal; cells do not communicate in human language. A saved “signal report” is already your human-language description, and the interpretation is the story you attach afterward. Every saved report appears below. Wording groups require each report to match every other member: exact wording, or at least two significant words and 60% of the combined word set. Interpretations never determine the grouping. Word overlap is not proof of an identical sensation or cause.';
   explanation.append(' ', createBookCitation(6, 'pages 15, 20'));
   globalComparison.append(eyebrow, title, summary, explanation);
+  globalComparison.append(createAttentionTrail(entries));
 
   const relatedHeading = document.createElement('h4');
   relatedHeading.className = 'global-section-title';
-  relatedHeading.textContent = 'Reports and the stories gathered around them';
+  relatedHeading.textContent = 'Signal reports and the interpretations gathered around them';
   relatedHeading.append(' ', createBookCitation(6, 'page 20'));
   globalComparison.append(relatedHeading);
 
-  if (!groups.length) {
+  if (!moments.length) {
     const empty = document.createElement('p');
     empty.className = 'comparison-empty';
-    empty.textContent = 'No raw report has repeated or closely matched another yet. Recurring feelings and words will still appear below as the notes accumulate.';
+    empty.textContent = 'No signal reports have been saved yet. Recurring feeling labels and wording will appear here as the notes accumulate.';
     globalComparison.append(empty);
   } else {
     const groupList = document.createElement('div');
@@ -847,13 +1020,16 @@ function renderGlobalComparison() {
     groups.forEach(group => {
       const article = document.createElement('article');
       article.className = 'repeated-report global-report-group';
+      article.classList.toggle('is-singleton', group.moments.length === 1);
       const heading = document.createElement('p');
       heading.className = 'repeated-report-count';
       const attachedStories = group.moments.filter(moment => moment.story).length;
-      const reportLabel = group.exact
-        ? `${group.moments.length} exact reports`
-        : `${group.moments.length} closely worded reports${group.mostFrequentWordingCount > 1 ? `, including ${group.mostFrequentWordingCount} exact repeats` : ''}`;
-      heading.textContent = `${reportLabel} · ${attachedStories} stor${attachedStories === 1 ? 'y' : 'ies'} attached`;
+      const reportLabel = group.moments.length === 1
+        ? '1 signal report · no close wording match yet'
+        : group.exact
+          ? `${group.moments.length} exact signal reports`
+          : `${group.moments.length} closely worded signal reports${group.mostFrequentWordingCount > 1 ? `, including ${group.mostFrequentWordingCount} exact repeats` : ''}`;
+      heading.textContent = `${reportLabel} · ${attachedStories} interpretation${attachedStories === 1 ? '' : 's'} attached`;
       heading.append(' ', createBookCitation(6, 'page 20'));
       const quote = document.createElement('blockquote');
       quote.textContent = group.moments[0].report;
@@ -862,7 +1038,7 @@ function renderGlobalComparison() {
       if (!group.exact && group.sharedWords.length) {
         const shared = document.createElement('p');
         shared.className = 'shared-report-words';
-        shared.textContent = `Shared significant words: ${group.sharedWords.join(', ')}.`;
+        shared.textContent = `Significant words common to every report in this group: ${group.sharedWords.join(', ')}.`;
         article.append(shared);
       }
 
@@ -876,9 +1052,9 @@ function renderGlobalComparison() {
         source.textContent = `${moment.source} · ${formatDate(moment.createdAt)}`;
         const report = document.createElement('p');
         report.className = 'global-moment-report';
-        report.textContent = `Report: “${moment.report}”`;
+        report.textContent = `Signal description: “${moment.report}”`;
         const story = document.createElement('p');
-        story.textContent = moment.story ? `Story: “${moment.story}”` : 'No story was written with this report.';
+        story.textContent = moment.story ? `Attached interpretation: “${moment.story}”` : 'No interpretation was written with this signal report.';
         if (!moment.story) story.classList.add('missing-story');
         item.append(source, report, story);
         reports.append(item);
@@ -895,10 +1071,14 @@ function renderGlobalComparison() {
   const feelingSection = document.createElement('section');
   feelingSection.className = 'global-insight';
   const feelingTitle = document.createElement('h4');
-  feelingTitle.textContent = 'Feelings named most often';
+  feelingTitle.textContent = 'Feeling labels named most often';
   feelingTitle.append(' ', createBookCitation(5, 'page 8'));
   feelingSection.append(feelingTitle);
   if (feelings.length) {
+    const feelingNote = document.createElement('p');
+    feelingNote.className = 'comparison-empty';
+    feelingNote.textContent = 'Counted once per saved journal, even when a label appears twice in one entry.';
+    feelingSection.append(feelingNote);
     feelingSection.append(createFrequencyList(feelings));
   } else {
     const empty = document.createElement('p');
@@ -910,17 +1090,17 @@ function renderGlobalComparison() {
   const wordSection = document.createElement('section');
   wordSection.className = 'global-insight';
   const wordTitle = document.createElement('h4');
-  wordTitle.textContent = 'Words recurring across raw reports';
+  wordTitle.textContent = 'Words recurring across signal descriptions';
   wordTitle.append(' ', createBookCitation(6, 'page 20'));
   wordSection.append(wordTitle);
   if (reportWords.length) {
-    const wordList = createFrequencyList(reportWords);
+    const wordList = createFrequencyList(reportWords, 10);
     wordList.classList.add('word-frequency-list');
     wordSection.append(wordList);
   } else {
     const empty = document.createElement('p');
     empty.className = 'comparison-empty';
-    empty.textContent = 'No significant words repeat across raw reports yet.';
+    empty.textContent = 'No significant words repeat across signal descriptions yet.';
     wordSection.append(empty);
   }
 
@@ -930,7 +1110,7 @@ function renderGlobalComparison() {
 
   const limit = document.createElement('p');
   limit.className = 'global-comparison-limit';
-  limit.textContent = 'These are transparent counts of the words you saved. They do not diagnose, assign causes, or decide what the repetition means.';
+  limit.textContent = 'These are transparent counts of the words used in your human-language descriptions. They do not reveal what the body or cells “said,” diagnose, assign causes, or decide what the repetition means.';
   globalComparison.append(limit);
 }
 
@@ -960,10 +1140,15 @@ function renderReturnDetail(entry, item, index, openReturnId) {
   details.append(summary);
   const content = document.createElement('div');
   content.className = 'return-history-copy';
-  addText(content, 'RAW REPORT NOW · O(0)', item.observation);
-  addText(content, 'STORY NOW · O(1)', item.meaning);
+  addText(content, 'WHAT FOLLOWED THE PREVIOUS TURN', item.returnObservation, [{ book: 5, page: 'page 12' }]);
+  addText(content, 'CHOSEN ATTENTION', item.attention);
+  addText(content, 'SIGNAL REPORT NOW · O(0)', item.observation);
+  addText(content, 'INTERPRETATION / STORY NOW · O(1)', item.meaning);
+  addText(content, 'ALTERNATIVE OR REMAINED OPEN', item.alternativeStory);
+  addText(content, 'STORY CHOSEN TO CARRY', item.chosenStory);
+  addText(content, 'TEST OR OBSERVATION', item.evidence);
   addText(content, 'WIDER MEMORY · O(n)', item.context);
-  addText(content, 'SMALL PRACTICE', item.practice, [{ book: 6, page: 'page 22' }]);
+  addText(content, 'SMALL ACTION', item.practice, [{ book: 6, page: 'page 22' }]);
   content.append(createReview(entry, item));
   details.append(content);
   return details;
@@ -1008,10 +1193,14 @@ function renderEntries(openReturnId = null) {
     const beginningContent = document.createElement('div');
     beginningContent.className = 'beginning-note-copy';
     addText(beginningContent, 'LEGACY PRIVATE NOTE · BOOK ONE', entry.beginningNote, [{ book: 1, page: 'pages 12–13' }]);
-    addText(beginningContent, 'RAW REPORT · O(0)', entry.observation);
-    addText(beginningContent, 'FIRST STORY · O(1)', entry.meaning);
+    addText(beginningContent, 'CHOSEN ATTENTION', entry.attention);
+    addText(beginningContent, 'SIGNAL REPORT · O(0)', entry.observation);
+    addText(beginningContent, 'FIRST INTERPRETATION / STORY · O(1)', entry.meaning);
+    addText(beginningContent, 'ALTERNATIVE OR REMAINED OPEN', entry.alternativeStory);
+    addText(beginningContent, 'STORY CHOSEN TO CARRY', entry.chosenStory);
+    addText(beginningContent, 'TEST OR OBSERVATION', entry.evidence);
     addText(beginningContent, 'WIDER MEMORY · O(n)', entry.context);
-    addText(beginningContent, 'SMALL PRACTICE', entry.practice, [{ book: 6, page: 'page 22' }]);
+    addText(beginningContent, 'SMALL ACTION', entry.practice, [{ book: 6, page: 'page 22' }]);
     const storyLink = getStoryLink(entry.storyId);
     if (storyLink) beginningContent.append(storyLink);
     beginning.append(beginningContent);
@@ -1038,6 +1227,25 @@ function renderEntries(openReturnId = null) {
     memoryList.append(card);
   });
   updateStorageUi(entries.length);
+  updateAttentionReveal();
+}
+
+function updateAttentionReveal() {
+  const completed = getAttentionTrailCycles(readEntries())
+    .filter(cycle => cycle.laterObservation)
+    .length;
+  const ready = completed >= 2;
+  attentionMessage.hidden = !ready;
+
+  if (!ready) {
+    attentionProgress.textContent = completed === 0
+      ? 'The first turn is still open. Save a beginning, return with what followed, then let another turn gather before looking for a pattern.'
+      : 'One loop has returned. Make another small turn and return to it; this section will appear when two observations can sit beside each other.';
+    return;
+  }
+
+  attentionProgress.textContent = `You now have ${completed} returned turns in your own notes. Read the sequence before accepting any explanation—including this one.`;
+  attentionCopy.textContent = 'Where did attention go before a story arrived, what did you choose to carry, what did you do, and what followed? The trail can be read without assigning a cause or final meaning. Attend to what actually recurred, what remained uncertain, and what your own record can support.';
 }
 
 const defaultStorageNote = 'This returning-journal entry stays in this browser on this device. It does not sync or encrypt. The private clearing page above is never saved here.';
@@ -1161,15 +1369,17 @@ function renderAnchor(entry) {
   heading.className = 'eyebrow';
   heading.textContent = 'RETURNING TO THE ORIGINAL ENTRY';
   const title = document.createElement('h3');
-  title.textContent = 'The original report stays here.';
+  title.textContent = 'The original signal report stays here.';
   const leave = document.createElement('button');
   leave.type = 'button';
   leave.className = 'leave-return';
   leave.textContent = 'Leave this return';
   leave.addEventListener('click', startBeginning);
   returnAnchor.append(heading, title, leave);
-  addText(returnAnchor, 'ORIGINAL RAW REPORT · O(0)', entry.observation || 'No raw report was saved in the original entry. You may add your first one now.', [{ book: 1, page: 'page 12' }]);
-  addText(returnAnchor, 'FIRST STORY · O(1)', entry.meaning || 'No first story was saved. Meaning can remain open.', [{ book: 1, page: 'page 12' }]);
+  addText(returnAnchor, 'CHOSEN ATTENTION', entry.attention || 'No point of attention was saved in the original entry.');
+  addText(returnAnchor, 'ORIGINAL SIGNAL REPORT · O(0)', entry.observation || 'No signal report was saved in the original entry. You may add your first one now.', [{ book: 1, page: 'page 12' }]);
+  addText(returnAnchor, 'FIRST INTERPRETATION / STORY · O(1)', entry.meaning || 'No first interpretation was saved. Meaning can remain open.', [{ book: 1, page: 'page 12' }]);
+  addText(returnAnchor, 'STORY CHOSEN TO CARRY', entry.chosenStory || 'No story was chosen in the original entry.');
   const storyLink = getStoryLink(entry.storyId);
   if (storyLink) returnAnchor.append(storyLink);
   returnAnchor.append(createReview(entry));
@@ -1229,13 +1439,14 @@ function startBeginning() {
   stateField.hidden = false;
   setModeEyebrow('RETURNING JOURNAL · ENTRY 01', 6, 'BOOK SIX', 'pages 20–22');
   document.getElementById('journalTitle').textContent = 'Begin the returning journal.';
-  document.getElementById('journalInstructions').textContent = 'Write the raw report first, then the first story attached to it, then a wider memory if one arises. This entry is kept locally and is meant to be reread over time, not analyzed into a conclusion today.';
-  setFieldText('observation', createFieldLabel('02', 'Raw report', 'O(0)'), 'What can you notice directly—in your body, surroundings, or actions—before explaining it? Use one or more defaults if they fit, and type anything else you want to add in your own words.');
-  setFieldText('meaning', createFieldLabel('03', 'First story', 'O(1)'), 'What meaning, emotion, or explanation arrived? This is a story you can revisit, not a verdict.');
+  document.getElementById('journalInstructions').textContent = 'Move through the spiral one turn at a time. Begin with what you choose to attend to, then notice the signal before deciding what it means. An interpretation can stay open. The later return is where you read what followed in your own words.';
+  setFieldText('observation', createFieldLabel('02', 'Signal report', 'O(0)'), 'Describe the signal directly—pressure, heat, tingling, movement, stillness, or anything else—before explaining it. Your words are a human-language description of the signal, not the signal itself.');
+  setFieldText('meaning', createFieldLabel('03', 'First interpretation', 'O(1)'), 'What words, meaning, emotion, or explanation did your mind attach to the signal? This is an interpretation you can revisit, not a verdict.');
   setSaveButton('Save this entry');
   form.reset();
   syncStatePresets();
   updateSelectedStory();
+  showSpiralStage(0);
 }
 
 function startReturn(entryId) {
@@ -1248,13 +1459,14 @@ function startReturn(entryId) {
   stateField.hidden = true;
   setModeEyebrow(`RETURN ${((entry.returns || []).length + 1).toString().padStart(2, '0')}`, 6, 'BOOK SIX', 'pages 20–22');
   document.getElementById('journalTitle').textContent = 'Set today beside the first note.';
-  document.getElementById('journalInstructions').textContent = 'Start with what is directly here now. Then write the story that appears, if one does. The notes are kept beside the original report so you can read them across time.';
-  setFieldText('observation', createFieldLabel('01', 'Raw report now', 'O(0)'), 'What can you notice directly now, before you explain it? Your own words are always allowed.');
-  setFieldText('meaning', createFieldLabel('02', 'Story now', 'O(1)'), 'What meaning or explanation is here now? It may differ, repeat, or remain uncertain.');
+  document.getElementById('journalInstructions').textContent = 'Begin with what followed the last turn. Then choose today’s point of attention, notice the signal before naming it, catch the first story, pause, test another account, and make a small next turn.';
+  setFieldText('observation', createFieldLabel('02', 'Signal report now', 'O(0)'), 'Describe what you can notice directly now, before explaining it. The words are your human-language description of a bodily signal, not the signal itself.');
+  setFieldText('meaning', createFieldLabel('03', 'Interpretation now', 'O(1)'), 'What words, meaning, or explanation did your mind attach to the signal? It may differ, repeat, or remain uncertain.');
   setSaveButton('Save this return');
   renderAnchor(entry);
   returnAnchor.hidden = false;
   updateSelectedStory();
+  showSpiralStage(0);
   form.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
@@ -1269,7 +1481,7 @@ function updateSelectedStory() {
   selectedStoryNote.replaceChildren(
     `Story starting point: ${storyTitles[selectedStoryId]}. `,
     createBookCitation(source.book, `page ${source.page}`),
-    ' Your own report stays in your words.'
+    ' Your own signal report stays in your words.'
   );
 }
 
@@ -1314,11 +1526,17 @@ form.addEventListener('submit', async event => {
   const note = {
     id: makeId(),
     createdAt: Date.now(),
+    returnObservation: String(values.get('returnObservation') || '').trim(),
+    attention: String(values.get('attention') || '').trim(),
     observation: String(values.get('observation') || '').trim(),
     meaning: String(values.get('meaning') || '').trim(),
+    alternativeStory: String(values.get('alternativeStory') || '').trim(),
+    chosenStory: String(values.get('chosenStory') || '').trim(),
+    evidence: String(values.get('evidence') || '').trim(),
     context: String(values.get('context') || '').trim(),
     practice: String(values.get('practice') || '').trim()
   };
+  const hasTurnContent = [note.attention, note.observation, note.meaning, note.alternativeStory, note.chosenStory, note.evidence, note.context, note.practice].some(Boolean);
 
   if (formMode === 'beginning') {
     const entry = {
@@ -1326,15 +1544,19 @@ form.addEventListener('submit', async event => {
       createdAt: note.createdAt,
       state: stateValue,
       beginningNote: '',
+      attention: note.attention,
       observation: note.observation,
       meaning: note.meaning,
+      alternativeStory: note.alternativeStory,
+      chosenStory: note.chosenStory,
+      evidence: note.evidence,
       context: note.context,
       practice: note.practice,
       storyId: selectedStoryId,
       returns: []
     };
-    if (!entry.observation && !entry.meaning && !entry.context && !entry.practice) {
-      showToast('Write anything that is here, or leave this moment unrecorded.');
+    if (!hasTurnContent) {
+      showToast('Write any part of this turn, or leave this moment unrecorded.');
       return;
     }
     try {
@@ -1346,14 +1568,14 @@ form.addEventListener('submit', async event => {
       });
       startBeginning();
       renderEntries();
-      showToast('Kept on this device. You can close the page and return when you choose.');
+      showToast('This turn is kept on this device. Return later to record what followed.');
     } catch {
       showToast('This browser could not save the entry. Your writing has not been kept.');
     }
     return;
   }
 
-  if (!note.observation && !note.meaning && !note.context && !note.practice) {
+  if (!note.returnObservation && !hasTurnContent) {
     showToast('Add a few words to this return, or leave the moment unrecorded.');
     return;
   }
@@ -1372,7 +1594,7 @@ form.addEventListener('submit', async event => {
     renderEntries(note.id);
     renderAnchor(entry);
     returnAnchor.hidden = false;
-    showToast('Return saved beside the beginning report.');
+    showToast('This return is saved beside the beginning report.');
     const savedCard = [...memoryList.children].find(card => card.dataset.entryId === entry.id);
     if (savedCard) savedCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
     startBeginning();

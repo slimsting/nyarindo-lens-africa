@@ -74,6 +74,7 @@
 .comparison-summary{margin-top:15px;color:var(--ink)}
 .repeated-report-list{display:grid;gap:12px;margin-top:14px}
 .repeated-report{padding:15px 16px;border-left:2px solid var(--green);background:rgba(255,255,255,.025)}
+.repeated-report.is-singleton{border-left-color:var(--line)}
 .repeated-report-count{margin:0 0 9px;color:var(--green);font:9px var(--mono);letter-spacing:.1em;text-transform:uppercase}
 .repeated-report blockquote,.comparison-example blockquote{margin:0;color:var(--ink);font:17px/1.6 var(--serif)}
 .report-story-list{display:grid;gap:9px;margin-top:14px}
@@ -280,3 +281,78 @@ html[data-theme="light"] .witness-field textarea{background:rgba(255,255,255,.62
 .storage-security{border:1px solid rgba(210,163,109,.42);border-radius:999px;padding:8px 11px;background:rgba(210,163,109,.06);color:var(--ink);font:9px var(--mono);letter-spacing:.05em;cursor:pointer}
 .storage-security:hover,.storage-security:focus-visible{border-color:var(--accent);background:rgba(210,163,109,.14)}
 .storage-locked-note{padding:18px;border:1px solid var(--line);background:rgba(255,255,255,.025);color:var(--muted);font-size:12px;line-height:1.75}
+
+/* A guided returning-journal spiral keeps interpretation open until the evidence gathers. */
+.spiral-stages{display:block}
+.spiral-stage{position:relative;min-width:0;padding:27px 28px 29px;border:1px solid var(--line);border-radius:16px;background:linear-gradient(145deg,rgba(255,255,255,.032),rgba(255,255,255,.012));box-shadow:0 18px 48px rgba(0,0,0,.12);scroll-margin-top:22px}
+.spiral-stage[hidden]{display:none}
+.spiral-stage::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;box-shadow:inset 0 1px 0 rgba(255,255,255,.035)}
+.spiral-stage.is-active{animation:spiral-stage-in .3s ease-out}
+.spiral-stage:focus{outline:none}
+.spiral-stage:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
+.spiral-stage-heading{display:grid;grid-template-columns:52px minmax(0,1fr);align-items:start;gap:17px;margin-bottom:25px;padding-bottom:19px;border-bottom:1px solid var(--line)}
+.spiral-stage-heading .eyebrow{margin:3px 0 8px;color:var(--green)}
+.spiral-stage-heading h3{max-width:650px;margin:0;font:clamp(25px,4.2vw,38px)/1.13 var(--serif);font-weight:400;letter-spacing:-.025em;overflow-wrap:anywhere}
+.spiral-stage-number{display:grid;place-items:center;width:48px;height:48px;border:1px solid rgba(210,163,109,.56);border-radius:50%;background:radial-gradient(circle,rgba(210,163,109,.16),transparent 68%);color:var(--accent);font:10px var(--mono);letter-spacing:.06em;box-shadow:0 0 0 6px rgba(210,163,109,.035)}
+.spiral-stage .state-field+.writing-field{margin-top:25px}
+.spiral-stage .writing-field+.writing-field{margin-top:22px}
+.spiral-stage .writing-field>span{line-height:1.35;overflow-wrap:anywhere}
+.spiral-stage .writing-field small{max-width:710px;line-height:1.65}
+.spiral-stage .writing-field textarea{min-height:108px;border-radius:9px}
+.spiral-pause-note{margin:0 0 22px;padding:18px 19px;border-left:2px solid var(--green);background:rgba(142,181,162,.06)}
+.spiral-pause-note p{margin:0;color:var(--muted);font:15px/1.72 var(--serif)}
+.spiral-return-invite{margin:25px 0 0;padding:17px 18px;border:1px dashed rgba(210,163,109,.42);color:var(--muted);font-size:12px;line-height:1.75}
+.spiral-nav{position:relative;z-index:1;display:grid;grid-template-columns:minmax(100px,auto) minmax(0,1fr) minmax(180px,auto);align-items:center;gap:13px;margin-top:20px;padding:13px;border:1px solid var(--line);border-radius:12px;background:rgba(16,17,15,.72);backdrop-filter:blur(12px)}
+.spiral-nav-button{min-height:42px;border:1px solid rgba(210,163,109,.5);border-radius:7px;background:transparent;color:var(--ink);padding:10px 13px;font:9px/1.35 var(--mono);letter-spacing:.045em;cursor:pointer;transition:background-color .2s ease,border-color .2s ease,color .2s ease,transform .2s ease}
+.spiral-nav-button[hidden]{display:none}
+.spiral-nav-button:is(:hover,:focus-visible){border-color:var(--accent);background:var(--accent);color:#18140e;transform:none}
+.spiral-nav-button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.spiral-nav-button:disabled{opacity:.38;cursor:not-allowed}
+.spiral-nav-next{justify-self:end;max-width:100%;text-align:right;border-color:rgba(142,181,162,.58)}
+#stageProgress{min-width:0;margin:0;text-align:center;color:var(--muted);font:9px/1.5 var(--mono);letter-spacing:.055em;overflow-wrap:anywhere}
+.save-row button[hidden]{display:none}
+.attention-progress{max-width:650px;margin:23px auto 18px;color:var(--muted);font:11px/1.75 var(--mono);letter-spacing:.025em}
+.attention-trail{margin-top:24px;padding:20px;border:1px solid rgba(210,163,109,.3);background:rgba(210,163,109,.025)}
+.attention-trail>.global-section-title{margin-top:0}
+.attention-trail>.comparison-explanation{margin-bottom:16px}
+.attention-trail-list{display:grid;gap:10px}
+.attention-trail-turn{border:1px solid var(--line);background:rgba(255,255,255,.02)}
+.attention-trail-turn summary{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:13px 15px;color:var(--ink);font:11px/1.45 var(--mono);letter-spacing:.04em;cursor:pointer;list-style:none}
+.attention-trail-turn summary::-webkit-details-marker{display:none}
+.attention-trail-turn summary::after{content:'+';flex:0 0 auto;color:var(--accent);font:18px/1 var(--sans)}
+.attention-trail-turn[open] summary::after{content:'−'}
+.attention-trail-turn summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.attention-trail-copy{padding:3px 15px 15px;border-top:1px solid var(--line)}
+.attention-trail-copy>p{display:grid;grid-template-columns:minmax(145px,.42fr) minmax(0,1fr);gap:18px;margin:12px 0 0;color:var(--muted);font-size:12px;line-height:1.7;overflow-wrap:anywhere}
+.attention-trail-copy>p :first-child{color:var(--accent);font:8px/1.6 var(--mono);letter-spacing:.09em}
+.attention-trail-copy>p :last-child{white-space:pre-wrap}
+html[data-theme="light"] .spiral-stage{background:linear-gradient(145deg,rgba(255,255,255,.64),rgba(255,255,255,.35));box-shadow:0 16px 38px rgba(53,50,42,.07)}
+html[data-theme="light"] .spiral-stage::after{box-shadow:inset 0 1px 0 rgba(255,255,255,.7)}
+html[data-theme="light"] .spiral-pause-note{background:rgba(77,125,99,.08)}
+html[data-theme="light"] .spiral-return-invite{border-color:rgba(153,100,49,.42)}
+html[data-theme="light"] .spiral-nav{background:rgba(238,234,224,.88)}
+html[data-theme="light"] .spiral-nav-button:is(:hover,:focus-visible){color:#18140e}
+html[data-theme="light"] .attention-trail{background:rgba(153,100,49,.055);border-color:rgba(153,100,49,.3)}
+html[data-theme="light"] .attention-trail-turn{background:rgba(255,255,255,.48)}
+@keyframes spiral-stage-in{from{opacity:.55;transform:translateY(7px)}to{opacity:1;transform:none}}
+@media(max-width:680px){
+  .spiral-stage{padding:21px 18px 23px;border-radius:12px}
+  .spiral-stage-heading{grid-template-columns:42px minmax(0,1fr);gap:12px;margin-bottom:20px;padding-bottom:16px}
+  .spiral-stage-number{width:40px;height:40px;box-shadow:0 0 0 4px rgba(210,163,109,.035)}
+  .spiral-stage-heading h3{font-size:27px}
+  .spiral-stage .writing-field>span{font-size:17px}
+  .spiral-nav{grid-template-columns:1fr 1fr;gap:10px;padding:10px}
+  #stageProgress{grid-column:1/-1;grid-row:1;padding:1px 2px 6px}
+  .spiral-nav-button{width:100%;justify-self:stretch;text-align:center}
+  .spiral-nav-next{grid-column:2}
+  .attention-trail{padding:16px 13px}
+  .attention-trail-copy{padding-inline:12px}
+  .attention-trail-copy>p{grid-template-columns:1fr;gap:4px}
+}
+@media(max-width:390px){
+  .spiral-stage{padding-inline:14px}
+  .spiral-stage-heading h3{font-size:24px}
+  .spiral-stage-heading .eyebrow{letter-spacing:.12em}
+  .spiral-nav-button{font-size:8px;padding-inline:8px}
+}
+@media(prefers-reduced-motion:reduce){.spiral-stage.is-active{animation:none}.spiral-nav-button{transition:none}}
