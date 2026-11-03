@@ -26,7 +26,7 @@
     <meta name="twitter:description" content="Two private journaling practices: a clearing page without witness, and a structured returning journal for rereading patterns over time.">
     <meta name="twitter:image" content="/portfolio-website/assets/newbon-nyarindo-gadson-brand-portrait.webp">
     <script src="../portfolio-website/site-theme-init.js?v=security-1"></script>
-    <link rel="stylesheet" href="styles.css?v=attention-pin-1">
+    <link rel="stylesheet" href="styles.css?v=attention-close-3">
     <link rel="stylesheet" href="tap-feedback.css?v=tap-feedback-1">
 
     <script type="application/ld+json">
@@ -125,6 +125,17 @@
           <p class="eyebrow" id="modeEyebrow">RETURNING JOURNAL · ENTRY 01 · <a class="book-reference" href="../portfolio-website/index.html#book-06">BOOK SIX (book 6, pages 20–22) ↗</a></p>
           <h2 id="journalTitle">Begin the returning journal.</h2>
           <p id="journalInstructions">Move through the spiral one turn at a time. Notice the raw bodily feeling before the mind explains it, then catch the story attached to that feeling. Return across ordinary days; each later turn begins with how the previous story felt afterward.</p>
+          <div class="attention-spiral-map" aria-hidden="true">
+            <div class="attention-spiral-head"><span>LEARN TO ATTEND</span><i>FOLLOW THE LIGHT</i></div>
+            <ol class="attention-spiral-steps">
+              <li class="is-active" data-attention-step="attention"><span>01</span><b>Notice</b></li>
+              <li data-attention-step="signal"><span>02</span><b>Feel</b></li>
+              <li data-attention-step="first-story"><span>03</span><b>Catch</b></li>
+              <li data-attention-step="pause"><span>04</span><b>Pause</b></li>
+              <li data-attention-step="choose"><span>05</span><b>Choose</b></li>
+              <li data-attention-step="action"><span>06</span><b>Return</b></li>
+            </ol>
+          </div>
           <details class="journal-example">
             <summary>See one complete example before you begin</summary>
             <div class="journal-example-copy">
@@ -166,7 +177,7 @@
               </div>
               <label class="state-custom" for="stateCustom">
                 <span>Your own description</span>
-                <input id="stateCustom" name="state" type="text" maxlength="120" autocomplete="off" placeholder="Type how you feel in your own words…" aria-describedby="stateCustomHint">
+                <input id="stateCustom" name="state" type="text" maxlength="120" autocomplete="off" placeholder="Describe the raw feeling…" aria-describedby="stateCustomHint">
                 <small id="stateCustomHint">Each default is added to this field with a comma. You can add your own words at any time.</small>
               </label>
             </fieldset>
@@ -210,7 +221,7 @@
           <p id="stageProgress" aria-live="polite">Step 1 of 6 · Choose attention</p>
           <button id="nextStage" class="spiral-nav-button spiral-nav-next" type="button">Next: Notice the signal →</button>
         </nav>
-        <div class="save-row"><p id="storageNote">Saved entries stay in this browser on this device. Add a PIN to encrypt them at rest. The private clearing page above is never saved here.</p><button type="submit" id="saveButton" hidden>Save this entry <span>↗</span></button></div>
+        <div class="save-row"><p id="storageNote">Saved entries stay in this browser on this device. Add a PIN to encrypt them at rest. The private clearing page above is never saved here.</p><button class="save-attention-button" type="submit" id="saveButton" hidden>Save this entry · continue the spiral <span>↗</span></button></div>
       </form>
 
       <section class="memory-shelf" aria-labelledby="shelfTitle">
@@ -218,10 +229,11 @@
         <p class="empty-note" id="emptyNote">Nothing is prepopulated. Your signal descriptions and the interpretations attached to them gather here over time. They can be revisited without turning today’s writing into a verdict.</p>
         <div id="memoryList" class="memory-list" aria-live="polite"></div>
         <section class="examination-gate" id="examinationGate" aria-labelledby="examinationTitle" hidden>
-          <p class="eyebrow">WHEN YOU DECIDE TO LOOK BACK</p>
-          <h3 id="examinationTitle">You decide when the spiral has taught you enough to examine.</h3>
+          <div class="examination-orbit" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+          <p class="eyebrow" id="examinationEyebrow">YOUR ATTENTION TRAIL</p>
+          <h3 id="examinationTitle">Seven completed returns reveal the pattern of your attention.</h3>
           <p>Keep returning across ordinary days. When you feel you have written enough and want to see what may have accumulated, make that choice deliberately.</p>
-          <button id="compareAllReports" class="compare-all-reports" type="button" aria-expanded="false" aria-controls="globalComparison">I have written enough — examine what I may have learned</button>
+          <button id="compareAllReports" class="compare-all-reports" type="button" aria-expanded="false" aria-controls="globalComparison">Examination unlocks at return seven</button>
           <p class="examination-progress" id="examinationProgress" aria-live="polite"></p>
         </section>
         <section id="globalComparison" class="comparison-panel global-comparison" aria-live="polite" hidden></section>
@@ -268,7 +280,7 @@
     </section>
     <footer><span>RETURN · A PRACTICE, NOT A PRESCRIPTION</span><a href="../portfolio-website/index.html#book-01">ABOUT THE LENS (book 1, page 12) ↗</a></footer>
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
-    <script src="app.js?v=attention-pin-1"></script>
+    <script src="app.js?v=attention-close-3"></script>
   <script src="tap-feedback.js?v=tap-feedback-1"></script>
       <nav class="site-map" aria-label="Nyarindo Lens Universal site map">
       <div class="site-map-intro">

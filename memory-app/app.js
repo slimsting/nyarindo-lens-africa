@@ -37,8 +37,12 @@ const attentionMessage = document.getElementById('attentionMessage');
 const attentionCopy = document.getElementById('attentionCopy');
 const attentionProgress = document.getElementById('attentionProgress');
 const examinationGate = document.getElementById('examinationGate');
+const examinationEyebrow = document.getElementById('examinationEyebrow');
+const examinationTitle = document.getElementById('examinationTitle');
 const examinationProgress = document.getElementById('examinationProgress');
+const examinationOrbitNodes = [...document.querySelectorAll('.examination-orbit span')];
 const spiralStages = [...document.querySelectorAll('.spiral-stage')];
+const attentionStepItems = [...document.querySelectorAll('[data-attention-step]')];
 const observationStage = document.querySelector('[data-stage="signal"]');
 const observationInput = form.elements.namedItem('observation');
 const observationError = document.getElementById('observationError');
@@ -147,6 +151,13 @@ function showSpiralStage(index, focus = false) {
   if (activeStageIndex < stages.length - 1) {
     nextStageButton.textContent = `Next: ${stages[activeStageIndex + 1].dataset.stageTitle} →`;
   }
+
+  const attentionStepKeys = ['attention', 'signal', 'first-story', 'pause', 'choose', 'action'];
+  const attentionStepIndex = attentionStepKeys.indexOf(activeStage.dataset.stage);
+  attentionStepItems.forEach((item, itemIndex) => {
+    item.classList.toggle('is-active', itemIndex === attentionStepIndex);
+    item.classList.toggle('is-complete', attentionStepIndex > itemIndex);
+  });
 
   if (focus) {
     activeStage.focus({ preventScroll: true });
@@ -973,9 +984,18 @@ function renderGlobalComparison() {
 
   globalComparison.replaceChildren();
 
+  const headingRow = document.createElement('div');
+  headingRow.className = 'global-comparison-head';
   const eyebrow = document.createElement('p');
   eyebrow.className = 'eyebrow';
   eyebrow.textContent = 'ACROSS THE WHOLE SPIRAL';
+  const closeButton = document.createElement('button');
+  closeButton.type = 'button';
+  closeButton.className = 'global-comparison-close';
+  closeButton.textContent = 'Close examination ↑';
+  closeButton.setAttribute('aria-label', 'Close the attention trail examination');
+  closeButton.addEventListener('click', () => setGlobalComparisonOpen(false));
+  headingRow.append(eyebrow, closeButton);
   const title = document.createElement('h3');
   title.textContent = 'What returns when the notes gather.';
   const summary = document.createElement('p');
@@ -985,7 +1005,7 @@ function renderGlobalComparison() {
   explanation.className = 'comparison-explanation';
   explanation.textContent = 'You opened this reflection deliberately. Read it slowly. The body sends a signal before it becomes human language; every saved “signal report” is already your description of that experience. The interpretation is the story attached afterward. The analysis can notice repetition, difference, feeling, action, and sequence. It cannot tell you what the cells communicated, what caused the signal, which story is ultimately true, or how you should live.';
   explanation.append(' ', createBookCitation(6, 'pages 15, 20'));
-  globalComparison.append(eyebrow, title, summary, explanation);
+  globalComparison.append(headingRow, title, summary, explanation);
   globalComparison.append(createAttentionTrail(entries));
   globalComparison.append(createInfluenceGuide());
 
@@ -1097,7 +1117,10 @@ function renderGlobalComparison() {
   const limit = document.createElement('p');
   limit.className = 'global-comparison-limit';
   limit.textContent = 'These are transparent counts of the words used in your human-language descriptions. They do not reveal what the body or cells “said,” diagnose, assign causes, or decide what the repetition means.';
-  globalComparison.append(limit);
+  const closeButtonAtEnd = closeButton.cloneNode(true);
+  closeButtonAtEnd.textContent = 'Close examination ↑';
+  closeButtonAtEnd.addEventListener('click', () => setGlobalComparisonOpen(false));
+  globalComparison.append(limit, closeButtonAtEnd);
 }
 
 function makeReturnButton(entry) {
@@ -1236,15 +1259,29 @@ function updateExaminationGate() {
     .length;
   const ready = completed >= requiredReturns;
   examinationGate.hidden = false;
+  examinationGate.classList.toggle('is-ready', ready);
   compareAllButton.hidden = false;
   compareAllButton.disabled = !ready;
+  examinationOrbitNodes.forEach((node, index) => {
+    node.classList.toggle('is-complete', index < Math.min(completed, requiredReturns));
+  });
 
   if (!ready) {
+    examinationEyebrow.textContent = 'YOUR ATTENTION TRAIL · IN FORMATION';
+    examinationTitle.textContent = 'Seven completed returns reveal the pattern of your attention.';
+    compareAllButton.textContent = completed
+      ? `Examination unlocks at return seven · ${completed} recorded`
+      : 'Examination unlocks at return seven';
     examinationProgress.textContent = `${completed} of ${requiredReturns} completed returns recorded. The examination unlocks after return seven.`;
     attentionProgress.textContent = '';
     return;
   }
 
+  examinationEyebrow.textContent = 'SEVEN RETURNS · READY TO EXAMINE';
+  examinationTitle.textContent = 'Your attention trail is ready to be examined.';
+  compareAllButton.textContent = globalComparison.hidden
+    ? 'Examine your attention trail · seven returns ready'
+    : 'Close what I found';
   examinationProgress.textContent = completed === requiredReturns
     ? 'Seven completed returns are ready. Nothing opens until you press the button above. You can keep returning if you want more of the spiral in the record.'
     : `${completed} completed returns are ready. Nothing opens until you press the button above. You can keep returning if you want more of the spiral in the record.`;
@@ -1440,23 +1477,28 @@ storageSecurity.addEventListener('click', async () => {
 
 unlockEntriesButton.addEventListener('click', () => openPinDialog('unlock'));
 
-compareAllButton.addEventListener('click', () => {
-  if (compareAllButton.disabled) return;
-  if (globalComparison.hidden) {
-    renderGlobalComparison();
-    globalComparison.hidden = false;
-    attentionMessage.hidden = false;
-    compareAllButton.textContent = 'Close what I found';
-    compareAllButton.setAttribute('aria-expanded', 'true');
-    globalComparison.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block: 'start' });
+function setGlobalComparisonOpen(open) {
+  if (!open) {
+    globalComparison.hidden = true;
+    attentionMessage.hidden = true;
+    compareAllButton.textContent = 'Examine your attention trail · seven returns ready';
+    compareAllButton.setAttribute('aria-expanded', 'false');
+    examinationGate.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block: 'center' });
+    compareAllButton.focus({ preventScroll: true });
     return;
   }
 
-  globalComparison.hidden = true;
-  attentionMessage.hidden = true;
-  compareAllButton.textContent = 'I have written enough — examine what I may have learned';
-  compareAllButton.setAttribute('aria-expanded', 'false');
-  examinationGate.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block: 'center' });
+  renderGlobalComparison();
+  globalComparison.hidden = false;
+  attentionMessage.hidden = false;
+  compareAllButton.textContent = 'Close what I found';
+  compareAllButton.setAttribute('aria-expanded', 'true');
+  globalComparison.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block: 'start' });
+}
+
+compareAllButton.addEventListener('click', () => {
+  if (compareAllButton.disabled) return;
+  setGlobalComparisonOpen(globalComparison.hidden);
 });
 
 function renderAnchor(entry) {
