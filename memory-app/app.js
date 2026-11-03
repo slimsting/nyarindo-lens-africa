@@ -319,7 +319,7 @@ function showToast(message) {
 }
 
 function getBookHref(bookNumber) {
-  return `../portfolio-website/index.html#book-${String(bookNumber).padStart(2, '0')}`;
+  return `/#book-${String(bookNumber).padStart(2, '0')}`;
 }
 
 function createBookCitation(bookNumber, pageLabel = null) {

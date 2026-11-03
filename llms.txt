@@ -4,7 +4,7 @@
 
 ## Primary pages
 
-- [Portfolio home](https://nyarindolens.com/portfolio-website/index.html): Author profile, selected work, books, and the full theory sequence.
+- [Portfolio home](https://nyarindolens.com/): Author profile, selected work, books, and the full theory sequence.
 - [The Lens of Everything](https://nyarindolens.com/portfolio-website/lens-of-everything.html): A working description of reality as process and regulation.
 - [A Legion Wearing One Face](https://nyarindolens.com/portfolio-website/a-legion-wearing-one-face.html): An illustrated theory of personhood, archetypes, meetings, and myth.
 - [The Threshold Rule of Communication and Morality](https://nyarindolens.com/portfolio-website/the-threshold-rule.html): A lens for communication, dissent, repair, and fidelity.

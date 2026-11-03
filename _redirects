@@ -1,10 +1,10 @@
 # Canonical home
-/ /portfolio-website/ 301
-/portfolio-website /portfolio-website/ 301
+/ /portfolio-website/index.html 200
+/portfolio-website / 301!
+/portfolio-website/ / 301!
+/portfolio-website/index.html / 301!
 
 # Portfolio and theory pages
-/portfolio-website/ /portfolio-website/index.html 200
-/portfolio-website/index.html /portfolio-website/index.html 200
 /portfolio-website/a-legion-wearing-one-face.html /portfolio-website/a-legion-wearing-one-face.html 200
 /portfolio-website/lens-of-everything.html /portfolio-website/lens-of-everything.html 200
 /portfolio-website/peace-pon-eye-and-eye.html /portfolio-website/peace-pon-eye-and-eye.html 200
