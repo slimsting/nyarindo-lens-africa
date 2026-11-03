@@ -20,10 +20,28 @@ const themeToggle = document.getElementById('themeToggle');
 const storageNote = document.getElementById('storageNote');
 const storageSecurity = document.getElementById('storageSecurity');
 const unlockEntriesButton = document.getElementById('unlockEntries');
+const pinDialog = document.getElementById('pinDialog');
+const pinForm = document.getElementById('pinForm');
+const pinTitle = document.getElementById('pinTitle');
+const pinIntro = document.getElementById('pinIntro');
+const pinLabel = document.getElementById('pinLabel');
+const pinValue = document.getElementById('pinValue');
+const pinConfirmField = document.getElementById('pinConfirmField');
+const pinConfirm = document.getElementById('pinConfirm');
+const pinHelp = document.getElementById('pinHelp');
+const pinError = document.getElementById('pinError');
+const pinSubmit = document.getElementById('pinSubmit');
+const pinCancel = document.getElementById('pinCancel');
+const pinCancelIcon = document.getElementById('pinCancelIcon');
 const attentionMessage = document.getElementById('attentionMessage');
 const attentionCopy = document.getElementById('attentionCopy');
 const attentionProgress = document.getElementById('attentionProgress');
+const examinationGate = document.getElementById('examinationGate');
+const examinationProgress = document.getElementById('examinationProgress');
 const spiralStages = [...document.querySelectorAll('.spiral-stage')];
+const observationStage = document.querySelector('[data-stage="signal"]');
+const observationInput = form.elements.namedItem('observation');
+const observationError = document.getElementById('observationError');
 const previousStageButton = document.getElementById('previousStage');
 const nextStageButton = document.getElementById('nextStage');
 const stageProgress = document.getElementById('stageProgress');
@@ -39,6 +57,7 @@ let entriesCache = [];
 let storageEnvelope = null;
 let storageKey = null;
 let storageLocked = false;
+let pinDialogMode = 'create';
 
 function applyTheme(theme, animate = true) {
   const isLight = theme === 'light';
@@ -367,72 +386,6 @@ function getStoryLink(storyId) {
 }
 
 const commonWords = new Set(('a about after again an and are around as at be been before but by can did do during feel feels felt for from had has have he her here his i if in into is it its just me my of on or our out over she so that the their them then there they this to under was we were what when where which while who why will with you your').split(' '));
-
-function returnsWithCurrent(entry, currentReturn = null) {
-  const returns = [...(entry.returns || [])];
-  if (currentReturn && !returns.some(item => item.id === currentReturn.id)) returns.push(currentReturn);
-  return returns;
-}
-
-function repeatedReportWords(entry, currentReturn = null) {
-  const reports = [entry.observation, ...returnsWithCurrent(entry, currentReturn).map(item => item.observation)];
-  const counts = new Map();
-  reports.filter(Boolean).forEach(report => {
-    const words = new Set(report.toLocaleLowerCase().match(/[\p{L}\p{N}']+/gu) || []);
-    words.forEach(word => {
-      if (word.length > 2 && !commonWords.has(word)) counts.set(word, (counts.get(word) || 0) + 1);
-    });
-  });
-  return [...counts.entries()].filter(([, count]) => count > 1).sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0])).map(([word]) => word).slice(0, 8);
-}
-
-function createReview(entry, currentReturn = null) {
-  const review = document.createElement('section');
-  review.className = 'return-review';
-  const heading = document.createElement('h4');
-  appendLinkedBookText(heading, 'What the notes show beside O(0)');
-  review.append(heading);
-
-  const allReturns = returnsWithCurrent(entry, currentReturn);
-  const reportCount = [entry.observation, ...allReturns.map(item => item.observation)].filter(Boolean).length;
-  const interpretationCount = [entry.meaning, ...allReturns.map(item => item.meaning)].filter(Boolean).length;
-  const attentionCount = [entry.attention, ...allReturns.map(item => item.attention)].filter(Boolean).length;
-  const chosenStoryCount = [entry.chosenStory, ...allReturns.map(item => item.chosenStory)].filter(Boolean).length;
-  const returnObservationCount = allReturns.filter(item => item.returnObservation).length;
-  const count = document.createElement('p');
-  count.textContent = `Across this entry: ${attentionCount} chosen point${attentionCount === 1 ? '' : 's'} of attention, ${reportCount} signal report${reportCount === 1 ? '' : 's'}, ${interpretationCount} first interpretation${interpretationCount === 1 ? '' : 's'}, ${chosenStoryCount} tested story choice${chosenStoryCount === 1 ? '' : 's'}, and ${returnObservationCount} later observation${returnObservationCount === 1 ? '' : 's'}.`;
-  review.append(count);
-
-  if (!entry.observation) {
-    const missing = document.createElement('p');
-    missing.className = 'review-note';
-    missing.textContent = 'The original entry has no signal report. That absence stays visible; this return can hold the first signal description if you choose.';
-    review.append(missing);
-  } else {
-    const anchor = document.createElement('blockquote');
-    anchor.className = 'review-anchor';
-    appendLinkedBookText(anchor, `Original signal report · O(0): “${entry.observation}”`);
-    review.append(anchor);
-  }
-
-  const echoes = repeatedReportWords(entry, currentReturn);
-  const echoNote = document.createElement('p');
-  echoNote.className = 'review-note';
-  echoNote.textContent = echoes.length
-    ? `Words appearing in more than one signal report: ${echoes.join(', ')}. This is only a word-level echo, not proof of a pattern or its cause.`
-    : 'No repeated content words stand out across the signal reports yet. Similar experiences can also be described in different words.';
-  review.append(echoNote);
-
-  const question = document.createElement('p');
-  question.className = 'review-question';
-  question.textContent = 'Read the turns in order. Where did your attention go, which story did you choose to carry, what did you do, and what followed? The notes can show the sequence without deciding what it means.';
-  review.append(question);
-
-  const limit = document.createElement('small');
-  limit.textContent = 'This is a transparent comparison of saved words and dates. It does not diagnose, infer causes, or decide what your notes mean.';
-  review.append(limit);
-  return review;
-}
 
 const portableJournalPrompts = [
   'What did I choose to attend to before the signal became a story?',
@@ -931,7 +884,7 @@ function createAttentionTrail(entries) {
   title.append(' ', createBookCitation(5, 'page 12'), ' ', createBookCitation(6, 'pages 20–22'));
   const explanation = document.createElement('p');
   explanation.className = 'comparison-explanation';
-  explanation.textContent = 'These are your saved turns shown in order. Read where attention went, what story arrived first, what stayed open or changed, what you chose to carry, what you did, and what followed. The page does not score the sequence or supply the meaning.';
+  explanation.textContent = 'These are your saved turns shown in order. Read the raw feeling first, then the story attached to it, what you chose to carry, what you did, and how the carried story felt when you returned. The page does not score the sequence or supply the meaning.';
   section.append(title, explanation);
 
   const cycles = getAttentionTrailCycles(entries);
@@ -960,7 +913,7 @@ function createAttentionTrail(entries) {
     addTrailField(body, 'STORY CHOSEN TO CARRY', cycle.chosenStory, 'No story was chosen in this turn.');
     addTrailField(body, 'TEST OR OBSERVATION', cycle.evidence, 'No test or observation was recorded.');
     addTrailField(body, 'SMALL ACTION', cycle.action, 'No action was recorded.');
-    addTrailField(body, 'WHAT FOLLOWED', cycle.laterObservation, index === cycles.length - 1 ? 'This turn has not been returned to yet.' : 'No return observation was recorded after this turn.');
+    addTrailField(body, 'HOW THE CHOSEN STORY FELT AFTERWARD · NEXT RETURN', cycle.laterObservation, index === cycles.length - 1 ? 'This turn has not been returned to yet.' : 'No feeling or later observation was recorded after this turn.');
     details.append(summary, body);
     list.append(details);
   });
@@ -970,9 +923,39 @@ function createAttentionTrail(entries) {
   const question = document.createElement('p');
   question.className = 'analysis-carry-question';
   question.textContent = completed
-    ? `You have recorded ${completed} observation${completed === 1 ? '' : 's'} after a saved turn. Read the trail from beginning to end: where did attention seem to lead what you noticed, chose, did, or experienced next?`
-    : 'No turn has been returned to yet. The spiral has not reached the point where it can show what followed. Make a small next turn, then return and read what actually changed.';
+    ? `You have recorded ${completed} return${completed === 1 ? '' : 's'} after a carried story. Read the trail from beginning to end: what felt different afterward, what stayed the same, and which possible explanation fits the record without ignoring alternatives?`
+    : 'No turn has been returned to yet. The spiral has not reached the point where it can show what came afterward. Make a small next turn, then return and begin with how that story felt.';
   section.append(question);
+  return section;
+}
+
+function createInfluenceGuide() {
+  const section = document.createElement('section');
+  section.className = 'influence-guide';
+  const title = document.createElement('h4');
+  title.className = 'global-section-title';
+  title.textContent = 'Notice how a story may influence what comes next';
+  title.append(' ', createBookCitation(3, 'page 10'), ' ', createBookCitation(5, 'page 12'));
+  const introduction = document.createElement('p');
+  introduction.className = 'comparison-explanation';
+  introduction.textContent = 'A story can change what you notice, how a feeling is understood, which action feels possible, and how you meet the next moment. The same bodily signal may also receive the same story with no clear change, or a different story with no clear change. Your notes can suggest possibilities; they cannot prove that a story caused an event, a feeling, or the world around you.';
+  const list = document.createElement('ul');
+  list.className = 'analysis-points influence-points';
+  [
+    'Read the raw sensation before the interpretation. Notice whether the description of the feeling changed when the story changed.',
+    'Read the next return before today’s new story. Notice how carrying the previous story felt afterward, what you did, and what happened independently of your explanation.',
+    'Look for both coherence and exceptions. A recurring story may be meaningful without being true of every situation.',
+    'Keep alternative explanations visible: bodily health, sleep, environment, other people, chance, ordinary events, and needs that deserve real support.',
+    'Leave the conclusion open enough to be corrected by the next observation. The record may show where attention and story seem to shape experience—or where they do not—without becoming a verdict about reality.'
+  ].forEach(point => {
+    const item = document.createElement('li');
+    item.textContent = point;
+    list.append(item);
+  });
+  const prompt = document.createElement('p');
+  prompt.className = 'analysis-carry-question';
+  prompt.textContent = 'Carry one question, not a prescription: What changed in how I felt or acted when I held a different story, and what alternative explanation does this record still allow?';
+  section.append(title, introduction, list, prompt);
   return section;
 }
 
@@ -982,7 +965,9 @@ function renderGlobalComparison() {
   const groups = getSimilarReportGroups(moments);
   const storyCount = moments.filter(moment => moment.story).length;
   const attentionCount = moments.filter(moment => moment.attention).length;
-  const returnObservationCount = moments.filter(moment => moment.returnObservation).length;
+  const returnObservationCount = entries.reduce((total, entry) => total + (entry.returns || [])
+    .filter(item => String(item.returnObservation || '').trim())
+    .length, 0);
   const feelings = getFrequentFeelings(entries);
   const reportWords = getFrequentReportWords(moments).map(([word, count]) => ({ word, count }));
 
@@ -995,13 +980,14 @@ function renderGlobalComparison() {
   title.textContent = 'What returns when the notes gather.';
   const summary = document.createElement('p');
   summary.className = 'comparison-summary';
-  summary.textContent = `${entries.length} saved journal${entries.length === 1 ? '' : 's'} · ${attentionCount} chosen point${attentionCount === 1 ? '' : 's'} of attention · ${moments.length} signal report${moments.length === 1 ? '' : 's'} · ${storyCount} first interpretation${storyCount === 1 ? '' : 's'} · ${returnObservationCount} later observation${returnObservationCount === 1 ? '' : 's'}.`;
+  summary.textContent = `${entries.length} saved journal${entries.length === 1 ? '' : 's'} · ${attentionCount} chosen point${attentionCount === 1 ? '' : 's'} of attention · ${moments.length} raw-feeling report${moments.length === 1 ? '' : 's'} · ${storyCount} first interpretation${storyCount === 1 ? '' : 's'} · ${returnObservationCount} felt aftermath${returnObservationCount === 1 ? '' : 's'}.`;
   const explanation = document.createElement('p');
   explanation.className = 'comparison-explanation';
-  explanation.textContent = 'The body reports a signal; cells do not communicate in human language. A saved “signal report” is already your human-language description, and the interpretation is the story you attach afterward. Every saved report appears below. Wording groups require each report to match every other member: exact wording, or at least two significant words and 60% of the combined word set. Interpretations never determine the grouping. Word overlap is not proof of an identical sensation or cause.';
+  explanation.textContent = 'You opened this reflection deliberately. Read it slowly. The body sends a signal before it becomes human language; every saved “signal report” is already your description of that experience. The interpretation is the story attached afterward. The analysis can notice repetition, difference, feeling, action, and sequence. It cannot tell you what the cells communicated, what caused the signal, which story is ultimately true, or how you should live.';
   explanation.append(' ', createBookCitation(6, 'pages 15, 20'));
   globalComparison.append(eyebrow, title, summary, explanation);
   globalComparison.append(createAttentionTrail(entries));
+  globalComparison.append(createInfluenceGuide());
 
   const relatedHeading = document.createElement('h4');
   relatedHeading.className = 'global-section-title';
@@ -1131,16 +1117,25 @@ function makeReturnButton(entry) {
 }
 
 function renderReturnDetail(entry, item, index, openReturnId) {
+  const listItem = document.createElement('li');
+  listItem.className = 'return-history-list-item';
   const details = document.createElement('details');
   details.className = 'return-history-item';
   details.dataset.returnId = item.id;
   details.open = item.id === openReturnId;
   const summary = document.createElement('summary');
-  summary.textContent = `Return ${index + 1} · ${formatDate(item.createdAt)}`;
+  const number = document.createElement('span');
+  number.className = 'return-history-number';
+  number.textContent = `Return ${index + 1} of ${entry.returns.length}`;
+  const timestamp = document.createElement('time');
+  timestamp.className = 'return-history-time';
+  timestamp.dateTime = new Date(item.createdAt).toISOString();
+  timestamp.textContent = formatDate(item.createdAt);
+  summary.append(number, timestamp);
   details.append(summary);
   const content = document.createElement('div');
   content.className = 'return-history-copy';
-  addText(content, 'WHAT FOLLOWED THE PREVIOUS TURN', item.returnObservation, [{ book: 5, page: 'page 12' }]);
+  addText(content, 'HOW THE LAST STORY FELT AFTERWARD · WHAT FOLLOWED', item.returnObservation, [{ book: 5, page: 'page 12' }]);
   addText(content, 'CHOSEN ATTENTION', item.attention);
   addText(content, 'SIGNAL REPORT NOW · O(0)', item.observation);
   addText(content, 'INTERPRETATION / STORY NOW · O(1)', item.meaning);
@@ -1149,9 +1144,9 @@ function renderReturnDetail(entry, item, index, openReturnId) {
   addText(content, 'TEST OR OBSERVATION', item.evidence);
   addText(content, 'WIDER MEMORY · O(n)', item.context);
   addText(content, 'SMALL ACTION', item.practice, [{ book: 6, page: 'page 22' }]);
-  content.append(createReview(entry, item));
   details.append(content);
-  return details;
+  listItem.append(details);
+  return listItem;
 }
 
 function renderEntries(openReturnId = null) {
@@ -1159,11 +1154,11 @@ function renderEntries(openReturnId = null) {
   memoryList.replaceChildren();
   emptyNote.hidden = entries.length > 0;
   clearButton.hidden = entries.length === 0;
-  compareAllButton.hidden = entries.length === 0;
-  compareAllButton.textContent = 'Analyze entries';
+  compareAllButton.textContent = 'I have written enough — examine what I may have learned';
   compareAllButton.setAttribute('aria-expanded', 'false');
   globalComparison.hidden = true;
   globalComparison.replaceChildren();
+  attentionMessage.hidden = true;
 
   entries.forEach(entry => {
     const card = document.createElement('article');
@@ -1206,9 +1201,13 @@ function renderEntries(openReturnId = null) {
     beginning.append(beginningContent);
     card.append(beginning);
 
-    (entry.returns || []).forEach((item, index) => card.append(renderReturnDetail(entry, item, index, openReturnId)));
-
-    card.append(createComparison(entry));
+    if ((entry.returns || []).length) {
+      const returnList = document.createElement('ol');
+      returnList.className = 'return-history-list';
+      returnList.setAttribute('aria-label', 'Numbered returns with dates and times');
+      entry.returns.forEach((item, index) => returnList.append(renderReturnDetail(entry, item, index, openReturnId)));
+      card.append(returnList);
+    }
 
     const remove = document.createElement('button');
     remove.type = 'button';
@@ -1227,29 +1226,34 @@ function renderEntries(openReturnId = null) {
     memoryList.append(card);
   });
   updateStorageUi(entries.length);
-  updateAttentionReveal();
+  updateExaminationGate();
 }
 
-function updateAttentionReveal() {
+function updateExaminationGate() {
+  const requiredReturns = 7;
   const completed = getAttentionTrailCycles(readEntries())
     .filter(cycle => cycle.laterObservation)
     .length;
-  const ready = completed >= 2;
-  attentionMessage.hidden = !ready;
+  const ready = completed >= requiredReturns;
+  examinationGate.hidden = false;
+  compareAllButton.hidden = false;
+  compareAllButton.disabled = !ready;
 
   if (!ready) {
-    attentionProgress.textContent = completed === 0
-      ? 'The first turn is still open. Save a beginning, return with what followed, then let another turn gather before looking for a pattern.'
-      : 'One loop has returned. Make another small turn and return to it; this section will appear when two observations can sit beside each other.';
+    examinationProgress.textContent = `${completed} of ${requiredReturns} completed returns recorded. The examination unlocks after return seven.`;
+    attentionProgress.textContent = '';
     return;
   }
 
-  attentionProgress.textContent = `You now have ${completed} returned turns in your own notes. Read the sequence before accepting any explanation—including this one.`;
-  attentionCopy.textContent = 'Where did attention go before a story arrived, what did you choose to carry, what did you do, and what followed? The trail can be read without assigning a cause or final meaning. Attend to what actually recurred, what remained uncertain, and what your own record can support.';
+  examinationProgress.textContent = completed === requiredReturns
+    ? 'Seven completed returns are ready. Nothing opens until you press the button above. You can keep returning if you want more of the spiral in the record.'
+    : `${completed} completed returns are ready. Nothing opens until you press the button above. You can keep returning if you want more of the spiral in the record.`;
+  attentionProgress.textContent = `You have returned ${completed} times and written what followed the stories you carried. Read the sequence before accepting any explanation—including this one.`;
+  attentionCopy.textContent = 'Notice the raw feeling before its story. Then notice how carrying a particular interpretation seemed to affect what you felt, chose, and did next. The record can reveal possible influence, repetition, and exceptions without proving a cause or deciding what reality must mean.';
 }
 
-const defaultStorageNote = 'This returning-journal entry stays in this browser on this device. It does not sync or encrypt. The private clearing page above is never saved here.';
-const encryptedStorageNote = 'This returning-journal entry is encrypted at rest with your passphrase. It stays in this browser, does not sync, and must be unlocked again after this session.';
+const defaultStorageNote = 'Saved entries stay in this browser on this device. Add a PIN to encrypt them at rest. The private clearing page above is never saved here.';
+const encryptedStorageNote = 'Saved entries are encrypted at rest with your PIN. They stay in this browser, do not sync, and must be unlocked again after this session.';
 
 function setMemoryFormEnabled(enabled) {
   [...form.elements].forEach(control => {
@@ -1260,63 +1264,101 @@ function setMemoryFormEnabled(enabled) {
 function updateStorageUi(entryCount) {
   const cryptoReady = Boolean(globalThis.crypto?.subtle);
   unlockEntriesButton.hidden = !storageLocked;
-  storageSecurity.hidden = storageLocked || entryCount === 0 || !cryptoReady;
-  storageSecurity.textContent = storageEnvelope ? 'Lock now' : 'Protect entries';
+  storageSecurity.hidden = storageLocked || !cryptoReady;
+  unlockEntriesButton.textContent = 'Unlock with PIN';
+  storageSecurity.textContent = storageEnvelope ? 'Lock now' : 'Protect with PIN';
+  storageSecurity.setAttribute('aria-label', storageEnvelope
+    ? 'Lock the encrypted journal'
+    : entryCount
+      ? 'Protect saved entries with a PIN'
+      : 'Set PIN protection before saving');
   storageNote.textContent = storageEnvelope ? encryptedStorageNote : defaultStorageNote;
 }
 
 function renderLockedState() {
   setMemoryFormEnabled(false);
+  form.hidden = true;
   emptyNote.hidden = true;
   memoryList.replaceChildren();
   const note = document.createElement('p');
   note.className = 'storage-locked-note';
-  note.textContent = 'Saved entries are encrypted. Unlock them with your passphrase to read, add, or remove entries.';
+  note.textContent = 'Saved entries are encrypted and hidden. Unlock them with your PIN to read, add, or remove entries.';
   memoryList.append(note);
   clearButton.hidden = true;
+  examinationGate.hidden = true;
   compareAllButton.hidden = true;
+  globalComparison.hidden = true;
+  attentionMessage.hidden = true;
   storageSecurity.hidden = true;
   unlockEntriesButton.hidden = false;
   storageNote.textContent = 'Your saved entries are encrypted and locked for this session.';
 }
 
-async function protectExistingEntries() {
-  if (!entriesCache.length) {
-    showToast('There are no saved entries to encrypt yet.');
-    return;
-  }
+function showPinError(message) {
+  pinError.textContent = message;
+  pinError.hidden = !message;
+}
+
+function openPinDialog(mode) {
+  pinDialogMode = mode;
+  pinForm.reset();
+  showPinError('');
+  const creating = mode === 'create';
+  pinTitle.textContent = creating ? 'Protect your spiral.' : 'Open your spiral.';
+  pinIntro.textContent = creating
+    ? 'A PIN keeps saved entries from opening casually in this browser. It cannot protect a compromised device or recover a forgotten PIN.'
+    : 'Enter your PIN to decrypt this browser\'s saved entries for this session. If you protected them before this PIN update, use your existing passphrase.';
+  pinLabel.textContent = creating ? 'CREATE A PIN' : 'ENTER PIN OR EXISTING PASSPHRASE';
+  pinHelp.textContent = creating
+    ? 'Use 6 to 32 digits. A longer PIN is harder to guess.'
+    : 'For entries created with the PIN update, enter the numeric PIN only.';
+  pinConfirmField.hidden = !creating;
+  pinConfirm.required = creating;
+  pinValue.autocomplete = creating ? 'new-password' : 'current-password';
+  pinValue.inputMode = creating ? 'numeric' : 'text';
+  pinValue.maxLength = creating ? 32 : 128;
+  pinValue.minLength = creating ? 6 : 1;
+  pinValue.toggleAttribute('pattern', creating);
+  if (creating) pinValue.setAttribute('pattern', '[0-9]{6,32}');
+  pinValue.required = true;
+  pinSubmit.textContent = creating ? 'Protect and lock' : 'Unlock entries';
+  if (!pinDialog.open) pinDialog.showModal();
+  requestAnimationFrame(() => pinValue.focus());
+}
+
+function closePinDialog() {
+  pinForm.reset();
+  showPinError('');
+  if (pinDialog.open) pinDialog.close();
+}
+
+async function protectExistingEntries(pin) {
   if (!globalThis.crypto?.subtle) {
-    showToast('This browser cannot provide application-level encryption on this page.');
-    return;
+    throw new Error('This browser cannot provide application-level encryption on this page.');
   }
-  const passphrase = window.prompt('Create a passphrase of at least 10 characters. There is no recovery if you forget it.');
-  if (passphrase === null) return;
-  if (passphrase.length < 10) {
-    showToast('Use a passphrase with at least 10 characters.');
-    return;
-  }
+  const protectedEntryCount = entriesCache.length;
   try {
-    const result = await createStorageEnvelope(entriesCache, passphrase);
+    const result = await createStorageEnvelope(entriesCache, pin);
     storageEnvelope = result.envelope;
-    storageKey = result.key;
     localStorage.setItem(STORAGE_KEY, JSON.stringify(storageEnvelope));
-    renderEntries();
-    showToast('Saved entries are now encrypted. You will unlock them again after this session.');
+    storageKey = null;
+    entriesCache = [];
+    storageLocked = true;
+    renderLockedState();
+    return protectedEntryCount;
   } catch {
-    showToast('The entries could not be encrypted. Nothing was changed.');
+    throw new Error('The entries could not be encrypted. Nothing was changed.');
   }
 }
 
-async function unlockSavedEntries() {
-  if (!storageEnvelope) return;
-  const passphrase = window.prompt('Enter the passphrase for the encrypted journal.');
-  if (passphrase === null) return;
+async function unlockSavedEntries(pin) {
+  if (!storageEnvelope) throw new Error('There are no encrypted entries to unlock.');
   try {
-    const result = await decryptStorageEnvelope(storageEnvelope, passphrase);
+    const result = await decryptStorageEnvelope(storageEnvelope, pin);
     entriesCache = result.entries;
     const oldIterations = Number(storageEnvelope.iterations);
     if (!Number.isFinite(oldIterations) || oldIterations < PBKDF2_ITERATIONS) {
-      const upgraded = await createStorageEnvelope(entriesCache, passphrase);
+      const upgraded = await createStorageEnvelope(entriesCache, pin);
       storageEnvelope = upgraded.envelope;
       storageKey = upgraded.key;
       localStorage.setItem(STORAGE_KEY, JSON.stringify(storageEnvelope));
@@ -1324,14 +1366,64 @@ async function unlockSavedEntries() {
       storageKey = result.key;
     }
     storageLocked = false;
+    form.hidden = false;
     setMemoryFormEnabled(true);
     startBeginning();
     renderEntries();
-    showToast('Encrypted entries unlocked for this session.');
+    showToast('Saved entries unlocked for this session.');
   } catch {
-    showToast('That passphrase did not unlock the saved entries.');
+    throw new Error('That PIN did not unlock the saved entries. If they predate PIN protection, try the original passphrase.');
   }
 }
+
+pinForm.addEventListener('submit', async event => {
+  event.preventDefault();
+  showPinError('');
+  const enteredPin = pinValue.value;
+  if (pinDialogMode === 'create') {
+    if (!/^[0-9]{6,32}$/.test(enteredPin)) {
+      showPinError('Use 6 to 32 digits for the PIN.');
+      pinValue.focus();
+      return;
+    }
+    if (enteredPin !== pinConfirm.value) {
+      showPinError('The PINs do not match.');
+      pinConfirm.focus();
+      pinConfirm.select();
+      return;
+    }
+  } else if (!enteredPin) {
+    showPinError('Enter your PIN or existing passphrase.');
+    pinValue.focus();
+    return;
+  }
+
+  pinSubmit.disabled = true;
+  pinSubmit.textContent = pinDialogMode === 'create' ? 'Protecting...' : 'Unlocking...';
+  try {
+    if (pinDialogMode === 'create') {
+      const protectedEntryCount = await protectExistingEntries(enteredPin);
+      closePinDialog();
+      showToast(protectedEntryCount
+        ? 'Saved entries encrypted and locked. Use your PIN to reopen them.'
+        : 'PIN protection is ready. Unlock first, then add your first private entry.');
+    } else {
+      await unlockSavedEntries(enteredPin);
+      closePinDialog();
+    }
+  } catch (error) {
+    showPinError(error.message || 'The saved entries could not be opened.');
+    pinValue.focus();
+    pinValue.select();
+  } finally {
+    pinSubmit.disabled = false;
+    pinSubmit.textContent = pinDialogMode === 'create' ? 'Protect and lock' : 'Unlock entries';
+  }
+});
+
+pinCancel.addEventListener('click', closePinDialog);
+pinCancelIcon.addEventListener('click', closePinDialog);
+pinDialog.addEventListener('close', () => pinForm.reset());
 
 storageSecurity.addEventListener('click', async () => {
   if (storageEnvelope && storageKey) {
@@ -1343,24 +1435,28 @@ storageSecurity.addEventListener('click', async () => {
     showToast('Encrypted entries locked.');
     return;
   }
-  await protectExistingEntries();
+  openPinDialog('create');
 });
 
-unlockEntriesButton.addEventListener('click', unlockSavedEntries);
+unlockEntriesButton.addEventListener('click', () => openPinDialog('unlock'));
 
 compareAllButton.addEventListener('click', () => {
+  if (compareAllButton.disabled) return;
   if (globalComparison.hidden) {
     renderGlobalComparison();
     globalComparison.hidden = false;
-    compareAllButton.textContent = 'Close analysis';
+    attentionMessage.hidden = false;
+    compareAllButton.textContent = 'Close what I found';
     compareAllButton.setAttribute('aria-expanded', 'true');
-    globalComparison.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    globalComparison.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block: 'start' });
     return;
   }
 
   globalComparison.hidden = true;
-  compareAllButton.textContent = 'Analyze entries';
+  attentionMessage.hidden = true;
+  compareAllButton.textContent = 'I have written enough — examine what I may have learned';
   compareAllButton.setAttribute('aria-expanded', 'false');
+  examinationGate.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block: 'center' });
 });
 
 function renderAnchor(entry) {
@@ -1382,7 +1478,6 @@ function renderAnchor(entry) {
   addText(returnAnchor, 'STORY CHOSEN TO CARRY', entry.chosenStory || 'No story was chosen in the original entry.');
   const storyLink = getStoryLink(entry.storyId);
   if (storyLink) returnAnchor.append(storyLink);
-  returnAnchor.append(createReview(entry));
 }
 
 function setFieldText(id, label, hint) {
@@ -1430,6 +1525,29 @@ function setModeEyebrow(prefix, bookNumber, bookLabel, pageLabel) {
   node.replaceChildren(`${prefix} · `, link);
 }
 
+function clearObservationError() {
+  observationInput.removeAttribute('aria-invalid');
+  observationError.hidden = true;
+}
+
+function requireRawReport() {
+  if (String(observationInput.value || '').trim()) {
+    clearObservationError();
+    return true;
+  }
+  observationInput.setAttribute('aria-invalid', 'true');
+  observationError.hidden = false;
+  const observationIndex = getVisibleSpiralStages().indexOf(observationStage);
+  showSpiralStage(observationIndex, true);
+  observationInput.focus({ preventScroll: true });
+  showToast('Write a raw-feeling report before saving this turn.');
+  return false;
+}
+
+observationInput.addEventListener('input', () => {
+  if (observationInput.value.trim()) clearObservationError();
+});
+
 function startBeginning() {
   formMode = 'beginning';
   activeEntryId = null;
@@ -1439,11 +1557,12 @@ function startBeginning() {
   stateField.hidden = false;
   setModeEyebrow('RETURNING JOURNAL · ENTRY 01', 6, 'BOOK SIX', 'pages 20–22');
   document.getElementById('journalTitle').textContent = 'Begin the returning journal.';
-  document.getElementById('journalInstructions').textContent = 'Move through the spiral one turn at a time. Begin with what you choose to attend to, then notice the signal before deciding what it means. An interpretation can stay open. The later return is where you read what followed in your own words.';
-  setFieldText('observation', createFieldLabel('02', 'Signal report', 'O(0)'), 'Describe the signal directly—pressure, heat, tingling, movement, stillness, or anything else—before explaining it. Your words are a human-language description of the signal, not the signal itself.');
-  setFieldText('meaning', createFieldLabel('03', 'First interpretation', 'O(1)'), 'What words, meaning, emotion, or explanation did your mind attach to the signal? This is an interpretation you can revisit, not a verdict.');
+  document.getElementById('journalInstructions').textContent = 'Move through the spiral one turn at a time. Notice the raw bodily feeling before the mind explains it, then catch the story attached to that feeling. Return across ordinary days; each later turn begins with how the previous story felt afterward.';
+  setFieldText('observation', createFieldLabel('02', 'Raw feeling', 'O(0)'), 'Describe the feeling itself in your own words—pressure, heat, tingling, movement, stillness, or anything else—before explaining why it is there. The body sends a signal; your words are a human-language description of it. This report is required before the entry can be saved.');
+  setFieldText('meaning', createFieldLabel('03', 'Meaning attached', 'O(1)'), 'What story, emotion, prediction, or explanation did your mind attach to the feeling? Write the interpretation as it arrived. It is real as an experience, but its meaning can remain open.');
   setSaveButton('Save this entry');
   form.reset();
+  clearObservationError();
   syncStatePresets();
   updateSelectedStory();
   showSpiralStage(0);
@@ -1455,13 +1574,14 @@ function startReturn(entryId) {
   formMode = 'return';
   activeEntryId = entryId;
   form.reset();
+  clearObservationError();
   journalMode.hidden = false;
   stateField.hidden = true;
   setModeEyebrow(`RETURN ${((entry.returns || []).length + 1).toString().padStart(2, '0')}`, 6, 'BOOK SIX', 'pages 20–22');
   document.getElementById('journalTitle').textContent = 'Set today beside the first note.';
-  document.getElementById('journalInstructions').textContent = 'Begin with what followed the last turn. Then choose today’s point of attention, notice the signal before naming it, catch the first story, pause, test another account, and make a small next turn.';
-  setFieldText('observation', createFieldLabel('02', 'Signal report now', 'O(0)'), 'Describe what you can notice directly now, before explaining it. The words are your human-language description of a bodily signal, not the signal itself.');
-  setFieldText('meaning', createFieldLabel('03', 'Interpretation now', 'O(1)'), 'What words, meaning, or explanation did your mind attach to the signal? It may differ, repeat, or remain uncertain.');
+  document.getElementById('journalInstructions').textContent = 'Begin with how the story you carried last time felt afterward. Then choose today’s attention, describe the raw feeling before its meaning, catch the new story, and continue the practice across ordinary days.';
+  setFieldText('observation', createFieldLabel('02', 'Raw feeling now', 'O(0)'), 'Describe what you feel directly now, before explaining it. Use your own words for the bodily experience. The description is yours; it is not the signal itself. This report is required before the return can be saved.');
+  setFieldText('meaning', createFieldLabel('03', 'Meaning attached now', 'O(1)'), 'What story did your mind attach to the feeling this time? It may repeat, differ, or remain uncertain. You are noticing the interpretation before deciding what to keep.');
   setSaveButton('Save this return');
   renderAnchor(entry);
   returnAnchor.hidden = false;
@@ -1538,6 +1658,8 @@ form.addEventListener('submit', async event => {
   };
   const hasTurnContent = [note.attention, note.observation, note.meaning, note.alternativeStory, note.chosenStory, note.evidence, note.context, note.practice].some(Boolean);
 
+  if (!requireRawReport()) return;
+
   if (formMode === 'beginning') {
     const entry = {
       id: makeId(),
@@ -1568,7 +1690,7 @@ form.addEventListener('submit', async event => {
       });
       startBeginning();
       renderEntries();
-      showToast('This turn is kept on this device. Return later to record what followed.');
+      showToast('This turn is kept on this device. Return later and begin with how this story felt.');
     } catch {
       showToast('This browser could not save the entry. Your writing has not been kept.');
     }
@@ -1594,7 +1716,7 @@ form.addEventListener('submit', async event => {
     renderEntries(note.id);
     renderAnchor(entry);
     returnAnchor.hidden = false;
-    showToast('This return is saved beside the beginning report.');
+    showToast('This return is saved. Continue the spiral; the full reflection opens only when you choose it.');
     const savedCard = [...memoryList.children].find(card => card.dataset.entryId === entry.id);
     if (savedCard) savedCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
     startBeginning();
@@ -1640,6 +1762,7 @@ async function initializeStorage() {
     renderLockedState();
     return;
   }
+  form.hidden = false;
   setMemoryFormEnabled(true);
   startBeginning();
   renderEntries();

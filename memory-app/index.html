@@ -26,7 +26,7 @@
     <meta name="twitter:description" content="Two private journaling practices: a clearing page without witness, and a structured returning journal for rereading patterns over time.">
     <meta name="twitter:image" content="/portfolio-website/assets/newbon-nyarindo-gadson-brand-portrait.webp">
     <script src="../portfolio-website/site-theme-init.js?v=security-1"></script>
-    <link rel="stylesheet" href="styles.css?v=theme-controls-1">
+    <link rel="stylesheet" href="styles.css?v=attention-pin-1">
     <link rel="stylesheet" href="tap-feedback.css?v=tap-feedback-1">
 
     <script type="application/ld+json">
@@ -124,14 +124,31 @@
         <div class="journal-mode" id="journalMode">
           <p class="eyebrow" id="modeEyebrow">RETURNING JOURNAL · ENTRY 01 · <a class="book-reference" href="../portfolio-website/index.html#book-06">BOOK SIX (book 6, pages 20–22) ↗</a></p>
           <h2 id="journalTitle">Begin the returning journal.</h2>
-          <p id="journalInstructions">Move through the spiral one turn at a time. Begin with what you choose to attend to, then notice the signal before deciding what it means. An interpretation can stay open. A return is where you read what followed in your own words.</p>
+          <p id="journalInstructions">Move through the spiral one turn at a time. Notice the raw bodily feeling before the mind explains it, then catch the story attached to that feeling. Return across ordinary days; each later turn begins with how the previous story felt afterward.</p>
+          <details class="journal-example">
+            <summary>See one complete example before you begin</summary>
+            <div class="journal-example-copy">
+              <p class="journal-example-intro">This sample is not saved or analyzed. It shows the order to follow in your own words.</p>
+              <ol class="journal-example-steps">
+                <li><b>Attention</b><p>A difficult conversation.</p></li>
+                <li><b>Raw feeling first</b><p>A tight band across my chest; jaw fixed; breath short.</p></li>
+                <li><b>The story attached afterward</b><p>They think I am unprepared.</p></li>
+                <li><b>Another possible reading</b><p>I may be under ordinary pressure; I do not yet know what they think.</p></li>
+                <li><b>Choose one story to test</b><p>I can pause and check what is actually happening.</p></li>
+                <li><b>One small action</b><p>Take one breath and ask one practical question.</p></li>
+                <li><b>Return 1 · after carrying that story</b><p>Afterward, I felt slightly less exposed. A colleague asked a practical question, and nothing suggested I had to prove myself.</p></li>
+              </ol>
+              <p class="journal-example-note">The body is noticed first. Its description comes from your own words. The story is the meaning added afterward. When you return, begin with how the carried story felt before starting the next spiral.</p>
+            </div>
+          </details>
         </div>
         <div class="return-anchor" id="returnAnchor" hidden aria-live="polite"></div>
 
         <div class="spiral-stages" id="spiralStages">
-          <section class="spiral-stage" data-stage="return-observation" data-return-only data-stage-title="What followed">
-            <div class="spiral-stage-heading"><span class="spiral-stage-number">00</span><div><p class="eyebrow">THE SPIRAL TURNS</p><h3>Start with what followed.</h3></div></div>
-            <label class="writing-field"><span>What did you notice after your last chosen story and small action?</span><small>Return to the signal, interpretation, action, or ordinary life—not to a promised result. No visible change is also an observation.</small><textarea name="returnObservation" rows="4" maxlength="1600" placeholder="What happened next, if anything?…"></textarea></label>
+          <section class="spiral-stage" data-stage="return-observation" data-return-only data-stage-title="How the story felt">
+            <div class="spiral-stage-heading"><span class="spiral-stage-number">00</span><div><p class="eyebrow">BEFORE THE NEXT STORY</p><h3>Begin with how the last story felt.</h3></div></div>
+            <div class="spiral-explainer"><p><b>Come back to your own felt experience first.</b> After you carried the story, did you feel relief, tension, heaviness, lightness, confusion, calm, nothing in particular, or something else?</p><p>Then add anything that happened afterward. Your feeling and the event are both observations; neither proves that the story caused the other.</p></div>
+            <label class="writing-field"><span>After carrying that story, how did you feel afterward?</span><small>Describe the felt aftermath in your own words, then add what you noticed next. No feeling and no visible change are also honest observations.</small><textarea name="returnObservation" rows="5" maxlength="1600" placeholder="Afterward, I felt… Then I noticed…"></textarea></label>
           </section>
 
           <section class="spiral-stage" data-stage="attention" data-stage-title="Choose attention">
@@ -156,14 +173,16 @@
             <label class="writing-field"><span id="attentionLabel">What are you choosing to attend to?</span><small id="attentionHint">Name the thing, place, sensation, question, memory, or action you are turning toward. This is your starting point, not a conclusion about it.</small><textarea name="attention" rows="3" maxlength="800" placeholder="I am turning toward…"></textarea></label>
           </section>
 
-          <section class="spiral-stage" data-stage="signal" data-stage-title="Notice the signal">
-            <div class="spiral-stage-heading"><span class="spiral-stage-number">02</span><div><p class="eyebrow">THE RAW REPORT</p><h3>Notice before naming.</h3></div></div>
-            <label class="writing-field"><span id="observationLabel"><b></b> Signal report · <a class="book-reference" href="../portfolio-website/index.html#book-06">O(0)</a> <a class="book-citation" href="../portfolio-website/index.html#book-06">(book 6, pages 15, 20)</a></span><small id="observationHint">Describe what is actually present—pressure, heat, tingling, movement, stillness, sound, or anything else—before explaining it. These are your words for the signal, not the signal itself.</small><textarea name="observation" rows="4" maxlength="1200" placeholder="A few words are enough…"></textarea></label>
+          <section class="spiral-stage" data-stage="signal" data-stage-title="Describe the raw feeling">
+            <div class="spiral-stage-heading"><span class="spiral-stage-number">02</span><div><p class="eyebrow">THE RAW REPORT</p><h3>Raw feeling first. Story second.</h3></div></div>
+            <div class="spiral-explainer"><p><b>First, the body.</b> Notice what is present before the mind explains it: pressure, heat, tingling, heaviness, movement, stillness, sound, or nothing you can name yet.</p><p><b>Then, your description.</b> The body does not send a sentence. You are translating what you notice into human words. Describe the feeling itself before deciding what it means.</p></div>
+            <label class="writing-field"><span id="observationLabel"><b></b> Signal report · <a class="book-reference" href="../portfolio-website/index.html#book-06">O(0)</a> <a class="book-citation" href="../portfolio-website/index.html#book-06">(book 6, pages 15, 20)</a></span><small id="observationHint">Use your own words for what you feel directly. Avoid explaining why it is there; the meaning belongs in the next step. A raw report is required in every journal turn.</small><textarea name="observation" rows="5" maxlength="1200" aria-required="true" aria-describedby="observationHint observationError" placeholder="The raw feeling is…"></textarea><small class="field-error" id="observationError" role="alert" hidden>A raw-feeling report is required before this turn can be saved.</small></label>
           </section>
 
-          <section class="spiral-stage" data-stage="first-story" data-stage-title="Catch the story">
-            <div class="spiral-stage-heading"><span class="spiral-stage-number">03</span><div><p class="eyebrow">THE STORY ARRIVES</p><h3>Catch the first interpretation without believing it whole.</h3></div></div>
-            <label class="writing-field"><span id="meaningLabel"><b></b> First interpretation · <a class="book-reference" href="../portfolio-website/index.html#book-06">O(1)</a> <a class="book-citation" href="../portfolio-website/index.html#book-06">(book 6, pages 15, 20)</a></span><small id="meaningHint">What words, meaning, emotion, or explanation did your mind attach to the signal? Write the story as it arrived; it is not yet the story you have to keep.</small><textarea name="meaning" rows="4" maxlength="1200" placeholder="My mind added the story that…"></textarea></label>
+          <section class="spiral-stage" data-stage="first-story" data-stage-title="Catch the attached story">
+            <div class="spiral-stage-heading"><span class="spiral-stage-number">03</span><div><p class="eyebrow">THE STORY ARRIVES</p><h3>Catch the meaning your mind attached.</h3></div></div>
+            <div class="spiral-explainer"><p><b>A story is the interpretation added after the sensation.</b> It may say what the feeling means, what it predicts, who caused it, or what it makes you want to do.</p><p>Write the first story as it arrived. You are observing the interpretation, not swearing that it is true.</p></div>
+            <label class="writing-field"><span id="meaningLabel"><b></b> First interpretation · <a class="book-reference" href="../portfolio-website/index.html#book-06">O(1)</a> <a class="book-citation" href="../portfolio-website/index.html#book-06">(book 6, pages 15, 20)</a></span><small id="meaningHint">What did your mind say the feeling meant? Name the emotion, prediction, explanation, or memory it attached. The story is real as an experience; its meaning is still open to testing.</small><textarea name="meaning" rows="5" maxlength="1200" placeholder="My mind attached the story that…"></textarea></label>
           </section>
 
           <section class="spiral-stage" data-stage="pause" data-stage-title="Leave room">
@@ -182,7 +201,7 @@
             <div class="spiral-stage-heading"><span class="spiral-stage-number">06</span><div><p class="eyebrow">BACK INTO THE WORLD</p><h3>Make the next turn small enough to take.</h3></div></div>
             <label class="writing-field"><span>What else is part of this moment? · <a class="book-reference" href="../portfolio-website/index.html#book-06">O(n)</a> <a class="book-citation" href="../portfolio-website/index.html#book-06">(book 6, pages 15, 20)</a></span><small>Memories, context, or loops that belong with this moment.</small><textarea name="context" rows="3" maxlength="1200" placeholder="Add context if it helps…"></textarea></label>
             <label class="writing-field"><span>One small next action, pause, or request for help</span><small>Action is not proof that a story worked. It is the next honest step you can take now.</small><textarea name="practice" rows="3" maxlength="800" placeholder="The next small turn is…"></textarea></label>
-            <p class="spiral-return-invite">Leave the entry here. The next turn will begin by asking what followed—not by asking you to prove a conclusion.</p>
+            <p class="spiral-return-invite">Leave the entry here. Continue the practice across ordinary days. The next turn will begin by asking how this story felt afterward—not by asking you to prove it true.</p>
           </section>
         </div>
 
@@ -191,14 +210,21 @@
           <p id="stageProgress" aria-live="polite">Step 1 of 6 · Choose attention</p>
           <button id="nextStage" class="spiral-nav-button spiral-nav-next" type="button">Next: Notice the signal →</button>
         </nav>
-        <div class="save-row"><p id="storageNote">This returning-journal entry stays in this browser on this device. It does not sync or encrypt. The private clearing page above is never saved here.</p><button type="submit" id="saveButton" hidden>Save this entry <span>↗</span></button></div>
+        <div class="save-row"><p id="storageNote">Saved entries stay in this browser on this device. Add a PIN to encrypt them at rest. The private clearing page above is never saved here.</p><button type="submit" id="saveButton" hidden>Save this entry <span>↗</span></button></div>
       </form>
 
       <section class="memory-shelf" aria-labelledby="shelfTitle">
-        <div class="shelf-head"><div><p class="eyebrow">JOURNAL · ACCUMULATE · RETURN</p><h2 id="shelfTitle">Your spiral of notes.</h2></div><div class="shelf-actions"><button id="storageSecurity" class="storage-security" type="button" hidden>Protect entries</button><button id="unlockEntries" class="storage-security" type="button" hidden>Unlock entries</button><button id="compareAllReports" class="compare-all-reports" type="button" aria-expanded="false" aria-controls="globalComparison" hidden>Analyze entries</button><button id="clearMemories" class="clear-button" type="button" hidden>Clear saved entries</button></div></div>
-        <section id="globalComparison" class="comparison-panel global-comparison" aria-live="polite" hidden></section>
-        <p class="empty-note" id="emptyNote">Signal descriptions and the interpretations attached to them gather here over time. They can be revisited without turning today’s writing into a verdict.</p>
+        <div class="shelf-head"><div><p class="eyebrow">JOURNAL · ACCUMULATE · RETURN</p><h2 id="shelfTitle">Your spiral of notes.</h2></div><div class="shelf-actions"><button id="storageSecurity" class="storage-security" type="button" hidden>Protect entries</button><button id="unlockEntries" class="storage-security" type="button" hidden>Unlock entries</button><button id="clearMemories" class="clear-button" type="button" hidden>Clear saved entries</button></div></div>
+        <p class="empty-note" id="emptyNote">Nothing is prepopulated. Your signal descriptions and the interpretations attached to them gather here over time. They can be revisited without turning today’s writing into a verdict.</p>
         <div id="memoryList" class="memory-list" aria-live="polite"></div>
+        <section class="examination-gate" id="examinationGate" aria-labelledby="examinationTitle" hidden>
+          <p class="eyebrow">WHEN YOU DECIDE TO LOOK BACK</p>
+          <h3 id="examinationTitle">You decide when the spiral has taught you enough to examine.</h3>
+          <p>Keep returning across ordinary days. When you feel you have written enough and want to see what may have accumulated, make that choice deliberately.</p>
+          <button id="compareAllReports" class="compare-all-reports" type="button" aria-expanded="false" aria-controls="globalComparison">I have written enough — examine what I may have learned</button>
+          <p class="examination-progress" id="examinationProgress" aria-live="polite"></p>
+        </section>
+        <section id="globalComparison" class="comparison-panel global-comparison" aria-live="polite" hidden></section>
       </section>
     </main>
     <dialog id="witnessDialog" class="witness-dialog" aria-labelledby="witnessTitle">
@@ -215,6 +241,23 @@
         <div class="witness-dialog-foot"><p>When you close this page, its words are cleared.</p><div><button id="clearWitness" class="witness-secondary" type="button">Clear text</button><button class="witness-close-action" value="close">Close without keeping</button></div></div>
       </form>
     </dialog>
+    <dialog id="pinDialog" class="witness-dialog pin-dialog" aria-labelledby="pinTitle" aria-describedby="pinIntro">
+      <form id="pinForm" novalidate>
+        <div class="witness-dialog-head">
+          <div>
+            <p class="eyebrow">PRIVATE ON THIS DEVICE</p>
+            <h2 id="pinTitle">Protect your spiral.</h2>
+          </div>
+          <button id="pinCancelIcon" class="witness-close" type="button" aria-label="Close PIN protection">&times;</button>
+        </div>
+        <p class="witness-guidance" id="pinIntro">A PIN keeps saved entries from opening casually in this browser. It cannot protect a compromised device or recover a forgotten PIN.</p>
+        <label class="pin-field" for="pinValue"><span id="pinLabel">CREATE A PIN</span><input id="pinValue" name="pinValue" type="password" autocomplete="new-password" inputmode="numeric" minlength="6" maxlength="32" pattern="[0-9]{6,32}" aria-describedby="pinHelp pinError" required></label>
+        <label class="pin-field" id="pinConfirmField" for="pinConfirm"><span>CONFIRM PIN</span><input id="pinConfirm" name="pinConfirm" type="password" autocomplete="new-password" inputmode="numeric" minlength="6" maxlength="32" pattern="[0-9]{6,32}" required></label>
+        <p class="pin-help" id="pinHelp">Use 6 to 32 digits. A longer PIN is harder to guess.</p>
+        <p class="pin-error" id="pinError" role="alert" hidden></p>
+        <div class="witness-dialog-foot"><p>There is no PIN recovery. Locking removes the decrypted copy from this page for the rest of the session.</p><div><button id="pinCancel" class="witness-secondary" type="button">Cancel</button><button id="pinSubmit" class="witness-close-action" type="submit">Protect and lock</button></div></div>
+      </form>
+    </dialog>
     <aside class="care-note"><span>IF THIS FEELS LIKE TOO MUCH</span><p>Pause the exercise. Reach for a trusted person, a qualified professional, or something steady beneath your feet. You can come back another time.</p></aside>
     <section class="attention-message" id="attentionMessage" aria-labelledby="attentionTitle" hidden>
       <p class="eyebrow">AFTER THE SPIRAL HAS TURNED</p>
@@ -225,7 +268,7 @@
     </section>
     <footer><span>RETURN · A PRACTICE, NOT A PRESCRIPTION</span><a href="../portfolio-website/index.html#book-01">ABOUT THE LENS (book 1, page 12) ↗</a></footer>
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
-    <script src="app.js?v=attention-spiral-2"></script>
+    <script src="app.js?v=attention-pin-1"></script>
   <script src="tap-feedback.js?v=tap-feedback-1"></script>
       <nav class="site-map" aria-label="Nyarindo Lens Universal site map">
       <div class="site-map-intro">
