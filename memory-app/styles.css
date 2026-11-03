@@ -142,7 +142,7 @@ html[data-theme="light"] .global-insight{background:rgba(255,255,255,.42)}
 html[data-theme="light"] .memory-card .compare-reports,html[data-theme="light"] .memory-card .copy-prompts,html[data-theme="light"] .compare-all-reports{background:rgba(153,100,49,.08)}
 html[data-theme="light"] .spiral-return{background:radial-gradient(circle,rgba(153,100,49,.14) 0 33%,transparent 34%)}
 html[data-theme="light"] .care-note{background:rgba(153,100,49,.07)}
-@media(max-width:620px){.topbar-actions{gap:9px}.theme-toggle{padding:7px}.theme-label{display:none}}
+@media(max-width:620px){.topbar-actions{gap:9px}.theme-toggle{padding:6px 8px;font-size:7px}.theme-label{display:inline}}
 
 /* The accumulated analysis includes a clearly separate guide to reading results. */
 .analysis-guide{margin-top:22px;border:1px solid rgba(210,163,109,.34);background:rgba(255,255,255,.022)}

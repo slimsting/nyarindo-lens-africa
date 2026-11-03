@@ -20,15 +20,12 @@
     root.dataset.theme = light ? "light" : "dark";
     document.body?.classList.toggle("light", light);
     buttons.forEach((button) => {
-      button.setAttribute("aria-pressed", String(light));
-      button.setAttribute(
-        "aria-label",
-        `Switch to ${light ? "dark" : "light"} mode`,
-      );
+      button.setAttribute("aria-pressed", String(!light));
+      button.setAttribute("aria-label", "Dark mode");
       const icon = button.querySelector(".theme-icon");
       const label = button.querySelector(".theme-label");
-      if (icon) icon.textContent = light ? "☾" : "☼";
-      if (label) label.textContent = light ? "LIGHT" : "DARK";
+      if (icon) icon.textContent = light ? "☼" : "☾";
+      if (label) label.textContent = light ? "DAY" : "NIGHT";
     });
 
     const themeColor = document.querySelector('meta[name="theme-color"]');

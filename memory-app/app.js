@@ -39,10 +39,10 @@ function applyTheme(theme, animate = true) {
     themeTimer = setTimeout(() => document.documentElement.classList.remove('theme-transition'), 500);
   }
   document.documentElement.dataset.theme = isLight ? 'light' : 'dark';
-  themeToggle.setAttribute('aria-pressed', String(isLight));
-  themeToggle.setAttribute('aria-label', `Switch to ${isLight ? 'dark' : 'light'} mode`);
-  themeToggle.querySelector('.theme-icon').textContent = isLight ? '☾' : '☼';
-  themeToggle.querySelector('.theme-label').textContent = isLight ? 'DARK' : 'LIGHT';
+  themeToggle.setAttribute('aria-pressed', String(!isLight));
+  themeToggle.setAttribute('aria-label', 'Dark mode');
+  themeToggle.querySelector('.theme-icon').textContent = isLight ? '☼' : '☾';
+  themeToggle.querySelector('.theme-label').textContent = isLight ? 'DAY' : 'NIGHT';
   document.querySelector('meta[name="theme-color"]').content = isLight ? '#eeeae0' : '#10110f';
   try {
     localStorage.setItem('nyarindo-theme', isLight ? 'light' : 'dark');

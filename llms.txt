@@ -1,6 +1,6 @@
-# Nyarindo Lens Africa
+# Nyarindo Lens Universal
 
-> Nyarindo Lens Africa is the portfolio and linked browser projects of Newbon Nyarindo Gadson: writer, consultant, designer, builder, and full-stack developer. The central creative framework is The Nyarindo Lens, a way of noticing pulse, container, relationship, attention, and return.
+> Nyarindo Lens Universal is the portfolio and linked browser projects of Newbon Nyarindo Gadson: writer, consultant, designer, builder, and full-stack developer. The central creative framework is The Nyarindo Lens, a way of noticing pulse, container, relationship, attention, and return.
 
 ## Primary pages
 

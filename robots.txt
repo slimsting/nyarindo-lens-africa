@@ -1,4 +1,4 @@
-# Nyarindo Lens Africa
+# Nyarindo Lens Universal
 User-agent: *
 Allow: /
 

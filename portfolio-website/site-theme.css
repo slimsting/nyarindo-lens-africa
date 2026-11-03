@@ -44,6 +44,10 @@ html[data-theme="dark"] {
   transform: translateY(-1px);
 }
 
+.site-theme-toggle:is(:hover, :focus-visible) .theme-icon {
+  color: inherit;
+}
+
 .site-theme-toggle:focus-visible {
   outline: 2px solid var(--gold, var(--accent, currentColor));
   outline-offset: 3px;
@@ -77,7 +81,7 @@ html.theme-transition :is(
   }
 
   .site-theme-toggle .theme-label {
-    display: none;
+    display: inline;
   }
 }
 

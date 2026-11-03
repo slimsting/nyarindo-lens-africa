@@ -1184,10 +1184,10 @@ function applySemanticTheme(theme, animate=true) {
     themeTransitionTimer = setTimeout(() => themeRoot.classList.remove('theme-transition'), 950);
   }
   themeRoot.dataset.theme = light ? 'light' : 'dark';
-  themeToggle.setAttribute('aria-pressed', String(light));
-  themeToggle.setAttribute('aria-label', `Switch to ${light ? 'dark' : 'light'} mode`);
-  document.getElementById('themeLabel').textContent = light ? 'LIGHT' : 'DARK';
-  themeToggle.querySelector('.theme-icon').textContent = light ? '☾' : '☼';
+  themeToggle.setAttribute('aria-pressed', String(!light));
+  themeToggle.setAttribute('aria-label', 'Dark mode');
+  document.getElementById('themeLabel').textContent = light ? 'DAY' : 'NIGHT';
+  themeToggle.querySelector('.theme-icon').textContent = light ? '☼' : '☾';
   document.querySelector('meta[name="theme-color"]').content = light ? '#f2f0e9' : '#0c0d0e';
   try { localStorage.setItem('nyarindo-theme', light ? 'light' : 'dark'); } catch {}
   setPhase(systemPhase);

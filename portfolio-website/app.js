@@ -21,9 +21,9 @@ function updateThemeColor() {
 function applyTheme(theme) {
   const isLight = theme === 'light';
   root.dataset.theme = isLight ? 'light' : 'dark';
-  themeToggle.setAttribute('aria-pressed', String(isLight));
-  themeToggle.setAttribute('aria-label', `Switch to ${isLight ? 'dark' : 'light'} mode`);
-  themeToggle.querySelector('.theme-icon').textContent = isLight ? '☾' : '☼';
+  themeToggle.setAttribute('aria-pressed', String(!isLight));
+  themeToggle.setAttribute('aria-label', 'Dark mode');
+  themeToggle.querySelector('.theme-icon').textContent = isLight ? '☼' : '☾';
   themeToggle.querySelector('.theme-label').textContent = isLight ? 'DAY' : 'NIGHT';
   updateThemeColor();
   try { localStorage.setItem('nyarindo-theme', isLight ? 'light' : 'dark'); } catch {}

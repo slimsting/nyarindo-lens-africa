@@ -40,3 +40,32 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--yellow);outline-off
 .transport button span,.transport .repeat-button,.transport .screen-button,.fullscreen-button{font-size:12px}
 .profile-form label,.form-note,.upload-form label,.payment-note,.back-link,.artist-link{font-size:13px}
 .toast{font-size:14px}
+
+/* Theme controls use the same day/night language as the rest of the Lens. */
+.theme-button {
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:5px;
+  width:auto;
+  min-width:63px;
+  height:35px;
+  padding:0 9px;
+  border-radius:999px;
+  font-size:10px;
+  letter-spacing:.06em;
+}
+
+.theme-button .theme-icon {
+  color:var(--yellow);
+  font-size:15px;
+  line-height:1;
+}
+
+.theme-button:is(:hover, :focus-visible) .theme-icon {
+  color:inherit;
+}
+
+button:not(:disabled):hover {
+  filter:none;
+}

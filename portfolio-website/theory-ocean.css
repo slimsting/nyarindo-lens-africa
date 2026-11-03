@@ -437,6 +437,12 @@ html[data-theme="dark"][data-page="lens"] body::after {
   }
 }
 
+@media (max-width: 360px) {
+  [data-page="lens"] .hero h1 {
+    font-size: clamp(58px, 19vw, 68px);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   [data-page="lens"] .theory-stars,
   [data-page="lens"] .theory-wave,
