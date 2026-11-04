@@ -87,7 +87,18 @@ function applyTheme(theme) {
 $('themeButton').addEventListener('click', () => {
   applyTheme(document.documentElement.dataset.theme === 'light' ? 'dark' : 'light');
 });
-$('fullscreenButton').addEventListener('click', () => { const entering = !document.body.classList.contains('immersive'); document.body.classList.toggle('immersive', entering); $('fullscreenButton').textContent = entering ? 'Normal view ×' : 'Large screen ⛶'; $('fullscreenButton').setAttribute('aria-pressed', String(entering)); if (entering && $('lyrics').hidden) $('lyricsToggle').click(); });
+let preImmersiveScroll = 0;
+$('fullscreenButton').addEventListener('click', (event) => {
+  event.stopPropagation();
+  const entering = !document.body.classList.contains('immersive');
+  const shell = document.querySelector('.app-shell');
+  if (entering) preImmersiveScroll = shell.scrollTop;
+  if (entering && $('lyrics').hidden) $('lyricsToggle').click();
+  document.body.classList.toggle('immersive', entering);
+  $('fullscreenButton').textContent = entering ? 'Normal view ×' : 'Large screen ⛶';
+  $('fullscreenButton').setAttribute('aria-pressed', String(entering));
+  shell.scrollTop = entering ? 0 : preImmersiveScroll;
+});
 document.querySelector('.lyrics-section').addEventListener('click', () => { if (document.body.classList.contains('immersive')) $('fullscreenButton').click(); });
 $('repeatButton').addEventListener('click', () => { repeatOne = !repeatOne; localStorage.setItem('drift-repeat-one', String(repeatOne)); $('repeatButton').textContent = repeatOne ? 'One song ↻' : 'Whole playlist ↻'; $('repeatButton').setAttribute('aria-pressed', String(repeatOne)); toast(repeatOne ? 'Repeating one song.' : 'Playing the full playlist.'); });
 if ('serviceWorker' in navigator) navigator.serviceWorker.register('./service-worker.js');

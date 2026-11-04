@@ -320,7 +320,6 @@ function makeField(canvas, closing = false) {
 }
 
 const cleanups = [
-  makeField(document.getElementById('field')),
   makeField(document.getElementById('closingCanvas'), true)
 ];
 window.addEventListener('pagehide', () => cleanups.forEach(stop => stop()), { once: true });

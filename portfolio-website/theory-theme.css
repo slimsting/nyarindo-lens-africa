@@ -122,6 +122,38 @@ html[data-theme="light"][data-page="lens"] .secondary-link {
   color: #24352b;
 }
 
+html[data-theme="light"][data-page="lens"] .site-head {
+  border-bottom-color: rgba(31, 54, 41, 0.24);
+}
+
+html[data-theme="light"][data-page="lens"] :is(.brand, .back-link) {
+  color: #203a2d;
+}
+
+html[data-theme="light"][data-page="lens"] .back-link {
+  border-bottom-color: rgba(143, 88, 42, 0.72);
+}
+
+html[data-theme="light"][data-page="lens"] .hero-shade {
+  background:
+    linear-gradient(90deg, rgba(244, 242, 231, 0.94) 0%, rgba(244, 242, 231, 0.8) 42%, rgba(244, 242, 231, 0.14) 76%),
+    linear-gradient(0deg, rgba(244, 242, 231, 0.9), transparent 44%);
+}
+
+html[data-theme="light"][data-page="lens"] .hero h1 {
+  color: #233a2d;
+  text-shadow: none;
+}
+
+html[data-theme="light"][data-page="lens"] .hero h1 em {
+  color: #9a5f31;
+}
+
+html[data-theme="light"][data-page="lens"] .hero-copy > p:last-of-type,
+html[data-theme="light"][data-page="lens"] .scroll-link {
+  color: #263c30;
+}
+
 /* The Threshold Rule of Communication and Morality */
 html[data-theme="dark"][data-page="threshold"] {
   --paper: #0d1510;

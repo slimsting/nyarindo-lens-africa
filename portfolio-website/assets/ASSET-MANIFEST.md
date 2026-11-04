@@ -95,6 +95,15 @@ portraits above. They are loaded only by the navigation-avatar animation and do 
 the source portraits.
 - `universal-coherence-protocol.avif/.webp` — 1460 × 1460, transparent
 - `depth-ribbons.svg` — responsive luminous depth artwork
+- `atmosphere/coastal-birds.svg` — lightweight decorative bird tile for the shared light-mode atmosphere
+- `atmosphere/day-sky.svg` — lightweight vector sun layer for the shared light-mode atmosphere
+- `atmosphere/night-sky.svg` — lightweight vector moon-and-cloud layer for the shared dark-mode atmosphere
+- `atmosphere/day-sky-mobile.svg` — 390 × 844 mobile sun-and-cloud composition
+- `atmosphere/night-sky-mobile.svg` — 390 × 844 mobile moon-and-cloud composition
+- `nav-coast/coastal-nav-day.avif/.webp` — 2172 × 152 desktop light-mode crop
+- `nav-coast/coastal-nav-night.avif/.webp` — 2172 × 152 desktop dark-mode crop
+- `nav-coast/coastal-nav-day-mobile.avif/.webp` — 1500 × 256 mobile light-mode crop
+- `nav-coast/coastal-nav-night-mobile.avif/.webp` — 1500 × 256 mobile dark-mode crop
 - `favicon-32.png` — browser-tab icon using the support portrait and green ring
 - `favicon-192.png` — larger browser and device icon
 - `apple-touch-icon.png` — 180 × 180 Touch icon
@@ -138,5 +147,9 @@ The seven thumbnails are 480 × 647. Full book covers are 880 × 1187.
 - File names are lowercase, descriptive, and hyphenated.
 - Structural variants use `-thumb` and `-full`.
 - Raster assets use `.avif` as the preferred delivery and `.webp` as fallback.
+- Coastal navigation crops derive from `Day and Night Coastal Paradise Banners.png`
+  with the day source cropped at `(0,40)-(2172,192)` and the night source at
+  `(0,325)-(2172,477)`; mobile crops use the central 1500-pixel region and preserve
+  the sunrise or moon.
 - Editable or resolution-independent artwork uses `.svg`.
 - Project-specific illustration sets use their own named subdirectory.

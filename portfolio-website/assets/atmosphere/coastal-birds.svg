@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 180" role="img" aria-label="Decorative coastal birds">
+  <g fill="none" stroke="#183f35" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M28 46q10-9 20 0 10-9 20 0" stroke-width="2.4"/>
+    <path d="M72 31q7-6 14 0 7-6 14 0" stroke-width="2"/>
+    <path d="M108 62q12-10 24 0 12-10 24 0" stroke-width="2.8"/>
+    <path d="M232 112q8-7 16 0 8-7 16 0" stroke-width="2.1"/>
+    <path d="M276 91q11-9 22 0 11-9 22 0" stroke-width="2.6"/>
+    <path d="M368 40q7-6 14 0 7-6 14 0" stroke-width="1.9"/>
+    <path d="M406 119q10-8 20 0 10-8 20 0" stroke-width="2.3"/>
+    <path d="M470 74q8-7 16 0 8-7 16 0" stroke-width="2"/>
+  </g>
+</svg>

@@ -78,3 +78,6 @@ DEPLOYMENT.md
 001-*.md
 002-*.md
 PROPOSAL*.md
+
+# Disposable visual-review material
+.review/

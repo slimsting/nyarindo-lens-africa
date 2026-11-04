@@ -1,4 +1,4 @@
-const CACHE = 'semantic-field-v3';
+const CACHE = 'semantic-field-v6';
 const CORE = [
   './',
   './index.html',
@@ -7,7 +7,13 @@ const CORE = [
   './app.js?v=theme-controls-1',
   './manifest.webmanifest',
   '/portfolio-website/install-apps.css?v=install-apps-3',
-  '/portfolio-website/install-app.js?v=install-apps-3'
+  '/portfolio-website/install-app.js?v=install-apps-3',
+  '/portfolio-website/lens-atmosphere.css?v=lens-atmosphere-17',
+  '/portfolio-website/assets/atmosphere/day-sky.svg',
+  '/portfolio-website/assets/atmosphere/day-sky-mobile.svg',
+  '/portfolio-website/assets/atmosphere/night-sky.svg',
+  '/portfolio-website/assets/atmosphere/night-sky-mobile.svg',
+  '/portfolio-website/assets/atmosphere/coastal-birds.svg'
 ];
 
 self.addEventListener('install', event => {

@@ -1,68 +1,50 @@
-body::before,
-body::after {
-  content: "";
-  position: fixed;
-  inset: -22vmax;
-  z-index: 4;
-  pointer-events: none;
-  transform-origin: 50% 50%;
-  will-change: transform
-}
-
-body::before {
-  background:
-    radial-gradient(circle at 24% 32%, rgba(68, 222, 148, .34) 0, rgba(68, 222, 148, .12) 21%, transparent 44%),
-    radial-gradient(circle at 77% 24%, rgba(228, 172, 105, .3) 0, rgba(228, 172, 105, .1) 18%, transparent 41%),
-    radial-gradient(circle at 63% 76%, rgba(78, 145, 205, .3) 0, rgba(78, 145, 205, .09) 20%, transparent 43%),
-    radial-gradient(circle at 18% 82%, rgba(194, 81, 75, .18) 0, transparent 32%);
-  opacity: .72;
-  mix-blend-mode: soft-light;
-  animation: lens-atmosphere-drift-a 24s ease-in-out infinite alternate
-}
-
-body::after {
-  background:
-    radial-gradient(ellipse at 70% 55%, rgba(95, 240, 168, .23) 0, transparent 28%),
-    radial-gradient(ellipse at 35% 22%, rgba(241, 189, 108, .22) 0, transparent 26%),
-    radial-gradient(ellipse at 42% 80%, rgba(126, 126, 231, .18) 0, transparent 29%);
-  opacity: .44;
-  mix-blend-mode: screen;
-  animation: lens-atmosphere-drift-b 37s ease-in-out infinite alternate
-}
-
-@keyframes lens-atmosphere-drift-a {
-  from { transform: translate3d(-2.5%, 1.5%, 0) rotate(-1.5deg) scale(1.02) }
-  to { transform: translate3d(3%, -2%, 0) rotate(1.5deg) scale(1.07) }
-}
-
-@keyframes lens-atmosphere-drift-b {
-  from { transform: translate3d(2%, -1%, 0) rotate(1deg) scale(1.06) }
-  to { transform: translate3d(-3%, 2.5%, 0) rotate(-1deg) scale(1.02) }
-}
-
-html[data-theme="light"] body::before {
-  opacity: .9
-}
-
-html[data-theme="light"] body::after {
-  opacity: .5;
-  mix-blend-mode: multiply
-}
-
-@media (prefers-reduced-motion: reduce) {
-  body::before,
-  body::after {
-    animation: none;
-    transform: none
-  }
-}
-
-@media (max-width: 700px) {
-  body::after {
-    opacity: .28
-  }
-
-  html[data-theme="light"] body::after {
-    opacity: .24
-  }
-}
+/* Shared coastal atmosphere for public pages and the separately installed practices. */
+body::before,body::after{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;background-repeat:no-repeat}
+body>main,body>footer{position:relative;z-index:1}
+body>main>.hero{background:none!important}
+html[data-page="home"] body>main>.hero{grid-template-columns:minmax(0,680px) minmax(0,1fr)}
+html[data-page="memory"] body>.topbar{position:relative;z-index:2}
+html[data-page="drift"] .install-hub-compact{padding-bottom:32px}
+html[data-page="semantic-field"] body>:is(.install-hub,.database-frame,.field-story,.site-map,.nyarindo-thread-footer){position:relative;z-index:1}
+html[data-page="memory"] :is(.journaling-type-card,.grounding,.story-card,.journal-mode,.memory-card,.comparison-panel,.spiral-stage,.examination-gate){background-color:var(--surface)}
+.hero-copy,.theory-intro>div,.theory-copy,.fidelity-copy,.section-copy,.attention-copy,.agreement-copy,.play-invitation-copy,.playem-copy,.guide-content,.chapter-intro,.approach-copy,.closing-copy,.site-map-intro{position:relative;z-index:5}
+main :is(h1,h2,h3,h4,h5,h6,p,li,a,button,dt,dd,blockquote,figcaption){position:relative;z-index:5}
+html[data-theme="light"] body::before{
+background-image:
+url("assets/atmosphere/day-sky.svg"),
+radial-gradient(circle at 82% 24%,rgba(255,225,153,.48),rgba(255,229,168,.16) 22%,transparent 39%),
+linear-gradient(180deg,rgba(73,170,214,.78) 0%,rgba(130,200,227,.68) 34%,rgba(198,226,234,.42) 64%,rgba(239,238,218,.08) 86%,transparent 100%);
+background-position:center top,center,center;background-size:cover,cover,cover;opacity:.92}
+html[data-theme="light"] body::after{
+inset:0 -520px 0 0;background-image:url("assets/atmosphere/coastal-birds.svg");background-position:0 48%;background-repeat:repeat-x;background-size:520px 180px;opacity:.58;animation:lens-birds-cross 84s linear infinite;will-change:transform}
+html[data-theme="dark"] body::before{
+background-image:
+url("assets/atmosphere/night-sky.svg"),
+radial-gradient(ellipse at 22% 18%,rgba(29,151,158,.34),transparent 40%),
+radial-gradient(ellipse at 76% 8%,rgba(77,108,190,.31),transparent 39%),
+linear-gradient(180deg,rgba(8,44,74,.86) 0%,rgba(7,29,51,.65) 42%,rgba(11,21,30,.12) 78%,transparent 100%);
+background-position:center top,center,center,center;background-size:cover;opacity:.9}
+html[data-theme="dark"] body::after{
+background-image:
+radial-gradient(circle,rgba(255,246,207,1) 0 1.8px,transparent 2.9px),
+radial-gradient(circle,rgba(189,226,255,.98) 0 1.5px,transparent 2.7px),
+radial-gradient(circle,rgba(255,255,255,.95) 0 1.2px,transparent 2.3px),
+radial-gradient(circle,rgba(133,205,226,.82) 0 1px,transparent 2px);
+background-position:17px 29px,71px 43px,29px 89px,113px 61px;
+background-size:173px 157px,241px 197px,109px 127px,307px 263px;
+opacity:.95;animation:lens-stars-twinkle 14s ease-in-out infinite alternate;will-change:opacity}
+@keyframes lens-birds-cross{from{transform:translate3d(0,0,0)}to{transform:translate3d(-520px,0,0)}}
+@keyframes lens-stars-twinkle{from{opacity:.64}to{opacity:.9}}
+@media(prefers-reduced-motion:reduce){body::after{animation:none!important;transform:none!important}}
+@media(max-width:700px){
+html[data-page="drift"] .install-hub-compact{padding-bottom:30px}
+html[data-theme="light"] body::before{
+background-image:url("assets/atmosphere/day-sky-mobile.svg"),radial-gradient(circle at 82% 33%,rgba(255,225,153,.30),rgba(255,229,168,.10) 28%,transparent 48%),linear-gradient(180deg,rgba(73,170,214,.72) 0%,rgba(130,200,227,.62) 38%,rgba(198,226,234,.38) 70%,transparent 100%);
+background-position:center,center,center;background-size:cover;opacity:.94}
+html[data-theme="dark"] body::before{
+background-image:url("assets/atmosphere/night-sky-mobile.svg"),radial-gradient(ellipse at 22% 18%,rgba(29,151,158,.28),transparent 42%),radial-gradient(ellipse at 82% 33%,rgba(77,108,190,.26),transparent 42%),linear-gradient(180deg,rgba(8,44,74,.84) 0%,rgba(7,29,51,.65) 44%,rgba(11,21,30,.12) 82%,transparent 100%);
+background-position:center,center,center,center;background-size:cover;opacity:.88}
+html[data-theme="dark"] main :is(h1,h2){text-shadow:0 1px 2px rgba(0,0,0,.34)}
+html[data-theme="light"] body::after{inset:0 -360px 0 0;background-position:0 48%;background-size:360px auto;opacity:.54;animation-name:lens-birds-cross-mobile;animation-duration:100s}
+html[data-theme="dark"] body::after{opacity:.9}}
+@keyframes lens-birds-cross-mobile{from{transform:translate3d(0,0,0)}to{transform:translate3d(-360px,0,0)}}
