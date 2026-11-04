@@ -1,10 +1,21 @@
 {
-  "name": "Drift — Ad-free music discovery",
+  "id": "/drift/",
+  "name": "Drift — Nyarindo Lens",
   "short_name": "Drift",
   "description": "Music that moves because people love it.",
-  "start_url": "./index.html",
+  "start_url": "/drift/?source=pwa",
+  "scope": "/drift/",
   "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
+  "orientation": "any",
   "background_color": "#090a08",
   "theme_color": "#090a08",
-  "icons": [{ "src": "assets/drift-app-icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }]
+  "categories": ["music", "entertainment"],
+  "icons": [
+    { "src": "assets/drift-icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "assets/drift-icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "assets/drift-app-icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "assets/drift-icon-maskable-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "assets/drift-icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
 }

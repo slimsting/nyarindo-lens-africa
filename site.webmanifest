@@ -1,11 +1,16 @@
 {
+  "id": "/",
   "name": "Nyarindo Lens Universal",
   "short_name": "Nyarindo Lens",
   "description": "The portfolio, theories, books, and browser projects of Newbon Nyarindo Gadson.",
-  "start_url": "/",
+  "start_url": "/?source=pwa",
+  "scope": "/",
   "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
+  "orientation": "any",
   "background_color": "#10110f",
   "theme_color": "#10110f",
+  "categories": ["books", "education", "entertainment"],
   "icons": [
     {
       "src": "/portfolio-website/assets/favicon-192.png",
@@ -13,9 +18,26 @@
       "type": "image/png"
     },
     {
+      "src": "/portfolio-website/assets/favicon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    },
+    {
       "src": "/portfolio-website/assets/apple-touch-icon.png",
       "sizes": "180x180",
       "type": "image/png"
+    },
+    {
+      "src": "/portfolio-website/assets/favicon-maskable-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/portfolio-website/assets/favicon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
     }
   ]
 }

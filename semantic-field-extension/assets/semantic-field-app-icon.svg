@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Semantic Field">
+  <rect width="512" height="512" rx="112" fill="#0c0d0e"/>
+  <circle cx="256" cy="256" r="142" fill="none" stroke="#8eb5a2" stroke-opacity=".24" stroke-width="2"/>
+  <circle cx="256" cy="256" r="103" fill="none" stroke="#d7a66d" stroke-opacity=".38" stroke-width="3" stroke-dasharray="7 13"/>
+  <path d="M130 311 208 188l91 69 83-99M130 311l169-54 83-99" fill="none" stroke="#8eb5a2" stroke-opacity=".58" stroke-width="4"/>
+  <circle cx="130" cy="311" r="16" fill="#8eb5a2"/>
+  <circle cx="208" cy="188" r="12" fill="#d7a66d"/>
+  <circle cx="299" cy="257" r="18" fill="#8eb5a2"/>
+  <circle cx="382" cy="158" r="12" fill="#d7a66d"/>
+  <circle cx="256" cy="256" r="42" fill="#0c0d0e" stroke="#d7a66d" stroke-width="4"/>
+  <circle cx="256" cy="256" r="17" fill="#d7a66d"/>
+</svg>

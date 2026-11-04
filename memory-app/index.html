@@ -9,12 +9,16 @@
     <meta name="description" content="Two private journaling practices: a clearing page without witness, and a structured returning journal for rereading patterns over time.">
     <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
     <meta name="author" content="Newbon Nyarindo Gadson">
-    <meta name="application-name" content="Nyarindo Lens Universal">
-    <link rel="icon" type="image/png" sizes="32x32" href="/portfolio-website/assets/favicon-32.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="/portfolio-website/assets/apple-touch-icon.png">
+    <meta name="application-name" content="Return — Memory Practice">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Return">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/return-icon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/return-icon-maskable-180.png">
     <link rel="canonical" href="https://nyarindolens.com/memory-app/index.html">
     <link rel="sitemap" type="application/xml" title="Sitemap" href="https://nyarindolens.com/sitemap.xml">
-    <link rel="manifest" href="/site.webmanifest">
+    <link rel="manifest" href="/memory-app/manifest.webmanifest">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="Nyarindo Lens Universal">
     <meta property="og:url" content="https://nyarindolens.com/memory-app/index.html">
@@ -49,15 +53,34 @@
     </script>
       <link rel="stylesheet" href="/portfolio-website/site-map.css?v=site-map-3">
     <link rel="stylesheet" href="/portfolio-website/local-fonts.css?v=fonts-1">
+    <link rel="stylesheet" href="/portfolio-website/install-apps.css?v=install-apps-3">
 
   </head>
-  <body>
+  <body data-app-install="return" data-app-name="Return — Memory Practice" data-service-worker="/memory-app/service-worker.js" data-service-worker-scope="/memory-app/">
     <header class="topbar"><a class="wordmark" href="/#home" aria-label="Back to Nyarindo Lens Universal home"><img src="assets/return-wordmark-spiral.svg" alt="" aria-hidden="true"><span>return</span></a><div class="topbar-actions"><span class="privacy-mark"><i></i> ON THIS DEVICE</span><button id="themeToggle" class="theme-toggle" type="button" aria-label="Dark mode" aria-pressed="true"><span class="theme-icon" aria-hidden="true">☾</span><span class="theme-label">NIGHT</span></button></div></header>
     <main>
       <section class="welcome">
         <p class="eyebrow">A SMALL PRACTICE OF ATTENTION</p>
         <h1>Meet this moment<br><em>where it is.</em></h1>
         <p>Two forms of journaling live here, with different purposes. One clears the lens without keeping a record. The other builds a record you can return to.</p>
+      </section>
+
+      <section class="install-hub install-hub-compact" data-install-panel aria-labelledby="installReturnTitle">
+        <div class="install-copy">
+          <p class="install-eyebrow"><span aria-hidden="true"></span> RETURN · SEPARATE JOURNALING APP</p>
+          <h2 id="installReturnTitle">Keep Return <em>close.</em></h2>
+          <p class="install-lede">Install Return separately for a quieter journaling space that opens directly to this practice. Your writing and local preferences stay on this device.</p>
+        </div>
+        <div>
+          <div class="install-primary">
+            <button class="install-button" type="button" data-install-app>Install Return on this device</button>
+          </div>
+          <p class="install-status" data-install-status role="status" aria-live="polite"></p>
+        </div>
+        <div class="install-manual" data-install-manual hidden>
+          <strong>If no install prompt appears</strong>
+          <span>In Chrome or Edge, open the browser menu and choose <b>Install app</b>. On iPhone or iPad, use Share → <b>Add to Home Screen</b>. On Android, use the menu → <b>Install app</b>.</span>
+        </div>
       </section>
 
       <section class="journaling-types" aria-labelledby="journalingTypesTitle">
@@ -282,6 +305,7 @@
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
     <script src="app.js?v=attention-close-3"></script>
   <script src="tap-feedback.js?v=tap-feedback-1"></script>
+    <script src="/portfolio-website/install-app.js?v=install-apps-3"></script>
       <nav class="site-map" aria-label="Nyarindo Lens Universal site map">
       <div class="site-map-intro">
         <p class="site-map-eyebrow">THE WHOLE NYARINDO LENS</p>

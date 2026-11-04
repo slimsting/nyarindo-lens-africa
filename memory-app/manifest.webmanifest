@@ -1,0 +1,46 @@
+{
+  "id": "/memory-app/",
+  "name": "Return — Memory Practice",
+  "short_name": "Return",
+  "description": "A private attention and journaling practice for noticing raw experience, the stories attached to it, and what changes through return.",
+  "start_url": "/memory-app/?source=pwa",
+  "scope": "/memory-app/",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
+  "orientation": "any",
+  "background_color": "#10110f",
+  "theme_color": "#10110f",
+  "categories": ["productivity", "lifestyle", "education"],
+  "icons": [
+    {
+      "src": "assets/return-spiral-mark.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/return-icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/return-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/return-icon-maskable-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "assets/return-icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

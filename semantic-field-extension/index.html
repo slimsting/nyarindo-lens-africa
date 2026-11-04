@@ -8,12 +8,16 @@
     <meta name="description" content="The Nyarindo Semantic Field is a browser-based prototype for mapping words, concepts, relationships, and changing meaning.">
     <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
     <meta name="author" content="Newbon Nyarindo Gadson">
-    <meta name="application-name" content="Nyarindo Lens Universal">
-    <link rel="icon" type="image/png" sizes="32x32" href="/portfolio-website/assets/favicon-32.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="/portfolio-website/assets/apple-touch-icon.png">
+    <meta name="application-name" content="Semantic Field">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Semantic Field">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/semantic-field-icon-32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/semantic-field-icon-maskable-180.png">
     <link rel="canonical" href="https://nyarindolens.com/semantic-field-extension/index.html">
     <link rel="sitemap" type="application/xml" title="Sitemap" href="https://nyarindolens.com/sitemap.xml">
-    <link rel="manifest" href="/site.webmanifest">
+    <link rel="manifest" href="/semantic-field-extension/manifest.webmanifest">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="Nyarindo Lens Universal">
     <meta property="og:url" content="https://nyarindolens.com/semantic-field-extension/index.html">
@@ -50,9 +54,10 @@
     </script>
       <link rel="stylesheet" href="/portfolio-website/site-map.css?v=site-map-3">
     <link rel="stylesheet" href="/portfolio-website/local-fonts.css?v=fonts-1">
+    <link rel="stylesheet" href="/portfolio-website/install-apps.css?v=install-apps-3">
 
   </head>
-<body>
+<body data-app-install="semantic-field" data-app-name="Semantic Field" data-service-worker="/semantic-field-extension/web-service-worker.js" data-service-worker-scope="/semantic-field-extension/">
 
 <header>
   <div class="header-left">
@@ -70,6 +75,24 @@
   </nav>
   <div class="header-right"><span id="headerPayloadCount">semantic db — 0 records</span><button class="theme-toggle" id="themeToggle" type="button" aria-label="Dark mode" aria-pressed="true"><span class="theme-icon" aria-hidden="true">☾</span><span id="themeLabel">NIGHT</span></button></div>
 </header>
+
+<section class="install-hub install-hub-compact" data-install-panel aria-labelledby="installFieldTitle">
+  <div class="install-copy">
+    <p class="install-eyebrow"><span aria-hidden="true"></span> SEMANTIC FIELD · SEPARATE APP</p>
+    <h2 id="installFieldTitle">Give the ideas <em>a room of their own.</em></h2>
+    <p class="install-lede">Install Semantic Field separately to open the living relationship map directly from your desktop or phone. It remains one independent experience within the Nyarindo Lens.</p>
+  </div>
+  <div>
+    <div class="install-primary">
+      <button class="install-button" type="button" data-install-app>Install Semantic Field on this device</button>
+    </div>
+    <p class="install-status" data-install-status role="status" aria-live="polite"></p>
+  </div>
+  <div class="install-manual" data-install-manual hidden>
+    <strong>If no install prompt appears</strong>
+    <span>In Chrome or Edge, open the browser menu and choose <b>Install app</b>. On iPhone or iPad, use Share → <b>Add to Home Screen</b>. On Android, use the menu → <b>Install app</b>.</span>
+  </div>
+</section>
 
 <div class="database-frame" role="region" aria-label="Semantic Field database workspace">
 <div class="main">
@@ -458,6 +481,7 @@
 
 <script src="app.js?v=theme-controls-1"></script>
 <script src="tap-feedback.js?v=tap-feedback-1"></script>
+<script src="/portfolio-website/install-app.js?v=install-apps-3"></script>
     <nav class="site-map" aria-label="Nyarindo Lens Universal site map">
       <div class="site-map-intro">
         <p class="site-map-eyebrow">THE WHOLE NYARINDO LENS</p>

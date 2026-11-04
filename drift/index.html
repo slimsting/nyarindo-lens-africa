@@ -4,17 +4,19 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="theme-color" content="#090a08">
-    <link rel="icon" href="assets/drift-app-icon.svg" type="image/svg+xml">
-    <link rel="apple-touch-icon" href="assets/drift-app-icon.svg">
+    <link rel="icon" href="assets/drift-icon-32.png" type="image/png" sizes="32x32">
+    <link rel="apple-touch-icon" href="assets/drift-icon-maskable-180.png" sizes="180x180">
     <link rel="stylesheet" href="styles.css?v=theme-controls-1">
     <title>Drift</title>
 
     <meta name="description" content="Drift is a music discovery prototype where songs move through real listening, shared taste, and human recommendation rather than ads.">
     <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
     <meta name="author" content="Newbon Nyarindo Gadson">
-    <meta name="application-name" content="Nyarindo Lens Universal">
-    <link rel="icon" type="image/png" sizes="32x32" href="/portfolio-website/assets/favicon-32.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="/portfolio-website/assets/apple-touch-icon.png">
+    <meta name="application-name" content="Drift">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Drift">
     <link rel="canonical" href="https://nyarindolens.com/drift/index.html">
     <link rel="sitemap" type="application/xml" title="Sitemap" href="https://nyarindolens.com/sitemap.xml">
     <link rel="manifest" href="/drift/manifest.webmanifest">
@@ -49,8 +51,9 @@
       }
     </script>
       <link rel="stylesheet" href="/portfolio-website/site-map.css?v=site-map-3">
+    <link rel="stylesheet" href="/portfolio-website/install-apps.css?v=install-apps-3">
   </head>
-  <body>
+  <body data-app-install="drift" data-app-name="Drift" data-service-worker="/drift/service-worker.js" data-service-worker-scope="/drift/">
     <main class="app-shell">
       <header class="topbar">
         <div class="topbar-start">
@@ -64,6 +67,24 @@
         <p class="eyebrow" id="greeting">YOUR LISTENING SPACE</p>
         <h1>Where do you want to <em>drift?</em></h1>
         <p class="intro">No ads. No paid placement. Just music moving through people and possibility.</p>
+      </section>
+
+      <section class="install-hub install-hub-compact" data-install-panel aria-labelledby="installDriftTitle">
+        <div class="install-copy">
+          <p class="install-eyebrow"><span aria-hidden="true"></span> DRIFT · SEPARATE MUSIC APP</p>
+          <h2 id="installDriftTitle">Let discovery <em>travel with you.</em></h2>
+          <p class="install-lede">Install Drift separately for a listening space that opens straight into its currents. It remains an independent browser app inside the Nyarindo Lens.</p>
+        </div>
+        <div>
+          <div class="install-primary">
+            <button class="install-button" type="button" data-install-app>Install Drift on this device</button>
+          </div>
+          <p class="install-status" data-install-status role="status" aria-live="polite"></p>
+        </div>
+        <div class="install-manual" data-install-manual hidden>
+          <strong>If no install prompt appears</strong>
+          <span>In Chrome or Edge, open the browser menu and choose <b>Install app</b>. On iPhone or iPad, use Share → <b>Add to Home Screen</b>. On Android, use the menu → <b>Install app</b>.</span>
+        </div>
       </section>
 
       <section class="modes" aria-label="Choose listening direction">
@@ -144,6 +165,7 @@
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
     <script src="app.js?v=theme-controls-1"></script>
   <script src="tap-feedback.js?v=tap-feedback-1"></script>
+    <script src="/portfolio-website/install-app.js?v=install-apps-3"></script>
       <nav class="site-map" aria-label="Nyarindo Lens Universal site map">
       <div class="site-map-intro">
         <p class="site-map-eyebrow">THE WHOLE NYARINDO LENS</p>
