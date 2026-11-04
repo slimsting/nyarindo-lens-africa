@@ -19,6 +19,12 @@
 - [Return](https://nyarindolens.com/memory-app/): A private, device-local journaling and returning practice.
 - [Semantic Field](https://nyarindolens.com/semantic-field-extension/): A browser-based semantic mapping prototype.
 
+## Nyarindo Library
+
+- [The Nyarindo Library](https://nyarindolens.com/books/): Read all seven books, the general introduction, the end note, and the combined collection in a theme-aware browser reader, or download the PDF editions.
+- [Particles in conversation](https://nyarindolens.com/books/experiments/particles.html): A live attraction-and-repulsion experiment from the companion code.
+- [Fields that remember walls](https://nyarindolens.com/books/experiments/fields.html): A bounded particle field exploring constraint, clustering, and equilibrium.
+
 ## Usage notes
 
 - The theory pages are presented as authored frameworks, stories, and observations rather than settled scientific claims.

@@ -197,7 +197,11 @@ $pathRules = @(
     },
     [pscustomobject]@{
         Reason = 'Potential client data export'
-        Pattern = '(?i)(client|customer|confidential|private|leads?|crm|sales|revenue|invoice|billing|analysis|export|report).*\.(xlsx?|xlsm|ods|csv|tsv|json|xml)$'
+        Pattern = '(?i)(^|/)(?:[^/]*[-_ ])?(?:client|customer|confidential|private|leads?|crm|sales|revenue|invoice|billing|analysis|exports?|reports?)(?:[-_ .][^/]*)?\.(?:xlsx?|xlsm|ods|csv|tsv)$'
+    },
+    [pscustomobject]@{
+        Reason = 'Potential client data export'
+        Pattern = '(?i)((^|/)(?:exports?|reports?|analytics|private|confidential)/[^/]+\.(?:json|xml)$|(^|/)(?:client|customer|confidential|private)[-_ ]?[^/]*\.(?:json|xml)$)'
     },
     [pscustomobject]@{
         Reason = 'Deployment or tool state'

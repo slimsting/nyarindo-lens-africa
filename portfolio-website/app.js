@@ -1,6 +1,5 @@
 const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const root = document.documentElement;
-const themeToggle = document.getElementById('themeToggle');
 const themeSwatches = [...document.querySelectorAll('[data-palette]')];
 
 const paletteColors = {
@@ -18,17 +17,6 @@ function updateThemeColor() {
     root.dataset.theme === 'light' ? palette.light : palette.dark;
 }
 
-function applyTheme(theme) {
-  const isLight = theme === 'light';
-  root.dataset.theme = isLight ? 'light' : 'dark';
-  themeToggle.setAttribute('aria-pressed', String(!isLight));
-  themeToggle.setAttribute('aria-label', 'Dark mode');
-  themeToggle.querySelector('.theme-icon').textContent = isLight ? '☼' : '☾';
-  themeToggle.querySelector('.theme-label').textContent = isLight ? 'DAY' : 'NIGHT';
-  updateThemeColor();
-  try { localStorage.setItem('nyarindo-theme', isLight ? 'light' : 'dark'); } catch {}
-}
-
 function applyPalette(palette, persist = true) {
   if (!paletteColors[palette]) palette = 'forest';
   root.dataset.palette = palette;
@@ -41,14 +29,11 @@ function applyPalette(palette, persist = true) {
   }
 }
 
-themeToggle.addEventListener('click', () => {
-  applyTheme(root.dataset.theme === 'light' ? 'dark' : 'light');
-});
 themeSwatches.forEach(button => {
   button.addEventListener('click', () => applyPalette(button.dataset.palette));
 });
 applyPalette(root.dataset.palette || 'forest', false);
-applyTheme(root.dataset.theme === 'light' ? 'light' : 'dark');
+window.addEventListener('nyarindo:themechange', updateThemeColor);
 
 let previousScrollY = window.scrollY;
 let scrollLightTimer;
@@ -331,6 +316,16 @@ const bookReadingCover = document.getElementById('bookReadingCover');
 const bookReadingNumber = document.getElementById('bookReadingNumber');
 const bookReadingTitle = document.getElementById('bookReadingTitle');
 const bookReadingDescription = document.getElementById('bookReadingDescription');
+const openSelectedBookInLibrary = document.getElementById('openSelectedBookInLibrary');
+const bookLibrarySlugs = [
+  'the-nyarindo-lens',
+  'the-pulse-reports',
+  'stories-we-tell-about-the-pulse',
+  'the-method-in-the-waves',
+  'attention',
+  'teaching-the-wave-mind',
+  'the-vacuum-experiment'
+];
 
 function featureBookCover(cover) {
   if (!cover || !bookReadingStage) return;
@@ -349,6 +344,11 @@ function featureBookCover(cover) {
   bookReadingNumber.textContent = `FEATURED COVER · BOOK ${number}`;
   bookReadingTitle.textContent = title;
   bookReadingDescription.textContent = description;
+  if (openSelectedBookInLibrary) {
+    const slug = bookLibrarySlugs[Number(number) - 1] || bookLibrarySlugs[0];
+    openSelectedBookInLibrary.href = `/books/?book=${slug}`;
+    openSelectedBookInLibrary.setAttribute('aria-label', `Open ${title} in the Nyarindo Library`);
+  }
   bookCoverFigures.forEach(item => item.classList.toggle('is-featured', item === cover));
 }
 

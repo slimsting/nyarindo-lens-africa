@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 620" role="img" aria-labelledby="title desc">
+  <title id="title">A small traveller steps into a luminous spiral</title>
+  <desc id="desc">A whimsical figure carrying a tiny lantern approaches nested golden and blue loops. Dots and small stars mark the path inward.</desc>
+  <defs>
+    <radialGradient id="sky" cx="63%" cy="42%" r="72%">
+      <stop offset="0" stop-color="#173f4b"/>
+      <stop offset=".56" stop-color="#0a202a"/>
+      <stop offset="1" stop-color="#050b11"/>
+    </radialGradient>
+    <linearGradient id="ink" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#f4d7a0"/>
+      <stop offset=".48" stop-color="#d49b55"/>
+      <stop offset="1" stop-color="#77b9bf"/>
+    </linearGradient>
+    <filter id="glow" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur stdDeviation="7" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <style>
+      .orbit{fill:none;stroke:url(#ink);stroke-linecap:round;transform-origin:458px 294px;animation:turn 18s linear infinite}
+      .orbit.b{animation-duration:25s;animation-direction:reverse}.orbit.c{animation-duration:34s}
+      .spark{animation:breathe 3.8s ease-in-out infinite}.spark:nth-of-type(even){animation-delay:-1.9s}
+      .walker{transform-origin:175px 469px;animation:lean 4.6s ease-in-out infinite}
+      @keyframes turn{to{transform:rotate(360deg)}}@keyframes breathe{50%{opacity:.35;transform:scale(.72)}}@keyframes lean{50%{transform:rotate(2deg) translateY(-4px)}}
+      @media (prefers-reduced-motion:reduce){.orbit,.spark,.walker{animation:none}}
+    </style>
+  </defs>
+  <rect width="720" height="620" rx="34" fill="url(#sky)"/>
+  <path d="M0 499c103-47 174-32 258 5 102 45 197 47 297-6 64-34 109-32 165-10v132H0z" fill="#071319" opacity=".92"/>
+  <g fill="#f3d79f" opacity=".68">
+    <circle class="spark" cx="88" cy="101" r="2.5"/><circle class="spark" cx="146" cy="176" r="1.8"/>
+    <circle class="spark" cx="250" cy="78" r="2.2"/><circle class="spark" cx="586" cy="98" r="2.8"/>
+    <circle class="spark" cx="646" cy="210" r="1.7"/><circle class="spark" cx="525" cy="479" r="2.1"/>
+    <circle class="spark" cx="304" cy="491" r="1.9"/><circle class="spark" cx="76" cy="385" r="2.1"/>
+  </g>
+  <g filter="url(#glow)">
+    <ellipse class="orbit" cx="458" cy="294" rx="200" ry="176" stroke-width="3" stroke-dasharray="13 19"/>
+    <ellipse class="orbit b" cx="458" cy="294" rx="157" ry="135" stroke-width="4" stroke-dasharray="8 20"/>
+    <ellipse class="orbit c" cx="458" cy="294" rx="113" ry="94" stroke-width="5" stroke-dasharray="20 15"/>
+    <path class="orbit b" d="M458 294c0-42 33-76 74-76s74 34 74 76-33 76-74 76c-55 0-99-45-99-100 0-70 56-127 125-127s125 57 125 127" stroke-width="4"/>
+  </g>
+  <circle cx="458" cy="294" r="15" fill="#f5d394" opacity=".96"/>
+  <circle cx="458" cy="294" r="38" fill="none" stroke="#f5d394" stroke-width="2" opacity=".22"/>
+  <path d="M196 514c-19-29-9-65 16-80 24-15 59-2 67 28 6 24-4 43-20 58" fill="#10191c" stroke="#d7aa68" stroke-width="3"/>
+  <path d="M252 501c37-4 72 6 104 32" fill="none" stroke="#7db5ba" stroke-width="3" stroke-dasharray="5 10"/>
+  <g class="walker">
+    <circle cx="175" cy="361" r="27" fill="#d9b77d"/>
+    <path d="M154 349c4-27 36-36 52-11 10 16 5 31-4 39-13-13-31-18-48-11z" fill="#16282c" stroke="#e6c58e" stroke-width="2"/>
+    <path d="M195 372c17 17 30 38 34 65l-39 27-31-38c10-22 21-40 36-54z" fill="#16373b" stroke="#78a8ad" stroke-width="3"/>
+    <path d="M189 462l-16 57m6-4-18 20m29-79 30 48m-8-2 20 21" fill="none" stroke="#d7aa68" stroke-width="7" stroke-linecap="round"/>
+    <path d="M202 397l33 18" fill="none" stroke="#d7aa68" stroke-width="7" stroke-linecap="round"/>
+    <path d="M234 410l23-28" fill="none" stroke="#f3d79f" stroke-width="2"/>
+    <circle cx="259" cy="379" r="7" fill="#f3d79f" filter="url(#glow)"/>
+    <path d="M259 383l-8 15h16z" fill="none" stroke="#f3d79f" stroke-width="2"/>
+  </g>
+  <path d="M68 284c15-12 29-12 44 0m-44 15c15-12 29-12 44 0m-44 15c15-12 29-12 44 0" fill="none" stroke="#75adb2" stroke-width="2" stroke-linecap="round" opacity=".6"/>
+  <text x="48" y="558" fill="#d8c8a8" font-family="Georgia,serif" font-size="20" letter-spacing="4">ENTER THE SPIRAL</text>
+</svg>

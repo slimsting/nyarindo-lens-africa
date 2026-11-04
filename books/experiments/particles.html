@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#000413">
+  <link rel="icon" type="image/png" sizes="32x32" href="/portfolio-website/assets/favicon-32.png">
+  <meta name="description" content="A live companion experiment for The Vacuum Experiment: watch particles negotiate attraction, repulsion, contraction, expansion, and equilibrium.">
+  <title>Particles in Conversation — Nyarindo Library</title>
+  <script src="/portfolio-website/site-theme-init.js?v=library-1"></script>
+  <link rel="stylesheet" href="/portfolio-website/local-fonts.css?v=hd-2">
+  <link rel="stylesheet" href="/portfolio-website/site-theme.css?v=site-theme-2">
+  <link rel="stylesheet" href="/books/experiments/experiment.css?v=experiments-2">
+  <link rel="stylesheet" href="/portfolio-website/theme-controls.css?v=theme-controls-3">
+  <script defer src="/portfolio-website/site-theme-control.js?v=theme-controls-5"></script>
+  <script defer src="/books/experiments/experiment.js?v=experiments-2"></script>
+</head>
+<body data-experiment="particles">
+  <canvas class="experiment-canvas" id="experimentCanvas" aria-label="Live particle field"></canvas>
+  <div class="experiment-shell">
+    <header class="experiment-header">
+      <a class="experiment-brand" href="/books/"><span aria-hidden="true">◉</span><span>NYARINDO LIBRARY / EXP. 01</span></a>
+      <div class="experiment-header-actions">
+        <button class="site-theme-toggle" type="button" data-theme-toggle data-theme-light="#edf3ef" data-theme-dark="#000413" aria-label="Switch to day mode" aria-pressed="true"><span class="theme-icon" aria-hidden="true">☾</span><span class="theme-label">NIGHT</span></button>
+      </div>
+    </header>
+
+    <section class="experiment-copy" aria-labelledby="experimentTitle">
+      <p class="experiment-kicker">COMPANION CODE · THE VACUUM EXPERIMENT</p>
+      <h1 id="experimentTitle">Particles in<br><em>conversation.</em></h1>
+      <p>Nothing here is assigned a final shape. Point-like bodies attract, repel, collide, and settle into temporary arrangements. Change the conditions and notice what the whole field begins to do.</p>
+      <p class="experiment-note" id="experimentStatus" aria-live="polite">The field is moving. Pause it whenever a pattern deserves a longer look.</p>
+    </section>
+
+    <footer class="experiment-footer">
+      <div class="experiment-controls" aria-label="Experiment controls">
+        <label for="attraction"><span>Attraction <output id="attractionValue">8</output></span><input id="attraction" type="range" min="1" max="20" value="8" step="1"></label>
+        <label for="repulsion"><span>Repulsion <output id="repulsionValue">6</output></span><input id="repulsion" type="range" min="1" max="20" value="6" step="1"></label>
+        <label for="population"><span>Particles <output id="populationValue">80</output></span><input id="population" type="range" min="20" max="160" value="80" step="10"></label>
+        <div class="experiment-actions"><button id="resetExperiment" type="button">Seed a new field</button><button id="pauseExperiment" type="button" aria-pressed="false">Pause observation</button></div>
+      </div>
+      <div class="experiment-stats" aria-live="polite">
+        <span class="stat-contract">contracting <b id="contractingCount">0</b></span>
+        <span class="stat-expand">expanding <b id="expandingCount">0</b></span>
+        <span class="stat-equilibrium">equilibrium <b id="equilibriumCount">0</b></span>
+        <span>collisions <b id="collisionCount">0</b></span>
+        <span>clusters <b id="clusterCount">0</b></span>
+      </div>
+      <div class="experiment-signoff"><span>Observation, not proof.</span><a href="/books/">Return to the library ↗</a><button class="thread-theme-toggle" type="button" data-theme-toggle data-theme-light="#edf3ef" data-theme-dark="#000413" aria-label="Switch to day mode" aria-pressed="true"><span class="theme-icon" aria-hidden="true">☾</span><span class="theme-label">NIGHT</span></button></div>
+    </footer>
+  </div>
+</body>
+</html>

@@ -1,0 +1,52 @@
+{
+  "introduction": {
+    "file": "/books/reader-content/introduction.json",
+    "pageCount": 3,
+    "bytes": 7170
+  },
+  "the-nyarindo-lens": {
+    "file": "/books/reader-content/the-nyarindo-lens.json",
+    "pageCount": 28,
+    "bytes": 71744
+  },
+  "the-pulse-reports": {
+    "file": "/books/reader-content/the-pulse-reports.json",
+    "pageCount": 40,
+    "bytes": 102317
+  },
+  "stories-we-tell-about-the-pulse": {
+    "file": "/books/reader-content/stories-we-tell-about-the-pulse.json",
+    "pageCount": 50,
+    "bytes": 140204
+  },
+  "the-method-in-the-waves": {
+    "file": "/books/reader-content/the-method-in-the-waves.json",
+    "pageCount": 125,
+    "bytes": 297081
+  },
+  "attention": {
+    "file": "/books/reader-content/attention.json",
+    "pageCount": 23,
+    "bytes": 54275
+  },
+  "teaching-the-wave-mind": {
+    "file": "/books/reader-content/teaching-the-wave-mind.json",
+    "pageCount": 42,
+    "bytes": 101979
+  },
+  "the-vacuum-experiment": {
+    "file": "/books/reader-content/the-vacuum-experiment.json",
+    "pageCount": 26,
+    "bytes": 55652
+  },
+  "collection": {
+    "file": "/books/reader-content/collection.json",
+    "pageCount": 339,
+    "bytes": 832957
+  },
+  "end-note": {
+    "file": "/books/reader-content/end-note.json",
+    "pageCount": 2,
+    "bytes": 3078
+  }
+}

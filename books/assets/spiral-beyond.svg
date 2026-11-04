@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 620" role="img" aria-labelledby="title desc">
+  <title id="title">A spiral deepens, then opens beyond its books</title>
+  <desc id="desc">Seven small book shapes gather around a warm centre while a spiral line loosens into orbiting paths, stars, and expanding light.</desc>
+  <defs>
+    <radialGradient id="night" cx="44%" cy="48%" r="78%">
+      <stop offset="0" stop-color="#244954"/><stop offset=".58" stop-color="#0b252d"/><stop offset="1" stop-color="#050b11"/>
+    </radialGradient>
+    <linearGradient id="path" x1="0" y1="1" x2="1" y2="0">
+      <stop stop-color="#d69a50"/><stop offset=".5" stop-color="#f4d99f"/><stop offset="1" stop-color="#80c4c8"/>
+    </linearGradient>
+    <filter id="softGlow" x="-80%" y="-80%" width="260%" height="260%"><feGaussianBlur stdDeviation="8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+    <style>
+      .unwind{stroke-dasharray:780;stroke-dashoffset:780;animation:draw 5s ease-out forwards,drift 16s ease-in-out 5s infinite}
+      .star{transform-origin:center;animation:twinkle 3s ease-in-out infinite}.star:nth-of-type(2n){animation-delay:-1.2s}.star:nth-of-type(3n){animation-delay:-2.1s}
+      .book{transform-origin:center;animation:float 5s ease-in-out infinite}.book:nth-of-type(2n){animation-delay:-1.4s}.book:nth-of-type(3n){animation-delay:-2.8s}
+      @keyframes draw{to{stroke-dashoffset:0}}@keyframes drift{50%{transform:rotate(5deg) scale(1.02)}}@keyframes twinkle{50%{opacity:.22;transform:scale(.58)}}@keyframes float{50%{transform:translateY(-7px) rotate(3deg)}}
+      @media (prefers-reduced-motion:reduce){.unwind,.star,.book{animation:none}.unwind{stroke-dashoffset:0}}
+    </style>
+  </defs>
+  <rect width="720" height="620" rx="34" fill="url(#night)"/>
+  <g fill="none" stroke="url(#path)" stroke-linecap="round">
+    <path class="unwind" d="M350 322c-4-23 14-42 37-42 31 0 54 24 54 54 0 41-33 72-73 72-51 0-89-41-89-91 0-62 50-111 112-111 72 0 128 58 128 128 0 82-66 147-148 147-91 0-163-74-163-165 0-101 82-183 183-183 110 0 197 90 197 200 0 119-97 217-217 217" stroke-width="4"/>
+    <path class="unwind" d="M351 322c12-30 53-41 79-17 30 27 27 76-4 102-42 35-106 21-137-20-40-53-24-131 29-172 67-52 165-30 214 36 59 79 34 193-44 251-91 68-224 39-290-51" stroke-width="2" opacity=".44" style="animation-delay:1s,6s"/>
+  </g>
+  <circle cx="350" cy="322" r="18" fill="#f6dd9e" filter="url(#softGlow)"/>
+  <circle cx="350" cy="322" r="55" fill="none" stroke="#f6dd9e" opacity=".2"/>
+  <g class="book">
+    <path d="M246 294l53-19v70l-53 18z" fill="#f0e7d4" stroke="#d3a261" stroke-width="2"/><path d="M299 275l22 16v70l-22-16z" fill="#b8d0cc" stroke="#d3a261" stroke-width="2"/>
+    <path d="M407 267l53 19v69l-53-18z" fill="#f0e7d4" stroke="#d3a261" stroke-width="2"/><path d="M407 267l-22 24v70l22-25z" fill="#b8d0cc" stroke="#d3a261" stroke-width="2"/>
+    <path d="M252 388l52 15v58l-52-15z" fill="#f0e7d4" stroke="#d3a261" stroke-width="2"/><path d="M304 403l22 9v58l-22-9z" fill="#b8d0cc" stroke="#d3a261" stroke-width="2"/>
+    <path d="M406 388l52-15v58l-52 15z" fill="#f0e7d4" stroke="#d3a261" stroke-width="2"/><path d="M406 388l-22 9v58l22-9z" fill="#b8d0cc" stroke="#d3a261" stroke-width="2"/>
+    <path d="M321 218l58 7v49l-58-7z" fill="#f0e7d4" stroke="#d3a261" stroke-width="2"/><path d="M321 218l-25 26v50l25-27z" fill="#b8d0cc" stroke="#d3a261" stroke-width="2"/>
+    <path d="M321 440l58-7v50l-58 7z" fill="#f0e7d4" stroke="#d3a261" stroke-width="2"/><path d="M321 440l-25-27v50l25 27z" fill="#b8d0cc" stroke="#d3a261" stroke-width="2"/>
+  </g>
+  <g fill="#f8e3aa" filter="url(#softGlow)">
+    <circle class="star" cx="92" cy="119" r="3"/><circle class="star" cx="610" cy="114" r="2.4"/>
+    <circle class="star" cx="655" cy="313" r="3.2"/><circle class="star" cx="81" cy="432" r="2.2"/>
+    <circle class="star" cx="533" cy="486" r="3"/><circle class="star" cx="174" cy="516" r="2.5"/>
+    <circle class="star" cx="273" cy="104" r="2.1"/><circle class="star" cx="484" cy="161" r="1.8"/>
+  </g>
+  <path d="M78 548c120-16 215 15 306 4 89-11 183-46 260-18" fill="none" stroke="#6ca7ad" stroke-width="2" opacity=".42"/>
+  <text x="42" y="578" fill="#d8c8a8" font-family="Georgia,serif" font-size="20" letter-spacing="4">RETURN—THEN CONTINUE</text>
+</svg>

@@ -118,6 +118,17 @@ try {
         clientTerms = @()
     }
     [System.IO.File]::WriteAllText($publicConfig, ($publicPolicy | ConvertTo-Json -Depth 5), (New-Object System.Text.UTF8Encoding($false)))
+
+    Write-Fixture -Path (Join-Path $publicRepo 'site/books/reader-content/the-pulse-reports.json') -Content '{"id":"the-pulse-reports","pages":[{"text":"A public narrative report."}]}'
+    & git -C $publicRepo add site/books/reader-content/the-pulse-reports.json
+    Assert-ExitCode -Actual (Invoke-Scanner -Repository $publicRepo -Config $publicConfig) -Expected 0 -Name 'public narrative report passes'
+
+    & git -C $publicRepo reset -q
+    Write-Fixture -Path (Join-Path $publicRepo 'site/client-report.csv') -Content 'client,value'
+    & git -C $publicRepo add site/client-report.csv
+    Assert-ExitCode -Actual (Invoke-Scanner -Repository $publicRepo -Config $publicConfig) -Expected 1 -Name 'client data export blocks'
+
+    & git -C $publicRepo reset -q
     Write-Fixture -Path (Join-Path $publicRepo 'AGENTS.md') -Content '# Internal instructions'
     & git -C $publicRepo add AGENTS.md
     Assert-ExitCode -Actual (Invoke-Scanner -Repository $publicRepo -Config $publicConfig) -Expected 1 -Name 'public allowlist blocks private governance'
