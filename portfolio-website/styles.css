@@ -206,11 +206,14 @@ body :is(.contact-link,.book-cta:not(:disabled)):is(:hover,:focus-visible){color
 /* The completed attention practice is the primary living invitation. */
 .project-memory .status-complete{color:var(--green)}
 .project-memory .status-complete i{background:var(--green);box-shadow:0 0 12px rgba(142,181,162,.7)}
-.project-memory .attention-journey-link{position:relative;isolation:isolate;border-color:rgba(142,181,162,.8);background:radial-gradient(circle at 18% 50%,rgba(142,181,162,.22),transparent 44%),linear-gradient(115deg,rgba(210,163,109,.2),rgba(142,181,162,.14));box-shadow:0 0 0 1px rgba(142,181,162,.12),0 0 22px rgba(142,181,162,.15),0 12px 30px rgba(0,0,0,.2),inset 0 1px rgba(255,255,255,.08);animation:attention-cta-breathe 4.8s ease-in-out infinite}
-.project-memory .attention-journey-link:is(:hover,:focus-visible){border-color:#eed3a8;background:radial-gradient(circle at 18% 50%,rgba(255,255,255,.2),transparent 46%),linear-gradient(115deg,#d2a36d,#b7c8ae);box-shadow:0 0 0 7px rgba(142,181,162,.1),0 0 38px rgba(210,163,109,.24),0 15px 34px rgba(0,0,0,.25)}
-.project-memory .attention-journey-link:is(:hover,:focus-visible) span{transform:translate(2px,-2px)}
-@keyframes attention-cta-breathe{0%,100%{box-shadow:0 0 0 1px rgba(142,181,162,.12),0 0 22px rgba(142,181,162,.15),0 12px 30px rgba(0,0,0,.2),inset 0 1px rgba(255,255,255,.08)}50%{box-shadow:0 0 0 6px rgba(142,181,162,.055),0 0 34px rgba(142,181,162,.22),0 12px 30px rgba(0,0,0,.2),inset 0 1px rgba(255,255,255,.1)}}
-@media(prefers-reduced-motion:reduce){.project-memory .attention-journey-link{animation:none;box-shadow:0 0 0 4px rgba(142,181,162,.07),0 0 26px rgba(142,181,162,.18),0 12px 30px rgba(0,0,0,.2)}}
+.project-memory .memory-priority-note{max-width:56ch;margin:14px 0 16px;padding:11px 13px;border-left:2px solid #1877f2;background:rgba(24,119,242,.07);color:var(--muted);font-size:12px;line-height:1.7}
+.project-memory .memory-priority-note strong{color:var(--ink);font-weight:600}
+.project-memory .attention-journey-link{position:relative;isolation:isolate;border-color:rgba(24,119,242,.72);background:linear-gradient(115deg,rgba(24,119,242,.1),rgba(24,119,242,.035));box-shadow:0 0 0 1px rgba(24,119,242,.16),0 0 24px rgba(24,119,242,.24),0 12px 30px rgba(0,0,0,.2),inset 0 1px rgba(255,255,255,.06);color:var(--ink);animation:attention-cta-breathe 3.8s ease-in-out infinite}
+.project-memory .attention-journey-link span{color:#6eafff}
+body #work .project-memory .attention-journey-link:is(:hover,:focus-visible){border-color:#1877f2;background:radial-gradient(circle at 18% 50%,rgba(255,255,255,.2),transparent 46%),#1877f2;box-shadow:0 0 0 7px rgba(24,119,242,.12),0 0 40px rgba(24,119,242,.48),0 15px 34px rgba(0,0,0,.25);color:#fff}
+body #work .project-memory .attention-journey-link:is(:hover,:focus-visible) span{transform:translate(2px,-2px);color:#fff}
+@keyframes attention-cta-breathe{0%,100%{box-shadow:0 0 0 1px rgba(24,119,242,.16),0 0 22px rgba(24,119,242,.22),0 12px 30px rgba(0,0,0,.2),inset 0 1px rgba(255,255,255,.06)}50%{box-shadow:0 0 0 7px rgba(24,119,242,.09),0 0 42px rgba(24,119,242,.46),0 12px 30px rgba(0,0,0,.2),inset 0 1px rgba(255,255,255,.08)}}
+@media(prefers-reduced-motion:reduce){.project-memory .attention-journey-link{animation:none;box-shadow:0 0 0 4px rgba(24,119,242,.1),0 0 30px rgba(24,119,242,.32),0 12px 30px rgba(0,0,0,.2)}}
 
 body .contact-link:is(:hover,:focus-visible) span{color:inherit}
 body .theme-toggle:is(:hover,:focus-visible){color:#18140e;transform:none;background:var(--accent);border-color:var(--accent);box-shadow:0 5px 16px rgba(0,0,0,.17)}
