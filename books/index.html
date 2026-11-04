@@ -5,16 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#071319">
   <link rel="icon" type="image/png" sizes="32x32" href="/portfolio-website/assets/favicon-32.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/books/assets/library-icon-maskable-180.png?v=library-1">
+  <link rel="manifest" href="/books/manifest.webmanifest">
   <meta name="description" content="Read the Nyarindo Lens books online: seven connected works, a general introduction, an end note, the combined collection, and two companion experiments.">
   <title>The Nyarindo Library — Books in a Spiral</title>
   <script src="/portfolio-website/site-theme-init.js?v=library-1"></script>
   <link rel="stylesheet" href="/portfolio-website/local-fonts.css?v=hd-2">
-  <link rel="stylesheet" href="/books/library.css?v=library-5">
-  <link rel="stylesheet" href="/portfolio-website/theme-controls.css?v=theme-controls-3">
-  <script defer src="/books/library.js?v=library-3"></script>
+  <link rel="stylesheet" href="/portfolio-website/install-apps.css?v=install-apps-3">
+  <link rel="stylesheet" href="/books/library.css?v=library-7">
+  <link rel="stylesheet" href="/portfolio-website/theme-controls.css?v=theme-controls-5">
+  <script defer src="/books/library.js?v=library-7"></script>
+  <script defer src="/portfolio-website/download-support.js?v=download-support-2"></script>
+  <script defer src="/portfolio-website/install-app.js?v=install-apps-4"></script>
   <script defer src="/portfolio-website/site-theme-control.js?v=theme-controls-5"></script>
 </head>
-<body>
+<body data-app-install="library" data-app-name="The Nyarindo Library" data-service-worker="/books/service-worker.js" data-service-worker-scope="/books/">
   <a class="skip-link" href="#library">Skip to the library</a>
   <div class="library-atmosphere" aria-hidden="true">
     <span class="library-sun"></span><span class="library-moon"></span>
@@ -49,7 +54,9 @@
       <div class="library-jump">
         <a href="/books/?book=introduction">Enter at the introduction <span>↘</span></a>
         <a href="#book-spiral">See all seven books <span>↓</span></a>
+        <button class="library-install" type="button" data-install-app data-install-label="Install the Library">Install the Library <span>↓</span></button>
       </div>
+      <p class="library-install-status" data-install-status role="status" aria-live="polite"></p>
       <div class="reading-note"><span aria-hidden="true">☼</span><p>Choose <strong>Paper</strong> for a quiet reading page. Keep <strong>Atmosphere</strong> on Day or Night when you want the world to remain visible around the words.</p></div>
     </section>
 
@@ -228,18 +235,18 @@
       <div class="reader-toolbar">
         <div class="reader-control-group" aria-label="Reading tone"><span>Tone</span><button type="button" data-reading-tone="paper" aria-pressed="false">Paper</button><button type="button" data-reading-tone="night" aria-pressed="true">Night</button></div>
         <div class="reader-control-group" aria-label="Atmosphere"><span>Atmosphere</span><button type="button" data-reader-atmosphere="off" aria-pressed="false">Off</button><button type="button" data-reader-atmosphere="day" aria-pressed="false">Day</button><button type="button" data-reader-atmosphere="night" aria-pressed="true">Night</button></div>
-        <p class="reader-hint">Page numbers follow the source text · arrows turn pages · swipe on touch screens</p>
+        <p class="reader-hint">Page markers follow the source text · scroll continuously through the edition · zoom without leaving the text</p>
       </div>
 
       <div class="reader-stage" id="readerStage">
         <div class="reader-atmosphere" aria-hidden="true"><span></span></div>
-        <article class="reader-paper" id="readerPaper" aria-label="Book page"><p class="reader-page-marker" id="readerPageMarker" aria-live="polite"></p><div class="reader-copy" id="readerCopy"></div></article>
+        <article class="reader-paper" id="readerPaper" aria-label="Continuous book edition"><p class="reader-page-marker" id="readerPageMarker">Choose a book to begin</p><div class="reader-copy" id="readerCopy"></div></article>
         <p class="reader-message" id="readerMessage" aria-live="polite">Choose a book from the library.</p>
       </div>
 
       <div class="reader-progress" aria-hidden="true"><span id="readerProgressBar"></span></div>
       <footer class="reader-footer">
-        <div class="reader-page-nav"><button id="previousPage" type="button" aria-label="Previous page">← <span>Previous</span></button><label>Page <input id="pageNumber" type="number" min="1" value="1" inputmode="numeric"> <span>/ <b id="pageCount">—</b></span></label><button id="nextPage" type="button" aria-label="Next page"><span>Next</span> →</button></div>
+        <div class="reader-page-nav" aria-label="Continuous reading position"><span class="reader-page-state">Page <b id="readerCurrentPage">1</b> of <b id="pageCount">—</b></span><span class="reader-scroll-note">one continuous scroll · source page markers preserved</span></div>
         <div class="reader-zoom"><button id="zoomOut" type="button" aria-label="Zoom out">−</button><button id="zoomReset" type="button" aria-label="Reset zoom">100%</button><button id="zoomIn" type="button" aria-label="Zoom in">＋</button><button id="readerFullscreen" type="button" aria-label="Enter fullscreen">Fullscreen ⛶</button></div>
       </footer>
     </div>

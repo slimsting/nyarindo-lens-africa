@@ -64,6 +64,11 @@ foreach ($requiredHeader in @(
     }
 }
 
+$headerText = $headerLines -join "`n"
+if ($headerText -notmatch '(?im)^/\*\.webmanifest\s*\r?\n\s*Content-Type:\s*application/manifest\+json;\s*charset=UTF-8\s*$') {
+    $failures.Add('Web app manifests must be served as application/manifest+json.')
+}
+
 function Test-IsPublishCandidate {
     param([Parameter(Mandatory = $true)][string]$FullName)
 

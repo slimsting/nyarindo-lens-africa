@@ -17,6 +17,12 @@
       body: 'Install the complete Nyarindo Lens now. Separate practices can be added later as you visit them.',
       action: 'Install the Lens'
     },
+    library: {
+      eyebrow: 'THE NYARINDO LIBRARY',
+      title: 'Keep the whole library close.',
+      body: 'Install the Library as its own app. Every reader edition remains available in one continuous scroll, with source page markers and your device preferences.',
+      action: 'Install the Library'
+    },
     return: {
       eyebrow: 'RETURN · MEMORY PRACTICE',
       title: 'Keep Return close.',

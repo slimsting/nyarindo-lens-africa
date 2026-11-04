@@ -122,9 +122,7 @@
   const readerPaper = document.getElementById("readerPaper");
   const readerCopy = document.getElementById("readerCopy");
   const readerPageMarker = document.getElementById("readerPageMarker");
-  const previousPage = document.getElementById("previousPage");
-  const nextPage = document.getElementById("nextPage");
-  const pageNumber = document.getElementById("pageNumber");
+  const readerCurrentPage = document.getElementById("readerCurrentPage");
   const pageCount = document.getElementById("pageCount");
   const readerProgressBar = document.getElementById("readerProgressBar");
   const zoomOut = document.getElementById("zoomOut");
@@ -143,6 +141,9 @@
   let zoom = 1;
   let loadSequence = 0;
   let atmosphereChosen = false;
+  let scrollFrame = 0;
+  let rememberTimer = 0;
+  const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   function setPressed(buttons, active, key) {
     buttons.forEach((button) => {
@@ -179,19 +180,20 @@
     readerMessage.hidden = !message;
   }
 
-  function updatePageControls() {
+  function updateReaderStatus() {
     const total = readerData?.pageCount || 0;
     pageCount.textContent = total || "—";
-    pageNumber.max = String(total || 1);
-    pageNumber.value = String(currentPage);
-    previousPage.disabled = !total || currentPage <= 1;
-    nextPage.disabled = !total || currentPage >= total;
-    readerProgressBar.style.width = total
-      ? `${Math.max(3, (currentPage / total) * 100)}%`
-      : "0";
+    readerCurrentPage.textContent = total
+      ? String(Math.min(Math.max(1, currentPage), total))
+      : "1";
+    const scrollable = readerStage.scrollHeight - readerStage.clientHeight;
+    const progress = scrollable > 8
+      ? Math.min(1, Math.max(0, readerStage.scrollTop / scrollable))
+      : 0;
+    readerProgressBar.style.width = total ? `${Math.max(3, progress * 100)}%` : "0";
     zoomReset.textContent = `${Math.round(zoom * 100)}%`;
     readerPageMarker.textContent = total
-      ? `Page ${currentPage} of ${total}`
+      ? `Continuous edition · ${total} source pages`
       : "Choose a book to begin";
   }
 
@@ -200,7 +202,7 @@
       "--reader-font-size",
       `${(1.12 * zoom).toFixed(2)}rem`,
     );
-    updatePageControls();
+    updateReaderStatus();
   }
 
   function buildLibraryUrl(bookSlug, page = currentPage) {
@@ -220,7 +222,12 @@
     } catch {}
   }
 
-  function appendPageBlocks(blocks) {
+  function scheduleRememberReaderState() {
+    clearTimeout(rememberTimer);
+    rememberTimer = window.setTimeout(rememberReaderState, 180);
+  }
+
+  function appendPageBlocks(blocks, container) {
     const fragment = document.createDocumentFragment();
     let currentList = null;
 
@@ -253,38 +260,95 @@
       fragment.append(paragraph);
     });
 
-    readerCopy.replaceChildren(fragment);
+    container.append(fragment);
   }
 
-  function renderPage() {
-    if (!readerData || !currentBook) return;
-    const page = readerData.pages.find(
-      (entry) => entry.number === currentPage,
+  function scrollToSourcePage(pageNumber, smooth = true) {
+    if (!readerData) return;
+    const bounded = Math.min(
+      Math.max(1, Number.parseInt(pageNumber, 10) || 1),
+      readerData.pageCount,
     );
-    readerPageMarker.textContent = `Page ${currentPage} of ${readerData.pageCount}`;
+    const target = readerCopy.querySelector(
+      `[data-reader-page="${bounded}"]`,
+    );
+    if (!target) return;
+    currentPage = bounded;
+    const stageRect = readerStage.getBoundingClientRect();
+    const targetRect = target.getBoundingClientRect();
+    const top = readerStage.scrollTop + targetRect.top - stageRect.top - 18;
+    readerStage.scrollTo({
+      top,
+      left: 0,
+      behavior: smooth && !reducedMotion ? "smooth" : "auto",
+    });
+    updateReaderStatus();
+  }
+
+  function renderDocument(requestedPage = 1) {
+    if (!readerData || !currentBook) return;
+    const fragment = document.createDocumentFragment();
+    readerData.pages.forEach((page) => {
+      const section = document.createElement("section");
+      section.className = "reader-source-page";
+      section.dataset.readerPage = String(page.number);
+      section.id = `reader-page-${page.number}`;
+      const marker = document.createElement("p");
+      marker.className = "reader-source-page-marker";
+      marker.textContent = `Source page ${page.number} of ${readerData.pageCount}`;
+      section.append(marker);
+      appendPageBlocks(page.blocks || [], section);
+      fragment.append(section);
+    });
+    readerCopy.replaceChildren(fragment);
     readerPaper.setAttribute(
       "aria-label",
-      `${currentBook.title}, page ${currentPage} of ${readerData.pageCount}`,
+      `${currentBook.title}, continuous edition, ${readerData.pageCount} source pages`,
     );
-    if (!page) {
-      readerCopy.replaceChildren();
-      setReaderMessage("This page is not available in the online edition.", true);
-      return;
-    }
-    appendPageBlocks(page.blocks || []);
+    readerPaper.setAttribute(
+      "data-page-count",
+      String(readerData.pageCount),
+    );
     setReaderMessage("");
-    updatePageControls();
-    rememberReaderState();
+    currentPage = Math.min(
+      Math.max(1, Number.parseInt(requestedPage, 10) || 1),
+      readerData.pageCount,
+    );
+    updateReaderStatus();
+    const targetPage = currentPage;
+    requestAnimationFrame(() => {
+      scrollToSourcePage(targetPage, false);
+      requestAnimationFrame(updateReaderStatus);
+    });
+    if (targetPage > 1) {
+      window.setTimeout(() => {
+        if (readerData && currentBook) scrollToSourcePage(targetPage, false);
+      }, 280);
+    }
   }
 
-  async function goToPage(nextPage) {
-    if (!readerData) return;
-    const bounded = Math.min(Math.max(1, nextPage), readerData.pageCount);
-    if (bounded === currentPage) return;
-    currentPage = bounded;
-    updatePageControls();
-    renderPage();
-    readerStage.scrollTo({ top: 0, left: 0, behavior: "auto" });
+  function syncVisiblePage() {
+    if (!readerData || !currentBook) return;
+    const sections = readerCopy.querySelectorAll(".reader-source-page");
+    if (!sections.length) return;
+    const stageRect = readerStage.getBoundingClientRect();
+    const readingLine = stageRect.top + Math.min(190, stageRect.height * 0.3);
+    const scrollable = readerStage.scrollHeight - readerStage.clientHeight;
+    let activePage = Number(sections[0].dataset.readerPage) || 1;
+    if (scrollable > 8 && readerStage.scrollTop >= scrollable - 4) {
+      activePage = readerData.pageCount;
+    } else {
+      sections.forEach((section) => {
+        if (section.getBoundingClientRect().top <= readingLine) {
+          activePage = Number(section.dataset.readerPage) || activePage;
+        }
+      });
+    }
+    if (activePage !== currentPage) {
+      currentPage = activePage;
+      scheduleRememberReaderState();
+    }
+    updateReaderStatus();
   }
 
   async function getReaderData(bookSlug) {
@@ -333,7 +397,7 @@
       readerData = data;
       currentPage = Math.min(currentPage, readerData.pageCount);
       applyZoom();
-      renderPage();
+      renderDocument(currentPage);
     } catch {
       if (sequence !== loadSequence) return;
       setReaderMessage(
@@ -362,10 +426,16 @@
   readerDialog.addEventListener("click", (event) => {
     if (event.target === readerDialog) closeReader();
   });
-  previousPage.addEventListener("click", () => goToPage(currentPage - 1));
-  nextPage.addEventListener("click", () => goToPage(currentPage + 1));
-  pageNumber.addEventListener("change", () =>
-    goToPage(Number.parseInt(pageNumber.value, 10) || 1),
+  readerStage.addEventListener(
+    "scroll",
+    () => {
+      if (scrollFrame) return;
+      scrollFrame = requestAnimationFrame(() => {
+        scrollFrame = 0;
+        syncVisiblePage();
+      });
+    },
+    { passive: true },
   );
   zoomOut.addEventListener("click", () => {
     zoom = Math.max(0.65, Math.round((zoom - 0.15) * 100) / 100);

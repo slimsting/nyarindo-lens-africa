@@ -1,0 +1,74 @@
+{
+  "id": "/books/",
+  "name": "The Nyarindo Library",
+  "short_name": "Nyarindo Library",
+  "description": "Read the complete Nyarindo Lens library as one continuous spiral, with every book, source-page marker, reading theme, and companion experiment.",
+  "start_url": "/books/?source=pwa",
+  "scope": "/books/",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
+  "orientation": "any",
+  "background_color": "#071319",
+  "theme_color": "#071319",
+  "categories": ["books", "education", "reference"],
+  "icons": [
+    {
+      "src": "/books/assets/library-icon-192.png?v=library-1",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/books/assets/library-icon-512.png?v=library-1",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/books/assets/library-icon.svg?v=library-1",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/books/assets/library-icon-maskable-192.png?v=library-1",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/books/assets/library-icon-maskable-512.png?v=library-1",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Continue with Attention",
+      "short_name": "Attention",
+      "description": "Open the most important book in the spiral.",
+      "url": "/books/?book=attention&source=shortcut",
+      "icons": [
+        {
+          "src": "/books/assets/library-icon-192.png?v=library-1",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Read the complete collection",
+      "short_name": "Collection",
+      "description": "Open the full spiral in one continuous edition.",
+      "url": "/books/?book=collection&source=shortcut",
+      "icons": [
+        {
+          "src": "/books/assets/library-icon-192.png?v=library-1",
+          "sizes": "192x192",
+          "type": "image/png"
+        }
+      ]
+    }
+  ]
+}

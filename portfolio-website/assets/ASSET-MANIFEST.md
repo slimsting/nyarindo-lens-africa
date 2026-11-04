@@ -1,12 +1,13 @@
 # Nyarindo Shared Asset Manifest
 
-This manifest covers the four applications in the paired Nyarindo development
+This manifest covers the five applications in the paired Nyarindo development
 runtime:
 
 - `portfolio-website`
 - `drift`
 - `memory-app`
 - `semantic-field-extension`
+- `books` / The Nyarindo Library
 
 ## Optimization result
 
@@ -78,6 +79,26 @@ The font files are loaded by `portfolio-website/local-fonts.css` with
 - `story-divider-field-constellation.svg`
 - `story-divider-pulse-orbit.svg`
 - `story-divider-return-arc.svg`
+
+### Nyarindo Library
+
+- `books/assets/library-icon.svg` — resolution-independent red, green, and blue book-stack
+  master, 1,925 bytes, SHA-256
+  `376C0EDEE8CD19242FC909CA8697EBF1D67C07D2B12F767D5CF0B5CC99B9BDCC`
+- `books/assets/library-icon-512.png` — 512 × 512 any-purpose PWA icon, 115,953 bytes,
+  SHA-256 `882202DB80A39FB3BAD98E34D88CCC59D3BDFB5690153A46BA547FCBAA8FAD0E`
+- `books/assets/library-icon-maskable-512.png` — 512 × 512 full-bleed maskable copy of the
+  master, 115,953 bytes, same SHA-256 as the any-purpose 512 icon
+- `books/assets/library-icon-192.png` — 192 × 192 any-purpose derivative, 29,757 bytes,
+  SHA-256 `BE316F6B1F8F50F4E9D0735EC91B715F788DCF059DE695A8CC592FDCE58509D0`
+- `books/assets/library-icon-maskable-192.png` — 192 × 192 full-bleed maskable derivative,
+  29,757 bytes, same SHA-256 as the any-purpose 192 icon
+- `books/assets/library-icon-maskable-180.png` — 180 × 180 Apple touch derivative,
+  27,767 bytes, SHA-256
+  `1F0687F6A38B4992E5E75AD0BAC2F405CB15F824A86339ECACD8E71E8DD57905`
+
+The SVG is the editable master. The PNG files are deterministic display-size derivatives with
+the same centered artwork and full-bleed background.
 
 ## Portfolio identity assets
 
