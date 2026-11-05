@@ -59,9 +59,18 @@ html[data-page="drift"] .modes {
 }
 
 @media (max-width:760px) {
-  html[data-page="drift"] .install-hub-compact {
+  html[data-page="drift"] body .install-hub-compact {
     margin-top:0;
     margin-bottom:0;
+    row-gap:1rem;
+    padding-bottom:1rem;
+  }
+  html[data-page="drift"] .install-hub-compact .install-primary {
+    margin-top:0;
+  }
+  html[data-page="drift"] .install-hub-compact .install-status {
+    min-height:0;
+    margin-top:.375rem;
   }
 }
 

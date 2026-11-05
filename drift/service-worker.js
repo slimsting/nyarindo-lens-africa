@@ -1,5 +1,5 @@
-const CACHE = 'drift-v27';
-const ASSETS = ['./', './index.html', './artist.html', './styles.css?v=theme-controls-10', './app.js?v=theme-controls-5', './artist.js', './manifest.webmanifest', './assets/drift-app-icon.svg', './assets/back-home-arrow.svg', '/portfolio-website/install-apps.css?v=install-apps-3', '/portfolio-website/install-app.js?v=install-apps-3', '/portfolio-website/lens-atmosphere.css?v=lens-atmosphere-17', '/portfolio-website/assets/atmosphere/day-sky.svg', '/portfolio-website/assets/atmosphere/day-sky-mobile.svg', '/portfolio-website/assets/atmosphere/night-sky.svg', '/portfolio-website/assets/atmosphere/night-sky-mobile.svg', '/portfolio-website/assets/atmosphere/coastal-birds.svg'];
+const CACHE = 'drift-v29';
+const ASSETS = ['./', './index.html', './artist.html', './styles.css?v=theme-controls-12', './app.js?v=theme-controls-5', './artist.js', './manifest.webmanifest', './assets/drift-app-icon.svg', './assets/back-home-arrow.svg', '/portfolio-website/install-apps.css?v=install-apps-3', '/portfolio-website/install-app.js?v=install-apps-3', '/portfolio-website/lens-atmosphere.css?v=lens-atmosphere-17', '/portfolio-website/assets/atmosphere/day-sky.svg', '/portfolio-website/assets/atmosphere/day-sky-mobile.svg', '/portfolio-website/assets/atmosphere/night-sky.svg', '/portfolio-website/assets/atmosphere/night-sky-mobile.svg', '/portfolio-website/assets/atmosphere/coastal-birds.svg'];
 self.addEventListener('install', event => event.waitUntil(
   caches.open(CACHE)
     .then(cache => cache.addAll(ASSETS))
