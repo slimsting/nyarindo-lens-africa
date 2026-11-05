@@ -1,4 +1,4 @@
-const CACHE = 'nyarindo-universal-v14';
+const CACHE = 'nyarindo-universal-v15';
 const CORE = [
   '/',
   '/site.webmanifest',
