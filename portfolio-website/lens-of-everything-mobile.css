@@ -1,0 +1,7 @@
+@media (max-width: 800px) {
+  .hero {
+    min-height: 680px;
+    padding: 128px 7vw 60px;
+    align-items: flex-start;
+  }
+}
