@@ -1173,30 +1173,10 @@ function switchTab(name) {
   });
 }
 
-const themeToggle = document.getElementById('themeToggle');
-const themeRoot = document.documentElement;
-let themeTransitionTimer;
-function applySemanticTheme(theme, animate=true) {
-  const light = theme === 'light';
-  if (animate && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    themeRoot.classList.add('theme-transition');
-    clearTimeout(themeTransitionTimer);
-    themeTransitionTimer = setTimeout(() => themeRoot.classList.remove('theme-transition'), 950);
-  }
-  themeRoot.dataset.theme = light ? 'light' : 'dark';
-  themeToggle.setAttribute('aria-pressed', String(!light));
-  themeToggle.setAttribute('aria-label', 'Dark mode');
-  document.getElementById('themeLabel').textContent = light ? 'DAY' : 'NIGHT';
-  themeToggle.querySelector('.theme-icon').textContent = light ? '☼' : '☾';
-  document.querySelector('meta[name="theme-color"]').content = light ? '#f2f0e9' : '#0c0d0e';
-  try { localStorage.setItem('nyarindo-theme', light ? 'light' : 'dark'); } catch {}
+window.addEventListener('nyarindo:themechange', () => {
   setPhase(systemPhase);
   draw();
-}
-themeToggle.addEventListener('click', () => {
-  applySemanticTheme(themeRoot.dataset.theme === 'light' ? 'dark' : 'light');
 });
-applySemanticTheme(themeRoot.dataset.theme === 'light' ? 'light' : 'dark', false);
 
 document.addEventListener('click', event => {
   const control = event.target.closest('[data-action]');

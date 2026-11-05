@@ -1,4 +1,4 @@
-const CACHE = "nyarindo-library-v3";
+const CACHE = "nyarindo-library-v4";
 const CORE = [
   "/books/",
   "/books/index.html",
@@ -11,8 +11,8 @@ const CORE = [
   "/books/assets/library-icon-512.png?v=library-1",
   "/books/assets/library-icon-maskable-192.png?v=library-1",
   "/books/assets/library-icon-maskable-512.png?v=library-1",
-  "/portfolio-website/theme-controls.css?v=theme-controls-5",
-  "/portfolio-website/site-theme-control.js?v=theme-controls-5",
+  "/portfolio-website/theme-controls.css?v=theme-controls-6",
+  "/portfolio-website/site-theme-control.js?v=theme-controls-6",
   "/portfolio-website/site-theme-init.js?v=library-1",
   "/portfolio-website/download-support.js?v=download-support-2",
   "/portfolio-website/install-app.js?v=install-apps-4",

@@ -12,17 +12,20 @@
     layer.className = "lens-cloudscape";
     layer.setAttribute("aria-hidden", "true");
 
+    const group = document.createElement("div");
+    group.className = "lens-cloud-group";
+
     [
-      "lens-cloud lens-cloud-a",
-      "lens-cloud lens-cloud-b",
-      "lens-cloud lens-cloud-c",
-      "lens-cloud lens-cloud-d",
+      "lens-cloud",
+      "lens-cloud",
+      "lens-cloud",
     ].forEach((classes) => {
       const cloud = document.createElement("span");
       cloud.className = classes;
-      layer.append(cloud);
+      group.append(cloud);
     });
 
+    layer.append(group);
     document.body.append(layer);
   }
 

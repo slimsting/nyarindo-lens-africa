@@ -16,7 +16,6 @@ const openWitnessPractice = document.getElementById('openWitnessPractice');
 const witnessDialog = document.getElementById('witnessDialog');
 const witnessText = document.getElementById('witnessText');
 const clearWitness = document.getElementById('clearWitness');
-const themeToggle = document.getElementById('themeToggle');
 const storageNote = document.getElementById('storageNote');
 const storageSecurity = document.getElementById('storageSecurity');
 const unlockEntriesButton = document.getElementById('unlockEntries');
@@ -52,7 +51,6 @@ const stageProgress = document.getElementById('stageProgress');
 const saveButton = document.getElementById('saveButton');
 const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 let toastTimer;
-let themeTimer;
 let formMode = 'beginning';
 let activeEntryId = null;
 let activeStageIndex = 0;
@@ -62,29 +60,6 @@ let storageEnvelope = null;
 let storageKey = null;
 let storageLocked = false;
 let pinDialogMode = 'create';
-
-function applyTheme(theme, animate = true) {
-  const isLight = theme === 'light';
-  if (animate && !reducedMotion) {
-    document.documentElement.classList.add('theme-transition');
-    clearTimeout(themeTimer);
-    themeTimer = setTimeout(() => document.documentElement.classList.remove('theme-transition'), 500);
-  }
-  document.documentElement.dataset.theme = isLight ? 'light' : 'dark';
-  themeToggle.setAttribute('aria-pressed', String(!isLight));
-  themeToggle.setAttribute('aria-label', 'Dark mode');
-  themeToggle.querySelector('.theme-icon').textContent = isLight ? '☼' : '☾';
-  themeToggle.querySelector('.theme-label').textContent = isLight ? 'DAY' : 'NIGHT';
-  document.querySelector('meta[name="theme-color"]').content = isLight ? '#eeeae0' : '#10110f';
-  try {
-    localStorage.setItem('nyarindo-theme', isLight ? 'light' : 'dark');
-  } catch {}
-}
-
-themeToggle.addEventListener('click', () => {
-  applyTheme(document.documentElement.dataset.theme === 'light' ? 'dark' : 'light');
-});
-applyTheme(document.documentElement.dataset.theme === 'light' ? 'light' : 'dark', false);
 
 function syncStatePresets() {
   const values = stateInput.value

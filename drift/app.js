@@ -71,22 +71,6 @@ function updateUser() { const name = sessionStorage.getItem('drift-user'); if (!
 let timeout; function toast(message) { const el = $('toast'); el.textContent = message; el.classList.add('show'); clearTimeout(timeout); timeout = setTimeout(() => el.classList.remove('show'), 2300); }
 ['artistTip','driftSupport'].forEach(id => $(id).addEventListener('click', () => toast(id === 'artistTip' ? 'Artist tips are a preview—payments are not connected.' : 'Support options are a preview—no payment is collected.')));
 $('lyricsToggle').addEventListener('click', () => { const panel = $('lyrics'); const open = panel.hidden; panel.hidden = !open; $('lyricsToggle').setAttribute('aria-expanded', String(open)); $('lyricsToggle').querySelector('span').textContent = open ? '−' : '+'; });
-function applyTheme(theme) {
-  const light = theme === 'light';
-  document.documentElement.dataset.theme = light ? 'light' : 'dark';
-  document.body.classList.toggle('light', light);
-  const button = $('themeButton');
-  button.setAttribute('aria-pressed', String(!light));
-  button.setAttribute('aria-label', 'Dark mode');
-  button.querySelector('.theme-icon').textContent = light ? '☼' : '☾';
-  button.querySelector('.theme-label').textContent = light ? 'DAY' : 'NIGHT';
-  document.querySelector('meta[name="theme-color"]').content = light ? '#f4f3eb' : '#090a08';
-  localStorage.setItem('nyarindo-theme', light ? 'light' : 'dark');
-  localStorage.setItem('drift-theme', light ? 'light' : 'dark');
-}
-$('themeButton').addEventListener('click', () => {
-  applyTheme(document.documentElement.dataset.theme === 'light' ? 'dark' : 'light');
-});
 let preImmersiveScroll = 0;
 $('fullscreenButton').addEventListener('click', (event) => {
   event.stopPropagation();
@@ -103,5 +87,4 @@ document.querySelector('.lyrics-section').addEventListener('click', () => { if (
 $('repeatButton').addEventListener('click', () => { repeatOne = !repeatOne; localStorage.setItem('drift-repeat-one', String(repeatOne)); $('repeatButton').textContent = repeatOne ? 'One song ↻' : 'Whole playlist ↻'; $('repeatButton').setAttribute('aria-pressed', String(repeatOne)); toast(repeatOne ? 'Repeating one song.' : 'Playing the full playlist.'); });
 if ('serviceWorker' in navigator) navigator.serviceWorker.register('./service-worker.js');
 updateUser(); render();
-applyTheme(localStorage.getItem('nyarindo-theme') || localStorage.getItem('drift-theme') || 'dark');
 if (repeatOne) { $('repeatButton').textContent = 'One song ↻'; $('repeatButton').setAttribute('aria-pressed', 'true'); }

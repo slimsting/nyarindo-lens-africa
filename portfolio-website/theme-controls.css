@@ -8,18 +8,26 @@
   transition: opacity 420ms ease;
 }
 
-.lens-cloud {
-  --lens-cloud-scale: 1;
+.lens-cloud-group {
   position: absolute;
-  left: -280px;
-  width: 210px;
-  height: 34px;
+  top: clamp(168px, 20vh, 210px);
+  left: 0;
+  width: clamp(300px, 34vw, 440px);
+  height: clamp(96px, 9vw, 128px);
+  opacity: 0.72;
+  transform: translate3d(-105%, 0, 0);
+  animation: lens-cloud-drift 34s linear -15.2s infinite;
+  will-change: transform;
+}
+
+.lens-cloud {
+  position: absolute;
+  width: 62%;
+  height: 22%;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.27);
-  filter: blur(1px);
-  transform: scale(var(--lens-cloud-scale));
-  transform-origin: left center;
-  animation: lens-cloud-drift 34s linear infinite;
+  background: rgba(255, 255, 255, 0.32);
+  filter: blur(0.8px);
+  animation: lens-cloud-stagger 22s ease-in-out infinite alternate;
   will-change: transform;
 }
 
@@ -32,45 +40,38 @@
 }
 
 .lens-cloud::before {
-  left: 34px;
+  left: 16%;
   bottom: 0;
-  width: 92px;
-  height: 74px;
+  width: 44%;
+  height: 250%;
 }
 
 .lens-cloud::after {
-  right: 21px;
+  right: 10%;
   bottom: 0;
-  width: 115px;
-  height: 56px;
+  width: 54%;
+  height: 185%;
 }
 
-.lens-cloud-a {
-  top: 180px;
+.lens-cloud:nth-child(1) {
+  left: 0;
+  top: 54%;
+  opacity: 0.84;
+  animation-delay: -4s;
 }
 
-.lens-cloud-b {
-  --lens-cloud-scale: 0.7;
-  top: 320px;
-  opacity: 0.6;
-  animation-delay: -15s;
-  animation-duration: 47s;
+.lens-cloud:nth-child(2) {
+  left: 24%;
+  top: 8%;
+  opacity: 0.64;
+  animation-delay: -11s;
 }
 
-.lens-cloud-c {
-  --lens-cloud-scale: 0.42;
-  top: 242px;
-  opacity: 0.44;
-  animation-delay: -30s;
-  animation-duration: 61s;
-}
-
-.lens-cloud-d {
-  --lens-cloud-scale: 0.3;
-  top: 438px;
-  opacity: 0.34;
-  animation-delay: -7s;
-  animation-duration: 73s;
+.lens-cloud:nth-child(3) {
+  right: 0;
+  top: 42%;
+  opacity: 0.5;
+  animation-delay: -17s;
 }
 
 html[data-theme="light"] .lens-cloudscape {
@@ -83,11 +84,21 @@ html[data-theme="dark"] .lens-cloudscape {
 
 @keyframes lens-cloud-drift {
   from {
-    transform: translate3d(0, 0, 0) scale(var(--lens-cloud-scale));
+    transform: translate3d(-105%, 0, 0);
   }
 
   to {
-    transform: translate3d(calc(100vw + 560px), 0, 0) scale(var(--lens-cloud-scale));
+    transform: translate3d(calc(100vw + 5%), 0, 0);
+  }
+}
+
+@keyframes lens-cloud-stagger {
+  from {
+    transform: translate3d(-7px, 2px, 0);
+  }
+
+  to {
+    transform: translate3d(14px, -2px, 0);
   }
 }
 
@@ -171,13 +182,15 @@ html[data-theme="light"] .thread-theme-toggle:is(:hover, :focus-visible) {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .lens-cloudscape,
-  .lens-cloud {
+  .lens-cloud-group {
     animation: none;
+    transform: translate3d(clamp(18px, 18vw, 240px), 0, 0);
+    will-change: auto;
   }
 
-  .lens-cloudscape {
-    display: none;
+  .lens-cloud {
+    animation: none;
+    will-change: auto;
   }
 
   .thread-theme-toggle {
