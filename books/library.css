@@ -109,6 +109,201 @@ img {
   animation: wave-breathe 9s ease-in-out infinite;
 }
 
+.cloud {
+  --cloud-scale: 1;
+  position: absolute;
+  left: -280px;
+  width: 210px;
+  height: 34px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .34);
+  filter: blur(1px);
+  opacity: 0;
+  transform: scale(var(--cloud-scale));
+  transform-origin: left center;
+  animation: cloud-drift 34s linear infinite;
+}
+
+.cloud::before,
+.cloud::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  background: inherit;
+}
+
+.cloud::before {
+  bottom: 0;
+  left: 34px;
+  width: 92px;
+  height: 74px;
+}
+
+.cloud::after {
+  right: 21px;
+  bottom: 0;
+  width: 115px;
+  height: 56px;
+}
+
+.cloud-a {
+  top: 180px;
+}
+
+.cloud-b {
+  --cloud-scale: .7;
+  top: 320px;
+  opacity: 0;
+  animation-delay: -15s;
+  animation-duration: 47s;
+}
+
+.cloud-c {
+  --cloud-scale: .42;
+  top: 242px;
+  animation-delay: -30s;
+  animation-duration: 61s;
+}
+
+.cloud-d {
+  --cloud-scale: .3;
+  top: 438px;
+  animation-delay: -7s;
+  animation-duration: 73s;
+}
+
+.day-plane {
+  position: absolute;
+  top: 20%;
+  left: -110px;
+  z-index: 1;
+  color: #315a70;
+  font: 25px/1 "Segoe UI Symbol", sans-serif;
+  opacity: 0;
+  filter: drop-shadow(0 2px 3px rgba(20, 66, 88, .22));
+  animation: library-plane-pass 44s linear -11s infinite;
+}
+
+.day-plane::before {
+  content: "";
+  display: block;
+  width: 26px;
+  height: 12px;
+  background:
+    linear-gradient(172deg, transparent 46%, #315a70 48% 54%, transparent 56%),
+    linear-gradient(8deg, transparent 46%, #315a70 48% 54%, transparent 56%);
+  transform: rotate(-7deg);
+}
+
+.bird-flock {
+  position: absolute;
+  top: 29%;
+  left: -100px;
+  width: 78px;
+  height: 34px;
+  opacity: 0;
+  filter: drop-shadow(0 1px 1px rgba(20, 66, 88, .2));
+  animation: library-flock-pass 38s linear -17s infinite;
+}
+
+.bird-flock-b {
+  top: 43%;
+  width: 94px;
+  height: 40px;
+  animation-delay: -33s;
+  animation-duration: 51s;
+  transform: scale(.78);
+}
+
+.bird-flock i {
+  position: absolute;
+  display: block;
+  width: 14px;
+  height: 7px;
+}
+
+.bird-flock i::before,
+.bird-flock i::after {
+  content: "";
+  position: absolute;
+  top: 3px;
+  width: 8px;
+  height: 1.5px;
+  border-radius: 99px;
+  background: #315a70;
+}
+
+.bird-flock i::before {
+  left: 0;
+  transform: rotate(24deg);
+  transform-origin: right center;
+}
+
+.bird-flock i::after {
+  right: 0;
+  transform: rotate(-24deg);
+  transform-origin: left center;
+}
+
+.bird-flock i:nth-child(1) {
+  top: 17px;
+  left: 3px;
+}
+
+.bird-flock i:nth-child(2) {
+  top: 5px;
+  left: 24px;
+}
+
+.bird-flock i:nth-child(3) {
+  top: 20px;
+  left: 47px;
+}
+
+.bird-flock i:nth-child(4) {
+  top: 0;
+  left: 57px;
+  transform: scale(.78);
+}
+
+.shooting-star {
+  position: absolute;
+  top: 12%;
+  left: 12%;
+  z-index: 1;
+  width: 130px;
+  height: 1px;
+  opacity: 0;
+  background: linear-gradient(90deg, rgba(255, 248, 218, 0), #fff8da 64%, #fff);
+  filter: drop-shadow(0 0 7px rgba(255, 238, 174, .92));
+  transform-origin: right center;
+  animation: library-shooting-star 26s ease-in 5s infinite;
+}
+
+.shooting-star-b {
+  top: 22%;
+  left: 64%;
+  animation-delay: 13s;
+}
+
+.shooting-star-c {
+  top: 34%;
+  left: 38%;
+  animation-delay: 19s;
+}
+
+html[data-theme="light"] .star-field,
+html[data-theme="light"] .shooting-star,
+html[data-theme="dark"] .cloud,
+html[data-theme="dark"] .day-plane,
+html[data-theme="dark"] .bird-flock {
+  display: none;
+}
+
+html[data-theme="light"] .cloud {
+  opacity: .72;
+}
+
 .library-sequence {
   position: relative;
   z-index: 1;
@@ -289,6 +484,61 @@ img {
   }
 }
 
+@keyframes cloud-drift {
+  from {
+    transform: translateX(0) scale(var(--cloud-scale));
+  }
+  to {
+    transform: translateX(calc(100vw + 500px)) scale(var(--cloud-scale));
+  }
+}
+
+@keyframes library-plane-pass {
+  0%, 74% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0) rotate(-3deg);
+  }
+  76% {
+    opacity: .7;
+  }
+  84% {
+    opacity: .74;
+    transform: translate3d(78vw, 2vh, 0) rotate(2deg);
+  }
+  94%, 100% {
+    opacity: 0;
+    transform: translate3d(calc(100vw + 160px), -1vh, 0) rotate(0);
+  }
+}
+
+@keyframes library-flock-pass {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0) scale(.8);
+  }
+  8%, 86% {
+    opacity: .6;
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(calc(100vw + 240px), -9vh, 0) scale(.8);
+  }
+}
+
+@keyframes library-shooting-star {
+  0%, 91% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0) rotate(18deg);
+  }
+  93% {
+    opacity: .92;
+  }
+  98%, 100% {
+    opacity: 0;
+    transform: translate3d(280px, 120px, 0) rotate(18deg);
+  }
+}
+
 @media (max-width: 980px) {
   .library-covers {
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -364,7 +614,11 @@ img {
   }
 
   .star-field,
-  .wave-field {
+  .wave-field,
+  .cloud,
+  .day-plane,
+  .bird-flock,
+  .shooting-star {
     animation: none;
   }
 
