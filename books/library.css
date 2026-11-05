@@ -64,11 +64,7 @@ html[data-theme=light] .library-header{background-color:#143c32;border-bottom-co
 @media(max-width:760px){.library-mark{width:32px;height:29px}.library-mark i{height:6px}.library-mark i:nth-child(1){bottom:2px}.library-mark i:nth-child(2){bottom:9px}.library-mark i:nth-child(3){bottom:16px}.collection-cover{width:min(70vw,340px)}html[data-theme=dark] .library-header{background-image:linear-gradient(90deg,rgba(2,12,24,.94),rgba(2,12,24,.48) 44%,rgba(2,12,24,.82)),linear-gradient(180deg,rgba(0,8,20,.12),rgba(0,8,20,.44)),url('/portfolio-website/assets/nav-coast/coastal-nav-night-mobile.webp');background-image:linear-gradient(90deg,rgba(2,12,24,.94),rgba(2,12,24,.48) 44%,rgba(2,12,24,.82)),linear-gradient(180deg,rgba(0,8,20,.12),rgba(0,8,20,.44)),image-set(url('/portfolio-website/assets/nav-coast/coastal-nav-night-mobile.avif') type('image/avif'),url('/portfolio-website/assets/nav-coast/coastal-nav-night-mobile.webp') type('image/webp'))}html[data-theme=light] .library-header{background-image:linear-gradient(90deg,rgba(3,31,27,.92),rgba(3,31,27,.42) 44%,rgba(3,31,27,.84)),linear-gradient(180deg,rgba(3,31,27,.03),rgba(3,31,27,.36)),url('/portfolio-website/assets/nav-coast/coastal-nav-day-mobile.webp');background-image:linear-gradient(90deg,rgba(3,31,27,.92),rgba(3,31,27,.42) 44%,rgba(3,31,27,.84)),linear-gradient(180deg,rgba(3,31,27,.03),rgba(3,31,27,.36)),image-set(url('/portfolio-website/assets/nav-coast/coastal-nav-day-mobile.avif') type('image/avif'),url('/portfolio-website/assets/nav-coast/coastal-nav-day-mobile.webp') type('image/webp'))}}
 @media(prefers-reduced-motion:reduce){.day-plane,.bird-flock,.shooting-star{animation:none;opacity:.5}.shooting-star{display:none}}
 
-/* The Library is installable in its own scope and the reader remains one continuous document. */
-.library-jump .library-install{display:inline-flex;align-items:center;justify-content:space-between;gap:35px;min-width:240px;border:1px solid var(--line);padding:15px 18px;background:color-mix(in srgb,var(--surface) 75%,transparent);color:var(--ink);font:10px var(--mono);letter-spacing:.04em;text-align:left;transition:border-color .2s,transform .2s,background .2s}
-.library-jump .library-install:is(:hover,:focus-visible){border-color:#d9b16d;transform:translateY(-2px);background:color-mix(in srgb,var(--surface) 90%,transparent)}
-.library-install-status{position:relative;z-index:1;min-height:1.5em;margin:12px 0 0;color:var(--muted);font:9px/1.6 var(--mono);letter-spacing:.04em}
-.library-install-status:empty{display:none}
+/* The reader remains one continuous document; installation is a quiet opening note. */
 .reader-source-page{content-visibility:auto;contain-intrinsic-size:auto 1000px}
 .reader-dialog,.reader-shell,.reader-stage,.reader-paper,.reader-copy,.reader-source-page{min-width:0;max-width:100%}
 .reader-stage{overflow-x:hidden}
@@ -83,4 +79,4 @@ html[data-theme=light] .library-header{background-color:#143c32;border-bottom-co
 .reader-dialog[data-reading-tone=paper] .reader-page-state b{color:#7d582b}
 .reader-dialog[data-reading-tone=paper] .reader-scroll-note{color:#6d7b75}
 @media(max-width:760px){.reader-page-nav{justify-content:center;text-align:center}.reader-scroll-note{width:100%}.reader-source-page+.reader-source-page{margin-top:54px;padding-top:42px}}
-@media(max-width:520px){.library-jump .library-install{min-width:0;width:100%}.reader-source-page{contain-intrinsic-size:auto 900px}}
+@media(max-width:520px){.reader-source-page{contain-intrinsic-size:auto 900px}}

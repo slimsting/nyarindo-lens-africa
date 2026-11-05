@@ -49,29 +49,11 @@ html[data-theme="light"] .track-info .prototype-note { color:#405246 !important;
 
 /* Immersive lyrics are the whole view; no site navigation or footer overlays. */
 body.immersive > .site-map,
-body.immersive > .nyarindo-thread-footer,
-body.immersive .install-hub,
-body.immersive .install-offer { display:none !important; }
+body.immersive > .nyarindo-thread-footer { display:none !important; }
 
-/* Keep the install invitation separated from the listening-mode buttons. */
+/* Keep the quiet install note separated from the listening-mode buttons. */
 html[data-page="drift"] .modes {
   margin-top:4rem;
-}
-
-@media (max-width:760px) {
-  html[data-page="drift"] body .install-hub-compact {
-    margin-top:0;
-    margin-bottom:0;
-    row-gap:1rem;
-    padding-bottom:1rem;
-  }
-  html[data-page="drift"] .install-hub-compact .install-primary {
-    margin-top:0;
-  }
-  html[data-page="drift"] .install-hub-compact .install-status {
-    min-height:0;
-    margin-top:.375rem;
-  }
 }
 
 /* Theme controls use the same day/night language as the rest of the Lens. */
