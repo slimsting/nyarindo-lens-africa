@@ -1,9 +1,14 @@
-const CACHE = "nyarindo-library-v6";
+const CACHE = "nyarindo-library-v7";
 const CORE = [
   "/books/",
   "/books/index.html",
   "/books/manifest.webmanifest",
-  "/books/library.css?v=gallery-1",
+  "/books/library.css?v=gallery-2",
+  "/books/library-reader.css?v=reader-1",
+  "/books/library.js?v=gallery-2",
+  "/portfolio-website/theme-controls.css?v=theme-controls-6",
+  "/portfolio-website/site-theme-init.js?v=library-1",
+  "/portfolio-website/site-theme-control.js?v=theme-controls-6",
   "/books/assets/entering-the-spiral.svg",
   "/books/assets/spiral-beyond.svg",
   "/books/assets/experiment-particles.svg",
@@ -30,7 +35,18 @@ const CORE = [
   "/portfolio-website/assets/books/nyarindo-lens-book-07-the-vacuum-experiment-thumb.avif",
   "/portfolio-website/assets/books/nyarindo-lens-book-07-the-vacuum-experiment-thumb.webp",
   "/portfolio-website/assets/books/nyarindo-lens-collection-cover-spiral-of-reach-and-return.avif",
-  "/portfolio-website/assets/books/nyarindo-lens-collection-cover-spiral-of-reach-and-return.webp"
+  "/portfolio-website/assets/books/nyarindo-lens-collection-cover-spiral-of-reach-and-return.webp",
+  "/books/reader-content/manifest.json",
+  "/books/reader-content/introduction.json",
+  "/books/reader-content/the-nyarindo-lens.json",
+  "/books/reader-content/the-pulse-reports.json",
+  "/books/reader-content/stories-we-tell-about-the-pulse.json",
+  "/books/reader-content/the-method-in-the-waves.json",
+  "/books/reader-content/attention.json",
+  "/books/reader-content/teaching-the-wave-mind.json",
+  "/books/reader-content/the-vacuum-experiment.json",
+  "/books/reader-content/collection.json",
+  "/books/reader-content/end-note.json"
 ];
 
 self.addEventListener("install", (event) => {

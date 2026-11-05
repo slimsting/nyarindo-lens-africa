@@ -9,10 +9,12 @@
   <link rel="manifest" href="/books/manifest.webmanifest">
   <meta name="description" content="The Nyarindo Library: the seven books, the complete collection, and two companion experiments.">
   <title>The Nyarindo Library — Books in a Spiral</title>
+  <script src="/portfolio-website/site-theme-init.js?v=library-1"></script>
   <link rel="stylesheet" href="/portfolio-website/local-fonts.css?v=hd-2">
   <link rel="stylesheet" href="/portfolio-website/install-apps.css?v=install-note-1">
-  <link rel="stylesheet" href="/books/library.css?v=gallery-1">
-  <script defer src="/portfolio-website/install-app.js?v=install-note-1"></script>
+  <link rel="stylesheet" href="/portfolio-website/theme-controls.css?v=theme-controls-6">
+  <link rel="stylesheet" href="/books/library.css?v=gallery-2">
+  <link rel="stylesheet" href="/books/library-reader.css?v=reader-1">
 </head>
 <body data-app-install="library" data-app-name="The Nyarindo Library" data-service-worker="/books/service-worker.js" data-service-worker-scope="/books/">
   <div class="library-atmosphere" aria-hidden="true">
@@ -21,6 +23,20 @@
     <span class="star-field"></span>
     <span class="wave-field"></span>
   </div>
+
+  <header class="library-header">
+    <a class="library-brand" href="/" aria-label="Nyarindo Lens home">
+      <span class="library-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+      <span><b>NYARINDO</b><small>THE LIBRARY</small></span>
+    </a>
+    <nav aria-label="Library navigation">
+      <a class="is-current" href="/books/" aria-current="page">Books</a>
+      <a href="/portfolio-website/lens-of-everything.html?v=library-1">Theories</a>
+      <a href="/memory-app/">Attention</a>
+      <a href="/">Portfolio</a>
+      <button class="library-theme" type="button" data-theme-toggle data-theme-light="#eeeae0" data-theme-dark="#071319" aria-label="Change colour theme" aria-pressed="true"><span class="theme-icon" aria-hidden="true">☾</span><span>NIGHT</span></button>
+    </nav>
+  </header>
 
   <main class="library-sequence" id="library">
     <section class="library-note library-note-begin" aria-labelledby="beginningNoteTitle">
@@ -31,35 +47,107 @@
         <p class="kicker">THE BEGINNING NOTE · ENTER THE SPIRAL</p>
         <h1 id="beginningNoteTitle">Begin here.</h1>
         <p class="install-note-entry"><button class="install-note" type="button" data-install-app data-install-label="Install the Library on this device.">Install the Library on this device.</button><span class="install-note-status" data-install-status role="status" aria-live="polite"></span></p>
-        <a class="note-link" href="/books/pdfs/general-introduction.pdf">Open the beginning note <span aria-hidden="true">↗</span></a>
+        <a class="note-link" href="/books/?book=introduction">Open the beginning note <span aria-hidden="true">↗</span></a>
       </div>
     </section>
 
     <section class="library-covers" aria-label="The Nyarindo Library books">
-      <a class="book-cover" href="/books/pdfs/book-01-nyarindo-lens.pdf" aria-label="Open The Nyarindo Lens">
-        <picture><source srcset="/portfolio-website/assets/books/the-nyarindo-lens-book-01-grammar-of-pulse-thumb.avif" type="image/avif"><img src="/portfolio-website/assets/books/the-nyarindo-lens-book-01-grammar-of-pulse-thumb.webp" alt="The Nyarindo Lens book cover" width="480" height="647" loading="eager" decoding="async"></picture>
-      </a>
-      <a class="book-cover" href="/books/pdfs/book-02-pulse-reports.pdf" aria-label="Open The Pulse Reports">
-        <picture><source srcset="/portfolio-website/assets/books/nyarindo-lens-book-02-the-pulse-reports-thumb.avif" type="image/avif"><img src="/portfolio-website/assets/books/nyarindo-lens-book-02-the-pulse-reports-thumb.webp" alt="The Pulse Reports book cover" width="480" height="647" loading="lazy" decoding="async"></picture>
-      </a>
-      <a class="book-cover" href="/books/pdfs/book-03-stories-we-tell-about-the-pulse.pdf" aria-label="Open The Stories We Tell About the Pulse">
-        <picture><source srcset="/portfolio-website/assets/books/nyarindo-lens-book-03-stories-we-tell-about-the-pulse-thumb.avif" type="image/avif"><img src="/portfolio-website/assets/books/nyarindo-lens-book-03-stories-we-tell-about-the-pulse-thumb.webp" alt="The Stories We Tell About the Pulse book cover" width="480" height="647" loading="lazy" decoding="async"></picture>
-      </a>
-      <a class="book-cover" href="/books/pdfs/book-04-method-in-the-waves.pdf" aria-label="Open The Method in the Waves">
-        <picture><source srcset="/portfolio-website/assets/books/nyarindo-lens-book-04-the-method-in-the-waves-thumb.avif" type="image/avif"><img src="/portfolio-website/assets/books/nyarindo-lens-book-04-the-method-in-the-waves-thumb.webp" alt="The Method in the Waves book cover" width="480" height="647" loading="lazy" decoding="async"></picture>
-      </a>
-      <a class="book-cover" href="/books/pdfs/book-05-attention.pdf" aria-label="Open Attention">
-        <picture><source srcset="/portfolio-website/assets/books/nyarindo-lens-book-05-attention-thumb.avif" type="image/avif"><img src="/portfolio-website/assets/books/nyarindo-lens-book-05-attention-thumb.webp" alt="Attention book cover" width="480" height="647" loading="lazy" decoding="async"></picture>
-      </a>
-      <a class="book-cover" href="/books/pdfs/book-06-teaching-the-wave-mind.pdf" aria-label="Open Teaching the Wave Mind">
-        <picture><source srcset="/portfolio-website/assets/books/nyarindo-lens-book-06-teaching-the-wave-mind-thumb.avif" type="image/avif"><img src="/portfolio-website/assets/books/nyarindo-lens-book-06-teaching-the-wave-mind-thumb.webp" alt="Teaching the Wave Mind book cover" width="480" height="647" loading="lazy" decoding="async"></picture>
-      </a>
-      <a class="book-cover" href="/books/pdfs/book-07-vacuum-experiment.pdf" aria-label="Open The Vacuum Experiment">
-        <picture><source srcset="/portfolio-website/assets/books/nyarindo-lens-book-07-the-vacuum-experiment-thumb.avif" type="image/avif"><img src="/portfolio-website/assets/books/nyarindo-lens-book-07-the-vacuum-experiment-thumb.webp" alt="The Vacuum Experiment book cover" width="480" height="647" loading="lazy" decoding="async"></picture>
-      </a>
-      <a class="book-cover collection-cover" href="/books/pdfs/collection-spiral-of-reach-and-return.pdf" aria-label="Open The Spiral of Reach and Return collection">
-        <picture><source srcset="/portfolio-website/assets/books/nyarindo-lens-collection-cover-spiral-of-reach-and-return.avif" type="image/avif"><img src="/portfolio-website/assets/books/nyarindo-lens-collection-cover-spiral-of-reach-and-return.webp" alt="The Spiral of Reach and Return collection cover" width="512" height="669" loading="lazy" decoding="async"></picture>
-      </a>
+      <article class="book-card">
+        <a class="book-cover" href="/books/?book=the-nyarindo-lens" aria-label="Read The Nyarindo Lens in the library">
+          <picture><source srcset="/portfolio-website/assets/books/the-nyarindo-lens-book-01-grammar-of-pulse-thumb.avif" type="image/avif"><img src="/portfolio-website/assets/books/the-nyarindo-lens-book-01-grammar-of-pulse-thumb.webp" alt="Cover of The Nyarindo Lens" width="480" height="647" loading="eager" decoding="async"></picture>
+          <span class="book-number">01</span><span class="cover-action">Read in library ↗</span>
+        </a>
+        <p class="book-role">THE FOUNDATION</p>
+        <h3>The Nyarindo Lens</h3>
+        <p class="book-subtitle">A Grammar of Pulse for the Fragile and the Fluid</p>
+        <p class="book-description">Dot, pulse, container, observation, return, and foundational practice.</p>
+        <a class="text-link" href="/books/pdfs/book-01-nyarindo-lens.pdf" download>Download this book <span>↓</span></a>
+      </article>
+
+      <article class="book-card">
+        <a class="book-cover" href="/books/?book=the-pulse-reports" aria-label="Read The Pulse Reports in the library">
+          <picture><source srcset="/portfolio-website/assets/books/nyarindo-lens-book-02-the-pulse-reports-thumb.avif" type="image/avif"><img src="/portfolio-website/assets/books/nyarindo-lens-book-02-the-pulse-reports-thumb.webp" alt="Cover of The Pulse Reports" width="480" height="647" loading="lazy" decoding="async"></picture>
+          <span class="book-number">02</span><span class="cover-action">Read in library ↗</span>
+        </a>
+        <p class="book-role">THE TURN OUTWARD</p>
+        <h3>The Pulse Reports</h3>
+        <p class="book-subtitle">A Grammar of Feeling and the External Pulse</p>
+        <p class="book-description">Patterns across animals, trees, cells, stones, and stars.</p>
+        <a class="text-link" href="/books/pdfs/book-02-pulse-reports.pdf" download>Download this book <span>↓</span></a>
+      </article>
+
+      <article class="book-card">
+        <a class="book-cover" href="/books/?book=stories-we-tell-about-the-pulse" aria-label="Read The Stories We Tell About the Pulse in the library">
+          <picture><source srcset="/portfolio-website/assets/books/nyarindo-lens-book-03-stories-we-tell-about-the-pulse-thumb.avif" type="image/avif"><img src="/portfolio-website/assets/books/nyarindo-lens-book-03-stories-we-tell-about-the-pulse-thumb.webp" alt="Cover of The Stories We Tell About the Pulse" width="480" height="647" loading="lazy" decoding="async"></picture>
+          <span class="book-number">03</span><span class="cover-action">Read in library ↗</span>
+        </a>
+        <p class="book-role">THE SHARED FIELD</p>
+        <h3>The Stories We Tell About the Pulse</h3>
+        <p class="book-subtitle">A Grammar of Systems and the Collective Pulse</p>
+        <p class="book-description">Relationships, families, communities, institutions, and shared stories.</p>
+        <a class="text-link" href="/books/pdfs/book-03-stories-we-tell-about-the-pulse.pdf" download>Download this book <span>↓</span></a>
+      </article>
+
+      <article class="book-card">
+        <a class="book-cover" href="/books/?book=the-method-in-the-waves" aria-label="Read The Method in the Waves in the library">
+          <picture><source srcset="/portfolio-website/assets/books/nyarindo-lens-book-04-the-method-in-the-waves-thumb.avif" type="image/avif"><img src="/portfolio-website/assets/books/nyarindo-lens-book-04-the-method-in-the-waves-thumb.webp" alt="Cover of The Method in the Waves" width="480" height="647" loading="lazy" decoding="async"></picture>
+          <span class="book-number">04</span><span class="cover-action">Read in library ↗</span>
+        </a>
+        <p class="book-role">THE METHOD</p>
+        <h3>The Method in the Waves</h3>
+        <p class="book-subtitle">A Grammar of Coherence for the Wavy Mind</p>
+        <p class="book-description">Nonlinear observations across life, inviting the reader to find the connections.</p>
+        <a class="text-link" href="/books/pdfs/book-04-method-in-the-waves.pdf" download>Download this book <span>↓</span></a>
+      </article>
+
+      <article class="book-card featured">
+        <span class="book-thread" aria-hidden="true">MOST IMPORTANT · ATTENTION</span>
+        <a class="book-cover" href="/books/?book=attention" aria-label="Read Attention in the library">
+          <picture><source srcset="/portfolio-website/assets/books/nyarindo-lens-book-05-attention-thumb.avif" type="image/avif"><img src="/portfolio-website/assets/books/nyarindo-lens-book-05-attention-thumb.webp" alt="Cover of Attention" width="480" height="647" loading="lazy" decoding="async"></picture>
+          <span class="book-number">05</span><span class="cover-action">Read in library ↗</span>
+        </a>
+        <p class="book-role">MOST IMPORTANT BOOK IN THE SPIRAL</p>
+        <h3>Attention</h3>
+        <p class="book-subtitle">The Green Between Faith and Science / A Grammar of Calibrated Self-Knowledge</p>
+        <p class="book-description">It teaches attending: the practice beneath belief, doubt, measurement, faith, and every theory that follows.</p>
+        <a class="text-link" href="/books/pdfs/book-05-attention.pdf" download>Download this book <span>↓</span></a>
+      </article>
+
+      <article class="book-card">
+        <a class="book-cover" href="/books/?book=teaching-the-wave-mind" aria-label="Read Teaching the Wave Mind in the library">
+          <picture><source srcset="/portfolio-website/assets/books/nyarindo-lens-book-06-teaching-the-wave-mind-thumb.avif" type="image/avif"><img src="/portfolio-website/assets/books/nyarindo-lens-book-06-teaching-the-wave-mind-thumb.webp" alt="Cover of Teaching the Wave Mind" width="480" height="647" loading="lazy" decoding="async"></picture>
+          <span class="book-number">06</span><span class="cover-action">Read in library ↗</span>
+        </a>
+        <p class="book-role">THE LEARNING TURN</p>
+        <h3>Teaching the Wave Mind</h3>
+        <p class="book-subtitle">Grammar as the Anchor</p>
+        <p class="book-description">Learning through attention, application, reflection, and journaling.</p>
+        <a class="text-link" href="/books/pdfs/book-06-teaching-the-wave-mind.pdf" download>Download this book <span>↓</span></a>
+      </article>
+
+      <article class="book-card">
+        <a class="book-cover" href="/books/?book=the-vacuum-experiment" aria-label="Read The Vacuum Experiment in the library">
+          <picture><source srcset="/portfolio-website/assets/books/nyarindo-lens-book-07-the-vacuum-experiment-thumb.avif" type="image/avif"><img src="/portfolio-website/assets/books/nyarindo-lens-book-07-the-vacuum-experiment-thumb.webp" alt="Cover of The Vacuum Experiment" width="480" height="647" loading="lazy" decoding="async"></picture>
+          <span class="book-number">07</span><span class="cover-action">Read in library ↗</span>
+        </a>
+        <p class="book-role">THE COMPUTATIONAL TURN</p>
+        <h3>The Vacuum Experiment</h3>
+        <p class="book-subtitle">Emergence observed, not pre-assigned</p>
+        <p class="book-description">Simple attraction and repulsion, with patterns observed as they emerge.</p>
+        <a class="text-link" href="/books/pdfs/book-07-vacuum-experiment.pdf" download>Download this book <span>↓</span></a>
+      </article>
+
+      <article class="book-card collection-book">
+        <a class="book-cover collection-cover" href="/books/?book=collection" aria-label="Read The Spiral of Reach and Return collection in the library">
+          <picture><source srcset="/portfolio-website/assets/books/nyarindo-lens-collection-cover-spiral-of-reach-and-return.avif" type="image/avif"><img src="/portfolio-website/assets/books/nyarindo-lens-collection-cover-spiral-of-reach-and-return.webp" alt="The Spiral of Reach and Return collection cover" width="512" height="669" loading="lazy" decoding="async"></picture>
+          <span class="book-number">ALL</span><span class="cover-action">Read in library ↗</span>
+        </a>
+        <p class="book-role">THE WHOLE COLLECTION</p>
+        <h3>The Spiral of Reach and Return</h3>
+        <p class="book-subtitle">The complete Nyarindo Lens collection</p>
+        <p class="book-description">Seven books gathered as one continuous edition.</p>
+        <a class="text-link" href="/books/pdfs/collection-spiral-of-reach-and-return.pdf" download>Download the collection <span>↓</span></a>
+      </article>
     </section>
 
     <section class="library-experiments" aria-label="Companion experiments">
@@ -78,9 +166,38 @@
       <div>
         <p class="kicker">THE END NOTE · NOT AN ENDING</p>
         <h2 id="endNoteTitle">Return—then continue.</h2>
-        <a class="note-link" href="/books/pdfs/end-note.pdf">Open the end note <span aria-hidden="true">↗</span></a>
+        <a class="note-link" href="/books/?book=end-note">Open the end note <span aria-hidden="true">↗</span></a>
       </div>
     </section>
   </main>
+
+  <dialog id="readerDialog" class="reader-dialog" aria-labelledby="readerTitle">
+    <div class="reader-shell">
+      <header class="reader-head">
+        <button class="reader-back" id="readerClose" type="button" aria-label="Close the reader and return to the library"><span aria-hidden="true">←</span> Library</button>
+        <div class="reader-title-block"><p id="readerNumber">THE NYARINDO LIBRARY</p><h2 id="readerTitle">Choose a book</h2><span id="readerSubtitle"></span></div>
+        <a class="reader-download" id="readerDownload" href="#" download>Download PDF <span aria-hidden="true">↓</span></a>
+      </header>
+      <div class="reader-toolbar">
+        <div class="reader-control-group" aria-label="Reading tone"><span>Tone</span><button type="button" data-reading-tone="paper" aria-pressed="false">Paper</button><button type="button" data-reading-tone="night" aria-pressed="true">Night</button></div>
+        <div class="reader-control-group" aria-label="Atmosphere"><span>Atmosphere</span><button type="button" data-reader-atmosphere="off" aria-pressed="false">Off</button><button type="button" data-reader-atmosphere="day" aria-pressed="false">Day</button><button type="button" data-reader-atmosphere="night" aria-pressed="true">Night</button></div>
+        <p class="reader-hint">Page markers follow the source text · scroll continuously through the edition · zoom without leaving the text</p>
+      </div>
+      <div class="reader-stage" id="readerStage">
+        <div class="reader-atmosphere" aria-hidden="true"><span></span></div>
+        <article class="reader-paper" id="readerPaper" aria-label="Continuous book edition"><p class="reader-page-marker" id="readerPageMarker">Choose a book to begin</p><div class="reader-copy" id="readerCopy"></div></article>
+        <p class="reader-message" id="readerMessage" aria-live="polite">Choose a book from the library.</p>
+      </div>
+      <div class="reader-progress" aria-hidden="true"><span id="readerProgressBar"></span></div>
+      <footer class="reader-footer">
+        <div class="reader-page-nav" aria-label="Continuous reading position"><span class="reader-page-state">Page <b id="readerCurrentPage">1</b> of <b id="pageCount">—</b></span><span class="reader-scroll-note">one continuous scroll · source page markers preserved</span></div>
+        <div class="reader-zoom"><button id="zoomOut" type="button" aria-label="Zoom out">−</button><button id="zoomReset" type="button" aria-label="Reset zoom">100%</button><button id="zoomIn" type="button" aria-label="Zoom in">＋</button><button id="readerFullscreen" type="button" aria-label="Enter fullscreen">Fullscreen ⛶</button></div>
+      </footer>
+    </div>
+  </dialog>
+
+  <script defer src="/books/library.js?v=gallery-2"></script>
+  <script defer src="/portfolio-website/site-theme-control.js?v=theme-controls-6"></script>
+  <script defer src="/portfolio-website/install-app.js?v=install-note-1"></script>
 </body>
 </html>

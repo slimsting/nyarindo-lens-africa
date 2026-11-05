@@ -82,34 +82,36 @@
       .trim();
   }
 
-  function filterLibrary() {
-    const query = normalise(searchInput.value);
-    let matches = 0;
-    searchableEntries.forEach((entry) => {
-      const haystack = normalise(entry.dataset.search || entry.textContent);
-      const match = !query || haystack.includes(query);
-      entry.hidden = !match;
-      if (match) matches += 1;
-    });
-    clearSearch.hidden = !query;
-    emptyState.hidden = matches !== 0;
-    searchStatus.textContent = query
-      ? `${matches} ${matches === 1 ? "entry follows" : "entries follow"} “${searchInput.value.trim()}”.`
-      : `Showing all ${searchableEntries.length} library entries.`;
-  }
+  if (searchInput && clearSearch && searchStatus && emptyState && emptyReset) {
+    const filterLibrary = () => {
+      const query = normalise(searchInput.value);
+      let matches = 0;
+      searchableEntries.forEach((entry) => {
+        const haystack = normalise(entry.dataset.search || entry.textContent);
+        const match = !query || haystack.includes(query);
+        entry.hidden = !match;
+        if (match) matches += 1;
+      });
+      clearSearch.hidden = !query;
+      emptyState.hidden = matches !== 0;
+      searchStatus.textContent = query
+        ? `${matches} ${matches === 1 ? "entry follows" : "entries follow"} “${searchInput.value.trim()}”.`
+        : `Showing all ${searchableEntries.length} library entries.`;
+    };
 
-  searchInput.addEventListener("input", filterLibrary);
-  clearSearch.addEventListener("click", () => {
-    searchInput.value = "";
+    searchInput.addEventListener("input", filterLibrary);
+    clearSearch.addEventListener("click", () => {
+      searchInput.value = "";
+      filterLibrary();
+      searchInput.focus();
+    });
+    emptyReset.addEventListener("click", () => {
+      searchInput.value = "";
+      filterLibrary();
+      searchInput.focus();
+    });
     filterLibrary();
-    searchInput.focus();
-  });
-  emptyReset.addEventListener("click", () => {
-    searchInput.value = "";
-    filterLibrary();
-    searchInput.focus();
-  });
-  filterLibrary();
+  }
 
   const readerDialog = document.getElementById("readerDialog");
   const readerClose = document.getElementById("readerClose");
