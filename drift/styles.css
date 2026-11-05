@@ -53,13 +53,6 @@ body.immersive > .nyarindo-thread-footer,
 body.immersive .install-hub,
 body.immersive .install-offer { display:none !important; }
 
-/* Keep the stacked Drift invitation and install action clearly separated. */
-@media (max-width:760px) {
-  html[data-page="drift"] .install-hub-compact .install-primary {
-    margin-top:4rem;
-  }
-}
-
 /* Theme controls use the same day/night language as the rest of the Lens. */
 .theme-button {
   display:inline-flex;
