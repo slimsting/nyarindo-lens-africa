@@ -1,0 +1,163 @@
+/*
+ * Light-mode readability corrections for portfolio metadata and controls.
+ * Colours are explicit so this final layer is not displaced by palette themes.
+ */
+
+html[data-theme=light] :is(.section-heading .eyebrow,.approach-copy>.eyebrow,.closing>.eyebrow){
+  color:#4f544a;
+  font-size:11px;
+}
+
+html[data-theme=light] .hero-copy>.eyebrow{
+  color:#4f544a;
+}
+
+html[data-theme=light] .hero-lens-guide summary i{
+  background:#68401b;
+  color:#fffaf0;
+  font-weight:600;
+}
+
+html[data-theme=light] .hero-foot{
+  color:#5d6057;
+}
+
+html[data-theme=light] .section-intro,
+html[data-theme=light] .project-main>p,
+html[data-theme=light] .approach-copy>p:not(.eyebrow),
+html[data-theme=light] .closing-copy{
+  color:#54584e;
+}
+
+html[data-theme=light] .project-index{
+  color:#68401b;
+  font-size:11px;
+}
+
+html[data-theme=light] .project-index span{
+  color:#5d6057;
+  font-size:9px;
+  letter-spacing:.1em;
+}
+
+html[data-theme=light] .status{
+  color:#4f544a;
+  font-size:9px;
+  line-height:1.45;
+}
+
+html[data-theme=light] .project-memory .status-complete{
+  color:#356344;
+  font-weight:500;
+}
+
+html[data-theme=light] .project-about summary,
+html[data-theme=light] .about-grid h4{
+  color:#68401b;
+  font-weight:500;
+}
+
+html[data-theme=light] .about-grid p{
+  color:#54584e;
+}
+
+html[data-theme=light] .visual-note{
+  color:#4b5348;
+  font-size:9px;
+  top:12px;
+  bottom:auto;
+}
+
+html[data-theme=light] .memory-word{
+  color:#4b5348;
+  font-size:10px;
+}
+
+html[data-theme=light] .field-visual span{
+  font-size:9px;
+}
+
+html[data-theme=light] .principle>span,
+html[data-theme=light] .contact-link span,
+html[data-theme=light] .project-main .project-link span{
+  color:#68401b;
+}
+
+html[data-theme=light] .books-heading .eyebrow{
+  color:#68401b;
+  font-size:11px;
+}
+
+html[data-theme=light] .books-attention strong,
+html[data-theme=light] .book-spiral .book-spiral-attention>span,
+html[data-theme=light] .book-spiral .book-spiral-attention strong,
+html[data-theme=light] .book-covers .book-cover-attention figcaption span{
+  color:#0d5ba7;
+}
+
+html[data-theme=light] .book-covers figcaption span,
+html[data-theme=light] .book-collection-cover figcaption span,
+html[data-theme=light] .book-spiral li>span{
+  color:#74461f;
+  font-size:10px;
+}
+
+html[data-theme=light] .book-spiral p{
+  color:#54584e;
+}
+
+html[data-theme=light] .book-spiral-words{
+  color:#256644;
+}
+
+html[data-theme=light] .book-reading-stage small,
+html[data-theme=light] .book-actions small{
+  color:#54584c;
+  font-size:12px;
+}
+
+html[data-theme=light] .book-cta:disabled{
+  opacity:1;
+  background:#52663f;
+  border-color:#52663f;
+  color:#fff;
+  font-weight:500;
+}
+
+html[data-theme=light] .book-cta-library{
+  background:transparent;
+  border-color:rgba(107,66,28,.7);
+  color:#5b3719;
+  font-weight:500;
+}
+
+html[data-theme=light] .footer-themes-title{
+  color:#68401b;
+  font-size:9px;
+}
+
+html[data-theme=light] .social-footer .eyebrow{
+  color:#4f544a;
+  font-size:11px;
+}
+
+html[data-theme=light] .site-map-eyebrow,
+html[data-theme=light] .site-map-index{
+  color:#68401b;
+  font-size:10px;
+}
+
+html[data-theme=light] .social-footer-bottom{
+  color:#4f5849;
+  font-size:9px;
+}
+
+@media(max-width:620px){
+  html[data-theme=light] .project-index span{
+    font-size:9px;
+  }
+
+  html[data-theme=light] .hero-foot{
+    font-size:9px;
+  }
+}

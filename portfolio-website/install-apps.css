@@ -328,13 +328,29 @@ html[data-theme="light"] .install-hub {
   --install-muted: #5f685e;
   --install-line: rgba(77, 104, 84, .24);
   --install-gold: #8d5d28;
-  --install-green: #47755f;
+  --install-green: #315e49;
   box-shadow: 0 24px 60px rgba(59, 60, 50, .12);
 }
 
 html[data-theme="light"] .install-button {
-  background: linear-gradient(135deg, #9a672f, #c8955d);
-  color: #fffaf0;
+  background: linear-gradient(135deg, #865823, #9b652d);
+  color: #fff;
+  font-weight: 600;
+}
+
+html[data-theme="light"] .install-button:is(:hover, :focus-visible) {
+  filter: none;
+}
+
+html[data-theme="light"] .install-entry {
+  font-size: 10px;
+  line-height: 1.6;
+  letter-spacing: .055em;
+}
+
+html[data-theme="light"] .install-entry a {
+  color: #315e49;
+  border-bottom-color: rgba(49, 94, 73, .55);
 }
 
 @keyframes install-pulse {
@@ -466,6 +482,7 @@ html[data-theme="light"] .install-offer {
   --install-offer-muted: #5f685e;
   --install-offer-line: rgba(77, 104, 84, .25);
   --install-offer-gold: #8d5d28;
+  --install-offer-green: #315e49;
   background:
     radial-gradient(circle at 100% 0, rgba(80, 127, 101, .14), transparent 40%),
     linear-gradient(145deg, rgba(252, 249, 240, .99), var(--install-offer-surface));
@@ -474,6 +491,29 @@ html[data-theme="light"] .install-offer {
 
 html[data-theme="light"] .install-offer-icon {
   background: #f6f3e9;
+}
+
+html[data-theme="light"] .install-offer-eyebrow {
+  font-size: 9px;
+  font-weight: 600;
+}
+
+html[data-theme="light"] .install-offer-dismiss {
+  font-size: 10px;
+}
+
+html[data-theme="light"] .install-offer-status {
+  font-size: 11px;
+  font-weight: 500;
+}
+
+html[data-theme="light"] .install-offer-button {
+  min-height: 42px;
+  font-size: 10px;
+}
+
+html[data-theme="light"] .install-option-heading {
+  font-size: 9px;
 }
 
 @keyframes install-offer-arrive {
