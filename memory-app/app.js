@@ -306,6 +306,16 @@ function createBookCitation(bookNumber, pageLabel = null) {
   return link;
 }
 
+document.addEventListener('click', (event) => {
+  const link = event.target.closest?.('a[href*="/portfolio-website/#book-"]');
+  if (!link) return;
+  const pageMatch = link.textContent.match(/\bpages?\s+(\d+)/i);
+  if (!pageMatch) return;
+  const url = new URL(link.href);
+  url.searchParams.set('page', pageMatch[1]);
+  link.href = url.href;
+}, true);
+
 function appendBookCitations(parent, references = []) {
   references.forEach(reference => {
     const bookNumber = typeof reference === 'number' ? reference : reference.book;
