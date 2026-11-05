@@ -54,9 +54,14 @@ body.immersive .install-hub,
 body.immersive .install-offer { display:none !important; }
 
 /* Keep the install invitation separated from the listening-mode buttons. */
+html[data-page="drift"] .modes {
+  margin-top:4rem;
+}
+
 @media (max-width:760px) {
   html[data-page="drift"] .install-hub-compact {
-    margin-bottom:4rem;
+    margin-top:0;
+    margin-bottom:0;
   }
 }
 
