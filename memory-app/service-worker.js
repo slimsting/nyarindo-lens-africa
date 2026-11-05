@@ -1,9 +1,9 @@
-const CACHE = 'return-memory-v7';
+const CACHE = 'return-memory-v8';
 const CORE = [
   './',
   './index.html',
   './styles.css?v=attention-close-3',
-  './app.js?v=attention-close-3',
+  './app.js?v=preview-library-1',
   './manifest.webmanifest',
   '/portfolio-website/install-apps.css?v=install-note-1',
   '/portfolio-website/install-app.js?v=install-note-1',

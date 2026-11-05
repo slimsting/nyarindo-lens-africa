@@ -359,15 +359,11 @@ bookCoverFigures.forEach(cover => {
   cover.setAttribute('aria-label', `Open ${caption}`);
   cover.addEventListener('mouseenter', () => featureBookCover(cover));
   cover.addEventListener('focus', () => featureBookCover(cover));
-  cover.addEventListener('click', () => {
-    if (location.hash === `#${cover.id}`) openBookSourceFromHash();
-    else location.hash = cover.id;
-  });
+  cover.addEventListener('click', () => openBookCover(cover));
   cover.addEventListener('keydown', event => {
     if (event.key !== 'Enter' && event.key !== ' ') return;
     event.preventDefault();
-    if (location.hash === `#${cover.id}`) openBookSourceFromHash();
-    else location.hash = cover.id;
+    openBookCover(cover);
   });
 });
 featureBookCover(bookCoverFigures[0]);
@@ -378,6 +374,15 @@ const bookPreviewCover = document.getElementById('bookPreviewCover');
 const bookPreviewNumber = document.getElementById('bookPreviewNumber');
 const bookSourceTitle = document.getElementById('bookSourceTitle');
 const bookPreviewDescription = document.getElementById('bookPreviewDescription');
+const previewLibraryLink = document.getElementById('previewLibraryLink');
+
+function openBookCover(cover) {
+  const url = new URL(location.href);
+  url.searchParams.delete('page');
+  url.hash = cover.id;
+  history.replaceState({}, '', url);
+  openBookSourceFromHash();
+}
 
 function openBookSourceFromHash() {
   const match = /^#book-(0[1-7])$/.exec(location.hash);
@@ -389,6 +394,8 @@ function openBookSourceFromHash() {
   const caption = cover.querySelector('figcaption')?.textContent.trim().replace(/\s+/g, ' ');
   const summary = document.querySelectorAll('.book-spiral li')[number - 1];
   const description = summary?.querySelector('p')?.textContent.trim();
+  const page = Math.max(1, Number.parseInt(new URL(location.href).searchParams.get('page'), 10) || 1);
+  const slug = bookLibrarySlugs[number - 1] || bookLibrarySlugs[0];
 
   bookPreviewCover.src = coverImage.dataset.fullSrc || coverImage.currentSrc || coverImage.src;
   if (bookPreviewAvif) {
@@ -398,6 +405,13 @@ function openBookSourceFromHash() {
   bookPreviewNumber.textContent = `BOOK ${match[1]}`;
   bookSourceTitle.textContent = caption || `Book ${number}`;
   bookPreviewDescription.textContent = description || '';
+  if (previewLibraryLink) {
+    previewLibraryLink.href = `/books/?book=${slug}&page=${page}`;
+    previewLibraryLink.setAttribute(
+      'aria-label',
+      `Open ${caption || `Book ${number}`} in the Nyarindo Library at page ${page}`,
+    );
+  }
 
   if (!bookSourcePreview.open) bookSourcePreview.showModal();
 }

@@ -157,7 +157,23 @@ html:not([data-theme=light]) .book-collection-cover figcaption span{color:#e1b87
 html[data-theme=light] .book-source-preview{background:#eeeae0;border-color:rgba(153,100,49,.5);box-shadow:0 30px 100px rgba(25,31,24,.32)}
 html[data-theme=light] .book-preview-close{background:rgba(245,242,233,.92)}
 @keyframes book-preview-in{from{opacity:0;transform:translateY(12px) scale(.98)}to{opacity:1;transform:none}}
-@media(max-width:680px){.book-preview-layout{grid-template-columns:1fr;gap:24px;padding:32px 20px 24px}.book-preview-cover{width:min(245px,72vw);justify-self:center}.book-preview-copy h2{font-size:38px}}
+@media(max-width:680px){
+  .book-source-preview{width:calc(100% - 12px);max-height:calc(100dvh - 12px);border-radius:12px}
+  .book-preview-layout{grid-template-columns:92px minmax(0,1fr);gap:14px;align-items:start;padding:48px 13px 13px}
+  .book-preview-cover{width:100%;justify-self:stretch}
+  .book-preview-cover img{max-height:150px;object-fit:cover;object-position:top}
+  .book-preview-copy .eyebrow{margin-bottom:6px;font-size:7.5px}
+  .book-preview-copy h2{font-size:clamp(24px,7.5vw,32px);line-height:1;margin-bottom:9px}
+  .book-preview-copy>p:not(.eyebrow):not(.book-preview-note){font-size:11.5px;line-height:1.55;margin-bottom:9px}
+  .book-preview-note{margin:9px 0 7px;font-size:7.5px}
+  .book-preview-return{font-size:8.5px}
+  .preview-support-invite{margin-top:12px;padding-top:10px}
+  .preview-support-invite .support-invite{gap:6px}
+  .preview-support-invite .support-avatar{display:none}
+  .preview-support-invite .support-cta{min-height:36px;padding:8px;font-size:8px;line-height:1.3}
+  .preview-support-invite :is(.book-cta,.preview-library-link){width:100%;min-height:36px;padding:8px;font-size:8px;line-height:1.3}
+}
+@media(max-width:420px){.book-preview-layout{grid-template-columns:78px minmax(0,1fr);gap:10px;padding:45px 10px 10px}.book-preview-cover img{max-height:126px}.book-preview-copy h2{font-size:24px}}
 @media(max-width:520px){.book-collection-cover{width:min(100%,360px);margin:45px auto 42px}}
 
 /* Native controls keep their semantics and gain a tactile response in the site's palette. */
@@ -281,6 +297,7 @@ html:not([data-theme=light]) .both-hats-meeting{color:#c4ccbf}html:not([data-the
 .preview-support-invite .support-invite{width:100%;margin-top:0}
 .preview-support-invite .support-avatar{width:76px;height:76px}
 .preview-support-invite .support-cta{min-height:58px;font-size:9px}
+.preview-library-link{display:flex;align-items:center;justify-content:center;width:100%;min-height:44px;margin-top:4px;text-align:center}
 
 /* The theory closes the site as an offering rather than another project. */
 .coherence-theory{position:relative;overflow:hidden;padding:118px 8vw 126px;background:radial-gradient(circle at 50% 30%,rgba(91,151,111,.16),transparent 30%),linear-gradient(160deg,#18231c,#101712);color:#eff1e7;border-top:1px solid rgba(225,233,217,.12)}
