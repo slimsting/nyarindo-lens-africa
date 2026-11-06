@@ -454,3 +454,120 @@ button:not(:disabled):active {
     transform: none !important;
   }
 }
+
+/*
+ * Shared native-app finish: the apps keep their own colour identities and layouts,
+ * while touch, focus, form, scrolling, selection, and safe-area behavior stay coherent.
+ */
+:root {
+  --nyarindo-native-ease: cubic-bezier(.2, .78, .22, 1);
+  --nyarindo-native-quick: 180ms;
+  --nyarindo-native-calm: 320ms;
+  --nyarindo-native-focus: color-mix(in srgb, var(--accent, currentColor) 68%, #5bb8e8);
+  --nyarindo-native-hairline: color-mix(in srgb, currentColor 14%, transparent);
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  scrollbar-color:
+    color-mix(in srgb, currentColor 25%, transparent)
+    color-mix(in srgb, currentColor 4%, transparent);
+  scrollbar-width: thin;
+}
+
+body {
+  -webkit-tap-highlight-color: transparent;
+  overscroll-behavior-y: contain !important;
+  text-rendering: optimizeLegibility;
+}
+
+button,
+a,
+summary,
+input,
+select,
+textarea {
+  touch-action: manipulation;
+}
+
+button {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--nyarindo-native-focus) 34%, transparent);
+  color: inherit;
+}
+
+:where(
+  input:not([type="color"]):not([type="range"]),
+  select,
+  textarea
+) {
+  accent-color: var(--nyarindo-native-focus);
+  caret-color: var(--nyarindo-native-focus);
+  transition:
+    border-color var(--nyarindo-native-quick) ease,
+    background-color var(--nyarindo-native-quick) ease,
+    box-shadow var(--nyarindo-native-quick) ease;
+}
+
+:where(
+  input:not([type="color"]):not([type="range"]),
+  select,
+  textarea
+):focus-visible {
+  outline: 2px solid var(--nyarindo-native-focus);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--nyarindo-native-focus) 14%, transparent);
+}
+
+:where(
+  .install-note,
+  .source-action,
+  .soft-button,
+  .theme-toggle,
+  .theme-button,
+  .library-theme,
+  .site-theme-toggle,
+  .quiet-action,
+  .profile-button
+):focus-visible {
+  scroll-margin-block: 96px;
+}
+
+:where(
+  [class*="floating"],
+  [id*="floating"],
+  .reader-focus-hint
+) {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+@media (pointer: coarse) {
+  :where(
+    .install-note,
+    .source-action,
+    .soft-button,
+    .theme-toggle,
+    .theme-button,
+    .library-theme,
+    .site-theme-toggle,
+    .quiet-action,
+    .profile-button
+  ) {
+    min-height: 44px !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where(
+    input:not([type="color"]):not([type="range"]),
+    select,
+    textarea
+  ) {
+    transition: none;
+  }
+}
