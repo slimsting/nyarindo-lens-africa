@@ -596,6 +596,55 @@ html[data-theme="light"] .library-note .note-link {
   opacity: .82;
 }
 
+.reader-toc-entry {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 18px;
+  align-items: baseline;
+  margin: 0 0 8px;
+  padding: 6px 0;
+  border-bottom: 1px dashed rgba(217, 177, 109, .28);
+  color: inherit;
+  text-decoration: none;
+  transition: color .18s ease, border-color .18s ease;
+}
+
+.reader-toc-entry:is(:hover, :focus-visible) {
+  border-bottom-style: solid;
+  border-bottom-color: #d9b16d;
+  color: #f2d79e;
+}
+
+.reader-toc-entry:focus-visible {
+  outline: 2px solid #f1d292;
+  outline-offset: 3px;
+}
+
+.reader-toc-title {
+  min-width: 0;
+  font-family: var(--serif);
+  line-height: 1.35;
+}
+
+.reader-toc-page {
+  color: #d9b16d;
+  font: 9px var(--mono);
+  letter-spacing: .08em;
+}
+
+.reader-dialog[data-reading-tone="paper"] .reader-toc-entry {
+  border-bottom-color: rgba(139, 103, 51, .28);
+}
+
+.reader-dialog[data-reading-tone="paper"] .reader-toc-entry:is(:hover, :focus-visible) {
+  border-bottom-color: #8b6733;
+  color: #6f4c20;
+}
+
+.reader-dialog[data-reading-tone="paper"] .reader-toc-page {
+  color: #8b6733;
+}
+
 .reader-message {
   position: absolute;
   z-index: 3;
@@ -950,6 +999,10 @@ html[data-theme="light"] .library-note .note-link {
   }
 
   .reader-progress span {
+    transition: none;
+  }
+
+  .reader-toc-entry {
     transition: none;
   }
 }

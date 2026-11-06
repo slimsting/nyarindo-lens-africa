@@ -237,6 +237,32 @@
       const text = typeof block?.text === "string" ? block.text.trim() : "";
       if (!text) return;
 
+      const contentsMatch = text.match(/^(.*?)(?:\.{3,}|\s{2,})(\d+)\s*$/);
+      if (contentsMatch) {
+        const targetPage = Math.max(
+          1,
+          Math.min(Number.parseInt(contentsMatch[2], 10), readerData.pageCount),
+        );
+        const link = document.createElement("a");
+        link.className = "reader-toc-entry";
+        link.href = `#reader-page-${targetPage}`;
+        link.dataset.readerTarget = String(targetPage);
+        link.setAttribute(
+          "aria-label",
+          `Go to ${contentsMatch[1].trim()}, source page ${targetPage}`,
+        );
+        const title = document.createElement("span");
+        title.className = "reader-toc-title";
+        title.textContent = contentsMatch[1].trim();
+        const page = document.createElement("span");
+        page.className = "reader-toc-page";
+        page.textContent = String(targetPage);
+        link.append(title, page);
+        currentList = null;
+        fragment.append(link);
+        return;
+      }
+
       if (block.type === "list-item") {
         if (!currentList) {
           currentList = document.createElement("ul");
@@ -421,6 +447,12 @@
   }
 
   readerClose.addEventListener("click", closeReader);
+  readerCopy.addEventListener("click", (event) => {
+    const contentsLink = event.target.closest?.("[data-reader-target]");
+    if (!contentsLink) return;
+    event.preventDefault();
+    scrollToSourcePage(contentsLink.dataset.readerTarget);
+  });
   readerDialog.addEventListener("cancel", (event) => {
     event.preventDefault();
     closeReader();
