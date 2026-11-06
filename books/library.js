@@ -165,14 +165,10 @@
   const readerClearBackgroundImage = document.getElementById("readerClearBackgroundImage");
   const readerResetBackground = document.getElementById("readerResetBackground");
   const readerBackgroundStatus = document.getElementById("readerBackgroundStatus");
-  const readerAtmosphereCustom = document.getElementById("readerAtmosphereCustom");
   const readerMobileControlsToggle = document.getElementById("readerMobileControlsToggle");
   const readerControlsToggleLabel = readerMobileControlsToggle.querySelector(".reader-controls-toggle-label");
   const readerFocusHint = document.getElementById("readerFocusHint");
   const toneButtons = [...document.querySelectorAll("[data-reading-tone]")];
-  const atmosphereButtons = [
-    ...document.querySelectorAll("[data-reader-atmosphere]"),
-  ];
 
   const readerCache = new Map();
   let readerData = null;
@@ -180,7 +176,6 @@
   let currentPage = 1;
   let zoom = 1;
   let loadSequence = 0;
-  let atmosphereChosen = false;
   let scrollFrame = 0;
   let rememberTimer = 0;
   let controlsHideTimer = 0;
@@ -209,12 +204,6 @@
   function setTone(tone) {
     readerDialog.dataset.readingTone = tone;
     setPressed(toneButtons, tone, "readingTone");
-  }
-
-  function setAtmosphere(atmosphere) {
-    readerDialog.dataset.atmosphere = atmosphere;
-    setPressed(atmosphereButtons, atmosphere, "readerAtmosphere");
-    atmosphereChosen = true;
   }
 
   const readerTypeKey = "nyarindo-reader-type";
@@ -341,22 +330,22 @@
     );
     const hasImage = Boolean(readerBackgroundImageUrl && preferences.imageName);
     const active = Boolean(preferences.enabled);
-    readerDialog.style.setProperty("--reader-custom-color", validColour);
-    readerDialog.style.setProperty(
-      "--reader-custom-color-strength",
+    readerPaper.style.setProperty("--reader-page-color", validColour);
+    readerPaper.style.setProperty(
+      "--reader-page-color-strength",
       preferences.transparent ? ".34" : ".7",
     );
-    readerDialog.style.setProperty(
-      "--reader-custom-image-opacity",
+    readerPaper.style.setProperty(
+      "--reader-page-image-opacity",
       String(opacity / 100),
     );
-    readerDialog.style.setProperty(
-      "--reader-custom-image",
+    readerPaper.style.setProperty(
+      "--reader-page-image",
       hasImage ? `url("${readerBackgroundImageUrl}")` : "none",
     );
-    readerDialog.classList.toggle("has-reader-custom-background", active);
-    readerDialog.classList.toggle(
-      "has-reader-transparent-background",
+    readerPaper.classList.toggle("has-reader-custom-page", active);
+    readerPaper.classList.toggle(
+      "has-reader-transparent-page",
       Boolean(preferences.transparent),
     );
     readerBackgroundColor.value = validColour;
@@ -367,7 +356,7 @@
       ? hasImage
         ? `${preferences.imageName} · ${opacity}% photo · ${preferences.transparent ? "transparent" : "solid"} blend`
         : `${validColour} · ${preferences.transparent ? "transparent" : "solid"} colour`
-      : "Original living sky.";
+      : "Original page tone.";
   }
 
   function readReaderType() {
@@ -510,12 +499,6 @@
   toneButtons.forEach((button) => {
     button.addEventListener("click", () => setTone(button.dataset.readingTone));
   });
-  atmosphereButtons.forEach((button) => {
-    button.addEventListener("click", () =>
-      setAtmosphere(button.dataset.readerAtmosphere),
-    );
-  });
-
   readerTextColor.addEventListener("input", () => {
     const preferences = readReaderType();
     preferences.color = readerTextColor.value;
@@ -628,7 +611,7 @@
     applyReaderBackground(preferences);
     readerBackgroundStatus.textContent = preferences.enabled
       ? "Background photo removed. The colour layer remains."
-      : "Original living sky.";
+      : "Original page tone.";
   });
 
   readerResetBackground.addEventListener("click", async () => {
@@ -637,7 +620,7 @@
     readerBackgroundImageUrl = "";
     writeReaderBackground({ ...readerBackgroundDefaults });
     applyReaderBackground({ ...readerBackgroundDefaults });
-    readerBackgroundStatus.textContent = "Reader backdrop reset to the living sky.";
+    readerBackgroundStatus.textContent = "Reader page reset to its original tone.";
   });
 
   function setReaderMessage(message, isError = false) {
@@ -969,9 +952,7 @@
     readerCopy.replaceChildren();
     pageCount.textContent = "—";
     applyZoom();
-    if (!atmosphereChosen) {
-      setAtmosphere(root.dataset.theme === "light" ? "day" : "night");
-    }
+    document.body.classList.add("reader-open");
     if (!readerDialog.open) readerDialog.showModal();
     rememberReaderState();
     setReaderMessage("Opening the book…");
@@ -1006,6 +987,7 @@
     clearTimeout(controlsHideTimer);
     fallbackFocusMode = false;
     setFocusMode(false);
+    document.body.classList.remove("reader-open");
     if (document.fullscreenElement === readerDialog) {
       document.exitFullscreen().catch(() => {});
     }
@@ -1413,9 +1395,6 @@
     swipeStart = null;
   });
   addEventListener("nyarindo:themechange", (event) => {
-    if (readerDialog.open && !atmosphereChosen) {
-      setAtmosphere(event.detail.theme === "light" ? "day" : "night");
-    }
     const preferences = readReaderType();
     if (!preferences.color) applyReaderType(preferences);
   });
