@@ -117,6 +117,7 @@
     artist: "Newbon Nyarindo Gadson",
     url: `https://suno.com/song/${track.id}`,
     embedUrl: `https://suno.com/embed/${track.id}`,
+    artworkUrl: `https://cdn2.suno.ai/image_${track.id}.jpeg`,
     art: `art-${(index % 4) + 1}`,
     colour: ["#eb4b3c", "#8d623c", "#62b36e", "#f1d04e", "#5bb8e8"][index % 5],
   }));
@@ -181,6 +182,9 @@
   let trackEndTimer = 0;
   let lyricColour =
     localStorage.getItem("drift-player-lyric-colour") || "#f1d04e";
+  let backgroundPlaybackAllowed =
+    localStorage.getItem("drift-background-playback") === "true";
+  let currentPlaylistVideoId = "";
 
   function loadState() {
     try {
@@ -435,6 +439,14 @@
 
   function playerSetPlaying(playing) {
     playerPlaying = playing;
+    document.body.classList.toggle("player-is-playing", playing);
+    $("profileButton")?.classList.toggle("is-playing", playing);
+    $("profileButton")?.setAttribute(
+      "aria-label",
+      playing
+        ? "Open your local profile. Playback is active."
+        : "Open your local profile",
+    );
     const button = $("transportPlay");
     if (button) {
       button.textContent = playing ? "■" : "▶";
@@ -485,6 +497,13 @@
     if ($("publicTrackLink")) {
       $("publicTrackLink").href = track.url;
     }
+    if ($("playbackFormatBadge")) {
+      $("playbackFormatBadge").textContent =
+        track.source === "youtube" ? "PLAYLIST" : "SINGLE SOURCE";
+      $("playbackFormatBadge").dataset.format =
+        track.source === "youtube" ? "playlist" : "single";
+    }
+    if ($("playlistPosition")) $("playlistPosition").textContent = "";
     $("youtube-sample")?.classList.toggle(
       "is-current-source",
       track.source === "youtube",
@@ -502,6 +521,13 @@
     if ($("lyricTrackContext")) {
       $("lyricTrackContext").textContent =
         `Currently linked: ${track.title}. The source metadata is public; every lyric edit below stays private on this device.`;
+    }
+    if ($("searchLyricsOnline")) {
+      const query = encodeURIComponent(
+        `${track.title} ${track.artist || ""} lyrics`,
+      );
+      $("searchLyricsOnline").href =
+        `https://duckduckgo.com/?q=${query}`;
     }
     saveState();
     renderLyrics();
@@ -568,6 +594,91 @@
     if ($("embeddedLyricOverlay") && $("embeddedLyricLine")) {
       $("embeddedLyricOverlay").hidden = !hasPublicLyrics;
       $("embeddedLyricLine").textContent = hasPublicLyrics ? activeText : "";
+    }
+  }
+
+  function sendYouTubeCommand(command, args = "") {
+    const frame = $("playerEmbed")?.querySelector("iframe");
+    if (!frame || currentPlayerTrack?.source !== "youtube") return false;
+    frame.contentWindow?.postMessage(
+      JSON.stringify({ event: "command", func: command, args }),
+      "*",
+    );
+    return true;
+  }
+
+  function updatePlaylistNowPlaying(videoData) {
+    if (
+      !videoData?.video_id
+      || currentPlayerTrack?.source !== "youtube"
+      || currentPlaylistVideoId === videoData.video_id
+    ) {
+      return;
+    }
+    currentPlaylistVideoId = videoData.video_id;
+    const title = videoData.title || "YouTube playlist source";
+    const artist = videoData.author || "YouTube";
+    if ($("trackTitle")) $("trackTitle").textContent = title;
+    if ($("trackArtist")) $("trackArtist").textContent = artist;
+    if ($("trackAlbum")) $("trackAlbum").textContent = "from the living Nyarindo YouTube playlist";
+    if ($("trackSource")) $("trackSource").textContent = "PLAYING PLAYLIST · YOUTUBE";
+    if ($("playbackFormatBadge")) {
+      $("playbackFormatBadge").textContent = "PLAYLIST";
+      $("playbackFormatBadge").dataset.format = "playlist";
+    }
+    if ($("publicTrackSyncTitle")) $("publicTrackSyncTitle").textContent = title;
+    if ($("publicTrackMeta")) {
+      $("publicTrackMeta").textContent =
+        `${artist} · Current song inside Nyarindo’s living YouTube playlist.`;
+    }
+    if ($("publicTrackSource")) {
+      $("publicTrackSource").textContent =
+        "YOUTUBE PLAYLIST · SONG NOW DRIFTING";
+    }
+    if ($("lyricTrackContext")) {
+      $("lyricTrackContext").textContent =
+        `Now linked: ${title} by ${artist}. Search and paste lyrics privately; Drift never downloads them.`;
+    }
+    const artwork = $("artworkImage");
+    if (artwork) {
+      artwork.src = `https://i.ytimg.com/vi/${encodeURIComponent(videoData.video_id)}/hqdefault.jpg`;
+      artwork.alt = `${title} video thumbnail`;
+      artwork.hidden = false;
+      $("artwork")?.classList.add("has-artwork");
+    }
+    recordTrail(
+      "playlist song",
+      title,
+      `https://www.youtube.com/watch?v=${videoData.video_id}`,
+      "YouTube playlist",
+    );
+  }
+
+  function handleYouTubeMessage(event) {
+    const frame = $("playerEmbed")?.querySelector("iframe");
+    if (!frame || event.source !== frame.contentWindow) return;
+    let payload = event.data;
+    if (typeof payload === "string") {
+      try {
+        payload = JSON.parse(payload);
+      } catch {
+        return;
+      }
+    }
+    const info = payload?.info || payload;
+    updatePlaylistNowPlaying(info?.videoData);
+    const playerState =
+      typeof info?.playerState === "number"
+        ? info.playerState
+        : typeof payload?.info === "number"
+          ? payload.info
+          : null;
+    if (playerState === 1) {
+      playerSetPlaying(true);
+      startPlayerLyricClock();
+    } else if (playerState === 2) {
+      playerSetPlaying(false);
+      stopLyricClock();
     }
   }
 
@@ -691,6 +802,7 @@
     currentPlayerTrack = tracks[playerIndex];
     const track = currentPlayerTrack;
     if (!track) return;
+    currentPlaylistVideoId = "";
     pausePlayerPlayback();
     $("trackTitle").textContent = track.title;
     $("trackArtist").textContent = track.artist || "Official source";
@@ -703,7 +815,9 @@
           ? "The living YouTube playlist chosen by Newbon."
           : "Saved in your private Playground.";
     $("trackSource").textContent =
-      `NOW DRIFTING · ${track.source === "suno" ? "SUNO" : track.source === "youtube" ? "YOUTUBE" : "OFFICIAL SOURCE"}`;
+      track.source === "youtube"
+        ? "PLAYING PLAYLIST · YOUTUBE"
+        : `PLAYING SINGLE SOURCE · ${track.source === "suno" ? "SUNO" : "OFFICIAL SOURCE"}`;
     $("officialSourceLink").href = track.url;
     $("reasonText").textContent =
       track.reason ||
@@ -711,7 +825,29 @@
         ? "A direct source from Nyarindo’s public catalogue, introduced with permission."
         : "An official source held as a link. Playback remains with its creator and platform.");
     $("artwork").className = `art ${track.art || "art-1"}`;
+    const artworkImage = $("artworkImage");
+    if (track.artworkUrl) {
+      artworkImage.src = track.artworkUrl;
+      artworkImage.alt = `${track.title} artwork`;
+      artworkImage.hidden = false;
+      $("artwork").classList.add("has-artwork");
+    } else {
+      artworkImage.removeAttribute("src");
+      artworkImage.alt = "";
+      artworkImage.hidden = true;
+      $("artwork").classList.remove("has-artwork");
+    }
+    $("artwork").setAttribute(
+      "aria-label",
+      `${track.source === "youtube" ? "Play video" : "Play or pause"} ${track.title}`,
+    );
     $("playerMediaShell").hidden = true;
+    $("playerMediaShell").classList.remove("video-float");
+    document.body.classList.remove("video-floating-active");
+    if ($("videoFloatButton")) {
+      $("videoFloatButton").textContent = "Float video";
+      $("videoFloatButton").setAttribute("aria-pressed", "false");
+    }
     $("playerEmbed").replaceChildren();
     $("sourceAudio").pause();
     $("sourceAudio").removeAttribute("src");
@@ -732,6 +868,15 @@
   async function startPlayerPlayback() {
     if (!currentPlayerTrack) return;
     const track = currentPlayerTrack;
+    if (
+      track.source === "youtube"
+      && $("playerEmbed")?.querySelector("iframe")
+    ) {
+      sendYouTubeCommand("playVideo");
+      playerSetPlaying(true);
+      startPlayerLyricClock();
+      return;
+    }
     if (track.audioUrl) {
       const audio = $("sourceAudio");
       $("playerEmbed").replaceChildren();
@@ -752,6 +897,10 @@
       const embedUrl = new URL(track.embedUrl);
       embedUrl.searchParams.set("autoplay", "1");
       embedUrl.searchParams.set("playsinline", "1");
+      if (track.source === "youtube") {
+        embedUrl.searchParams.set("enablejsapi", "1");
+        embedUrl.searchParams.set("origin", location.origin);
+      }
       frame.src = embedUrl.href;
       frame.title = `${track.title} from ${track.album}`;
       frame.allow =
@@ -775,6 +924,12 @@
   function pausePlayerPlayback() {
     const audio = $("sourceAudio");
     if (audio && !audio.paused) audio.pause();
+    if (sendYouTubeCommand("pauseVideo")) {
+      stopLyricClock();
+      clearTrackEndTimer();
+      playerSetPlaying(false);
+      return;
+    }
     if ($("playerEmbed")?.querySelector("iframe")) {
       $("playerEmbed").replaceChildren();
       $("playerMediaShell").hidden = true;
@@ -787,6 +942,40 @@
   function togglePlayerPlayback() {
     if (playerPlaying) pausePlayerPlayback();
     else startPlayerPlayback();
+  }
+
+  function syncVideoFullscreenButton() {
+    const active =
+      document.fullscreenElement === $("playerMediaShell")
+      || $("playerMediaShell")?.classList.contains("video-focus-fallback");
+    if (!$("videoFullscreenButton")) return;
+    $("videoFullscreenButton").textContent = active
+      ? "Exit video screen ×"
+      : "Full-screen video ⛶";
+    $("videoFullscreenButton").setAttribute("aria-pressed", String(active));
+  }
+
+  async function setVideoFullscreen(active) {
+    const shell = $("playerMediaShell");
+    if (!shell) return;
+    if (!active) {
+      shell.classList.remove("video-focus-fallback");
+      document.body.classList.remove("video-fullscreen-active");
+      try {
+        window.screen.orientation?.unlock?.();
+      } catch {}
+      if (document.fullscreenElement === shell) {
+        await document.exitFullscreen().catch(() => {});
+      }
+      syncVideoFullscreenButton();
+      return;
+    }
+    document.body.classList.add("video-fullscreen-active");
+    shell.classList.add("video-focus-fallback");
+    try {
+      await window.screen.orientation?.lock?.("landscape");
+    } catch {}
+    syncVideoFullscreenButton();
   }
 
   function movePlayerTrack(direction) {
@@ -876,8 +1065,67 @@
     });
     $("transportPlay").addEventListener("click", togglePlayerPlayback);
     $("publicTrackPlay").addEventListener("click", togglePlayerPlayback);
-    $("nextTrack").addEventListener("click", () => movePlayerTrack(1));
-    $("previousTrack").addEventListener("click", () => movePlayerTrack(-1));
+    $("artwork").addEventListener("click", togglePlayerPlayback);
+    $("videoFullscreenButton").addEventListener("click", () => {
+      const active =
+        document.fullscreenElement === $("playerMediaShell")
+        || $("playerMediaShell").classList.contains("video-focus-fallback");
+      setVideoFullscreen(!active);
+    });
+    document.addEventListener("fullscreenchange", () => {
+      if (document.fullscreenElement !== $("playerMediaShell")) {
+        $("playerMediaShell")?.classList.remove("video-focus-fallback");
+        document.body.classList.remove("video-fullscreen-active");
+        try {
+          window.screen.orientation?.unlock?.();
+        } catch {}
+      }
+      syncVideoFullscreenButton();
+    });
+    $("videoFloatButton").addEventListener("click", async () => {
+      const shell = $("playerMediaShell");
+      if (!shell || !$("playerEmbed")?.querySelector("iframe")) return;
+      if (document.fullscreenElement === shell) {
+        await document.exitFullscreen().catch(() => {});
+      }
+      const floating = shell.classList.toggle("video-float");
+      document.body.classList.toggle("video-floating-active", floating);
+      $("videoFloatButton").textContent = floating ? "Dock video" : "Float video";
+      $("videoFloatButton").setAttribute("aria-pressed", String(floating));
+    });
+    $("videoCloseButton").addEventListener("click", () => {
+      pausePlayerPlayback();
+      setVideoFullscreen(false);
+      $("playerMediaShell").classList.remove("video-float");
+      document.body.classList.remove("video-floating-active");
+      $("videoFloatButton").textContent = "Float video";
+      $("videoFloatButton").setAttribute("aria-pressed", "false");
+    });
+    window.addEventListener("message", handleYouTubeMessage);
+    $("nextTrack").addEventListener("click", () => {
+      if (currentPlayerTrack?.source === "youtube" && sendYouTubeCommand("nextVideo")) {
+        recordTrail(
+          "advanced playlist",
+          "Next song",
+          "https://www.youtube.com/playlist?list=PLax6dkIC77xw",
+          "YouTube playlist",
+        );
+        return;
+      }
+      movePlayerTrack(1);
+    });
+    $("previousTrack").addEventListener("click", () => {
+      if (currentPlayerTrack?.source === "youtube" && sendYouTubeCommand("previousVideo")) {
+        recordTrail(
+          "returned in playlist",
+          "Previous song",
+          "https://www.youtube.com/playlist?list=PLax6dkIC77xw",
+          "YouTube playlist",
+        );
+        return;
+      }
+      movePlayerTrack(-1);
+    });
     $("driftButton").addEventListener("click", () => {
       $("directionPanel").hidden = !$("directionPanel").hidden;
     });
@@ -981,6 +1229,74 @@
       toast("Artist support remains an official-source handoff in this build."),
     );
     $("driftSupport").addEventListener("click", () => $("faqDialog")?.showModal());
+    const renderBackgroundPermission = () => {
+      $("backgroundAudioPermission").setAttribute(
+        "aria-pressed",
+        String(backgroundPlaybackAllowed),
+      );
+      $("backgroundAudioPermission").textContent = backgroundPlaybackAllowed
+        ? "Hidden playback allowed"
+        : "Allow hidden playback";
+    };
+    renderBackgroundPermission();
+    $("backgroundAudioPermission").addEventListener("click", () => {
+      if (backgroundPlaybackAllowed) {
+        backgroundPlaybackAllowed = false;
+        localStorage.setItem("drift-background-playback", "false");
+        renderBackgroundPermission();
+        toast("Drift will pause when the app is hidden.");
+        return;
+      }
+      if (
+        !window.confirm(
+          "Allow Drift to keep playing audio when you leave or hide the app? Your provider may still pause embedded media.",
+        )
+      ) {
+        return;
+      }
+      backgroundPlaybackAllowed = true;
+      localStorage.setItem("drift-background-playback", "true");
+      renderBackgroundPermission();
+      toast("Hidden playback allowed while the provider keeps its player active.");
+    });
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden && !backgroundPlaybackAllowed && playerPlaying) {
+        pausePlayerPlayback();
+      }
+    });
+    $("searchLyricsOnline").addEventListener("click", () => {
+      if (!currentPlayerTrack) return;
+      recordTrail(
+        "searched lyrics",
+        currentPlayerTrack.title,
+        $("searchLyricsOnline").href,
+        currentPlayerTrack.album,
+      );
+    });
+    $("pasteLyricsButton").addEventListener("click", async () => {
+      try {
+        const text = (await navigator.clipboard.readText()).trim();
+        if (!text) {
+          toast("The clipboard has no lyric text.");
+          return;
+        }
+        $("lyricEditor").value = text;
+        state.lyrics.text = text;
+        state.lyrics.timings = [];
+        if (currentPlayerTrack) {
+          state.lyricsByTrack[currentPlayerTrack.id] = {
+            text,
+            timings: [],
+          };
+        }
+        saveState(true);
+        renderLyrics();
+        toast("Lyrics pasted into your private Playground.");
+      } catch {
+        $("lyricEditor").focus();
+        toast("Use paste in the lyric editor to keep the text local.");
+      }
+    });
     audio.addEventListener("play", () => {
       playerSetPlaying(true);
       startPlayerLyricClock();

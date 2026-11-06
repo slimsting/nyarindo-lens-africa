@@ -9,8 +9,8 @@
 .brand .brand-mark{
   position:relative;
   flex:0 0 auto;
-  width:46px;
-  height:46px;
+  width:64px;
+  height:64px;
   overflow:hidden;
   padding:0;
   border:2px solid rgba(210,163,109,.58);
@@ -63,8 +63,8 @@
   }
 
   .brand .brand-mark {
-    width: 40px;
-    height: 40px;
+    width: 56px;
+    height: 56px;
     border-width: 2px;
     box-shadow: 0 0 0 4px rgba(88, 181, 116, .09),
                 0 0 18px rgba(88, 181, 116, .18)
@@ -72,7 +72,7 @@
 
   .brand > span:last-child {
     min-width: 0;
-    max-width: 170px;
+    max-width: 142px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap

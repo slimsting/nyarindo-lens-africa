@@ -32,11 +32,11 @@
     <link rel="stylesheet" href="/portfolio-website/local-fonts.css?v=fonts-1">
     <link rel="stylesheet" href="/portfolio-website/theme-controls.css?v=theme-controls-8">
     <link rel="stylesheet" href="/portfolio-website/install-apps.css?v=install-note-1">
-    <link rel="stylesheet" href="/portfolio-website/lens-atmosphere.css?v=lens-atmosphere-19">
+    <link rel="stylesheet" href="/portfolio-website/lens-atmosphere.css?v=lens-atmosphere-22">
     <link rel="stylesheet" href="/portfolio-website/site-map.css?v=site-map-3">
     <link rel="stylesheet" href="tap-feedback.css?v=tap-feedback-1">
     <link rel="stylesheet" href="styles.css?v=trail-native-2">
-    <link rel="stylesheet" href="compact-shell.css?v=compact-shell-1">
+    <link rel="stylesheet" href="compact-shell.css?v=compact-shell-3">
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -71,6 +71,7 @@
       <div class="header-actions">
         <button class="quiet-action" id="faqButton" type="button" aria-haspopup="dialog" aria-controls="faqDialog">How Drift works</button>
         <button class="theme-button" type="button" data-theme-toggle data-theme-light="#f4f3eb" data-theme-dark="#090a08" aria-label="Switch to day mode" aria-pressed="true"><span class="theme-icon" aria-hidden="true">☾</span><span class="theme-label">NIGHT</span></button>
+        <span class="nav-live-visual" id="navLiveVisual" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></span>
         <button class="profile-button" id="profileButton" type="button" aria-label="Open your local profile"><span id="profileInitial">D</span><img id="profileAvatarSmall" alt="" hidden></button>
       </div>
     </header>
@@ -125,9 +126,10 @@
           </nav>
 
           <section class="now-playing" aria-live="polite">
-            <div class="art art-1" id="artwork" aria-hidden="true"><span></span><span></span><span></span></div>
+            <button class="art art-1" id="artwork" type="button" aria-label="Open the current source player"><img id="artworkImage" alt="" hidden><span></span><span></span><span></span></button>
             <div class="track-info">
               <p class="eyebrow" id="trackSource">NOW DRIFTING · SUNO</p>
+              <div class="playback-format-row"><span class="playback-format-badge" id="playbackFormatBadge">SINGLE SOURCE</span><span id="playlistPosition"></span></div>
               <h2 id="trackTitle">Peace Pon Eye And Eye</h2>
               <p id="trackArtist">Newbon Nyarindo Gadson</p>
               <p class="album" id="trackAlbum">from the Nyarindo Lens catalogue</p>
@@ -138,6 +140,9 @@
 
           <div class="player-media-shell" id="playerMediaShell" hidden>
             <div id="playerEmbed"></div>
+            <button class="video-fullscreen-button" id="videoFullscreenButton" type="button" aria-pressed="false">Full-screen video ⛶</button>
+            <button class="video-float-button" id="videoFloatButton" type="button" aria-pressed="false">Float video</button>
+            <button class="video-close-button" id="videoCloseButton" type="button" aria-label="Close video and stop playback">×</button>
             <div class="embedded-lyric-overlay" id="embeddedLyricOverlay" aria-live="polite" hidden><span>CURRENT LINE</span><p id="embeddedLyricLine"></p></div>
           </div>
           <video class="source-audio-engine" id="sourceAudio" playsinline preload="metadata" aria-hidden="true"></video>
@@ -184,6 +189,7 @@
           <section class="support" aria-label="Support options">
             <button id="artistTip" type="button">♡ Support the artist</button>
             <button id="driftSupport" type="button">How Drift works</button>
+            <button id="backgroundAudioPermission" type="button" aria-pressed="false">Allow hidden playback</button>
           </section>
 
           <section class="drift-system-reveal" aria-labelledby="driftSystemTitle">
@@ -342,7 +348,7 @@
                 <div class="lyric-preview" id="lyricPreview" aria-label="Private lyric stage"><p>Your lyrics will appear here as you write.</p></div>
               </div>
               <textarea id="lyricEditor" rows="6" placeholder="Write or paste your private lyrics, one line at a time."></textarea>
-              <div class="button-row"><button class="soft-button" id="tapTiming" type="button">Tap next line</button><button class="soft-button" id="exportLyrics" type="button">Export lyrics + timing</button><button class="text-button" id="clearLyrics" type="button">Clear</button></div>
+              <div class="button-row"><a class="soft-button" id="searchLyricsOnline" href="https://www.google.com/search?q=lyrics" target="_blank" rel="noopener noreferrer">Search lyrics online ↗</a><button class="soft-button" id="pasteLyricsButton" type="button">Paste copied lyrics</button><button class="soft-button" id="tapTiming" type="button">Tap next line</button><button class="soft-button" id="exportLyrics" type="button">Export lyrics + timing</button><button class="text-button" id="clearLyrics" type="button">Clear</button></div>
               <p class="timing-status" id="timingStatus">Prime the local recording, then tap each line as it begins.</p>
               <details class="lyric-theme-panel">
                 <summary>Lyric window theme</summary>
@@ -441,9 +447,9 @@
     </dialog>
 
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
-    <script src="app.js?v=trail-native-2"></script>
+    <script src="app.js?v=trail-native-5"></script>
     <script src="tap-feedback.js?v=tap-feedback-1"></script>
-    <script src="/portfolio-website/site-theme-control.js?v=colour-world-2"></script>
+    <script src="/portfolio-website/site-theme-control.js?v=colour-world-3"></script>
     <script src="/portfolio-website/install-app.js?v=install-separate-2"></script>
     <nav class="site-map" aria-label="Nyarindo Lens Universal site map">
       <div class="site-map-intro"><p class="site-map-eyebrow">THE WHOLE NYARINDO LENS</p><h2>Every page, one connected field.</h2><p>Move through the theory sequence, books, and browser projects from the same Lens.</p><a class="site-map-index" href="/sitemap.xml">Machine-readable site map ↗</a></div>

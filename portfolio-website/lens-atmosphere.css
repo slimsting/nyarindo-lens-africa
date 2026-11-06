@@ -124,8 +124,8 @@ html[data-theme="dark"] body::before {
     center;
   background-size:
     cover,
-    1100px 430px,
-    980px 360px,
+    cover,
+    cover,
     360px 94px,
     280px 74px,
     cover;
@@ -170,6 +170,30 @@ html[data-theme="dark"] body::after {
     lens-stars-twinkle 14s ease-in-out infinite alternate,
     lens-stars-pass 220s linear infinite;
   will-change: opacity, background-position;
+}
+
+/* Dark content floats directly in the same uninterrupted night sky. */
+html[data-theme="dark"][data-page="home"] body > main > :is(
+  .work,
+  .app-launchpad,
+  .approach,
+  .closing,
+  .books-section,
+  .both-hats,
+  .coherence-theory
+) {
+  background: transparent !important;
+  border-color: transparent;
+  box-shadow: none !important;
+}
+
+html[data-theme="dark"][data-page="home"] body > :is(
+  .social-footer,
+  .ucp-signoff,
+  .nyarindo-thread-footer
+) {
+  background: transparent !important;
+  box-shadow: none !important;
 }
 
 @keyframes lens-day-clouds {
@@ -322,7 +346,7 @@ html[data-theme="dark"] body::after {
       center;
     background-size:
       cover,
-      800px 320px,
+      cover,
       260px 70px,
       cover;
     opacity: .98;
@@ -515,6 +539,7 @@ html[data-theme="dark"] body::after {
   height: 20px;
   border-radius: 50% 58% 44% 55%;
   background: linear-gradient(180deg, #d5a34f 0 35%, #6d8b77 36% 100%);
+  transform: scaleX(-1);
 }
 
 .nyarindo-sky-traffic .sky-helicopter .aircraft-body::before {
@@ -559,6 +584,155 @@ html[data-theme="dark"] body::after {
   box-shadow: 0 0 10px #7bd8b0;
 }
 
+/* Night satellites move slowly and signal with a small, readable artificial blink. */
+.nyarindo-sky-traffic .sky-satellite {
+  --satellite-top: 19%;
+  --satellite-duration: 260s;
+  --satellite-delay: -74s;
+  --satellite-rise: -7vh;
+  top: var(--satellite-top);
+  left: -14vw;
+  display: none;
+  width: 34px;
+  height: 12px;
+}
+
+html[data-theme="dark"] .nyarindo-sky-traffic .sky-satellite {
+  display: block;
+  animation:
+    nyarindo-satellite-cross var(--satellite-duration) linear var(--satellite-delay) infinite;
+}
+
+.nyarindo-sky-traffic .sky-satellite::before {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 0;
+  width: 34px;
+  height: 7px;
+  border-radius: 2px;
+  background:
+    linear-gradient(90deg, #376c9c 0 31%, transparent 31% 69%, #376c9c 69% 100%);
+  box-shadow: inset 0 0 0 1px rgba(156, 219, 255, .24);
+}
+
+.nyarindo-sky-traffic .sky-satellite::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 13px;
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  background: linear-gradient(145deg, #faf3c6, #8bc2dd);
+  box-shadow: 0 0 4px rgba(255, 248, 198, .78);
+  animation: satellite-signal 3.8s steps(1) infinite;
+}
+
+.nyarindo-sky-traffic .satellite-a {
+  --satellite-top: 15%;
+  --satellite-duration: 238s;
+  --satellite-delay: -46s;
+}
+
+.nyarindo-sky-traffic .satellite-b {
+  --satellite-top: 39%;
+  --satellite-duration: 317s;
+  --satellite-delay: -201s;
+  --satellite-rise: -12vh;
+  --satellite-scale: .72;
+}
+
+.nyarindo-sky-traffic .satellite-c {
+  --satellite-top: 63%;
+  --satellite-duration: 286s;
+  --satellite-delay: -123s;
+  --satellite-rise: -4vh;
+  --satellite-scale: .58;
+}
+
+/* Daylight balloons borrow the black, white, red, and green of the Kenyan flag. */
+.nyarindo-sky-traffic .sky-balloon {
+  --balloon-top: 23%;
+  --balloon-duration: 254s;
+  --balloon-delay: -86s;
+  --balloon-rise: -8vh;
+  top: var(--balloon-top);
+  left: -16vw;
+  display: none;
+  width: 58px;
+  height: 82px;
+  filter: drop-shadow(0 8px 10px rgba(15, 62, 79, .2));
+}
+
+html[data-theme="light"] .nyarindo-sky-traffic .sky-balloon {
+  display: block;
+  animation:
+    nyarindo-balloon-cross var(--balloon-duration) ease-in-out var(--balloon-delay) infinite;
+}
+
+.nyarindo-sky-traffic .sky-balloon::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 3px;
+  width: 52px;
+  height: 60px;
+  border: 1px solid rgba(19, 43, 38, .24);
+  border-radius: 50% 50% 44% 44%;
+  background:
+    radial-gradient(circle at 35% 27%, rgba(255, 255, 255, .66), transparent 23%),
+    linear-gradient(180deg, #111 0 25%, #fff 25% 31%, #ce3737 31% 58%, #fff 58% 64%, #27874d 64% 100%);
+  box-shadow:
+    inset 8px 0 18px rgba(255, 255, 255, .15),
+    inset -9px -4px 18px rgba(0, 0, 0, .18);
+}
+
+.nyarindo-sky-traffic .sky-balloon::after {
+  content: "";
+  position: absolute;
+  right: 17px;
+  bottom: 1px;
+  width: 24px;
+  height: 11px;
+  border: 2px solid #62442c;
+  border-radius: 3px 3px 7px 7px;
+  background: #b77a42;
+}
+
+.nyarindo-sky-traffic .balloon-rigging {
+  position: absolute;
+  top: 54px;
+  left: 14px;
+  width: 30px;
+  height: 20px;
+  background:
+    linear-gradient(78deg, transparent 48%, rgba(67, 48, 30, .72) 49% 52%, transparent 53%),
+    linear-gradient(102deg, transparent 48%, rgba(67, 48, 30, .72) 49% 52%, transparent 53%);
+}
+
+.nyarindo-sky-traffic .balloon-a {
+  --balloon-top: 22%;
+  --balloon-duration: 248s;
+  --balloon-delay: -78s;
+}
+
+.nyarindo-sky-traffic .balloon-b {
+  --balloon-top: 46%;
+  --balloon-duration: 331s;
+  --balloon-delay: -229s;
+  --balloon-rise: -13vh;
+  --balloon-scale: .72;
+}
+
+.nyarindo-sky-traffic .balloon-c {
+  --balloon-top: 68%;
+  --balloon-duration: 287s;
+  --balloon-delay: -151s;
+  --balloon-rise: -5vh;
+  --balloon-scale: .54;
+}
+
 html[data-theme="dark"] .nyarindo-sky-traffic > span {
   opacity: 0;
   filter: drop-shadow(0 0 7px rgba(119, 201, 235, .28));
@@ -595,6 +769,55 @@ html[data-theme="dark"] .nyarindo-sky-traffic .aircraft-contrail {
 @keyframes helicopter-rotor {
   to {
     transform: rotate(360deg);
+  }
+}
+
+@keyframes nyarindo-satellite-cross {
+  0%,
+  8% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0) rotate(-8deg) scale(var(--satellite-scale, 1));
+  }
+  11%,
+  91% {
+    opacity: .84;
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(138vw, var(--satellite-rise), 0) rotate(5deg) scale(var(--satellite-scale, 1));
+  }
+}
+
+@keyframes satellite-signal {
+  0%,
+  7%,
+  15%,
+  100% {
+    box-shadow: 0 0 4px rgba(255, 248, 198, .72);
+    opacity: .72;
+  }
+  8%,
+  14% {
+    box-shadow: 0 0 13px 4px rgba(255, 250, 204, 1);
+    opacity: 1;
+  }
+}
+
+@keyframes nyarindo-balloon-cross {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0) rotate(-2deg) scale(var(--balloon-scale, 1));
+  }
+  5%,
+  95% {
+    opacity: .82;
+  }
+  50% {
+    transform: translate3d(74vw, var(--balloon-rise), 0) rotate(1deg) scale(var(--balloon-scale, 1));
+  }
+  100% {
+    opacity: 0;
+    transform: translate3d(146vw, -2vh, 0) rotate(3deg) scale(var(--balloon-scale, 1));
   }
 }
 
@@ -638,7 +861,9 @@ html[data-theme="dark"] .nyarindo-sky-traffic .aircraft-contrail {
   }
 
   .nyarindo-sky-traffic .helicopter-b,
-  .nyarindo-sky-traffic .plane-b {
+  .nyarindo-sky-traffic .plane-b,
+  .nyarindo-sky-traffic .satellite-c,
+  .nyarindo-sky-traffic .balloon-c {
     display: none;
   }
 }
@@ -647,7 +872,8 @@ html[data-theme="dark"] .nyarindo-sky-traffic .aircraft-contrail {
   .nyarindo-sky-traffic,
   .nyarindo-sky-traffic > span,
   .nyarindo-sky-traffic .aircraft-rotor,
-  .nyarindo-sky-traffic .aircraft-light {
+  .nyarindo-sky-traffic .aircraft-light,
+  .nyarindo-sky-traffic .sky-satellite::after {
     animation: none !important;
   }
 }

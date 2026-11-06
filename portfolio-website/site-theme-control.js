@@ -52,6 +52,12 @@
       ["sky-plane", "plane-b"],
       ["sky-helicopter", "helicopter-a"],
       ["sky-helicopter", "helicopter-b"],
+      ["sky-satellite", "satellite-a"],
+      ["sky-satellite", "satellite-b"],
+      ["sky-satellite", "satellite-c"],
+      ["sky-balloon", "balloon-a"],
+      ["sky-balloon", "balloon-b"],
+      ["sky-balloon", "balloon-c"],
     ].forEach(([type, variant]) => {
       const craft = document.createElement("span");
       craft.className = `${type} ${variant}`;
@@ -64,6 +70,11 @@
       const light = document.createElement("i");
       light.className = "aircraft-light";
       craft.append(contrail, rotor, body, light);
+      if (type === "sky-balloon") {
+        const rigging = document.createElement("i");
+        rigging.className = "balloon-rigging";
+        craft.append(rigging);
+      }
       sky.append(craft);
     });
 

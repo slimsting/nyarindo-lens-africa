@@ -11,7 +11,7 @@ const CORE = [
   "/books/vendor/pdfjs/pdf.worker.min.mjs",
   "/portfolio-website/theme-controls.css?v=theme-controls-8",
   "/portfolio-website/site-theme-init.js?v=colour-world-2",
-  "/portfolio-website/site-theme-control.js?v=colour-world-2",
+  "/portfolio-website/site-theme-control.js?v=colour-world-3",
   "/portfolio-website/palette-themes.css?v=palette-themes-5",
   "/books/assets/entering-the-spiral.svg",
   "/books/assets/spiral-beyond.svg",
