@@ -654,10 +654,7 @@
   }
 
   function applyZoom() {
-    readerPaper.style.setProperty(
-      "--reader-font-size",
-      `${(1.12 * zoom).toFixed(2)}rem`,
-    );
+    readerPaper.style.setProperty("--reader-page-zoom", String(zoom));
     updateReaderStatus();
   }
 
