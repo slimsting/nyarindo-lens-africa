@@ -28,14 +28,15 @@
     <meta name="twitter:title" content="Drift — Follow the human trail through music">
     <meta name="twitter:description" content="Official source links, visible introductions, and a private Playground for listening, stories, lyrics, and local collections.">
     <meta name="twitter:image" content="https://nyarindolens.com/drift/assets/drift-app-icon.svg">
-    <script src="/portfolio-website/site-theme-init.js?v=colour-world-1"></script>
+    <script src="/portfolio-website/site-theme-init.js?v=colour-world-2"></script>
     <link rel="stylesheet" href="/portfolio-website/local-fonts.css?v=fonts-1">
-    <link rel="stylesheet" href="/portfolio-website/theme-controls.css?v=theme-controls-6">
+    <link rel="stylesheet" href="/portfolio-website/theme-controls.css?v=theme-controls-8">
     <link rel="stylesheet" href="/portfolio-website/install-apps.css?v=install-note-1">
-    <link rel="stylesheet" href="/portfolio-website/lens-atmosphere.css?v=lens-atmosphere-18">
+    <link rel="stylesheet" href="/portfolio-website/lens-atmosphere.css?v=lens-atmosphere-19">
     <link rel="stylesheet" href="/portfolio-website/site-map.css?v=site-map-3">
     <link rel="stylesheet" href="tap-feedback.css?v=tap-feedback-1">
-    <link rel="stylesheet" href="styles.css?v=trail-native-1">
+    <link rel="stylesheet" href="styles.css?v=trail-native-2">
+    <link rel="stylesheet" href="compact-shell.css?v=compact-shell-1">
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -75,6 +76,29 @@
     </header>
 
     <main id="main">
+      <aside class="drift-rail" aria-label="Drift tools">
+        <a class="rail-tool rail-player" href="#driftPlayerView" data-show-player aria-label="Player">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.8v14.4L19 12 7 4.8Z"/></svg><span>Play</span>
+        </a>
+        <button class="rail-tool rail-sources" type="button" data-show-lab data-lab-target="discover" aria-label="Sources">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="m15.7 8.3-2.1 5.3-5.3 2.1 2.1-5.3 5.3-2.1Z"/></svg><span>Sources</span>
+        </button>
+        <button class="rail-tool rail-playground" type="button" data-show-lab data-lab-target="playground" aria-label="Playground">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 6.5h14M5 12h14M5 17.5h14"/><circle cx="8" cy="6.5" r="1.6"/><circle cx="15.5" cy="12" r="1.6"/><circle cx="10" cy="17.5" r="1.6"/></svg><span>Playground</span>
+        </button>
+        <button class="rail-tool rail-lyrics" type="button" data-show-lab data-lab-target="lyricLab" aria-label="Lyric Lab">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 16.5a4 4 0 1 0 4-4V4.5l7-1.5v4l-4 .9"/><path d="M11 12.5v7"/></svg><span>Lyrics</span>
+        </button>
+        <button class="rail-tool rail-theme" type="button" data-show-lab data-lab-target="theme" aria-label="Theme Lab">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5c5 0 8.5 3.3 8.5 7.5 0 3-2.2 4.8-4.7 4.8h-1.5c-1.2 0-2 .8-2 2 0 .9.3 1.3.3 2.1A2.1 2.1 0 0 1 10.5 22C6 22 3 18.3 3 13.8 3 8 6.8 3.5 12 3.5Z"/><circle cx="8.3" cy="10" r="1"/><circle cx="11.5" cy="7.4" r="1"/><circle cx="15.3" cy="8.6" r="1"/></svg><span>Theme</span>
+        </button>
+        <button class="rail-tool rail-sandbox" type="button" data-show-lab data-lab-target="sandbox" aria-label="AI Sandbox">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 1.4 5.2L18 9l-4.6 1.8L12 16l-1.4-5.2L6 9l4.6-1.8L12 2Z"/><path d="m19 14 .8 2.8L22 18l-2.2.9L19 22l-.8-3.1L16 18l2.2-1.2L19 14Z"/></svg><span>Sandbox</span>
+        </button>
+        <a class="rail-tool rail-artist" href="artist.html" aria-label="Artist lane">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3"/><path d="M5.5 20c.4-4 2.5-6.1 6.5-6.1s6.1 2.1 6.5 6.1"/><path d="M18 3.5v5l3-1.5-3-1.5"/></svg><span>Artist</span>
+        </a>
+      </aside>
       <section class="drift-player-view" id="driftPlayerView" aria-labelledby="driftPlayerTitle">
         <div class="player-shell">
           <section class="welcome">
@@ -91,6 +115,15 @@
             <button class="mode mode-explore" data-mode="explore" type="button"><b>Explore</b><small>Open the whole source field</small></button>
           </section>
 
+          <nav class="player-service-orbit" aria-label="Drift services around the player">
+            <button type="button" class="service-orbit-tool service-trail" data-service-target="trail"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 18c4 0 3-12 7-12s3 12 7 12"/><circle cx="5" cy="18" r="1.5"/><circle cx="12" cy="6" r="1.5"/><circle cx="19" cy="18" r="1.5"/></svg><span>Trail</span></button>
+            <button type="button" class="service-orbit-tool service-albums" data-service-target="collections"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="14" height="14" rx="2"/><path d="M8 2.5h12v14M8 9h6M8 13h6"/></svg><span>Albums</span></button>
+            <button type="button" class="service-orbit-tool service-import" data-service-target="import"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v11M8 10l4 4 4-4M5 17v3h14v-3"/></svg><span>Import</span></button>
+            <button type="button" class="service-orbit-tool service-lyrics" data-service-target="lyricLab"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 16.5a4 4 0 1 0 4-4V4.5l7-1.5v4l-4 .9M11 12.5v7"/></svg><span>Lyrics</span></button>
+            <button type="button" class="service-orbit-tool service-theme" data-service-target="theme"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5c5 0 8.5 3.3 8.5 7.5 0 3-2.2 4.8-4.7 4.8h-1.5c-1.2 0-2 .8-2 2 0 .9.3 1.3.3 2.1A2.1 2.1 0 0 1 10.5 22C6 22 3 18.3 3 13.8 3 8 6.8 3.5 12 3.5Z"/></svg><span>Theme</span></button>
+            <button type="button" class="service-orbit-tool service-sandbox" data-service-target="sandbox"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 1.4 5.2L18 9l-4.6 1.8L12 16l-1.4-5.2L6 9l4.6-1.8L12 2Z"/><path d="m19 14 .8 2.8L22 18l-2.2.9L19 22l-.8-3.1L16 18l2.2-1.2L19 14Z"/></svg><span>Sandbox</span></button>
+          </nav>
+
           <section class="now-playing" aria-live="polite">
             <div class="art art-1" id="artwork" aria-hidden="true"><span></span><span></span><span></span></div>
             <div class="track-info">
@@ -105,6 +138,7 @@
 
           <div class="player-media-shell" id="playerMediaShell" hidden>
             <div id="playerEmbed"></div>
+            <div class="embedded-lyric-overlay" id="embeddedLyricOverlay" aria-live="polite" hidden><span>CURRENT LINE</span><p id="embeddedLyricLine"></p></div>
           </div>
           <video class="source-audio-engine" id="sourceAudio" playsinline preload="metadata" aria-hidden="true"></video>
 
@@ -258,12 +292,12 @@
 
         <div class="playground-body" id="playgroundBody">
           <nav class="adaptive-tools" id="adaptiveTools" aria-label="Playground tools">
-            <button type="button" data-tool="trail">Trail</button>
-            <button type="button" data-tool="collections">Albums</button>
-            <button type="button" data-tool="import">Import</button>
-            <button type="button" data-tool="lyricLab">Lyric Lab</button>
-            <button type="button" data-tool="theme">Theme Lab</button>
-            <button type="button" data-tool="sandbox">AI Sandbox</button>
+            <button type="button" data-tool="trail"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 18c4 0 3-12 7-12s3 12 7 12"/><circle cx="5" cy="18" r="1.5"/><circle cx="12" cy="6" r="1.5"/><circle cx="19" cy="18" r="1.5"/></svg><span>Trail</span></button>
+            <button type="button" data-tool="collections"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="14" height="14" rx="2"/><path d="M8 2.5h12v14"/><path d="M8 9h6M8 13h6"/></svg><span>Albums</span></button>
+            <button type="button" data-tool="import"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v11"/><path d="m8 10 4 4 4-4"/><path d="M5 17v3h14v-3"/></svg><span>Import</span></button>
+            <button type="button" data-tool="lyricLab"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 16.5a4 4 0 1 0 4-4V4.5l7-1.5v4l-4 .9"/><path d="M11 12.5v7"/></svg><span>Lyric Lab</span></button>
+            <button type="button" data-tool="theme"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.5c5 0 8.5 3.3 8.5 7.5 0 3-2.2 4.8-4.7 4.8h-1.5c-1.2 0-2 .8-2 2 0 .9.3 1.3.3 2.1A2.1 2.1 0 0 1 10.5 22C6 22 3 18.3 3 13.8 3 8 6.8 3.5 12 3.5Z"/><circle cx="8.3" cy="10" r="1"/><circle cx="11.5" cy="7.4" r="1"/><circle cx="15.3" cy="8.6" r="1"/></svg><span>Theme Lab</span></button>
+            <button type="button" data-tool="sandbox"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 1.4 5.2L18 9l-4.6 1.8L12 16l-1.4-5.2L6 9l4.6-1.8L12 2Z"/><path d="m19 14 .8 2.8L22 18l-2.2.9L19 22l-.8-3.1L16 18l2.2-1.2L19 14Z"/></svg><span>AI Sandbox</span></button>
           </nav>
 
           <div class="playground-grid">
@@ -407,9 +441,9 @@
     </dialog>
 
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
-    <script src="app.js?v=trail-native-1"></script>
+    <script src="app.js?v=trail-native-2"></script>
     <script src="tap-feedback.js?v=tap-feedback-1"></script>
-    <script src="/portfolio-website/site-theme-control.js?v=colour-world-1"></script>
+    <script src="/portfolio-website/site-theme-control.js?v=colour-world-2"></script>
     <script src="/portfolio-website/install-app.js?v=install-separate-2"></script>
     <nav class="site-map" aria-label="Nyarindo Lens Universal site map">
       <div class="site-map-intro"><p class="site-map-eyebrow">THE WHOLE NYARINDO LENS</p><h2>Every page, one connected field.</h2><p>Move through the theory sequence, books, and browser projects from the same Lens.</p><a class="site-map-index" href="/sitemap.xml">Machine-readable site map ↗</a></div>

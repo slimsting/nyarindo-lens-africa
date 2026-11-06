@@ -63,25 +63,25 @@ main :is(h1, h2, h3, h4, h5, h6, p, li, a, button, dt, dd, blockquote, figcaptio
 /* Daylight: unmistakably blue, with wide staggered cloud traffic and layered birds. */
 html[data-theme="light"] body::before {
   background-image:
-    url("assets/atmosphere/day-sky.svg"),
     radial-gradient(ellipse at center, rgba(255, 255, 255, .96) 0 28%, rgba(255, 255, 255, .68) 48%, transparent 73%),
     radial-gradient(ellipse at center, rgba(255, 255, 255, .9) 0 31%, rgba(245, 252, 255, .56) 55%, transparent 76%),
     radial-gradient(ellipse at center, rgba(255, 255, 255, .82) 0 30%, rgba(236, 249, 255, .45) 56%, transparent 76%),
     radial-gradient(ellipse at center, rgba(255, 255, 255, .72) 0 32%, rgba(227, 246, 255, .34) 58%, transparent 78%),
-    linear-gradient(180deg, #219cdf 0%, #63bceb 32%, #a9ddf2 62%, #dff4f6 84%, #f4f2df 100%);
+    url("assets/atmosphere/day-sky.svg"),
+    linear-gradient(180deg, #0787d7 0%, #31a9e6 30%, #8bd2f1 61%, #dcf3f8 83%, #f4f2df 100%);
   background-position:
-    center top,
     -16% 18%,
     106% 31%,
     18% 44%,
     76% 8%,
+    center top,
     center;
   background-size:
-    cover,
     310px 96px,
     245px 74px,
     190px 58px,
     130px 40px,
+    cover,
     cover;
   background-repeat: no-repeat;
   opacity: .96;
@@ -93,18 +93,15 @@ html[data-theme="light"] body::after {
   inset: 0 -520px 0 0;
   background-image:
     url("assets/atmosphere/coastal-birds.svg"),
-    url("assets/atmosphere/coastal-birds.svg"),
     url("assets/atmosphere/coastal-birds.svg");
   background-position:
-    0 20%,
-    170px 36%,
+    0 24%,
     70px 54%;
   background-repeat: repeat-x;
   background-size:
     520px 180px,
-    430px 150px,
     360px 126px;
-  opacity: .58;
+  opacity: .46;
   animation: lens-birds-cross 96s linear infinite;
   will-change: transform;
 }
@@ -178,29 +175,29 @@ html[data-theme="dark"] body::after {
 @keyframes lens-day-clouds {
   0% {
     background-position:
-      center top,
       -16% 18%,
       106% 31%,
       18% 44%,
       76% 8%,
+      center top,
       center;
   }
   45% {
     background-position:
-      center 1.5%,
       28% 21%,
       65% 27%,
       39% 48%,
       87% 12%,
+      center 1.5%,
       center;
   }
   100% {
     background-position:
-      center 3%,
       118% 19%,
       -14% 36%,
       63% 41%,
       94% 5%,
+      center 3%,
       center;
   }
 }
@@ -295,19 +292,19 @@ html[data-theme="dark"] body::after {
 @media (max-width: 700px) {
   html[data-theme="light"] body::before {
     background-image:
-      url("assets/atmosphere/day-sky-mobile.svg"),
       radial-gradient(ellipse at center, rgba(255, 255, 255, .94) 0 29%, rgba(255, 255, 255, .58) 52%, transparent 74%),
       radial-gradient(ellipse at center, rgba(255, 255, 255, .84) 0 31%, rgba(235, 249, 255, .42) 56%, transparent 76%),
-      linear-gradient(180deg, #249ee0 0%, #67bdeb 34%, #b5e2f4 68%, #eef6ed 100%);
+      url("assets/atmosphere/day-sky-mobile.svg"),
+      linear-gradient(180deg, #088bd8 0%, #35ace6 34%, #9cd8f1 68%, #eef6ed 100%);
     background-position:
-      center,
       -24% 22%,
       110% 39%,
+      center,
       center;
     background-size:
-      cover,
       220px 68px,
       170px 54px,
+      cover,
       cover;
     opacity: .97;
   }
@@ -334,14 +331,12 @@ html[data-theme="dark"] body::after {
   html[data-theme="light"] body::after {
     inset: 0 -360px 0 0;
     background-position:
-      0 18%,
-      120px 36%,
+      0 20%,
       40px 57%;
     background-size:
       360px 124px,
-      300px 104px,
       250px 86px;
-    opacity: .56;
+    opacity: .45;
     animation-name: lens-birds-cross-mobile;
     animation-duration: 108s;
   }
@@ -377,5 +372,282 @@ html[data-theme="dark"] body::after {
   body::after {
     animation: none !important;
     transform: none !important;
+  }
+}
+
+/* Long-interval stylized air traffic keeps the living sky from feeling like a loop. */
+.nyarindo-sky-traffic {
+  position: fixed;
+  z-index: 0;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.nyarindo-sky-traffic > span {
+  position: absolute;
+  top: var(--flight-top, 24%);
+  left: -24vw;
+  width: 150px;
+  height: 42px;
+  opacity: 0;
+  animation:
+    nyarindo-aircraft-cross var(--flight-duration, 170s) linear var(--flight-delay, -40s) infinite;
+  filter: drop-shadow(0 4px 6px rgba(14, 58, 86, .16));
+  will-change: transform, opacity;
+}
+
+.nyarindo-sky-traffic .aircraft-contrail {
+  position: absolute;
+  top: 19px;
+  right: 105px;
+  width: 235px;
+  height: 3px;
+  border-radius: 99px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .72));
+  filter: blur(.4px);
+  opacity: .56;
+}
+
+.nyarindo-sky-traffic .aircraft-body {
+  position: absolute;
+  top: 15px;
+  left: 48px;
+  display: block;
+  width: 78px;
+  height: 10px;
+  border: 1px solid rgba(14, 58, 86, .22);
+  border-radius: 70% 36% 36% 70%;
+  background: linear-gradient(180deg, #f8fbfa, #90aeb9);
+}
+
+.nyarindo-sky-traffic .aircraft-body::before {
+  content: "";
+  position: absolute;
+  top: 13px;
+  left: 28px;
+  width: 44px;
+  height: 9px;
+  background: linear-gradient(180deg, #dce8e9, #7294a2);
+  clip-path: polygon(0 45%, 30% 0, 72% 16%, 100% 50%, 72% 84%, 30% 100%);
+  transform: translateY(0);
+}
+
+.nyarindo-sky-traffic .aircraft-body::after {
+  content: "";
+  position: absolute;
+  top: -9px;
+  right: 11px;
+  width: 30px;
+  height: 14px;
+  background: linear-gradient(150deg, #f8fcfb, #7697a4);
+  clip-path: polygon(0 50%, 20% 0, 100% 38%, 78% 100%);
+}
+
+.nyarindo-sky-traffic .aircraft-rotor {
+  display: none;
+}
+
+.nyarindo-sky-traffic .aircraft-light {
+  position: absolute;
+  top: 18px;
+  left: 122px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #ff675b;
+  box-shadow: 0 0 10px #ff675b;
+  animation: aircraft-light-blink 2.1s steps(1) infinite;
+}
+
+.nyarindo-sky-traffic .plane-a {
+  --flight-top: 18%;
+  --flight-duration: 158s;
+  --flight-delay: -43s;
+  --craft-scale: 1.25;
+  transform: rotate(-2deg) scale(1.25);
+}
+
+.nyarindo-sky-traffic .plane-b {
+  --flight-top: 41%;
+  --flight-duration: 236s;
+  --flight-delay: -171s;
+  --craft-scale: .68;
+  width: 92px;
+  height: 28px;
+  opacity: 0;
+  transform: rotate(3deg) scale(.68);
+}
+
+.nyarindo-sky-traffic .plane-b .aircraft-contrail {
+  right: 64px;
+  width: 290px;
+  opacity: .3;
+}
+
+.nyarindo-sky-traffic .sky-helicopter {
+  --flight-top: 31%;
+  --flight-duration: 204s;
+  --flight-delay: -109s;
+  --craft-scale: .82;
+  width: 104px;
+  transform: rotate(1deg) scale(.82);
+}
+
+.nyarindo-sky-traffic .helicopter-b {
+  --flight-top: 58%;
+  --flight-duration: 281s;
+  --flight-delay: -235s;
+  --craft-scale: .54;
+  width: 76px;
+  opacity: 0;
+  transform: scale(.54);
+}
+
+.nyarindo-sky-traffic .sky-helicopter .aircraft-contrail {
+  display: none;
+}
+
+.nyarindo-sky-traffic .sky-helicopter .aircraft-body {
+  top: 17px;
+  left: 30px;
+  width: 45px;
+  height: 20px;
+  border-radius: 50% 58% 44% 55%;
+  background: linear-gradient(180deg, #d5a34f 0 35%, #6d8b77 36% 100%);
+}
+
+.nyarindo-sky-traffic .sky-helicopter .aircraft-body::before {
+  top: 3px;
+  left: 42px;
+  width: 48px;
+  height: 4px;
+  border-radius: 99px;
+  background: #527266;
+  clip-path: none;
+  transform: rotate(-5deg);
+  transform-origin: left center;
+}
+
+.nyarindo-sky-traffic .sky-helicopter .aircraft-body::after {
+  top: 10px;
+  right: -12px;
+  width: 13px;
+  height: 12px;
+  border-radius: 50% 0 0 50%;
+  background: #6d8b77;
+  clip-path: none;
+}
+
+.nyarindo-sky-traffic .sky-helicopter .aircraft-rotor {
+  position: absolute;
+  top: 11px;
+  left: 12px;
+  display: block;
+  width: 82px;
+  height: 2px;
+  border-radius: 99px;
+  background: rgba(24, 63, 64, .72);
+  transform-origin: center;
+  animation: helicopter-rotor .34s linear infinite;
+}
+
+.nyarindo-sky-traffic .sky-helicopter .aircraft-light {
+  top: 26px;
+  left: 69px;
+  background: #7bd8b0;
+  box-shadow: 0 0 10px #7bd8b0;
+}
+
+html[data-theme="dark"] .nyarindo-sky-traffic > span {
+  opacity: 0;
+  filter: drop-shadow(0 0 7px rgba(119, 201, 235, .28));
+}
+
+html[data-theme="dark"] .nyarindo-sky-traffic .aircraft-body {
+  border-color: rgba(150, 207, 229, .3);
+  background: linear-gradient(180deg, #7897a4, #263b43);
+}
+
+html[data-theme="dark"] .nyarindo-sky-traffic .aircraft-contrail {
+  background: linear-gradient(90deg, transparent, rgba(134, 204, 231, .34));
+}
+
+@keyframes nyarindo-aircraft-cross {
+  0%,
+  77% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0) rotate(-2deg) scale(var(--craft-scale, .92));
+  }
+  79% {
+    opacity: .58;
+  }
+  82% {
+    opacity: .58;
+  }
+  97%,
+  100% {
+    opacity: 0;
+    transform: translate3d(145vw, -3vh, 0) rotate(2deg) scale(var(--craft-scale, .92));
+  }
+}
+
+@keyframes helicopter-rotor {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes aircraft-light-blink {
+  0%,
+  52% {
+    opacity: 1;
+  }
+  53%,
+  100% {
+    opacity: .18;
+  }
+}
+
+@media (max-width: 700px) {
+  .nyarindo-sky-traffic > span {
+    width: 110px;
+    height: 32px;
+  }
+
+  .nyarindo-sky-traffic .aircraft-contrail {
+    right: 76px;
+    width: 150px;
+  }
+
+  .nyarindo-sky-traffic .aircraft-body {
+    left: 35px;
+    width: 58px;
+    height: 8px;
+  }
+
+  .nyarindo-sky-traffic .aircraft-body::before {
+    top: 10px;
+    left: 21px;
+    width: 33px;
+    height: 7px;
+  }
+
+  .nyarindo-sky-traffic .aircraft-light {
+    left: 90px;
+  }
+
+  .nyarindo-sky-traffic .helicopter-b,
+  .nyarindo-sky-traffic .plane-b {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nyarindo-sky-traffic,
+  .nyarindo-sky-traffic > span,
+  .nyarindo-sky-traffic .aircraft-rotor,
+  .nyarindo-sky-traffic .aircraft-light {
+    animation: none !important;
   }
 }

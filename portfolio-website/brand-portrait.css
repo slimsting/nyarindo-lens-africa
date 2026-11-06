@@ -15,8 +15,10 @@
   padding:0;
   border:2px solid rgba(210,163,109,.58);
   border-radius:50%;
-  background:#d8d4c7;
-  box-shadow:0 0 0 4px rgba(88,181,116,.08),0 0 18px rgba(88,181,116,.16)
+  background:#249bd8;
+  box-shadow:
+    0 0 0 4px rgba(241,208,78,.1),
+    0 0 22px rgba(91,184,232,.32)
 }
 
 .brand-mark img{
@@ -26,8 +28,8 @@
   width:100%;
   height:100%;
   border-radius:50%;
-  object-fit:cover;
-  object-position:center 30%
+  object-fit:contain;
+  object-position:center
 }
 
 .brand-avatar-canvas{

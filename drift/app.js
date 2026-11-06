@@ -178,6 +178,7 @@
   let playerPlaying = false;
   let lyricIndex = -1;
   let lyricTimer = 0;
+  let trackEndTimer = 0;
   let lyricColour =
     localStorage.getItem("drift-player-lyric-colour") || "#f1d04e";
 
@@ -520,6 +521,26 @@
     lyricTimer = 0;
   }
 
+  function clearTrackEndTimer() {
+    clearTimeout(trackEndTimer);
+    trackEndTimer = 0;
+  }
+
+  function scheduleEmbeddedTrackEnd(track) {
+    clearTrackEndTimer();
+    if (!track || track.source !== "suno" || !Number(track.duration)) return;
+    trackEndTimer = window.setTimeout(() => {
+      trackEndTimer = 0;
+      if (!playerPlaying) return;
+      if (playerRepeatOne) {
+        $("playerEmbed").replaceChildren();
+        startPlayerPlayback();
+      } else {
+        movePlayerTrack(1);
+      }
+    }, (Number(track.duration) + 0.72) * 1000);
+  }
+
   function showPlayerLyric(index) {
     const lines = [...document.querySelectorAll("#lyricsText .lyric-line")];
     if (!lines.length) return;
@@ -540,6 +561,14 @@
       windowElement.clientHeight / 2 +
       active.offsetHeight / 2;
     linesElement.style.transform = `translateY(${-Math.max(0, target)}px)`;
+    const activeText = active.textContent.trim();
+    const hasPublicLyrics =
+      currentPlayerTrack?.source === "suno" &&
+      !activeText.startsWith("No public lyric text");
+    if ($("embeddedLyricOverlay") && $("embeddedLyricLine")) {
+      $("embeddedLyricOverlay").hidden = !hasPublicLyrics;
+      $("embeddedLyricLine").textContent = hasPublicLyrics ? activeText : "";
+    }
   }
 
   function renderPlayerLyrics() {
@@ -558,6 +587,7 @@
     });
     container.replaceChildren(fragment);
     container.style.transform = "translateY(0)";
+    if ($("embeddedLyricOverlay")) $("embeddedLyricOverlay").hidden = true;
     lyricIndex = -1;
     requestAnimationFrame(() => showPlayerLyric(0));
     if ($("lyricsSourceLabel")) {
@@ -587,9 +617,23 @@
     if (!currentPlayerTrack || currentPlayerTrack.audioUrl) return;
     const lines = currentPlayerTrack.lyrics || [];
     if (lines.length < 2) return;
+    const durationMs =
+      Number(currentPlayerTrack.duration) > 1
+        ? Number(currentPlayerTrack.duration) * 1000
+        : lines.length * 4800;
+    const startedAt = performance.now();
+    const sourceStartDelay = 650;
     lyricTimer = window.setInterval(() => {
-      showPlayerLyric((lyricIndex + 1) % lines.length);
-    }, 4800);
+      const elapsed = Math.max(
+        0,
+        performance.now() - startedAt - sourceStartDelay,
+      );
+      const nextIndex = Math.min(
+        lines.length - 1,
+        Math.floor((elapsed / durationMs) * lines.length),
+      );
+      if (nextIndex !== lyricIndex) showPlayerLyric(nextIndex);
+    }, 220);
   }
 
   function updateMediaSession() {
@@ -718,6 +762,7 @@
       $("playerMediaShell").hidden = false;
       playerSetPlaying(true);
       startPlayerLyricClock();
+      scheduleEmbeddedTrackEnd(track);
     } else {
       window.open(track.url, "_blank", "noopener,noreferrer");
       toast("Opened the official source in a new tab.");
@@ -735,6 +780,7 @@
       $("playerMediaShell").hidden = true;
     }
     stopLyricClock();
+    clearTrackEndTimer();
     playerSetPlaying(false);
   }
 
@@ -1614,11 +1660,43 @@
       button.addEventListener("click", () => {
         const target = $(button.dataset.tool);
         recordToolUse(button.dataset.tool);
-        target?.scrollIntoView({ behavior: "smooth", block: "start" });
         if (target) {
+          document.querySelectorAll(".playground-card.is-expanded").forEach((card) => {
+            if (card !== target) card.classList.remove("is-expanded");
+          });
+          target.classList.add("is-expanded");
           target.classList.add("tool-focus");
           window.setTimeout(() => target.classList.remove("tool-focus"), 900);
+          target.scrollIntoView({ behavior: "smooth", block: "start" });
         }
+      });
+    });
+
+    document.querySelectorAll(".playground-card").forEach((card) => {
+      card.addEventListener("click", (event) => {
+        if (card.classList.contains("is-expanded")) return;
+        if (event.target.closest("input, textarea, select, button, a, label")) {
+          return;
+        }
+        document.querySelectorAll(".playground-card.is-expanded").forEach((entry) => {
+          if (entry !== card) entry.classList.remove("is-expanded");
+        });
+        card.classList.add("is-expanded");
+      });
+    });
+
+    document.querySelectorAll("[data-service-target]").forEach((button) => {
+      button.addEventListener("click", () => {
+        const target = $(button.dataset.serviceTarget);
+        showLabView("playground");
+        if (!target) return;
+        requestAnimationFrame(() => {
+          document.querySelectorAll(".playground-card.is-expanded").forEach((card) => {
+            if (card !== target) card.classList.remove("is-expanded");
+          });
+          target.classList.add("is-expanded");
+          target.scrollIntoView({ behavior: "smooth", block: "center" });
+        });
       });
     });
 

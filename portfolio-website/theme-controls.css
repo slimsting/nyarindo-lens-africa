@@ -341,3 +341,107 @@ html .reader-dialog .download-support-notice {
     animation: none;
   }
 }
+
+/* Vivid daylight controls and perfect circular colour pickers across the Nyarindo apps. */
+html[data-theme="light"] .site-theme-toggle,
+html[data-theme="light"] .theme-toggle,
+html[data-theme="light"] .theme-button,
+html[data-theme="light"] .library-theme {
+  border-color: rgba(23, 111, 150, .34);
+  background:
+    linear-gradient(135deg, rgba(255, 248, 218, .95), rgba(156, 220, 244, .78)),
+    #f9f6e9;
+  color: #174657;
+  box-shadow: 0 5px 16px rgba(28, 104, 132, .12);
+}
+
+html[data-theme="light"] .site-theme-toggle .theme-icon,
+html[data-theme="light"] .theme-toggle .theme-icon,
+html[data-theme="light"] .theme-button .theme-icon,
+html[data-theme="light"] .library-theme .theme-icon {
+  color: #b4792b;
+}
+
+html[data-theme="light"] .site-theme-toggle:is(:hover, :focus-visible),
+html[data-theme="light"] .theme-toggle:is(:hover, :focus-visible),
+html[data-theme="light"] .theme-button:is(:hover, :focus-visible),
+html[data-theme="light"] .library-theme:is(:hover, :focus-visible) {
+  border-color: #e8ad46;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(255, 255, 255, .94), transparent 35%),
+    linear-gradient(135deg, #ffd978, #77c8ec);
+  color: #102f3b;
+  box-shadow: 0 0 0 4px rgba(68, 164, 205, .12), 0 9px 24px rgba(24, 101, 132, .22);
+}
+
+input[type="color"] {
+  width: 34px !important;
+  min-width: 34px !important;
+  height: 34px !important;
+  min-height: 34px !important;
+  aspect-ratio: 1 / 1;
+  padding: 0 !important;
+  overflow: hidden;
+  border-radius: 50% !important;
+  appearance: none;
+  -webkit-appearance: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+input[type="color"]::-webkit-color-swatch-wrapper {
+  padding: 0;
+  border-radius: 50%;
+}
+
+input[type="color"]::-webkit-color-swatch {
+  border: 2px solid rgba(255, 255, 255, .72);
+  border-radius: 50%;
+}
+
+input[type="color"]::-moz-color-swatch {
+  border: 2px solid rgba(255, 255, 255, .72);
+  border-radius: 50%;
+}
+
+input[type="color"]:focus-visible {
+  outline: 2px solid var(--accent, #5bb8e8);
+  outline-offset: 3px;
+}
+
+.nyarindo-theme-header {
+  position: sticky;
+  z-index: 40;
+  top: 0;
+}
+
+button:not(:disabled) {
+  transition:
+    color .2s ease,
+    background-color .2s ease,
+    border-color .2s ease,
+    box-shadow .2s ease,
+    filter .2s ease,
+    transform .2s ease;
+}
+
+button:not(:disabled):hover {
+  filter: saturate(1.2) brightness(1.055);
+  transform: translateY(-1px);
+  box-shadow: 0 0 24px color-mix(in srgb, currentColor 20%, transparent);
+}
+
+button:not(:disabled):active {
+  transform: translateY(0) scale(.985);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  button:not(:disabled) {
+    transition: none;
+  }
+
+  button:not(:disabled):hover,
+  button:not(:disabled):active {
+    transform: none;
+  }
+}

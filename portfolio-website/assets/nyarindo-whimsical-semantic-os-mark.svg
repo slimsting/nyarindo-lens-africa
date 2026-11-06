@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">Nyarindo Whimsical Semantic OS</title>
+  <desc id="desc">A gold semantic pulse and eye inside a blue sky with clouds and birds.</desc>
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0787dc"/>
+      <stop offset=".55" stop-color="#58bce9"/>
+      <stop offset="1" stop-color="#d8f1ef"/>
+    </linearGradient>
+    <radialGradient id="sun" cx=".4" cy=".36" r=".7">
+      <stop offset="0" stop-color="#fff9cd"/>
+      <stop offset=".58" stop-color="#ffd679"/>
+      <stop offset="1" stop-color="#f3a94f"/>
+    </radialGradient>
+    <linearGradient id="core" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#142b27"/>
+      <stop offset="1" stop-color="#071714"/>
+    </linearGradient>
+    <filter id="glow" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <style>
+      .orbit { transform-origin: 256px 256px; animation: orbit 18s linear infinite; }
+      .pulse { transform-origin: 256px 256px; animation: pulse 3.8s ease-in-out infinite; }
+      .wing { transform-origin: center; animation: wing 2.8s ease-in-out infinite alternate; }
+      @keyframes orbit { to { transform: rotate(360deg); } }
+      @keyframes pulse {
+        0%, 100% { opacity: .58; transform: scale(.94); }
+        50% { opacity: 1; transform: scale(1.05); }
+      }
+      @keyframes wing {
+        from { transform: translateY(-2px); }
+        to { transform: translateY(3px); }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .orbit, .pulse, .wing { animation: none; }
+      }
+    </style>
+  </defs>
+  <rect width="512" height="512" rx="256" fill="url(#sky)"/>
+  <circle cx="405" cy="117" r="63" fill="url(#sun)" opacity=".94"/>
+  <g fill="#fff" opacity=".9">
+    <ellipse cx="97" cy="112" rx="62" ry="21"/>
+    <circle cx="67" cy="101" r="27"/>
+    <circle cx="100" cy="86" r="38"/>
+    <circle cx="139" cy="99" r="25"/>
+    <ellipse cx="412" cy="325" rx="70" ry="23"/>
+    <circle cx="384" cy="309" r="30"/>
+    <circle cx="423" cy="300" r="39"/>
+    <circle cx="458" cy="316" r="25"/>
+    <ellipse cx="135" cy="399" rx="54" ry="18" opacity=".65"/>
+    <circle cx="110" cy="388" r="23" opacity=".65"/>
+    <circle cx="141" cy="378" r="29" opacity=".65"/>
+  </g>
+  <g class="wing" fill="none" stroke="#173f43" stroke-linecap="round" stroke-width="5" opacity=".8">
+    <path d="M79 237q15-13 30 0 15-13 30 0"/>
+    <path d="M367 203q11-10 22 0 11-10 22 0"/>
+    <path d="M330 245q8-7 16 0 8-7 16 0"/>
+  </g>
+  <g class="pulse" fill="none" filter="url(#glow)">
+    <circle cx="256" cy="256" r="147" stroke="#ffe49b" stroke-width="3" opacity=".42"/>
+    <circle cx="256" cy="256" r="124" stroke="#7ed8c0" stroke-width="2" opacity=".42" stroke-dasharray="7 12"/>
+  </g>
+  <circle cx="256" cy="256" r="104" fill="url(#core)" stroke="#f4cf81" stroke-width="7"/>
+  <circle cx="256" cy="256" r="84" fill="none" stroke="#f3d794" stroke-width="3" opacity=".82"/>
+  <g class="orbit" fill="none" stroke-linecap="round">
+    <path d="M182 285c24-37 52-55 84-55 33 0 60 16 78 49" stroke="#f05446" stroke-width="6"/>
+    <path d="M179 244c25 26 47 38 72 38 30 0 54-13 80-45" stroke="#6fd398" stroke-width="6"/>
+    <path d="M197 307c28-18 54-27 78-27 22 0 43 7 64 22" stroke="#78cdf3" stroke-width="6"/>
+  </g>
+  <path d="M216 256c17-21 31-31 43-31 13 0 27 10 40 31-13 20-28 30-42 30-14 0-27-10-41-30Z" fill="#f7f3e7"/>
+  <circle cx="258" cy="256" r="18" fill="#d49f42"/>
+  <circle cx="258" cy="256" r="9" fill="#142b27"/>
+  <g fill="none" stroke="#fff" stroke-linecap="round" opacity=".8">
+    <path d="M111 447q12-10 24 0 12-10 24 0" stroke-width="3"/>
+    <path d="M352 437q9-7 18 0 9-7 18 0" stroke-width="2.5"/>
+  </g>
+</svg>

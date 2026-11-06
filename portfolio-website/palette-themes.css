@@ -214,6 +214,13 @@ body,.playem-section,.playem-copy,.social-footer,.books-section{transition:none}
 .nyarindo-palette-grid button{
   width:26px;
   height:26px;
+  min-width:26px;
+  min-height:26px;
+  max-width:26px;
+  max-height:26px;
+  flex:0 0 26px;
+  align-self:center;
+  aspect-ratio:1 / 1;
   padding:0;
   border:2px solid transparent;
   border-radius:50%;
@@ -280,6 +287,11 @@ html[data-theme=light] .nyarindo-palette-strip{
 .nyarindo-palette-grid.is-footer button{
   width:24px;
   height:24px;
+  min-width:24px;
+  min-height:24px;
+  max-width:24px;
+  max-height:24px;
+  flex-basis:24px;
 }
 
 .nyarindo-thread-footer .nyarindo-palette-footer{
@@ -301,4 +313,29 @@ html[data-theme=light] .nyarindo-palette-strip{
 
 @media(prefers-reduced-motion:reduce){
   .nyarindo-palette-grid button{transition:none}
+}
+
+button[data-palette]{
+  width:26px!important;
+  min-width:26px!important;
+  max-width:26px!important;
+  height:26px!important;
+  min-height:26px!important;
+  max-height:26px!important;
+  flex:0 0 26px!important;
+  align-self:center!important;
+  aspect-ratio:1/1!important;
+  padding:0!important;
+  border-radius:50%!important;
+}
+
+.nyarindo-palette-grid.is-footer button[data-palette],
+.footer-themes button[data-palette]{
+  width:24px!important;
+  min-width:24px!important;
+  max-width:24px!important;
+  height:24px!important;
+  min-height:24px!important;
+  max-height:24px!important;
+  flex-basis:24px!important;
 }

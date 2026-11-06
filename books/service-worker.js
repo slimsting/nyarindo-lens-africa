@@ -1,4 +1,4 @@
-const CACHE = "nyarindo-library-v19";
+const CACHE = "nyarindo-library-v20";
 const CORE = [
   "/books/",
   "/books/index.html",
@@ -9,10 +9,10 @@ const CORE = [
   "/books/pdf-importer.js?v=local-pdf-2",
   "/books/vendor/pdfjs/pdf.min.mjs",
   "/books/vendor/pdfjs/pdf.worker.min.mjs",
-  "/portfolio-website/theme-controls.css?v=theme-controls-6",
-  "/portfolio-website/site-theme-init.js?v=colour-world-1",
-  "/portfolio-website/site-theme-control.js?v=colour-world-1",
-  "/portfolio-website/palette-themes.css?v=palette-themes-4",
+  "/portfolio-website/theme-controls.css?v=theme-controls-8",
+  "/portfolio-website/site-theme-init.js?v=colour-world-2",
+  "/portfolio-website/site-theme-control.js?v=colour-world-2",
+  "/portfolio-website/palette-themes.css?v=palette-themes-5",
   "/books/assets/entering-the-spiral.svg",
   "/books/assets/spiral-beyond.svg",
   "/books/assets/experiment-particles.svg",

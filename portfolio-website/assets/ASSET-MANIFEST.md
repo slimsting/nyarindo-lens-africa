@@ -110,10 +110,13 @@ the same centered artwork and full-bleed background.
 - `avatar-wave.webp` — 256 × 256 smiling frame used with the animated waving-hand overlay
 - `avatar-peek.webp` — 256 × 256 close crop for the peeking state
 - `avatar-lookaway.webp` — 256 × 256 mirrored crop for the alternate-heading state
+- `nyarindo-whimsical-semantic-os-mark.svg` — 512 × 512 animated circular-safe vector mark,
+  3,953 bytes, SHA-256
+  `821A2B33F829258AB8CC0F4A0ABF2EE4A62EF6B3DD86C802E1E14FE3D05C5560`
 
 The five small WebP portrait crops are deterministic derivatives of the three authored
-portraits above. They are loaded only by the navigation-avatar animation and do not replace
-the source portraits.
+portraits above. They remain retained evidence and source derivatives, but the navigation
+profile now uses the wholly illustrated Whimsical Semantic OS mark instead of a real photo.
 - `universal-coherence-protocol.avif/.webp` — 1460 × 1460, transparent
 - `depth-ribbons.svg` — responsive luminous depth artwork
 - `atmosphere/coastal-birds.svg` — lightweight decorative bird tile for the shared light-mode atmosphere

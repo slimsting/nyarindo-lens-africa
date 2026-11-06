@@ -39,6 +39,37 @@
     document.body.append(layer);
   }
 
+  function ensureSkyTraffic() {
+    if (!document.body || document.querySelector(".nyarindo-sky-traffic")) {
+      return;
+    }
+    const sky = document.createElement("div");
+    sky.className = "nyarindo-sky-traffic";
+    sky.setAttribute("aria-hidden", "true");
+
+    [
+      ["sky-plane", "plane-a"],
+      ["sky-plane", "plane-b"],
+      ["sky-helicopter", "helicopter-a"],
+      ["sky-helicopter", "helicopter-b"],
+    ].forEach(([type, variant]) => {
+      const craft = document.createElement("span");
+      craft.className = `${type} ${variant}`;
+      const contrail = document.createElement("i");
+      contrail.className = "aircraft-contrail";
+      const body = document.createElement("i");
+      body.className = "aircraft-body";
+      const rotor = document.createElement("i");
+      rotor.className = "aircraft-rotor";
+      const light = document.createElement("i");
+      light.className = "aircraft-light";
+      craft.append(contrail, rotor, body, light);
+      sky.append(craft);
+    });
+
+    document.body.append(sky);
+  }
+
   function paletteButtons() {
     return [...document.querySelectorAll("[data-palette]")];
   }
@@ -213,11 +244,28 @@
 
   function initThemeControl() {
     ensureCloudscape();
+    ensureSkyTraffic();
 
     const root = document.documentElement;
-    const buttons = [...new Set(document.querySelectorAll(
+    const header = document.querySelector("header, .topbar, .library-header");
+    const allThemeButtons = [...new Set(document.querySelectorAll(
       "[data-theme-toggle], .site-theme-toggle, .theme-toggle, .theme-button, .library-theme, #themeToggle",
     ))];
+    const buttons = header
+      ? allThemeButtons.filter((button) => header.contains(button))
+      : allThemeButtons;
+
+    allThemeButtons
+      .filter((button) => !buttons.includes(button))
+      .forEach((button) => button.remove());
+
+    if (
+      header
+      && !["fixed", "sticky"].includes(getComputedStyle(header).position)
+    ) {
+      header.classList.add("nyarindo-theme-header");
+    }
+
     if (!buttons.length && !document.documentElement.dataset.palette) return;
 
     ensurePaletteControls();
