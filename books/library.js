@@ -499,6 +499,33 @@
   toneButtons.forEach((button) => {
     button.addEventListener("click", () => setTone(button.dataset.readingTone));
   });
+
+  const readerDetails = [...readerDialog.querySelectorAll("details")];
+  readerDetails.forEach((panel) => {
+    panel.addEventListener("toggle", () => {
+      if (!panel.open) return;
+      readerDetails.forEach((peer) => {
+        if (peer !== panel) peer.open = false;
+      });
+    });
+  });
+
+  document.addEventListener(
+    "pointerdown",
+    (event) => {
+      document.querySelectorAll("details[open]").forEach((panel) => {
+        if (
+          !panel.matches("#readerDialog details, details.nyarindo-palette-nav")
+          || panel.contains(event.target)
+        ) {
+          return;
+        }
+        panel.open = false;
+      });
+    },
+    { capture: true },
+  );
+
   readerTextColor.addEventListener("input", () => {
     const preferences = readReaderType();
     preferences.color = readerTextColor.value;

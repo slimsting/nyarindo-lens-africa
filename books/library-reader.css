@@ -637,8 +637,8 @@ html[data-theme="light"] .local-pdf-card {
 
 .reader-back,
 .reader-download,
-.reader-toolbar button,
-.reader-footer button {
+.reader-toolbar button:not([data-palette]),
+.reader-footer button:not([data-palette]) {
   min-height: 38px;
   padding: 8px 12px;
   border: 1px solid rgba(255, 255, 255, .15);
@@ -650,11 +650,11 @@ html[data-theme="light"] .local-pdf-card {
 
 .reader-back:is(:hover, :focus-visible),
 .reader-download:is(:hover, :focus-visible),
-.reader-toolbar button:is(:hover, :focus-visible),
-.reader-footer button:is(:hover, :focus-visible) {
-  border-color: #d9b16d;
-  background: rgba(217, 177, 109, .08);
-  color: #f2d79e;
+.reader-toolbar button:not([data-palette]):is(:hover, :focus-visible),
+.reader-footer button:not([data-palette]):is(:hover, :focus-visible) {
+  border-color: var(--accent, #d9b16d);
+  background: color-mix(in srgb, var(--accent, #d9b16d) 14%, transparent);
+  color: var(--accent, #f2d79e);
 }
 
 .reader-title-block {
@@ -727,9 +727,9 @@ html[data-theme="light"] .local-pdf-card {
 }
 
 .reader-toolbar button[aria-pressed="true"] {
-  border-color: #d9b16d;
-  background: #d9b16d;
-  color: #101715;
+  border-color: var(--accent, #d9b16d);
+  background: var(--accent, #d9b16d);
+  color: var(--bg, #101715);
 }
 
 .reader-hint {
@@ -774,12 +774,12 @@ html[data-theme="light"] .reader-footer {
 html[data-theme="light"] .reader-title-block h2,
 html[data-theme="light"] .reader-back,
 html[data-theme="light"] .reader-download,
-html[data-theme="light"] .reader-toolbar button,
-html[data-theme="light"] .reader-footer button {
+html[data-theme="light"] .reader-toolbar button:not([data-palette]),
+html[data-theme="light"] .reader-footer button:not([data-palette]) {
   color: var(--ink);
 }
 
-html[data-theme="light"] :is(.reader-back, .reader-download, .reader-toolbar button, .reader-footer button) {
+html[data-theme="light"] :is(.reader-back, .reader-download, .reader-toolbar button, .reader-footer button):not([data-palette]) {
   border-color: color-mix(in srgb, var(--line) 88%, transparent);
   background: color-mix(in srgb, var(--surface2) 72%, transparent);
   color: var(--ink);
@@ -802,16 +802,74 @@ html[data-theme="light"] .reader-scroll-note {
   color: var(--dim);
 }
 
-html[data-theme="light"] .reader-toolbar button[aria-pressed="true"] {
+html[data-theme="light"] :is(.reader-toolbar, .reader-footer) button[aria-pressed="true"]:not([data-palette]) {
   border-color: var(--accent);
   background: var(--accent);
   color: var(--surface);
 }
 
-html[data-theme="light"] :is(.reader-back, .reader-download, .reader-toolbar button, .reader-footer button):is(:hover, :focus-visible) {
+html[data-theme="light"] :is(.reader-back, .reader-download, .reader-toolbar button, .reader-footer button):not([data-palette]):is(:hover, :focus-visible) {
   border-color: var(--accent);
   background: var(--accent);
   color: var(--surface);
+}
+
+.reader-dialog button:not(:disabled),
+.reader-dialog summary {
+  cursor: pointer;
+}
+
+.reader-type-panel summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: color-mix(in srgb, var(--surface2) 72%, transparent);
+}
+
+.reader-type-panel summary::after {
+  content: "⌄";
+  font-size: 10px;
+  line-height: 1;
+  transform: translateY(-1px);
+  transition: transform .18s ease;
+}
+
+.reader-type-panel[open] summary::after {
+  transform: rotate(180deg) translateY(1px);
+}
+
+.reader-type-panel summary:is(:hover, :focus-visible),
+.reader-type-panel[open] summary {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--surface);
+}
+
+html[data-theme="light"] .reader-footer .nyarindo-palette-grid button[data-palette] {
+  border-color: color-mix(in srgb, var(--ink) 36%, transparent);
+  background: var(--swatch);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, .58),
+    0 0 0 1px var(--line);
+}
+
+html[data-theme="light"] .reader-footer .nyarindo-palette-grid button[data-palette]:is(:hover, :focus-visible) {
+  border-color: var(--ink);
+  background: var(--swatch);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, .72),
+    0 0 0 2px var(--accent),
+    0 7px 16px color-mix(in srgb, var(--ink) 22%, transparent);
+}
+
+html[data-theme="light"] .reader-footer .nyarindo-palette-grid button[data-palette][aria-pressed="true"] {
+  border-color: var(--surface);
+  background: var(--swatch);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, .72),
+    0 0 0 2px var(--ink),
+    0 0 0 4px var(--accent);
+  transform: scale(1.08);
 }
 
 .reader-stage {
