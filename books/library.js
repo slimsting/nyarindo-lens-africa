@@ -237,7 +237,9 @@
       const text = typeof block?.text === "string" ? block.text.trim() : "";
       if (!text) return;
 
-      const contentsMatch = text.match(/^(.*?)(?:\.{3,}|\s{2,})(\d+)\s*$/);
+      const contentsMatch = text.match(
+        /^(.*?)(?:\s*(?:\.{2,}|…{2,}|-{2,}|–{2,})\s*|\s{2,})\s*(?:pages?|pg\.?|p\.?)?\s*(\d+)\s*$/iu,
+      );
       if (contentsMatch) {
         const targetPage = Math.max(
           1,
@@ -258,6 +260,10 @@
         page.className = "reader-toc-page";
         page.textContent = String(targetPage);
         link.append(title, page);
+        link.addEventListener("click", (event) => {
+          event.preventDefault();
+          requestAnimationFrame(() => scrollToSourcePage(targetPage));
+        });
         currentList = null;
         fragment.append(link);
         return;
@@ -447,12 +453,6 @@
   }
 
   readerClose.addEventListener("click", closeReader);
-  readerCopy.addEventListener("click", (event) => {
-    const contentsLink = event.target.closest?.("[data-reader-target]");
-    if (!contentsLink) return;
-    event.preventDefault();
-    scrollToSourcePage(contentsLink.dataset.readerTarget);
-  });
   readerDialog.addEventListener("cancel", (event) => {
     event.preventDefault();
     closeReader();
