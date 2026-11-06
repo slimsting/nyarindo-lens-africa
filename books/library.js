@@ -167,6 +167,7 @@
   const readerBackgroundStatus = document.getElementById("readerBackgroundStatus");
   const readerAtmosphereCustom = document.getElementById("readerAtmosphereCustom");
   const readerMobileControlsToggle = document.getElementById("readerMobileControlsToggle");
+  const readerControlsToggleLabel = readerMobileControlsToggle.querySelector(".reader-controls-toggle-label");
   const readerFocusHint = document.getElementById("readerFocusHint");
   const toneButtons = [...document.querySelectorAll("[data-reading-tone]")];
   const atmosphereButtons = [
@@ -188,6 +189,7 @@
   let fallbackFocusMode = false;
   let readerControlsManuallyHidden = false;
   let readerBubbleHandledPointer = false;
+  let readerBubbleDrag = null;
   let sectionIndex = [];
   let customReaderFontFace = null;
   let customReaderFontFile = null;
@@ -1156,6 +1158,7 @@
       "aria-label",
       hidden ? "Show reader controls" : "Hide reader controls",
     );
+    readerControlsToggleLabel.textContent = hidden ? "Show menu" : "Hide menu";
     clearTimeout(controlsHideTimer);
     clearTimeout(focusHintTimer);
     if (hidden) {
@@ -1177,14 +1180,101 @@
     }
   }
 
+  const readerControlsPositionKey = "nyarindo-reader-controls-position";
+
+  function clampReaderControlsToggle(left, top) {
+    const margin = 10;
+    const maxLeft = Math.max(margin, innerWidth - readerMobileControlsToggle.offsetWidth - margin);
+    const maxTop = Math.max(margin, innerHeight - readerMobileControlsToggle.offsetHeight - margin);
+    return {
+      left: Math.min(Math.max(margin, left), maxLeft),
+      top: Math.min(Math.max(margin, top), maxTop),
+    };
+  }
+
+  function placeReaderControlsToggle(left, top, persist = false) {
+    const position = clampReaderControlsToggle(left, top);
+    readerMobileControlsToggle.classList.add("has-position");
+    readerMobileControlsToggle.classList.toggle("tooltip-on-right", position.left < 150);
+    readerMobileControlsToggle.style.setProperty("--reader-toggle-left", `${position.left}px`);
+    readerMobileControlsToggle.style.setProperty("--reader-toggle-top", `${position.top}px`);
+    if (persist) {
+      try {
+        localStorage.setItem(readerControlsPositionKey, JSON.stringify(position));
+      } catch {}
+    }
+  }
+
+  function restoreReaderControlsPosition() {
+    try {
+      const stored = JSON.parse(localStorage.getItem(readerControlsPositionKey) || "null");
+      if (
+        Number.isFinite(stored?.left) &&
+        Number.isFinite(stored?.top)
+      ) {
+        placeReaderControlsToggle(stored.left, stored.top);
+      }
+    } catch {}
+  }
+
   readerMobileControlsToggle.addEventListener("pointerdown", (event) => {
     if (event.pointerType === "mouse" && event.button !== 0) return;
-    readerBubbleHandledPointer = true;
     event.stopPropagation();
+    const rect = readerMobileControlsToggle.getBoundingClientRect();
+    readerBubbleHandledPointer = true;
+    readerBubbleDrag = {
+      pointerId: event.pointerId,
+      startX: event.clientX,
+      startY: event.clientY,
+      left: rect.left,
+      top: rect.top,
+      moved: false,
+    };
+    try {
+      readerMobileControlsToggle.setPointerCapture(event.pointerId);
+    } catch {}
+  });
+
+  readerMobileControlsToggle.addEventListener("pointermove", (event) => {
+    if (!readerBubbleDrag || readerBubbleDrag.pointerId !== event.pointerId) return;
+    const xDistance = event.clientX - readerBubbleDrag.startX;
+    const yDistance = event.clientY - readerBubbleDrag.startY;
+    if (!readerBubbleDrag.moved && Math.hypot(xDistance, yDistance) < 6) return;
+    readerBubbleDrag.moved = true;
+    readerMobileControlsToggle.classList.add("is-dragging");
+    event.preventDefault();
+    event.stopPropagation();
+    placeReaderControlsToggle(
+      readerBubbleDrag.left + xDistance,
+      readerBubbleDrag.top + yDistance,
+    );
+  });
+
+  readerMobileControlsToggle.addEventListener("pointerup", (event) => {
+    if (!readerBubbleDrag || readerBubbleDrag.pointerId !== event.pointerId) return;
+    const moved = readerBubbleDrag.moved;
+    readerBubbleDrag = null;
+    readerMobileControlsToggle.classList.remove("is-dragging");
+    try {
+      readerMobileControlsToggle.releasePointerCapture(event.pointerId);
+    } catch {}
+    event.stopPropagation();
+    if (moved) {
+      const rect = readerMobileControlsToggle.getBoundingClientRect();
+      placeReaderControlsToggle(rect.left, rect.top, true);
+      return;
+    }
     setTouchReaderControlsHidden(
       !readerDialog.classList.contains("reader-controls-hidden"),
     );
   });
+
+  readerMobileControlsToggle.addEventListener("pointercancel", () => {
+    readerBubbleDrag = null;
+    readerBubbleHandledPointer = false;
+    readerMobileControlsToggle.classList.remove("is-dragging");
+  });
+
   readerMobileControlsToggle.addEventListener("click", (event) => {
     event.stopPropagation();
     if (readerBubbleHandledPointer) {
@@ -1194,6 +1284,12 @@
     setTouchReaderControlsHidden(
       !readerDialog.classList.contains("reader-controls-hidden"),
     );
+  });
+
+  addEventListener("resize", () => {
+    if (!readerMobileControlsToggle.classList.contains("has-position")) return;
+    const rect = readerMobileControlsToggle.getBoundingClientRect();
+    placeReaderControlsToggle(rect.left, rect.top, true);
   });
 
   readerFullscreen.addEventListener("click", async () => {
@@ -1336,6 +1432,7 @@
 
   const openingUrl = new URL(location.href);
   const openingBook = openingUrl.searchParams.get("book");
+  restoreReaderControlsPosition();
   restoreReaderType();
   restoreReaderBackground().catch(() => {
     readerBackgroundStatus.textContent = "The saved background could not be restored.";

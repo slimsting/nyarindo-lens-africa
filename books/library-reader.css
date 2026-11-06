@@ -1400,35 +1400,111 @@ html[data-theme="light"] .local-pdf-card {
 .reader-mobile-controls-toggle {
   display: none;
   position: fixed;
-  z-index: 18;
+  z-index: 2147483000;
   right: max(16px, env(safe-area-inset-right));
   bottom: max(16px, env(safe-area-inset-bottom));
   place-items: center;
   width: 48px;
   height: 48px;
   padding: 0;
-  border: 1px solid rgba(239, 205, 139, .48);
+  border: 1px solid rgba(255, 255, 255, .55);
   border-radius: 50%;
-  background: rgba(7, 18, 19, .86);
-  color: #f2d79e;
+  background:
+    radial-gradient(circle at 24% 18%, rgba(255, 255, 255, .28), transparent 34%),
+    linear-gradient(135deg, #176f9d, #5bb8e8);
+  color: #fff;
   font: 16px/1 var(--mono);
-  box-shadow: 0 10px 28px rgba(0, 0, 0, .34);
+  box-shadow: 0 0 0 4px rgba(91, 184, 232, .13), 0 10px 28px rgba(0, 0, 0, .34);
   -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
   cursor: pointer;
+  touch-action: none;
+  animation: reader-orb-breathe 3.4s ease-in-out infinite;
+}
+
+.reader-mobile-controls-toggle.has-position {
+  right: auto;
+  bottom: auto;
+  left: var(--reader-toggle-left);
+  top: var(--reader-toggle-top);
+}
+
+.reader-mobile-controls-toggle.is-dragging {
+  cursor: grabbing;
+  animation: none;
+  filter: saturate(1.2) brightness(1.08);
+}
+
+.reader-mobile-controls-toggle.is-dragging .reader-controls-toggle-label {
+  opacity: 0 !important;
+}
+
+.reader-controls-toggle-label {
+  position: absolute;
+  top: 50%;
+  right: calc(100% + 10px);
+  display: block;
+  padding: 7px 10px;
+  border: 1px solid rgba(239, 205, 139, .38);
+  border-radius: 999px;
+  background: rgba(7, 18, 19, .94);
+  color: #f5efe0;
+  font: 9px/1.2 var(--mono);
+  letter-spacing: .035em;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(5px, -50%);
+  transition: opacity .18s ease, transform .18s ease;
+}
+
+.reader-mobile-controls-toggle:is(:hover, :focus-visible) .reader-controls-toggle-label {
+  opacity: 1;
+  transform: translate(0, -50%);
+}
+
+.reader-mobile-controls-toggle.tooltip-on-right .reader-controls-toggle-label {
+  right: auto;
+  left: calc(100% + 10px);
+  transform: translate(-5px, -50%);
+}
+
+.reader-mobile-controls-toggle.tooltip-on-right:is(:hover, :focus-visible) .reader-controls-toggle-label {
+  transform: translate(0, -50%);
 }
 
 .reader-mobile-controls-toggle[aria-pressed="true"] {
-  border-color: rgba(91, 184, 232, .7);
-  color: #8bd8ff;
-  box-shadow: 0 0 0 5px rgba(91, 184, 232, .1), 0 10px 30px rgba(0, 0, 0, .38);
+  border-color: rgba(255, 255, 255, .72);
+  background:
+    radial-gradient(circle at 24% 18%, rgba(255, 255, 255, .3), transparent 34%),
+    linear-gradient(135deg, #b7762e, #f1d04e);
+  color: #17120c;
+  box-shadow: 0 0 0 5px rgba(241, 208, 78, .16), 0 10px 30px rgba(0, 0, 0, .38);
 }
 
 .reader-dialog[data-reading-tone="paper"] .reader-mobile-controls-toggle {
-  border-color: rgba(44, 78, 62, .3);
-  background: rgba(249, 244, 232, .92);
-  color: #315d4c;
-  box-shadow: 0 10px 26px rgba(37, 54, 45, .2);
+  border-color: rgba(255, 255, 255, .72);
+  background:
+    radial-gradient(circle at 24% 18%, rgba(255, 255, 255, .36), transparent 34%),
+    linear-gradient(135deg, #2f7358, #72c5a0);
+  color: #fffef7;
+  box-shadow: 0 0 0 4px rgba(53, 111, 80, .11), 0 10px 26px rgba(37, 54, 45, .2);
+}
+
+.reader-dialog[data-reading-tone="paper"] .reader-controls-toggle-label {
+  border-color: rgba(44, 78, 62, .26);
+  background: rgba(249, 244, 232, .96);
+  color: #263a33;
+}
+
+@keyframes reader-orb-breathe {
+  0%,
+  100% {
+    box-shadow: 0 0 0 4px rgba(91, 184, 232, .11), 0 8px 24px rgba(0, 0, 0, .3);
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba(91, 184, 232, .18), 0 0 28px rgba(91, 184, 232, .5), 0 10px 30px rgba(0, 0, 0, .34);
+  }
 }
 
 @media (max-width: 980px) {
@@ -1439,6 +1515,12 @@ html[data-theme="light"] .local-pdf-card {
 
   .reader-hint {
     margin-left: 0;
+  }
+}
+
+@media (min-width: 761px) and (pointer: fine) {
+  .reader-mobile-controls-toggle {
+    display: grid;
   }
 }
 
@@ -1719,6 +1801,10 @@ html[data-theme="light"] .local-pdf-card {
     animation: none;
   }
 
+  .reader-mobile-controls-toggle {
+    animation: none;
+  }
+
   .reader-progress span {
     transition: none;
   }
@@ -1727,11 +1813,16 @@ html[data-theme="light"] .local-pdf-card {
     transition: none;
   }
 
+  .reader-controls-toggle-label {
+    transition: none;
+  }
+
   .reader-atmosphere-day,
   .reader-atmosphere-night,
   .reader-atmosphere-custom,
   .reader-atmosphere-custom::after,
   .reader-atmosphere::after,
+  .reader-mobile-controls-toggle,
   .reader-dialog.reader-focus-mode :is(.reader-head, .reader-toolbar, .reader-footer, .reader-progress),
   .reader-focus-hint {
     transition: none;
