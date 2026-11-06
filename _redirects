@@ -1,6 +1,5 @@
 # Canonical home and separately scoped Universal installation identity
 / /portfolio-website/ 301!
-/portfolio-website /portfolio-website/ 301!
 /portfolio-website/ /portfolio-website/index.html 200
 /portfolio-website/index.html /portfolio-website/index.html 200
 
