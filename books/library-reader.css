@@ -740,14 +740,35 @@ html[data-theme="light"] .local-pdf-card {
 }
 
 html[data-theme="light"] .reader-dialog {
-  color: #223c36;
+  color: var(--ink);
 }
 
 html[data-theme="light"] .reader-head,
 html[data-theme="light"] .reader-toolbar,
 html[data-theme="light"] .reader-footer {
-  color: #29443d;
-  text-shadow: 0 1px 5px rgba(255, 255, 255, .82);
+  color: var(--ink);
+  background:
+    radial-gradient(circle at 100% 0, rgba(var(--accent-rgb), .16), transparent 44%),
+    color-mix(in srgb, var(--surface) 88%, transparent);
+  text-shadow: none;
+  -webkit-backdrop-filter: blur(18px) saturate(1.16);
+  backdrop-filter: blur(18px) saturate(1.16);
+}
+
+html[data-theme="light"] .reader-head {
+  border-bottom: 1px solid color-mix(in srgb, var(--line) 82%, transparent);
+  border-radius: 16px 16px 0 0;
+  box-shadow: 0 8px 28px color-mix(in srgb, var(--ink) 9%, transparent);
+}
+
+html[data-theme="light"] .reader-toolbar {
+  border-bottom: 1px solid color-mix(in srgb, var(--line) 82%, transparent);
+}
+
+html[data-theme="light"] .reader-footer {
+  border-top: 1px solid color-mix(in srgb, var(--line) 82%, transparent);
+  border-radius: 0 0 16px 16px;
+  box-shadow: 0 -8px 28px color-mix(in srgb, var(--ink) 8%, transparent);
 }
 
 html[data-theme="light"] .reader-title-block h2,
@@ -755,12 +776,42 @@ html[data-theme="light"] .reader-back,
 html[data-theme="light"] .reader-download,
 html[data-theme="light"] .reader-toolbar button,
 html[data-theme="light"] .reader-footer button {
-  color: #203a34;
+  color: var(--ink);
 }
 
 html[data-theme="light"] :is(.reader-back, .reader-download, .reader-toolbar button, .reader-footer button) {
-  border-color: rgba(34, 74, 62, .25);
-  background: rgba(255, 255, 255, .34);
+  border-color: color-mix(in srgb, var(--line) 88%, transparent);
+  background: color-mix(in srgb, var(--surface2) 72%, transparent);
+  color: var(--ink);
+}
+
+html[data-theme="light"] .reader-title-block p,
+html[data-theme="light"] .reader-page-state b {
+  color: var(--accent);
+}
+
+html[data-theme="light"] .reader-title-block span,
+html[data-theme="light"] .reader-toolbar,
+html[data-theme="light"] .reader-page-nav,
+html[data-theme="light"] .reader-page-jump label {
+  color: var(--muted);
+}
+
+html[data-theme="light"] .reader-hint,
+html[data-theme="light"] .reader-scroll-note {
+  color: var(--dim);
+}
+
+html[data-theme="light"] .reader-toolbar button[aria-pressed="true"] {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--surface);
+}
+
+html[data-theme="light"] :is(.reader-back, .reader-download, .reader-toolbar button, .reader-footer button):is(:hover, :focus-visible) {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--surface);
 }
 
 .reader-stage {
@@ -981,6 +1032,14 @@ html[data-theme="light"] :is(.reader-back, .reader-download, .reader-toolbar but
   transition: width .2s;
 }
 
+html[data-theme="light"] .reader-progress {
+  background: color-mix(in srgb, var(--ink) 16%, transparent);
+}
+
+html[data-theme="light"] .reader-progress span {
+  background: linear-gradient(90deg, var(--accent), var(--green));
+}
+
 .reader-footer {
   position: relative;
   z-index: 5;
@@ -1047,6 +1106,17 @@ html[data-theme="light"] :is(.reader-back, .reader-download, .reader-toolbar but
   text-align: center;
 }
 
+html[data-theme="light"] .reader-page-jump input,
+html[data-theme="light"] .reader-section-jump input {
+  border-color: var(--line);
+  background: color-mix(in srgb, var(--surface2) 82%, transparent);
+  color: var(--ink);
+}
+
+html[data-theme="light"] :is(.reader-page-jump input, .reader-section-jump input)::placeholder {
+  color: var(--dim);
+}
+
 .reader-section-jump {
   display: flex;
   align-items: center;
@@ -1111,6 +1181,28 @@ html[data-theme="light"] :is(.reader-back, .reader-download, .reader-toolbar but
   border-radius: 9px;
   background: color-mix(in srgb, var(--bg, #0b1112) 96%, transparent);
   box-shadow: 0 16px 40px rgba(0, 0, 0, .3);
+}
+
+html[data-theme="light"] .reader-type-controls {
+  border-color: var(--line);
+  background: color-mix(in srgb, var(--surface) 98%, transparent);
+  color: var(--ink);
+  box-shadow: 0 18px 46px color-mix(in srgb, var(--ink) 18%, transparent);
+}
+
+html[data-theme="light"] .reader-type-controls select {
+  border-color: var(--line);
+  background: color-mix(in srgb, var(--surface2) 88%, transparent);
+  color: var(--ink);
+}
+
+html[data-theme="light"] .reader-type-controls input[type="color"] {
+  border-color: var(--line);
+}
+
+html[data-theme="light"] .reader-type-panel summary {
+  border-color: var(--line);
+  color: var(--ink);
 }
 
 .reader-type-controls label {
@@ -1459,6 +1551,23 @@ html[data-theme="light"] :is(.reader-back, .reader-download, .reader-toolbar but
   box-shadow: 0 0 0 5px rgba(241, 208, 78, .16), 0 10px 30px rgba(0, 0, 0, .38);
 }
 
+html[data-theme="light"] .reader-mobile-controls-toggle {
+  border-color: color-mix(in srgb, var(--surface) 76%, transparent);
+  background:
+    radial-gradient(circle at 24% 18%, rgba(255, 255, 255, .34), transparent 34%),
+    linear-gradient(135deg, var(--accent), color-mix(in srgb, var(--accent) 66%, var(--surface)));
+  color: var(--surface);
+  box-shadow:
+    0 0 0 4px rgba(var(--accent-rgb), .14),
+    0 10px 28px color-mix(in srgb, var(--ink) 24%, transparent);
+}
+
+html[data-theme="light"] .reader-controls-toggle-label {
+  border-color: var(--line);
+  background: color-mix(in srgb, var(--surface) 96%, transparent);
+  color: var(--ink);
+}
+
 .reader-dialog[data-reading-tone="paper"] .reader-mobile-controls-toggle {
   border-color: rgba(255, 255, 255, .72);
   background:
@@ -1472,6 +1581,41 @@ html[data-theme="light"] :is(.reader-back, .reader-download, .reader-toolbar but
   border-color: rgba(44, 78, 62, .26);
   background: rgba(249, 244, 232, .96);
   color: #263a33;
+}
+
+html[data-theme="light"] .reader-dialog[data-reading-tone="paper"] .reader-background-controls {
+  border-color: var(--line);
+  background: color-mix(in srgb, var(--surface) 98%, transparent);
+  color: var(--ink);
+  box-shadow: 0 18px 46px color-mix(in srgb, var(--ink) 18%, transparent);
+}
+
+html[data-theme="light"] .reader-dialog[data-reading-tone="paper"] .reader-type-panel summary {
+  border-color: var(--line);
+  color: var(--ink);
+}
+
+html[data-theme="light"] .reader-dialog[data-reading-tone="paper"] .reader-background-actions button {
+  border-color: var(--line);
+  background: color-mix(in srgb, var(--surface2) 88%, transparent);
+  color: var(--ink);
+}
+
+html[data-theme="light"] .reader-dialog[data-reading-tone="paper"] .reader-mobile-controls-toggle {
+  border-color: color-mix(in srgb, var(--surface) 76%, transparent);
+  background:
+    radial-gradient(circle at 24% 18%, rgba(255, 255, 255, .34), transparent 34%),
+    linear-gradient(135deg, var(--accent), color-mix(in srgb, var(--accent) 66%, var(--surface)));
+  color: var(--surface);
+  box-shadow:
+    0 0 0 4px rgba(var(--accent-rgb), .14),
+    0 10px 28px color-mix(in srgb, var(--ink) 24%, transparent);
+}
+
+html[data-theme="light"] .reader-dialog[data-reading-tone="paper"] .reader-controls-toggle-label {
+  border-color: var(--line);
+  background: color-mix(in srgb, var(--surface) 96%, transparent);
+  color: var(--ink);
 }
 
 @keyframes reader-orb-breathe {
