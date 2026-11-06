@@ -190,6 +190,7 @@
   let readerControlsManuallyHidden = false;
   let readerBubbleHandledPointer = false;
   let readerBubbleDrag = null;
+  let readerPointerFocusUntil = 0;
   let sectionIndex = [];
   let customReaderFontFace = null;
   let customReaderFontFile = null;
@@ -1329,11 +1330,13 @@
     });
   });
   readerDialog.addEventListener("pointerdown", () => {
+    readerPointerFocusUntil = performance.now() + 700;
     if (readerControlsManuallyHidden) return;
     showReaderControls();
   });
   readerDialog.addEventListener("focusin", (event) => {
     if (event.target === readerMobileControlsToggle) return;
+    if (performance.now() < readerPointerFocusUntil) return;
     if (
       readerControlsManuallyHidden &&
       !event.target.closest("a, button, input, select, textarea, summary")
