@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="/portfolio-website/install-apps.css?v=install-note-1">
   <link rel="stylesheet" href="/portfolio-website/theme-controls.css?v=theme-controls-6">
   <link rel="stylesheet" href="/books/library.css?v=library-day-3">
-  <link rel="stylesheet" href="/books/library-reader.css?v=reader-toc-1">
+  <link rel="stylesheet" href="/books/library-reader.css?v=reader-atmosphere-2">
 </head>
 <body data-app-install="library" data-app-name="The Nyarindo Library" data-service-worker="/books/service-worker.js" data-service-worker-scope="/books/">
   <div class="library-atmosphere" aria-hidden="true">
@@ -154,6 +154,23 @@
       </article>
     </section>
 
+    <section class="library-local-extension" id="local-library" aria-labelledby="localLibraryTitle">
+      <div class="local-library-heading">
+        <div>
+          <p class="kicker">LOCAL EXTENSION · PRIVATE TO THIS DEVICE</p>
+          <h2 id="localLibraryTitle">Add your own PDF.</h2>
+          <p>Convert a PDF into the Nyarindo reader. The original stays in this browser and is never uploaded.</p>
+        </div>
+        <form class="local-pdf-form" id="localPdfForm">
+          <label>PDF file<input id="localPdfFile" type="file" accept="application/pdf,.pdf" required></label>
+          <label>Title <span>(optional)</span><input id="localPdfTitle" type="text" maxlength="120" placeholder="Use the PDF filename"></label>
+          <button type="submit">Add to this library</button>
+        </form>
+      </div>
+      <p class="local-library-status" id="localPdfStatus" role="status" aria-live="polite"></p>
+      <div class="local-pdf-list" id="localPdfList" aria-live="polite"></div>
+    </section>
+
     <section class="library-experiments" aria-label="Companion experiments">
       <article class="experiment-card">
         <a class="experiment-image" href="/books/experiments/particles.html" aria-label="Open Experiment One: Particles in conversation">
@@ -196,24 +213,43 @@
       </header>
       <div class="reader-toolbar">
         <div class="reader-control-group" aria-label="Reading tone"><span>Tone</span><button type="button" data-reading-tone="paper" aria-pressed="false">Paper</button><button type="button" data-reading-tone="night" aria-pressed="true">Night</button></div>
-        <div class="reader-control-group" aria-label="Atmosphere"><span>Atmosphere</span><button type="button" data-reader-atmosphere="off" aria-pressed="false">Off</button><button type="button" data-reader-atmosphere="day" aria-pressed="false">Day</button><button type="button" data-reader-atmosphere="night" aria-pressed="true">Night</button></div>
-        <p class="reader-hint">Page markers follow the source text · scroll continuously through the edition · zoom without leaving the text</p>
+        <div class="reader-control-group" aria-label="Background atmosphere"><span>Background</span><button type="button" data-reader-atmosphere="day" aria-pressed="false">Day</button><button type="button" data-reader-atmosphere="night" aria-pressed="true">Night</button></div>
+        <details class="reader-type-panel">
+          <summary>Type</summary>
+          <div class="reader-type-controls">
+            <label>Text colour<input id="readerTextColor" type="color" value="#f0eadc"></label>
+            <label>Font<select id="readerFontFamily"><option value="serif">Reader serif</option><option value="sans">Reader sans</option><option value="mono">Reader mono</option><option value="custom" disabled>Imported font</option></select></label>
+            <label class="reader-font-import">Import font<input id="readerFontFile" type="file" accept=".woff2,.woff,.ttf,.otf,font/woff2,font/woff,font/ttf,font/otf"></label>
+            <button id="readerResetType" type="button">Reset type</button>
+            <span id="readerTypeStatus" role="status" aria-live="polite"></span>
+          </div>
+        </details>
+        <form class="reader-section-jump" id="readerSectionJumpForm"><label for="readerSectionInput"><span>Jump to section</span><input id="readerSectionInput" list="readerSectionOptions" autocomplete="off" placeholder="Type a section name"></label><datalist id="readerSectionOptions"></datalist><button type="submit">Find</button></form>
+        <p class="reader-hint">Arrows turn pages · Home and End jump to the edges · G focuses page entry · S focuses section search</p>
       </div>
       <div class="reader-stage" id="readerStage">
-        <div class="reader-atmosphere" aria-hidden="true"><span></span></div>
+        <div class="reader-atmosphere" aria-hidden="true"><span class="reader-atmosphere-day"></span><span class="reader-atmosphere-night"></span></div>
         <article class="reader-paper" id="readerPaper" aria-label="Continuous book edition"><p class="reader-page-marker" id="readerPageMarker">Choose a book to begin</p><div class="reader-copy" id="readerCopy"></div></article>
         <p class="reader-message" id="readerMessage" aria-live="polite">Choose a book from the library.</p>
       </div>
       <div class="reader-progress" aria-hidden="true"><span id="readerProgressBar"></span></div>
       <footer class="reader-footer">
-        <div class="reader-page-nav" aria-label="Continuous reading position"><span class="reader-page-state">Page <b id="readerCurrentPage">1</b> of <b id="pageCount">—</b></span><span class="reader-scroll-note">one continuous scroll · source page markers preserved</span></div>
-        <div class="reader-zoom"><button id="zoomOut" type="button" aria-label="Zoom out">−</button><button id="zoomReset" type="button" aria-label="Reset zoom">100%</button><button id="zoomIn" type="button" aria-label="Zoom in">＋</button><button id="readerFullscreen" type="button" aria-label="Enter fullscreen">Fullscreen ⛶</button></div>
+        <div class="reader-page-nav" aria-label="Continuous reading position">
+          <button id="readerPreviousPage" type="button" aria-label="Go to previous page">← Previous</button>
+          <form class="reader-page-jump" id="readerPageJumpForm"><label for="readerPageInput">Page</label><input id="readerPageInput" type="number" min="1" inputmode="numeric" aria-label="Enter page number"><button type="submit">Go</button></form>
+          <button id="readerNextPage" type="button" aria-label="Go to next page">Next →</button>
+          <span class="reader-page-state">Page <b id="readerCurrentPage">1</b> of <b id="pageCount">—</b></span>
+          <span class="reader-scroll-note">one continuous scroll · source page markers preserved</span>
+        </div>
+        <div class="reader-zoom"><button id="zoomOut" type="button" aria-label="Zoom out">−</button><button id="zoomReset" type="button" aria-label="Reset zoom">100%</button><button id="zoomIn" type="button" aria-label="Zoom in">＋</button><button id="readerFullscreen" type="button" aria-label="Enter fullscreen" aria-pressed="false">Fullscreen ⛶</button></div>
       </footer>
     </div>
+    <p class="reader-focus-hint" id="readerFocusHint" aria-hidden="true">Move, tap, or press any key to show controls</p>
   </dialog>
 
-  <script defer src="/books/library.js?v=reader-toc-2"></script>
+  <script defer src="/books/pdf-importer.js?v=local-pdf-2"></script>
+  <script defer src="/books/library.js?v=reader-toc-4"></script>
   <script defer src="/portfolio-website/site-theme-control.js?v=theme-controls-6"></script>
-  <script defer src="/portfolio-website/install-app.js?v=install-note-1"></script>
+  <script defer src="/portfolio-website/install-app.js?v=install-separate-2"></script>
 </body>
 </html>

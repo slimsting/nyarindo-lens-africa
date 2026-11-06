@@ -64,6 +64,20 @@
       file: "/books/pdfs/end-note.pdf",
     },
   });
+  const localBooks = new Map();
+
+  function getBook(bookSlug) {
+    return localBooks.get(bookSlug) || books[bookSlug] || null;
+  }
+
+  async function refreshLocalBooks() {
+    if (!window.NyarindoPdfLibrary) return;
+    const documents = await window.NyarindoPdfLibrary.listBooks();
+    localBooks.clear();
+    documents.forEach((document) => {
+      localBooks.set(document.id, { ...document, local: true });
+    });
+  }
 
   const root = document.documentElement;
   const searchInput = document.getElementById("librarySearch");
@@ -131,6 +145,19 @@
   const zoomReset = document.getElementById("zoomReset");
   const zoomIn = document.getElementById("zoomIn");
   const readerFullscreen = document.getElementById("readerFullscreen");
+  const readerPreviousPage = document.getElementById("readerPreviousPage");
+  const readerNextPage = document.getElementById("readerNextPage");
+  const readerPageJumpForm = document.getElementById("readerPageJumpForm");
+  const readerPageInput = document.getElementById("readerPageInput");
+  const readerSectionJumpForm = document.getElementById("readerSectionJumpForm");
+  const readerSectionInput = document.getElementById("readerSectionInput");
+  const readerSectionOptions = document.getElementById("readerSectionOptions");
+  const readerTextColor = document.getElementById("readerTextColor");
+  const readerFontFamily = document.getElementById("readerFontFamily");
+  const readerFontFile = document.getElementById("readerFontFile");
+  const readerResetType = document.getElementById("readerResetType");
+  const readerTypeStatus = document.getElementById("readerTypeStatus");
+  const readerFocusHint = document.getElementById("readerFocusHint");
   const toneButtons = [...document.querySelectorAll("[data-reading-tone]")];
   const atmosphereButtons = [
     ...document.querySelectorAll("[data-reader-atmosphere]"),
@@ -145,6 +172,12 @@
   let atmosphereChosen = false;
   let scrollFrame = 0;
   let rememberTimer = 0;
+  let controlsHideTimer = 0;
+  let pointerFrame = 0;
+  let fallbackFocusMode = false;
+  let sectionIndex = [];
+  let customReaderFontFace = null;
+  let customReaderFontFile = null;
   const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   function setPressed(buttons, active, key) {
@@ -167,6 +200,154 @@
     atmosphereChosen = true;
   }
 
+  const readerTypeKey = "nyarindo-reader-type";
+  const readerTypeDefaults = {
+    color: "",
+    family: "serif",
+    customFileName: "",
+  };
+
+  function openReaderTypeDb() {
+    return new Promise((resolve, reject) => {
+      const request = indexedDB.open("nyarindo-reader-type", 1);
+      request.onupgradeneeded = () => {
+        request.result.createObjectStore("fonts", { keyPath: "id" });
+      };
+      request.onsuccess = () => resolve(request.result);
+      request.onerror = () => reject(request.error);
+    });
+  }
+
+  async function readStoredReaderFont() {
+    const db = await openReaderTypeDb();
+    return new Promise((resolve, reject) => {
+      const request = db.transaction("fonts", "readonly").objectStore("fonts").get("current");
+      request.onsuccess = () => resolve(request.result || null);
+      request.onerror = () => reject(request.error);
+    });
+  }
+
+  async function writeStoredReaderFont(record) {
+    const db = await openReaderTypeDb();
+    return new Promise((resolve, reject) => {
+      const transaction = db.transaction("fonts", "readwrite");
+      transaction.objectStore("fonts").put({ id: "current", ...record });
+      transaction.oncomplete = resolve;
+      transaction.onerror = () => reject(transaction.error);
+    });
+  }
+
+  async function clearStoredReaderFont() {
+    const db = await openReaderTypeDb();
+    return new Promise((resolve, reject) => {
+      const transaction = db.transaction("fonts", "readwrite");
+      transaction.objectStore("fonts").delete("current");
+      transaction.oncomplete = resolve;
+      transaction.onerror = () => reject(transaction.error);
+    });
+  }
+
+  function readReaderType() {
+    try {
+      return {
+        ...readerTypeDefaults,
+        ...JSON.parse(localStorage.getItem(readerTypeKey) || "{}"),
+      };
+    } catch {
+      return { ...readerTypeDefaults };
+    }
+  }
+
+  function writeReaderType(preferences) {
+    try {
+      localStorage.setItem(readerTypeKey, JSON.stringify(preferences));
+    } catch {}
+  }
+
+  function fontStack(family, customAvailable) {
+    if (family === "custom" && customAvailable) {
+      return '"Drift Reader Custom", var(--serif)';
+    }
+    return family === "sans"
+      ? "var(--sans)"
+      : family === "mono"
+        ? "var(--mono)"
+        : "var(--serif)";
+  }
+
+  function applyReaderType(preferences = readReaderType()) {
+    const customAvailable = Boolean(customReaderFontFace);
+    const family =
+      preferences.family === "custom" && !customAvailable
+        ? "serif"
+        : preferences.family;
+    readerDialog.style.setProperty(
+      "--reader-font-family",
+      fontStack(family, customAvailable),
+    );
+    readerFontFamily.value = family;
+    const customOption = readerFontFamily.querySelector('option[value="custom"]');
+    customOption.disabled = !customAvailable;
+    customOption.textContent = customAvailable && preferences.customFileName
+      ? `Imported · ${preferences.customFileName}`
+      : "Imported font";
+    if (/^#[0-9a-f]{6}$/i.test(preferences.color)) {
+      readerDialog.style.setProperty("--reader-text-color", preferences.color);
+      readerDialog.classList.add("has-reader-type");
+      readerTextColor.value = preferences.color;
+    } else {
+      readerDialog.style.removeProperty("--reader-text-color");
+      readerDialog.classList.remove("has-reader-type");
+      readerTextColor.value =
+        root.dataset.theme === "light" ? "#22251f" : "#f0eadc";
+    }
+  }
+
+  async function installReaderFont(blob, fileName) {
+    const extension = fileName.split(".").pop().toLocaleLowerCase();
+    const formats = {
+      woff2: "woff2",
+      woff: "woff",
+      ttf: "truetype",
+      otf: "opentype",
+    };
+    const format = formats[extension];
+    if (!format) throw new Error("Choose a WOFF2, WOFF, TTF, or OTF font.");
+    const buffer = await blob.arrayBuffer();
+    const face = new FontFace("Drift Reader Custom", buffer, { style: "normal" });
+    await face.load();
+    if (customReaderFontFace) document.fonts.delete(customReaderFontFace);
+    customReaderFontFace = face;
+    customReaderFontFile = { blob, fileName, format };
+    document.fonts.add(face);
+    await writeStoredReaderFont({ blob, fileName, format });
+    const preferences = readReaderType();
+    preferences.family = "custom";
+    preferences.customFileName = fileName;
+    writeReaderType(preferences);
+    applyReaderType(preferences);
+    readerTypeStatus.textContent = `${fileName} imported locally.`;
+  }
+
+  async function restoreReaderType() {
+    const preferences = readReaderType();
+    try {
+      const stored = await readStoredReaderFont();
+      if (stored?.blob) {
+        const face = new FontFace("Drift Reader Custom", await stored.blob.arrayBuffer(), {
+          style: "normal",
+        });
+        await face.load();
+        customReaderFontFace = face;
+        customReaderFontFile = stored;
+        document.fonts.add(face);
+      }
+    } catch {
+      readerTypeStatus.textContent = "The saved font could not be restored.";
+    }
+    applyReaderType(preferences);
+  }
+
   toneButtons.forEach((button) => {
     button.addEventListener("click", () => setTone(button.dataset.readingTone));
   });
@@ -174,6 +355,53 @@
     button.addEventListener("click", () =>
       setAtmosphere(button.dataset.readerAtmosphere),
     );
+  });
+
+  readerTextColor.addEventListener("input", () => {
+    const preferences = readReaderType();
+    preferences.color = readerTextColor.value;
+    writeReaderType(preferences);
+    applyReaderType(preferences);
+    readerTypeStatus.textContent = "Text colour updated.";
+  });
+  readerFontFamily.addEventListener("change", () => {
+    if (readerFontFamily.value === "custom" && !customReaderFontFace) {
+      readerFontFamily.value = "serif";
+      return;
+    }
+    const preferences = readReaderType();
+    preferences.family = readerFontFamily.value;
+    writeReaderType(preferences);
+    applyReaderType(preferences);
+    readerTypeStatus.textContent = readerFontFamily.value === "custom"
+      ? `${preferences.customFileName || "Imported font"} selected.`
+      : "Built-in reader font selected.";
+  });
+  readerFontFile.addEventListener("change", async () => {
+    const [file] = readerFontFile.files || [];
+    if (!file) return;
+    if (file.size > 12 * 1024 * 1024) {
+      readerTypeStatus.textContent = "Choose a font file smaller than 12 MB.";
+      readerFontFile.value = "";
+      return;
+    }
+    try {
+      await installReaderFont(file, file.name);
+    } catch (error) {
+      readerTypeStatus.textContent =
+        error instanceof Error ? error.message : "The font could not be imported.";
+    } finally {
+      readerFontFile.value = "";
+    }
+  });
+  readerResetType.addEventListener("click", async () => {
+    if (customReaderFontFace) document.fonts.delete(customReaderFontFace);
+    customReaderFontFace = null;
+    customReaderFontFile = null;
+    await clearStoredReaderFont().catch(() => {});
+    writeReaderType({ ...readerTypeDefaults });
+    applyReaderType({ ...readerTypeDefaults });
+    readerTypeStatus.textContent = "Reader type reset.";
   });
 
   function setReaderMessage(message, isError = false) {
@@ -184,10 +412,17 @@
 
   function updateReaderStatus() {
     const total = readerData?.pageCount || 0;
+    const activePage = total
+      ? Math.min(Math.max(1, currentPage), total)
+      : 1;
     pageCount.textContent = total || "—";
-    readerCurrentPage.textContent = total
-      ? String(Math.min(Math.max(1, currentPage), total))
-      : "1";
+    readerCurrentPage.textContent = String(activePage);
+    readerPageInput.max = total ? String(total) : "";
+    if (document.activeElement !== readerPageInput) {
+      readerPageInput.value = total ? String(activePage) : "";
+    }
+    readerPreviousPage.disabled = !total || activePage <= 1;
+    readerNextPage.disabled = !total || activePage >= total;
     const scrollable = readerStage.scrollHeight - readerStage.clientHeight;
     const progress = scrollable > 8
       ? Math.min(1, Math.max(0, readerStage.scrollTop / scrollable))
@@ -234,10 +469,46 @@
     let currentList = null;
 
     blocks.forEach((block) => {
+      if (block?.type === "image" && block.src) {
+        currentList = null;
+        const figure = document.createElement("figure");
+        figure.className = "reader-page-image";
+        const image = document.createElement("img");
+        image.src = block.src;
+        image.alt = block.alt || "Rendered PDF page";
+        image.loading = "lazy";
+        image.decoding = "async";
+        figure.append(image);
+        fragment.append(figure);
+        return;
+      }
+
+      if (block?.type === "link") {
+        currentList = null;
+        const link = document.createElement("a");
+        link.className = "reader-pdf-link";
+        link.textContent = block.text || "Open PDF link";
+        if (block.targetPage) {
+          link.href = `#reader-page-${block.targetPage}`;
+          link.addEventListener("click", (event) => {
+            event.preventDefault();
+            goToPage(block.targetPage);
+          });
+        } else if (block.url) {
+          link.href = block.url;
+          link.target = "_blank";
+          link.rel = "noopener noreferrer";
+        }
+        if (link.getAttribute("href")) {
+          fragment.append(link);
+        }
+        return;
+      }
+
       const text = typeof block?.text === "string" ? block.text.trim() : "";
       if (!text) return;
 
-      const contentsMatch = text.match(
+      const contentsMatch = text.replace(/\s+/g, " ").trim().match(
         /^(.*?)(?:\s*(?:\.{2,}|…{2,}|-{2,}|–{2,})\s*|\s{2,})\s*(?:pages?|pg\.?|p\.?)?\s*(\d+)\s*$/iu,
       );
       if (contentsMatch) {
@@ -262,7 +533,7 @@
         link.append(title, page);
         link.addEventListener("click", (event) => {
           event.preventDefault();
-          requestAnimationFrame(() => scrollToSourcePage(targetPage));
+          requestAnimationFrame(() => scrollToSourcePage(targetPage, false));
         });
         currentList = null;
         fragment.append(link);
@@ -297,7 +568,7 @@
     container.append(fragment);
   }
 
-  function scrollToSourcePage(pageNumber, smooth = true) {
+  function scrollToSourcePage(pageNumber, smooth = false) {
     if (!readerData) return;
     const bounded = Math.min(
       Math.max(1, Number.parseInt(pageNumber, 10) || 1),
@@ -317,6 +588,46 @@
       behavior: smooth && !reducedMotion ? "smooth" : "auto",
     });
     updateReaderStatus();
+  }
+
+  function goToPage(pageNumber, smooth = false) {
+    if (!readerData) return;
+    scrollToSourcePage(pageNumber, smooth);
+  }
+
+  function populateSectionJumps() {
+    const entries = [];
+    const seen = new Set();
+    const addEntry = (label, page) => {
+      const cleanLabel = String(label || "").trim().replace(/\s+/g, " ");
+      const cleanPage = Number.parseInt(page, 10);
+      if (!cleanLabel || !Number.isFinite(cleanPage)) return;
+      const key = `${cleanLabel.toLocaleLowerCase()}::${cleanPage}`;
+      if (seen.has(key)) return;
+      seen.add(key);
+      entries.push({
+        label: cleanLabel,
+        searchLabel: cleanLabel.toLocaleLowerCase(),
+        page: cleanPage,
+      });
+    };
+
+    readerCopy.querySelectorAll(".reader-toc-entry").forEach((entry) => {
+      addEntry(entry.querySelector(".reader-toc-title")?.textContent, entry.dataset.readerTarget);
+    });
+    readerCopy.querySelectorAll(".reader-source-page h2").forEach((heading) => {
+      addEntry(heading.textContent, heading.closest(".reader-source-page")?.dataset.readerPage);
+    });
+
+    sectionIndex = entries;
+    const options = document.createDocumentFragment();
+    entries.forEach((entry) => {
+      const option = document.createElement("option");
+      option.value = `${entry.label} — page ${entry.page}`;
+      options.append(option);
+    });
+    readerSectionOptions.replaceChildren(options);
+    readerSectionInput.value = "";
   }
 
   function renderDocument(requestedPage = 1) {
@@ -343,6 +654,7 @@
       "data-page-count",
       String(readerData.pageCount),
     );
+    populateSectionJumps();
     setReaderMessage("");
     currentPage = Math.min(
       Math.max(1, Number.parseInt(requestedPage, 10) || 1),
@@ -405,9 +717,11 @@
   }
 
   async function openReader(bookSlug, requestedPage = 1) {
-    const book = books[bookSlug];
+    await refreshLocalBooks();
+    const book = getBook(bookSlug);
     if (!book) return;
     const sequence = ++loadSequence;
+    window.NyarindoPdfLibrary?.releaseReaderUrls();
     currentBook = { ...book, slug: bookSlug };
     readerData = null;
     currentPage = Math.max(1, Number.parseInt(requestedPage, 10) || 1);
@@ -415,7 +729,7 @@
     readerTitle.textContent = book.title;
     readerSubtitle.textContent = book.subtitle;
     readerNumber.textContent = book.number;
-    readerDownload.href = book.file;
+    readerDownload.href = book.file || "#";
     readerCopy.replaceChildren();
     pageCount.textContent = "—";
     applyZoom();
@@ -426,7 +740,13 @@
     rememberReaderState();
     setReaderMessage("Opening the book…");
     try {
-      const data = await getReaderData(bookSlug);
+      const data = book.local
+        ? await window.NyarindoPdfLibrary.getReaderData(bookSlug)
+        : await getReaderData(bookSlug);
+      if (book.local) {
+        readerDownload.href =
+          (await window.NyarindoPdfLibrary.getOriginalFileUrl(bookSlug)) || "#";
+      }
       if (sequence !== loadSequence) return;
       readerData = data;
       currentPage = Math.min(currentPage, readerData.pageCount);
@@ -446,6 +766,13 @@
     readerData = null;
     currentBook = null;
     readerCopy.replaceChildren();
+    window.NyarindoPdfLibrary?.releaseReaderUrls();
+    clearTimeout(controlsHideTimer);
+    fallbackFocusMode = false;
+    setFocusMode(false);
+    if (document.fullscreenElement === readerDialog) {
+      document.exitFullscreen().catch(() => {});
+    }
     if (readerDialog.open) readerDialog.close();
     try {
       history.replaceState({}, "", "/books/");
@@ -455,10 +782,23 @@
   readerClose.addEventListener("click", closeReader);
   readerDialog.addEventListener("cancel", (event) => {
     event.preventDefault();
+    if (focusModeActive()) {
+      if (document.fullscreenElement === readerDialog) {
+        document.exitFullscreen().catch(() => {});
+      }
+      fallbackFocusMode = false;
+      setFocusMode(false);
+      return;
+    }
     closeReader();
   });
   readerDialog.addEventListener("click", (event) => {
-    if (event.target === readerDialog) closeReader();
+    if (event.target !== readerDialog) return;
+    if (focusModeActive()) {
+      showReaderControls();
+    } else {
+      closeReader();
+    }
   });
   readerStage.addEventListener(
     "scroll",
@@ -483,35 +823,175 @@
     zoom = 1;
     applyZoom();
   });
+
+  readerPreviousPage.addEventListener("click", () => {
+    goToPage(currentPage - 1);
+  });
+  readerNextPage.addEventListener("click", () => {
+    goToPage(currentPage + 1);
+  });
+  readerPageJumpForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    if (!readerData) return;
+    const page = Number.parseInt(readerPageInput.value, 10);
+    if (!Number.isFinite(page)) {
+      setReaderMessage("Enter a page number.", true);
+      readerPageInput.focus();
+      return;
+    }
+    setReaderMessage("");
+    goToPage(page);
+    readerPageInput.blur();
+  });
+  readerSectionJumpForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const query = readerSectionInput.value.trim().toLocaleLowerCase();
+    if (!query || !sectionIndex.length) return;
+    const match =
+      sectionIndex.find((entry) =>
+        `${entry.label} — page ${entry.page}`.toLocaleLowerCase() === query
+      ) ||
+      sectionIndex.find((entry) => entry.searchLabel.includes(query));
+    if (!match) {
+      setReaderMessage("No section with that name appears in this edition.", true);
+      return;
+    }
+    setReaderMessage("");
+    readerSectionInput.value = `${match.label} — page ${match.page}`;
+    goToPage(match.page);
+    readerSectionInput.blur();
+  });
+
+  function focusModeActive() {
+    return (
+      readerDialog.classList.contains("reader-focus-mode") ||
+      document.fullscreenElement === readerDialog
+    );
+  }
+
+  function hideReaderControls() {
+    if (!focusModeActive()) return;
+    const focusedControl = readerDialog.querySelector(
+      ":is(button, input, select):focus",
+    );
+    if (focusedControl) {
+      scheduleReaderControlHide();
+      return;
+    }
+    readerDialog.classList.add("reader-controls-hidden");
+  }
+
+  function scheduleReaderControlHide() {
+    clearTimeout(controlsHideTimer);
+    if (!focusModeActive()) return;
+    controlsHideTimer = window.setTimeout(hideReaderControls, 2800);
+  }
+
+  function showReaderControls(schedule = true) {
+    readerDialog.classList.remove("reader-controls-hidden");
+    readerFocusHint.classList.remove("is-visible");
+    if (schedule) scheduleReaderControlHide();
+  }
+
+  function setFocusMode(active) {
+    readerDialog.classList.toggle("reader-focus-mode", active);
+    readerDialog.classList.remove("reader-controls-hidden");
+    readerFullscreen.textContent = active ? "Exit fullscreen ×" : "Fullscreen ⛶";
+    readerFullscreen.setAttribute("aria-pressed", String(active));
+    clearTimeout(controlsHideTimer);
+    if (active) {
+      readerDialog.querySelector(":focus")?.blur();
+      readerFocusHint.classList.add("is-visible");
+      window.setTimeout(() => readerFocusHint.classList.remove("is-visible"), 1600);
+      scheduleReaderControlHide();
+    }
+  }
+
   readerFullscreen.addEventListener("click", async () => {
+    if (document.fullscreenElement === readerDialog || fallbackFocusMode) {
+      try {
+        if (document.fullscreenElement) await document.exitFullscreen();
+      } catch {}
+      fallbackFocusMode = false;
+      setFocusMode(false);
+      return;
+    }
     try {
       if (document.fullscreenElement) {
         await document.exitFullscreen();
-        readerFullscreen.textContent = "Fullscreen ⛶";
       } else {
         await readerDialog.requestFullscreen();
-        readerFullscreen.textContent = "Exit fullscreen ⛶";
+        setFocusMode(true);
       }
     } catch {
-      readerFullscreen.textContent = "Fullscreen unavailable";
+      fallbackFocusMode = true;
+      setFocusMode(true);
     }
   });
   document.addEventListener("fullscreenchange", () => {
-    readerFullscreen.textContent = document.fullscreenElement
-      ? "Exit fullscreen ⛶"
-      : "Fullscreen ⛶";
+    if (document.fullscreenElement === readerDialog) {
+      setFocusMode(true);
+    } else if (!fallbackFocusMode) {
+      setFocusMode(false);
+    }
   });
+
+  readerDialog.addEventListener("pointermove", () => {
+    if (!focusModeActive() || pointerFrame) return;
+    pointerFrame = requestAnimationFrame(() => {
+      pointerFrame = 0;
+      showReaderControls();
+    });
+  });
+  readerDialog.addEventListener("pointerdown", () => showReaderControls());
+  readerDialog.addEventListener("focusin", () => showReaderControls(false));
+  readerDialog.addEventListener("focusout", scheduleReaderControlHide);
 
   document.addEventListener("keydown", (event) => {
     if (!readerDialog.open) return;
-    if (event.target instanceof HTMLInputElement) return;
-    if (event.key === "ArrowLeft") {
+    showReaderControls();
+    if (event.key === "Escape" && fallbackFocusMode) {
+      event.preventDefault();
+      fallbackFocusMode = false;
+      setFocusMode(false);
+      return;
+    }
+    if (
+      event.target instanceof HTMLInputElement ||
+      event.target instanceof HTMLSelectElement ||
+      event.target instanceof HTMLTextAreaElement
+    ) {
+      return;
+    }
+    if (event.key === "ArrowLeft" || event.key === "PageUp") {
       event.preventDefault();
       goToPage(currentPage - 1);
     }
-    if (event.key === "ArrowRight") {
+    if (event.key === "ArrowRight" || event.key === "PageDown") {
       event.preventDefault();
       goToPage(currentPage + 1);
+    }
+    if (event.key === "Home") {
+      event.preventDefault();
+      goToPage(1);
+    }
+    if (event.key === "End") {
+      event.preventDefault();
+      goToPage(readerData?.pageCount || 1);
+    }
+    if (event.key.toLocaleLowerCase() === "g") {
+      event.preventDefault();
+      readerPageInput.focus();
+      readerPageInput.select();
+    }
+    if (event.key.toLocaleLowerCase() === "s") {
+      event.preventDefault();
+      readerSectionInput.focus();
+      readerSectionInput.select();
+    }
+    if (event.key.toLocaleLowerCase() === "f") {
+      event.preventDefault();
+      readerFullscreen.click();
     }
   });
 
@@ -538,7 +1018,11 @@
     if (readerDialog.open && !atmosphereChosen) {
       setAtmosphere(event.detail.theme === "light" ? "day" : "night");
     }
+    const preferences = readReaderType();
+    if (!preferences.color) applyReaderType(preferences);
   });
+  window.NyarindoLibrary = { openReader };
+  window.addEventListener("nyarindo:local-library-changed", refreshLocalBooks);
 
   document.addEventListener("click", (event) => {
     const link = event.target.closest('a[href^="/books/?"]');
@@ -546,16 +1030,19 @@
     if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
     const url = new URL(link.href, location.href);
     const book = url.searchParams.get("book");
-    if (!books[book]) return;
+    if (!getBook(book)) return;
     event.preventDefault();
     openReader(book, url.searchParams.get("page") || 1);
   });
 
   const openingUrl = new URL(location.href);
   const openingBook = openingUrl.searchParams.get("book");
-  if (books[openingBook]) {
-    requestAnimationFrame(() =>
-      openReader(openingBook, openingUrl.searchParams.get("page") || 1),
-    );
-  }
+  restoreReaderType();
+  refreshLocalBooks().then(() => {
+    if (getBook(openingBook)) {
+      requestAnimationFrame(() =>
+        openReader(openingBook, openingUrl.searchParams.get("page") || 1),
+      );
+    }
+  });
 })();

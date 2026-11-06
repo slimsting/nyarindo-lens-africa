@@ -1,41 +1,42 @@
 <!doctype html>
-<html lang="en" data-page="drift-artist">
+<html lang="en" data-page="drift-artist" data-theme="dark">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="theme-color" content="#090a08">
-    <link rel="stylesheet" href="styles.css?v=theme-controls-12">
-    <title>Upload to Drift</title>
-
-    <script src="../portfolio-website/site-theme-init.js?v=site-theme-1"></script>
-    <meta name="description" content="Drift's artist workspace preview for sharing music, lyrics, discovery preferences, and direct artist support.">
-    <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
+    <link rel="icon" href="assets/drift-icon-32.png" type="image/png" sizes="32x32">
+    <link rel="apple-touch-icon" href="assets/drift-icon-maskable-180.png" sizes="180x180">
+    <title>Drift Artist Lane — Verified sources, not uploaded copies</title>
+    <meta name="description" content="Drift's artist lane for verified identities, official source batches, reversible rights choices, and quiet updates that respect listeners.">
+    <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1">
     <meta name="author" content="Newbon Nyarindo Gadson">
-    <meta name="application-name" content="Nyarindo Lens Universal">
-    <link rel="icon" type="image/png" sizes="32x32" href="/portfolio-website/assets/favicon-32.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="/portfolio-website/assets/apple-touch-icon.png">
+    <meta name="application-name" content="Drift">
     <link rel="canonical" href="https://nyarindolens.com/drift/artist.html">
     <link rel="sitemap" type="application/xml" title="Sitemap" href="https://nyarindolens.com/sitemap.xml">
     <link rel="manifest" href="/drift/manifest.webmanifest">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="Nyarindo Lens Universal">
     <meta property="og:url" content="https://nyarindolens.com/drift/artist.html">
-    <meta property="og:title" content="Upload to Drift">
-    <meta property="og:description" content="Drift's artist workspace preview for sharing music, lyrics, discovery preferences, and direct artist support.">
+    <meta property="og:title" content="Drift Artist Lane">
+    <meta property="og:description" content="Verified identity, official source batches, reversible permission, and quiet artist updates.">
     <meta property="og:image" content="https://nyarindolens.com/drift/assets/drift-app-icon.svg">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Upload to Drift">
-    <meta name="twitter:description" content="Drift's artist workspace preview for sharing music, lyrics, discovery preferences, and direct artist support.">
+    <meta name="twitter:title" content="Drift Artist Lane">
+    <meta name="twitter:description" content="Verified identity, official source batches, reversible permission, and quiet artist updates.">
     <meta name="twitter:image" content="https://nyarindolens.com/drift/assets/drift-app-icon.svg">
-    <link rel="stylesheet" href="../portfolio-website/site-theme.css?v=site-theme-2">
+    <script src="/portfolio-website/site-theme-init.js?v=site-theme-1"></script>
+    <link rel="stylesheet" href="/portfolio-website/local-fonts.css?v=fonts-1">
+    <link rel="stylesheet" href="/portfolio-website/theme-controls.css?v=theme-controls-6">
+    <link rel="stylesheet" href="/portfolio-website/lens-atmosphere.css?v=lens-atmosphere-17">
+    <link rel="stylesheet" href="/portfolio-website/site-map.css?v=site-map-3">
     <link rel="stylesheet" href="tap-feedback.css?v=tap-feedback-1">
-
+    <link rel="stylesheet" href="styles.css?v=trail-first-3">
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
         "@type": "WebApplication",
-        "name": "Upload to Drift",
-        "description": "Drift's artist workspace preview for sharing music, lyrics, discovery preferences, and direct artist support.",
+        "name": "Drift Artist Lane",
+        "description": "A rights-first artist workspace for verified identities and batches of official music sources.",
         "url": "https://nyarindolens.com/drift/artist.html",
         "image": "https://nyarindolens.com/drift/assets/drift-app-icon.svg",
         "author": {
@@ -43,109 +44,133 @@
           "name": "Newbon Nyarindo Gadson",
           "url": "https://nyarindolens.com/"
         },
-        "applicationCategory": "BrowserApplication",
+        "applicationCategory": "MusicApplication",
         "operatingSystem": "Any",
         "browserRequirements": "Requires JavaScript and a modern browser."
       }
     </script>
-      <link rel="stylesheet" href="/portfolio-website/site-map.css?v=site-map-3">
-      <link rel="stylesheet" href="/portfolio-website/theme-controls.css?v=theme-controls-6">
-      <link rel="stylesheet" href="/portfolio-website/lens-atmosphere.css?v=lens-atmosphere-17">
   </head>
-  <body>
-    <main class="app-shell artist-shell">
-      <header class="topbar">
-        <a class="wordmark" href="index.html">drift<span>.</span></a>
-        <div class="header-actions">
-          <a class="back-link" href="index.html">← Listener view</a>
-          <button class="site-theme-toggle" type="button" data-theme-toggle aria-label="Switch to day mode" aria-pressed="true" data-theme-light="#f4f3eb" data-theme-dark="#090a08"><span class="theme-icon" aria-hidden="true">☾</span><span class="theme-label">NIGHT</span></button>
+  <body data-app-install="drift" data-app-name="Drift" data-service-worker="/drift/service-worker.js" data-service-worker-scope="/drift/">
+    <div class="custom-theme-layer" id="customThemeLayer" aria-hidden="true"></div>
+    <a class="skip-link" href="#artistMain">Skip to artist lane</a>
+
+    <header class="drift-header">
+      <a class="wordmark" href="index.html" aria-label="Drift listener view">drift<span>.</span></a>
+      <nav aria-label="Drift artist navigation">
+        <a href="index.html#discover">Discover</a>
+        <a href="index.html#playground">Playground</a>
+        <a href="artist.html" aria-current="page">Artists</a>
+      </nav>
+      <div class="header-actions">
+        <a class="quiet-action" href="index.html">Listener view</a>
+        <button class="theme-button" type="button" data-theme-toggle data-theme-light="#f4f3eb" data-theme-dark="#090a08" aria-label="Switch to day mode" aria-pressed="true"><span class="theme-icon" aria-hidden="true">☾</span><span class="theme-label">NIGHT</span></button>
+      </div>
+    </header>
+
+    <main id="artistMain" class="artist-main">
+      <section class="artist-hero" aria-labelledby="artistTitle">
+        <p class="eyebrow">ARTIST LANE · OFFICIAL SOURCES · REVERSIBLE CONTROL</p>
+        <h1 id="artistTitle">Your catalogue.<br><em>Your source.</em></h1>
+        <p>Drift does not need another copy of your music. It points to the place you chose to publish, shows who introduced it, and keeps the permission decision in your hands.</p>
+        <div class="artist-principles" aria-label="Artist lane principles">
+          <span>No default media hosting</span>
+          <span>Verified identity required</span>
+          <span>Quiet updates only</span>
         </div>
-      </header>
-      <section class="artist-intro">
-        <p class="eyebrow">ARTIST SPACE</p>
-        <h1>Put your music<br>into the <em>current.</em></h1>
-        <p>Your music is discovered through real listening—not ads or paid placement.</p>
-        <p class="artist-prototype-note">Artist workspace preview · uploads and payouts are not connected yet.</p>
       </section>
-      <form class="upload-form" id="uploadForm">
-        <section>
-          <p class="eyebrow">01 — THE SONG</p>
-          <label for="audio">Audio file</label>
-          <input class="file-input" id="audio" type="file" accept="audio/*" required>
-          <div class="field-grid">
-            <div><label for="title">Song title</label><input id="title" required placeholder="Song title"></div>
-            <div><label for="artist">Artist name</label><input id="artist" required placeholder="Artist name"></div>
-            <div><label for="album">Album <span>(optional)</span></label><input id="album" placeholder="Album or release"></div>
-            <div><label for="genre">Genre</label><input id="genre" required placeholder="e.g. alt-soul"></div>
+
+      <section class="artist-workspace" aria-labelledby="workspaceTitle">
+        <header>
+          <p class="eyebrow">LOCAL PREVIEW · NOTHING IS TRANSMITTED</p>
+          <h2 id="workspaceTitle">Build a source batch.</h2>
+          <p>This static workspace prepares a rights and identity preview on this device. Production verification, provider checks, and live updates require the connected service behind Drift.</p>
+        </header>
+
+        <form id="artistForm" class="artist-form">
+          <section class="artist-step" aria-labelledby="identityStep">
+            <div class="step-heading"><p>01</p><div><h3 id="identityStep">Verified identity</h3><span>The public name listeners will see beside every source.</span></div></div>
+            <div class="artist-fields">
+              <label>Artist or project name<input id="artistName" maxlength="100" required placeholder="Name shown on Drift"></label>
+              <label>Official provider profile<input id="providerProfile" type="url" required placeholder="https://suno.com/@your-name or another official profile"></label>
+              <label>Public contact email<input id="artistContact" type="email" required placeholder="rights@example.com"></label>
+              <label>Verified provider<select id="providerName"><option>Suno</option><option>YouTube</option><option>Spotify</option><option>SoundCloud</option><option>Bandcamp</option><option>Official website</option><option>Other</option></select></label>
+            </div>
+          </section>
+
+          <section class="artist-step" aria-labelledby="sourcesStep">
+            <div class="step-heading"><p>02</p><div><h3 id="sourcesStep">Official source batch</h3><span>One official song, video, album, or playlist URL per line.</span></div></div>
+            <label>Source URLs<textarea id="sourceBatch" rows="8" required placeholder="https://suno.com/song/…&#10;https://www.youtube.com/watch?v=…"></textarea></label>
+            <div class="artist-fields">
+              <label>Catalogue label<input id="catalogueLabel" maxlength="100" placeholder="Album, era, or collection"></label>
+              <label>Source note<textarea id="sourceNote" rows="3" maxlength="500" placeholder="Context listeners should see"></textarea></label>
+            </div>
+          </section>
+
+          <section class="artist-step" aria-labelledby="rightsStep">
+            <div class="step-heading"><p>03</p><div><h3 id="rightsStep">Permission, not surrender</h3><span>Choose the smallest public permission Drift needs.</span></div></div>
+            <div class="rights-choices">
+              <label><input type="radio" name="rightsState" value="allow" checked><span><b>Allow</b><small>Official sources may appear publicly with visible credit.</small></span></label>
+              <label><input type="radio" name="rightsState" value="restrict"><span><b>Restrict</b><small>Link directly, but do not embed or promote the catalogue.</small></span></label>
+              <label><input type="radio" name="rightsState" value="block"><span><b>Block</b><small>Hide public appearances while preserving private local stories.</small></span></label>
+            </div>
+            <div class="artist-checks">
+              <label><input id="rightsAuthority" type="checkbox" required><span>I own these sources or am authorised to submit this batch.</span></label>
+              <label><input id="quietUpdates" type="checkbox" checked><span>I may send quiet release and show updates to listeners who choose to follow me.</span></label>
+              <label><input id="providerControl" type="checkbox" required><span>I understand final activation requires provider or domain verification.</span></label>
+            </div>
+            <button class="source-action" id="previewRights" type="button">Preview rights state</button>
+          </section>
+
+          <aside class="rights-preview" id="rightsPreview" aria-live="polite">
+            <p class="eyebrow">RIGHTS PREVIEW</p>
+            <h3>Nothing verified yet.</h3>
+            <p>Complete the identity and source batch to see the proposed public state. This preview does not prove ownership.</p>
+          </aside>
+
+          <div class="artist-submit-row">
+            <button class="save-profile" type="submit">Create local batch preview</button>
+            <button class="soft-button" id="downloadBatch" type="button">Download batch JSON</button>
           </div>
-        </section>
-        <section>
-          <p class="eyebrow">02 — COVER &amp; WORDS</p>
-          <label for="cover">Cover image</label>
-          <input class="file-input" id="cover" type="file" accept="image/*" required>
-          <label for="lyrics">Lyrics</label>
-          <textarea id="lyrics" rows="7" placeholder="Paste your lyrics exactly as you want listeners to read them."></textarea>
-          <label class="check-row"><input id="instrumental" type="checkbox"> This song is instrumental / has no lyrics</label>
-        </section>
-        <section>
-          <p class="eyebrow">03 — SUPPORT</p>
-          <label class="check-row tip-row"><input id="artistTips" type="checkbox" checked> <span><b>Tip other artists</b><small>On by default. Listeners can support other artists directly.</small></span></label>
-          <p class="payment-note">Your payout details stay with your payment provider, not Drift.</p>
-          <button class="connect-button" id="connectButton" type="button">Connect my payout account →</button>
-        </section>
-        <section>
-          <p class="eyebrow">04 — SHARE</p>
-          <label class="check-row"><input id="rights" type="checkbox" required> I own or have permission to share this music and its lyrics on Drift.</label>
-          <button class="publish-button" type="submit">Add song to Drift →</button>
-        </section>
-      </form>
+        </form>
+      </section>
+
+      <section class="artist-source-boundary" aria-labelledby="boundaryTitle">
+        <div>
+          <p class="eyebrow">SOURCE BOUNDARY</p>
+          <h2 id="boundaryTitle">Drift links. The creator hosts.</h2>
+          <p>Official sources stay with the provider that published them. If a video or audio source is restricted, private local stories can remain while public playback becomes unavailable.</p>
+        </div>
+        <div class="boundary-list">
+          <article><b>Public lane</b><span>Official source links, embeds, visible provenance, and artist updates.</span></article>
+          <article><b>Private Playground</b><span>Local media, private lyrics, personal order, and generated tools.</span></article>
+          <article><b>Verified dispute</b><span>Matched contacts negotiate outside the public feed; Drift applies the final agreement.</span></article>
+        </div>
+      </section>
     </main>
+
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
-    <script src="artist.js"></script>
-  <script src="tap-feedback.js?v=tap-feedback-1"></script>
-    <script src="../portfolio-website/site-theme-control.js?v=theme-controls-6"></script>
-      <nav class="site-map" aria-label="Nyarindo Lens Universal site map">
+    <script src="artist.js?v=artist-lane-2"></script>
+    <script src="tap-feedback.js?v=tap-feedback-1"></script>
+    <script src="/portfolio-website/site-theme-control.js?v=theme-controls-6"></script>
+    <script src="/portfolio-website/install-app.js?v=install-separate-2"></script>
+
+    <nav class="site-map" aria-label="Nyarindo Lens Universal site map">
       <div class="site-map-intro">
         <p class="site-map-eyebrow">THE WHOLE NYARINDO LENS</p>
         <h2>Every page, one connected field.</h2>
-        <p>Move through the complete theory sequence, the books and portfolio, and the browser projects built from the same Lens.</p>
+        <p>Move through the theory sequence, books, and browser projects from the same Lens.</p>
         <a class="site-map-index" href="/sitemap.xml">Machine-readable site map ↗</a>
       </div>
       <div class="site-map-groups">
-        <section aria-labelledby="siteMapTheories">
-          <h3 id="siteMapTheories">The theories</h3>
-          <a href="/portfolio-website/#home">Portfolio home</a>
-          <a href="/portfolio-website/lens-of-everything.html">The Lens of Everything</a>
-          <a href="/portfolio-website/a-legion-wearing-one-face.html">A Legion Wearing One Face</a>
-          <a href="/portfolio-website/the-threshold-rule.html">The Threshold Rule of Communication and Morality</a>
-          <a href="/portfolio-website/peace-pon-eye-and-eye.html">Peace Pon Eye and Eye</a>
-          <a href="/portfolio-website/science-and-religion.html">When Science and Faith Share a Bench</a>
-          <a href="/portfolio-website/the-aperture.html">The Aperture</a>
-        </section>
-        <section aria-labelledby="siteMapProjects">
-          <h3 id="siteMapProjects">Browser projects</h3>
-          <a href="/drift/">Drift</a>
-          <a href="/drift/artist.html">Drift artist workspace</a>
-          <a href="/memory-app/">Return</a>
-          <a href="/semantic-field-extension/">Semantic Field</a>
-        </section>
-        <section aria-labelledby="siteMapBooks">
-          <h3 id="siteMapBooks">Books and discovery</h3>
-          <a href="/portfolio-website/#books">The seven-book collection</a>
-          <a href="/portfolio-website/#coherence-theory">The coherence sequence</a>
-          <a href="/llms.txt">AI-readable site guide</a>
-          <a href="/robots.txt">Crawler permissions</a>
-        </section>
+        <section aria-labelledby="siteMapTheories"><h3 id="siteMapTheories">The theories</h3><a href="/portfolio-website/lens-of-everything.html">The Lens of Everything</a><a href="/portfolio-website/the-threshold-rule.html">The Threshold Rule</a><a href="/portfolio-website/science-and-religion.html">Science and Religion</a></section>
+        <section aria-labelledby="siteMapProjects"><h3 id="siteMapProjects">Browser projects</h3><a href="/drift/">Drift</a><a href="/drift/artist.html">Drift artist lane</a><a href="/books/">The Library</a><a href="/memory-app/">Return</a><a href="/semantic-field-extension/">Semantic Field</a></section>
+        <section aria-labelledby="siteMapBooks"><h3 id="siteMapBooks">Books and discovery</h3><a href="/portfolio-website/#books">The seven-book collection</a><a href="/portfolio-website/#coherence-theory">The coherence sequence</a><a href="/llms.txt">AI-readable site guide</a></section>
       </div>
     </nav>
     <footer class="nyarindo-thread-footer">
       <a href="/portfolio-website/#socials">keep following the thread</a>
-      <nav aria-label="Nyarindo Lens signposts">
-        <a href="/portfolio-website/#universal-coherence-protocol">universal coherence protocol</a>
-        <span aria-hidden="true">·</span>
-        <a href="/portfolio-website/#home">the whole nyarindo lens</a>
-      </nav>
-      <button class="thread-theme-toggle" type="button" data-theme-toggle data-theme-light="#f4f3eb" data-theme-dark="#090a08" aria-label="Switch to day mode" aria-pressed="true"><span class="theme-icon" aria-hidden="true">☾</span><span class="theme-label">NIGHT</span></button>
+      <nav aria-label="Nyarindo Lens signposts"><a href="/portfolio-website/#universal-coherence-protocol">universal coherence protocol</a><span aria-hidden="true">·</span><a href="/portfolio-website/#home">the whole nyarindo lens</a></nav>
+      <button class="thread-theme-toggle" type="button" data-theme-toggle aria-label="Switch to day mode" aria-pressed="true"><span class="theme-icon" aria-hidden="true">☾</span><span class="theme-label">NIGHT</span></button>
     </footer>
   </body>
 </html>

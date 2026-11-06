@@ -3,14 +3,30 @@
   if (!settings.appInstall) return;
 
   const appName = settings.appName || 'Nyarindo Lens Universal';
+  const appId = settings.appInstall;
   const workerPath = settings.serviceWorker;
   const workerScope = settings.serviceWorkerScope;
+  const installedKey = `nyarindo-install-state:${appId}`;
+  const path = location.pathname.replace(/\/index\.html$/i, '/');
+  const insideScope = !workerScope || path.startsWith(workerScope);
   const standalone =
     matchMedia('(display-mode: standalone)').matches ||
     navigator.standalone === true;
+  let installed = false;
   const notes = [...document.querySelectorAll('[data-install-app]')];
   const statuses = [...document.querySelectorAll('[data-install-status]')];
   let installPrompt = null;
+
+  try {
+    installed = localStorage.getItem(installedKey) === 'installed';
+  } catch {}
+
+  if (standalone && insideScope) {
+    installed = true;
+    try {
+      localStorage.setItem(installedKey, 'installed');
+    } catch {}
+  }
 
   function setStatus(message) {
     statuses.forEach((status) => {
@@ -55,7 +71,7 @@
   }
 
   async function installApp() {
-    if (standalone) {
+    if (installed) {
       setStatus(`${appName} is already installed.`);
       return;
     }
@@ -71,6 +87,12 @@
       const choice = await installPrompt.userChoice;
       installPrompt = null;
       resetNotes();
+      if (choice.outcome === 'accepted') {
+        installed = true;
+        try {
+          localStorage.setItem(installedKey, 'installed');
+        } catch {}
+      }
       setStatus(
         choice.outcome === 'accepted'
           ? `${appName} is being installed.`
@@ -90,13 +112,17 @@
 
   window.addEventListener('appinstalled', () => {
     installPrompt = null;
+    installed = true;
+    try {
+      localStorage.setItem(installedKey, 'installed');
+    } catch {}
     setNoteState('Installed');
     setStatus(`${appName} is installed.`);
   });
 
   notes.forEach((note) => note.addEventListener('click', installApp));
 
-  if (standalone) {
+  if (installed && insideScope) {
     setNoteState('Installed');
     setStatus(`${appName} is already installed.`);
   }

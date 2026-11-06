@@ -1,11 +1,14 @@
-const CACHE = "nyarindo-library-v13";
+const CACHE = "nyarindo-library-v17";
 const CORE = [
   "/books/",
   "/books/index.html",
   "/books/manifest.webmanifest",
   "/books/library.css?v=library-day-3",
-  "/books/library-reader.css?v=reader-toc-1",
-  "/books/library.js?v=reader-toc-2",
+  "/books/library-reader.css?v=reader-atmosphere-2",
+  "/books/library.js?v=reader-toc-4",
+  "/books/pdf-importer.js?v=local-pdf-2",
+  "/books/vendor/pdfjs/pdf.min.mjs",
+  "/books/vendor/pdfjs/pdf.worker.min.mjs",
   "/portfolio-website/theme-controls.css?v=theme-controls-6",
   "/portfolio-website/site-theme-init.js?v=library-1",
   "/portfolio-website/site-theme-control.js?v=theme-controls-6",
@@ -17,7 +20,7 @@ const CORE = [
   "/books/assets/library-icon-512.png?v=library-1",
   "/books/assets/library-icon-maskable-192.png?v=library-1",
   "/books/assets/library-icon-maskable-512.png?v=library-1",
-  "/portfolio-website/install-app.js?v=install-note-1",
+  "/portfolio-website/install-app.js?v=install-separate-2",
   "/portfolio-website/install-apps.css?v=install-note-1",
   "/portfolio-website/local-fonts.css?v=hd-2",
   "/portfolio-website/assets/books/the-nyarindo-lens-book-01-grammar-of-pulse-thumb.avif",

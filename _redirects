@@ -1,8 +1,8 @@
-# Canonical home
-/ /portfolio-website/index.html 200
-/portfolio-website / 301!
-/portfolio-website/ / 301!
-/portfolio-website/index.html / 301!
+# Canonical home and separately scoped Universal installation identity
+/ /portfolio-website/ 301!
+/portfolio-website /portfolio-website/ 301!
+/portfolio-website/ /portfolio-website/index.html 200
+/portfolio-website/index.html /portfolio-website/ 301!
 
 # Portfolio and theory pages
 /portfolio-website/a-legion-wearing-one-face.html /portfolio-website/a-legion-wearing-one-face.html 200

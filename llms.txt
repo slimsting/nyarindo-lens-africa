@@ -4,7 +4,7 @@
 
 ## Primary pages
 
-- [Portfolio home](https://nyarindolens.com/): Author profile, selected work, books, and the full theory sequence.
+- [Portfolio home](https://nyarindolens.com/portfolio-website/): Author profile, selected work, books, and the full theory sequence.
 - [The Lens of Everything](https://nyarindolens.com/portfolio-website/lens-of-everything.html): A working description of reality as process and regulation.
 - [A Legion Wearing One Face](https://nyarindolens.com/portfolio-website/a-legion-wearing-one-face.html): An illustrated theory of personhood, archetypes, meetings, and myth.
 - [The Threshold Rule of Communication and Morality](https://nyarindolens.com/portfolio-website/the-threshold-rule.html): A lens for communication, dissent, repair, and fidelity.
@@ -14,14 +14,14 @@
 
 ## Browser projects
 
-- [Drift](https://nyarindolens.com/drift/): A music discovery prototype based on listening and shared taste.
-- [Drift artist workspace](https://nyarindolens.com/drift/artist.html): A preview of the artist upload and support experience.
+- [Drift](https://nyarindolens.com/drift/): A human-curated music discovery app built on official source links, visible provenance, and a private local Playground for albums, playlists, lyric timing, local media, themes, and karaoke preparation.
+- [Drift artist lane](https://nyarindolens.com/drift/artist.html): A rights-first workspace preview for verified identities, batches of official music sources, reversible public permission, and quiet listener updates.
 - [Return](https://nyarindolens.com/memory-app/): A private, device-local journaling and returning practice.
 - [Semantic Field](https://nyarindolens.com/semantic-field-extension/): A browser-based semantic mapping prototype.
 
 ## Nyarindo Library
 
-- [The Nyarindo Library](https://nyarindolens.com/books/): Read all seven books, the general introduction, the end note, and the combined collection in a theme-aware browser reader, or download the PDF editions.
+- [The Nyarindo Library](https://nyarindolens.com/books/): Read all seven books, the general introduction, the end note, and the combined collection in a theme-aware browser reader; download the PDF editions; or convert a private PDF into the same reader locally on the device.
 - [Particles in conversation](https://nyarindolens.com/books/experiments/particles.html): A live attraction-and-repulsion experiment from the companion code.
 - [Fields that remember walls](https://nyarindolens.com/books/experiments/fields.html): A bounded particle field exploring constraint, clustering, and equilibrium.
 

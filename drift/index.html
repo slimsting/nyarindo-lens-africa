@@ -1,15 +1,13 @@
 <!doctype html>
-<html lang="en" data-page="drift">
+<html lang="en" data-page="drift" data-theme="dark">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="theme-color" content="#090a08">
     <link rel="icon" href="assets/drift-icon-32.png" type="image/png" sizes="32x32">
     <link rel="apple-touch-icon" href="assets/drift-icon-maskable-180.png" sizes="180x180">
-    <link rel="stylesheet" href="styles.css?v=theme-controls-12">
-    <title>Drift</title>
-
-    <meta name="description" content="Drift is a music discovery prototype where songs move through real listening, shared taste, and human recommendation rather than ads.">
+    <title>Drift — Follow the human trail through music</title>
+    <meta name="description" content="Drift is a human-curated music and video discovery space built on official source links, visible introductions, and a private local Playground.">
     <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1">
     <meta name="author" content="Newbon Nyarindo Gadson">
     <meta name="application-name" content="Drift">
@@ -23,21 +21,27 @@
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="Nyarindo Lens Universal">
     <meta property="og:url" content="https://nyarindolens.com/drift/index.html">
-    <meta property="og:title" content="Drift">
-    <meta property="og:description" content="Drift is a music discovery prototype where songs move through real listening, shared taste, and human recommendation rather than ads.">
+    <meta property="og:title" content="Drift — Follow the human trail through music">
+    <meta property="og:description" content="Official source links, visible introductions, and a private Playground for listening, stories, lyrics, and local collections.">
     <meta property="og:image" content="https://nyarindolens.com/drift/assets/drift-app-icon.svg">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Drift">
-    <meta name="twitter:description" content="Drift is a music discovery prototype where songs move through real listening, shared taste, and human recommendation rather than ads.">
+    <meta name="twitter:title" content="Drift — Follow the human trail through music">
+    <meta name="twitter:description" content="Official source links, visible introductions, and a private Playground for listening, stories, lyrics, and local collections.">
     <meta name="twitter:image" content="https://nyarindolens.com/drift/assets/drift-app-icon.svg">
+    <script src="/portfolio-website/site-theme-init.js?v=site-theme-1"></script>
+    <link rel="stylesheet" href="/portfolio-website/local-fonts.css?v=fonts-1">
+    <link rel="stylesheet" href="/portfolio-website/theme-controls.css?v=theme-controls-6">
+    <link rel="stylesheet" href="/portfolio-website/install-apps.css?v=install-note-1">
+    <link rel="stylesheet" href="/portfolio-website/lens-atmosphere.css?v=lens-atmosphere-17">
+    <link rel="stylesheet" href="/portfolio-website/site-map.css?v=site-map-3">
     <link rel="stylesheet" href="tap-feedback.css?v=tap-feedback-1">
-
+    <link rel="stylesheet" href="styles.css?v=trail-first-3">
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
         "@type": "WebApplication",
         "name": "Drift",
-        "description": "Drift is a music discovery prototype where songs move through real listening, shared taste, and human recommendation rather than ads.",
+        "description": "A human-curated music and video discovery space built on official source links and a private local Playground.",
         "url": "https://nyarindolens.com/drift/index.html",
         "image": "https://nyarindolens.com/drift/assets/drift-app-icon.svg",
         "author": {
@@ -45,156 +49,273 @@
           "name": "Newbon Nyarindo Gadson",
           "url": "https://nyarindolens.com/"
         },
-        "applicationCategory": "BrowserApplication",
+        "applicationCategory": "MusicApplication",
         "operatingSystem": "Any",
         "browserRequirements": "Requires JavaScript and a modern browser."
       }
     </script>
-      <link rel="stylesheet" href="/portfolio-website/site-map.css?v=site-map-3">
-    <link rel="stylesheet" href="/portfolio-website/theme-controls.css?v=theme-controls-6">
-    <link rel="stylesheet" href="/portfolio-website/install-apps.css?v=install-note-1">
-    <link rel="stylesheet" href="/portfolio-website/lens-atmosphere.css?v=lens-atmosphere-17">
   </head>
   <body data-app-install="drift" data-app-name="Drift" data-service-worker="/drift/service-worker.js" data-service-worker-scope="/drift/">
-    <main class="app-shell">
-      <header class="topbar">
-        <div class="topbar-start">
-          <a class="wordmark" href="#top" aria-label="Drift home">drift<span>.</span></a>
-          <a class="home-button" href="/portfolio-website/#home" aria-label="Back to Nyarindo Lens Universal home"><span class="home-icon" aria-hidden="true"></span><span>Home</span></a>
+    <div class="custom-theme-layer" id="customThemeLayer" aria-hidden="true"></div>
+    <a class="skip-link" href="#main">Skip to Drift</a>
+
+    <header class="drift-header">
+      <a class="wordmark" href="#discover" aria-label="Drift home">drift<span>.</span></a>
+      <nav aria-label="Drift navigation">
+        <a href="#discover">Discover</a>
+        <a href="#playground">Playground</a>
+        <a href="artist.html">Artists</a>
+      </nav>
+      <div class="header-actions">
+        <button class="quiet-action" id="faqButton" type="button" aria-haspopup="dialog" aria-controls="faqDialog">How Drift works</button>
+        <button class="theme-button" type="button" data-theme-toggle data-theme-light="#f4f3eb" data-theme-dark="#090a08" aria-label="Switch to day mode" aria-pressed="true"><span class="theme-icon" aria-hidden="true">☾</span><span class="theme-label">NIGHT</span></button>
+        <button class="profile-button" id="profileButton" type="button" aria-label="Open your local profile"><span id="profileInitial">D</span><img id="profileAvatarSmall" alt="" hidden></button>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="drift-hero" id="discover" aria-labelledby="driftTitle">
+        <div class="hero-copy">
+          <p class="eyebrow"><span class="live-dot"></span> HUMAN DISCOVERY · OFFICIAL SOURCES · PRIVATE PLAYGROUND</p>
+          <h1 id="driftTitle">Follow the human<br>trail through <em>music.</em></h1>
+          <p>Drift connects songs, videos, people, and the stories around them. We do not host the music. We show you who introduced it and where the creator chose to publish it.</p>
+          <p class="install-note-entry"><button class="install-note" type="button" data-install-app data-install-label="Install Drift on this device.">Install Drift on this device.</button><span class="install-note-status" data-install-status role="status" aria-live="polite"></span></p>
         </div>
-        <div class="header-actions"><button class="theme-button" id="themeButton" type="button" data-theme-toggle data-theme-light="#f4f3eb" data-theme-dark="#090a08" aria-label="Switch to day mode" aria-pressed="true"><span class="theme-icon" aria-hidden="true">☾</span><span class="theme-label">NIGHT</span></button><button class="profile-button" id="profileButton" type="button" aria-label="Open profile"><span id="profileInitial">D</span></button></div>
-      </header>
-
-      <section class="welcome" id="top">
-        <p class="eyebrow" id="greeting">YOUR LISTENING SPACE</p>
-        <h1>Where do you want to <em>drift?</em></h1>
-        <p class="intro">No ads. No paid placement. Just music moving through people and possibility.</p>
-      </section>
-
-      <p class="install-note-entry"><button class="install-note" type="button" data-install-app data-install-label="Install Drift on this device.">Install Drift on this device.</button><span class="install-note-status" data-install-status role="status" aria-live="polite"></span></p>
-
-      <section class="modes" aria-label="Choose listening direction">
-        <button class="mode mode-familiar" data-mode="familiar" type="button"><b>Familiar</b><small>Only songs you know</small></button>
-        <button class="mode mode-genre" data-mode="genre" type="button"><b>Within genre</b><small>New ground, close to home</small></button>
-        <button class="mode mode-balance selected" data-mode="balance" type="button"><b>Balance</b><small>Trust + gentle discovery</small></button>
-        <button class="mode mode-explore" data-mode="explore" type="button"><b>Explore</b><small>Take me somewhere new</small></button>
-      </section>
-
-      <section class="now-playing" aria-live="polite">
-        <div class="art art-1" id="artwork" aria-hidden="true"><span></span><span></span><span></span></div>
-        <div class="track-info">
-          <p class="eyebrow">NOW DRIFTING</p>
-          <h2 id="trackTitle">Sunrise in Mombasa</h2>
-          <p id="trackArtist">Amani &amp; The Sea</p>
-          <p class="album" id="trackAlbum">from Coastline Letters</p>
-          <p class="prototype-note">Prototype preview · sample tracks · no music streaming yet</p>
-          <p class="path" id="trackPath">Maya drifted here from Nia Archives</p>
+        <div class="hero-links">
+          <a class="source-action primary" href="#youtube-sample">Explore Nyarindo’s authorised trail</a>
+          <a class="source-action" href="#suno-sample">Hear the Suno sample</a>
         </div>
       </section>
 
-      <section class="transport" aria-label="Player controls">
-        <button id="previousTrack" type="button" aria-label="Previous song">↶<span>Previous</span></button>
-        <button class="transport-play" id="transportPlay" type="button" aria-label="Play">▶</button>
-        <button id="nextTrack" type="button" aria-label="Next song"><span>Next</span>↷</button>
-        <button class="repeat-button" id="repeatButton" type="button" aria-pressed="false">Whole playlist ↻</button>
-        <button class="screen-button" id="fullscreenButton" type="button" aria-pressed="false">Large screen ⛶</button>
+      <section class="source-grid" aria-label="Sample music and video sources">
+        <article class="source-card source-video" id="youtube-sample">
+          <div class="source-topline"><span>VIDEO PLAYLIST</span><span>YouTube</span></div>
+          <div class="source-heading">
+            <div>
+              <p class="eyebrow">THE BEST SONGS EVER WRITTEN</p>
+              <h2>One playlist.<br><em>Many currents.</em></h2>
+            </div>
+            <span class="permission-badge">Introduced by Newbon</span>
+          </div>
+          <div class="media-shell" id="youtubeMedia">
+            <div class="media-poster media-poster-youtube">
+              <span class="poster-orbit"></span>
+              <p>Official YouTube playlist</p>
+              <button id="youtubePlay" type="button">Load the official player</button>
+            </div>
+          </div>
+          <p class="source-description">The first two and last two songs remain constant while the middle of the playlist continues to evolve.</p>
+          <div class="source-footer">
+            <span><b>Source</b> YouTube</span>
+            <span><b>Introduced by</b> Newbon Nyarindo Gadson</span>
+            <a href="https://www.youtube.com/playlist?list=PLax6dkIC77xw" target="_blank" rel="noopener noreferrer">Open on YouTube ↗</a>
+          </div>
+        </article>
+
+        <article class="source-card source-audio" id="suno-sample">
+          <div class="suno-art">
+            <img src="assets/sample-peace-pon-eye-and-eye.jpg" alt="Artwork for Peace Pon Eye And Eye" width="800" height="800" loading="eager" decoding="async">
+          </div>
+          <div class="suno-copy">
+            <div class="source-topline"><span>AUDIO SOURCE</span><span>Suno</span></div>
+            <p class="eyebrow">INTRODUCED BY THE ARTIST</p>
+            <h2>Peace Pon Eye<br><em>And Eye.</em></h2>
+            <p class="source-description">A listenable source example from Nyarindo’s Suno catalogue. Play it here or continue directly to the artist’s page.</p>
+            <div class="source-actions">
+              <button class="source-action primary" id="sunoPlay" type="button">Play official audio</button>
+              <a class="source-action" href="https://suno.com/song/1ff0aca8-5405-47fa-8b01-bd9074791cf6" target="_blank" rel="noopener noreferrer">Open on Suno ↗</a>
+            </div>
+            <div class="media-shell media-shell-audio" id="sunoMedia" hidden></div>
+            <p class="provenance-line"><span>Artist</span> Newbon Nyarindo Gadson <i>·</i> <span>Introduced by</span> Newbon Nyarindo Gadson</p>
+          </div>
+        </article>
       </section>
 
-      <section class="actions" aria-label="Listening actions">
-        <button class="return-button" id="returnButton" type="button" aria-label="Return to the first song in this drift">↺ Return to drift start</button>
-        <button class="drift-button" id="driftButton" type="button">Drift again <span>→</span></button>
-      </section>
-
-      <section class="direction-panel" id="directionPanel" hidden aria-label="Choose a new approach">
-        <p class="eyebrow">CHANGE THE CURRENT</p>
-        <div class="directions">
-          <button data-direction="softer" type="button">Softer <small>same feeling, calmer sound</small></button>
-          <button data-direction="deeper" type="button">Deeper <small>less obvious, more underground</small></button>
-          <button data-direction="angle" type="button">Different angle <small>same mood, another world</small></button>
-          <button data-direction="people" type="button">Closer to my people <small>follow their listening trail</small></button>
-          <button data-direction="surprise" type="button">Surprise me <small>break the pattern</small></button>
+      <section class="trail-strip" aria-labelledby="trailTitle">
+        <div>
+          <p class="eyebrow">A TRAIL, NOT A RANKING</p>
+          <h2 id="trailTitle">Every source carries a person.</h2>
+        </div>
+        <div class="trail-path" aria-label="Example discovery path">
+          <span class="trail-person"><b>Maya</b><small>followed a feeling</small></span>
+          <i aria-hidden="true">→</i>
+          <span class="trail-person"><b>Newbon</b><small>introduced the source</small></span>
+          <i aria-hidden="true">→</i>
+          <span class="trail-person"><b>You</b><small>choose where it goes</small></span>
         </div>
       </section>
 
-      <section class="reason">
-        <p class="eyebrow">WHY THIS SONG</p>
-        <p id="reasonText">It holds the warm, open rhythm you’ve been saving—and Maya loved it too.</p>
-      </section>
+      <section class="playground-shell" id="playground" aria-labelledby="playgroundTitle">
+        <header class="playground-header">
+          <div>
+            <p class="eyebrow">PRIVATE · LOCAL-FIRST</p>
+            <h2 id="playgroundTitle">Your Playground.</h2>
+            <p>Albums, playlists, lyrics, karaoke timing, themes, and your private trail stay on this device unless you choose encrypted sync.</p>
+          </div>
+          <button class="playground-toggle" id="playgroundToggle" type="button" aria-expanded="true" aria-controls="playgroundBody"><span>Collapse</span><b aria-hidden="true">⌃</b></button>
+        </header>
 
-      <section class="lyrics-section" aria-label="Song lyrics">
-        <div class="lyrics-heading"><button class="lyrics-toggle" id="lyricsToggle" type="button" aria-expanded="false">Lyrics <span>+</span></button></div>
-        <div class="lyrics" id="lyrics" hidden>
-          <p class="eyebrow">ARTIST-PROVIDED LYRICS</p>
-          <div class="lyrics-window"><div class="lyrics-lines" id="lyricsText">Lyrics will appear here when the artist has shared them with Drift.</div></div>
+        <div class="playground-body" id="playgroundBody">
+          <nav class="adaptive-tools" id="adaptiveTools" aria-label="Playground tools">
+            <button type="button" data-tool="trail">Trail</button>
+            <button type="button" data-tool="collections">Albums</button>
+            <button type="button" data-tool="import">Import</button>
+            <button type="button" data-tool="lyrics">Lyric Lab</button>
+            <button type="button" data-tool="theme">Theme Lab</button>
+            <button type="button" data-tool="sandbox">AI Sandbox</button>
+          </nav>
+
+          <div class="playground-grid">
+            <article class="playground-card profile-card" id="profile">
+              <p class="eyebrow">YOUR LOCAL IDENTITY</p>
+              <div class="profile-large"><div class="profile-avatar-large" id="profileAvatarLarge"><span>D</span><img id="profileAvatar" alt="Your chosen profile picture" hidden></div><div><h3 id="profileDisplayName">Local listener</h3><p>Your identity appears only when you choose to share a story or introduce a source.</p></div></div>
+              <button class="soft-button" id="editProfileButton" type="button">Edit name &amp; picture</button>
+            </article>
+
+            <article class="playground-card" id="trail">
+              <p class="eyebrow">YOUR DRIFT TRAIL</p>
+              <h3>What you noticed.</h3>
+              <ul class="trail-list" id="trailList"><li>No listening entries yet. Your local trail begins when you play or open a source.</li></ul>
+              <div class="button-row"><button class="soft-button" id="exportTrail" type="button">Export Markdown</button><button class="soft-button" id="exportPlayground" type="button">Export JSON</button><button class="text-button" id="clearTrail" type="button">Clear trail</button></div>
+            </article>
+
+            <article class="playground-card" id="collections">
+              <p class="eyebrow">PERSONAL CONTAINERS</p>
+              <h3>Albums &amp; playlists.</h3>
+              <form class="compact-form" id="collectionForm"><input id="collectionName" required maxlength="80" placeholder="Name this album or playlist"><input id="collectionDescription" maxlength="240" placeholder="Description (optional)"><button type="submit">Create</button></form>
+              <ul class="collection-list" id="collectionList"><li>No personal albums yet.</li></ul>
+              <form class="compact-form collection-item-form" id="collectionItemForm"><select id="collectionTarget" aria-label="Choose a personal collection" disabled></select><input id="collectionItemTitle" required maxlength="100" placeholder="Source title"><input id="collectionItemUrl" required type="url" placeholder="Official source URL"><button type="submit">Add source</button></form>
+            </article>
+
+            <article class="playground-card" id="import">
+              <p class="eyebrow">LIVING IMPORTS</p>
+              <h3>Bring a playlist into Drift.</h3>
+              <form class="compact-form" id="importForm"><input id="playlistTitle" maxlength="100" placeholder="Playlist title"><input id="playlistUrl" type="url" required placeholder="Paste any playlist URL"><textarea id="playlistDescription" rows="3" placeholder="Playlist description to keep with this import"></textarea><button type="submit">Import playlist</button></form>
+              <div class="import-status" id="importStatus"><b>Connector ready.</b> Supported providers can expose richer metadata; unsupported links remain link-only and honest about it.</div>
+              <ul class="import-list" id="importList"></ul>
+            </article>
+
+            <article class="playground-card lyric-card" id="lyrics">
+              <p class="eyebrow">PRIVATE LYRIC LAB</p>
+              <h3>Write. Time. Karaoke.</h3>
+              <p>Load a local audio or video file you already have. Nothing is uploaded.</p>
+              <input id="localMediaFile" type="file" accept="audio/*,video/*">
+              <video id="localMedia" controls playsinline hidden></video>
+              <div class="lyric-stage" id="lyricStage" data-tone="night">
+                <span class="lyric-stage-image" id="lyricStageImage" aria-hidden="true"></span>
+                <div class="lyric-preview" id="lyricPreview" aria-label="Private lyric stage"><p>Your lyrics will appear here as you write.</p></div>
+              </div>
+              <textarea id="lyricEditor" rows="6" placeholder="Write or paste your private lyrics, one line at a time."></textarea>
+              <div class="button-row"><button class="soft-button" id="tapTiming" type="button">Tap next line</button><button class="soft-button" id="exportLyrics" type="button">Export lyrics + timing</button><button class="text-button" id="clearLyrics" type="button">Clear</button></div>
+              <p class="timing-status" id="timingStatus">Prime the local recording, then tap each line as it begins.</p>
+              <details class="lyric-theme-panel">
+                <summary>Lyric window theme</summary>
+                <div class="lyric-theme-controls">
+                  <div class="lyric-tone-controls" aria-label="Lyric window tone"><button type="button" data-lyric-tone="day">Day</button><button type="button" data-lyric-tone="night" aria-pressed="true">Night</button></div>
+                  <label>Background<input id="lyricBackgroundColor" type="color" value="#08100d"></label>
+                  <label>Text<input id="lyricTextColor" type="color" value="#f7f4ea"></label>
+                  <label>Photo opacity<input id="lyricImageOpacity" type="range" min="0" max="100" value="34"></label>
+                  <label class="lyric-file-control">Background photo<input id="lyricThemeImage" type="file" accept="image/*"></label>
+                  <label class="lyric-file-control">Reader-style font<input id="lyricThemeFont" type="file" accept=".woff2,.woff,.ttf,.otf"></label>
+                  <button class="text-button" id="resetLyricTheme" type="button">Reset lyric theme</button>
+                  <span id="lyricThemeStatus" role="status" aria-live="polite"></span>
+                </div>
+              </details>
+            </article>
+
+            <article class="playground-card theme-card" id="theme">
+              <p class="eyebrow">THEME LAB</p>
+              <h3>Make the room yours.</h3>
+              <div class="theme-controls">
+                <label>Background colour<input id="themeColor" type="color" value="#0b1714"></label>
+                <label>Background photo<input id="themeImage" type="file" accept="image/*"></label>
+                <label>Photo opacity<input id="themeOpacity" type="range" min="0" max="100" value="24"></label>
+                <label>Theme font<input id="themeFont" type="file" accept=".woff2,.woff,.ttf,.otf"></label>
+                <label class="check-row"><input id="themeTransparent" type="checkbox"> Keep the photograph transparent</label>
+              </div>
+              <div class="button-row"><button class="soft-button" id="resetTheme" type="button">Reset theme</button><span id="themeStatus" role="status" aria-live="polite"></span></div>
+            </article>
+
+            <article class="playground-card sandbox-card" id="sandbox">
+              <p class="eyebrow">AI SANDBOX CHARTER</p>
+              <h3>Private tools, portable prompt.</h3>
+              <p>This code is for your private local workspace. It may not publish, upload, or distribute this workspace.</p>
+              <p class="sandbox-note">Private does not remove the selected AI provider’s terms. A cloud model processes what you send; a local model keeps it on-device.</p>
+              <button class="soft-button" id="copySandboxPrompt" type="button">Copy sandbox prompt</button>
+            </article>
+          </div>
         </div>
       </section>
 
-      <section class="support" aria-label="Support options">
-        <button id="artistTip" type="button">♡ Tip artist</button>
-        <button id="driftSupport" type="button">Support Drift</button>
+      <section class="artist-updates" aria-labelledby="updatesTitle">
+        <div>
+          <p class="eyebrow">FROM THE ARTISTS YOU CHOOSE</p>
+          <h2 id="updatesTitle">Updates, not interruptions.</h2>
+          <p>Following means only one thing: you are willing to receive that artist’s updates. It does not change discovery or expose your listening history.</p>
+        </div>
+        <div class="update-card"><span>RETURN · NYARINDO</span><h3>A smaller album, on the way.</h3><p>New release · coming soon</p><button class="soft-button" id="updateToggle" type="button" aria-pressed="true">Receiving updates</button></div>
+      </section>
+
+      <section class="rights-strip" aria-labelledby="rightsTitle">
+        <div><p class="eyebrow">ARTIST CONTROL</p><h2 id="rightsTitle">The source stays theirs.</h2><p>Owners and authorised contacts can allow, restrict, or block public appearances of their catalogue. Drift links to official sources and keeps private local copies private.</p></div>
+        <button class="source-action" id="rightsButton" type="button" aria-haspopup="dialog" aria-controls="rightsDialog">Open owner controls</button>
       </section>
     </main>
 
-    <dialog id="profileDialog">
-      <form method="dialog" class="profile-form" id="profileForm">
-        <button class="close" value="cancel" formnovalidate aria-label="Close">×</button>
-        <p class="eyebrow">YOUR DRIFT</p>
-        <h2>Choose your name</h2>
-        <label for="username">Username</label>
-        <input id="username" name="username" maxlength="20" autocomplete="username" placeholder="your name" required>
-        <p class="form-note">This prototype saves your display name on this device. No account is created.</p>
-        <button class="save-profile" value="save">Enter Drift</button>
-        <a class="artist-link" href="artist.html">I’m an artist →</a>
+    <dialog id="profileDialog" class="drift-dialog" aria-labelledby="profileTitle">
+      <form method="dialog" class="dialog-card" id="profileForm">
+        <button class="dialog-close" value="cancel" formnovalidate aria-label="Close profile">×</button>
+        <p class="eyebrow">PRIVATE ON THIS DEVICE</p>
+        <h2 id="profileTitle">Your Drift identity.</h2>
+        <label>Name<input id="profileName" maxlength="60" autocomplete="nickname" placeholder="Your name"></label>
+        <label>Profile picture<input id="profilePhoto" type="file" accept="image/*"></label>
+        <p class="dialog-note">This identity stays local until you choose to introduce or privately share something.</p>
+        <button class="save-profile" value="save">Save to this device</button>
       </form>
     </dialog>
 
-    <div class="toast" id="toast" role="status" aria-live="polite"></div>
-    <script src="app.js?v=theme-controls-5"></script>
-    <script src="/portfolio-website/site-theme-control.js?v=theme-controls-6"></script>
-  <script src="tap-feedback.js?v=tap-feedback-1"></script>
-    <script src="/portfolio-website/install-app.js?v=install-note-1"></script>
-      <nav class="site-map" aria-label="Nyarindo Lens Universal site map">
-      <div class="site-map-intro">
-        <p class="site-map-eyebrow">THE WHOLE NYARINDO LENS</p>
-        <h2>Every page, one connected field.</h2>
-        <p>Move through the complete theory sequence, the books and portfolio, and the browser projects built from the same Lens.</p>
-        <a class="site-map-index" href="/sitemap.xml">Machine-readable site map ↗</a>
+    <dialog id="faqDialog" class="drift-dialog" aria-labelledby="faqTitle">
+      <div class="dialog-card faq-card">
+        <button class="dialog-close" id="faqClose" type="button" aria-label="Close explanation">×</button>
+        <p class="eyebrow">THE SHAPE OF DRIFT</p>
+        <h2 id="faqTitle">How Drift works.</h2>
+        <details open><summary>Public, private, and shared are different containers</summary><p>Public Drift is the discovery layer. Your Playground is local and private. A Shared Room is an explicit, invite-only version of a story you choose to share.</p></details>
+        <details><summary>Where does the music come from?</summary><p>Official source links and embeds. Drift does not host or download public media, and a source can disappear or disable embedding.</p></details>
+        <details><summary>What does Following mean?</summary><p>It means you accept updates from that artist. It does not change recommendations, expose your history, or change the public experience.</p></details>
+        <details><summary>Why can a source be unavailable?</summary><p>A creator or platform may remove, restrict, or block it. The playlist and personal story can remain while official playback becomes unavailable.</p></details>
+        <details><summary>What lives in the Playground?</summary><p>Your albums, playlists, imported links, notes, lyric timing, themes, and optional local media or font files. Nothing is uploaded by default.</p></details>
+        <details><summary>What happens to my data?</summary><p>It stays in this browser. You can export Markdown or JSON and clear it locally at any time.</p></details>
       </div>
+    </dialog>
+
+    <dialog id="rightsDialog" class="drift-dialog" aria-labelledby="rightsDialogTitle">
+      <div class="dialog-card">
+        <button class="dialog-close" id="rightsClose" type="button" aria-label="Close owner controls">×</button>
+        <p class="eyebrow">OWNER CONTROL LANE</p>
+        <h2 id="rightsDialogTitle">Allow. Restrict. Block.</h2>
+        <ol class="rights-list">
+          <li><b>Claim</b><span>Identify the source and the rights you represent.</span></li>
+          <li><b>Verify</b><span>Confirm control through the provider account, official domain, or authorised representative.</span></li>
+          <li><b>Negotiate privately</b><span>Drift receives only the final permission state.</span></li>
+          <li><b>Apply</b><span>Control embed, lyrics, video, catalogue, and future sharing separately.</span></li>
+        </ol>
+        <p class="dialog-note">Verified disputes do not automatically erase someone’s private local story. Public availability and further sharing follow the agreement.</p>
+      </div>
+    </dialog>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="app.js?v=trail-first-3"></script>
+    <script src="tap-feedback.js?v=tap-feedback-1"></script>
+    <script src="/portfolio-website/site-theme-control.js?v=theme-controls-6"></script>
+    <script src="/portfolio-website/install-app.js?v=install-separate-2"></script>
+    <nav class="site-map" aria-label="Nyarindo Lens Universal site map">
+      <div class="site-map-intro"><p class="site-map-eyebrow">THE WHOLE NYARINDO LENS</p><h2>Every page, one connected field.</h2><p>Move through the theory sequence, books, and browser projects from the same Lens.</p><a class="site-map-index" href="/sitemap.xml">Machine-readable site map ↗</a></div>
       <div class="site-map-groups">
-        <section aria-labelledby="siteMapTheories">
-          <h3 id="siteMapTheories">The theories</h3>
-          <a href="/portfolio-website/#home">Portfolio home</a>
-          <a href="/portfolio-website/lens-of-everything.html">The Lens of Everything</a>
-          <a href="/portfolio-website/a-legion-wearing-one-face.html">A Legion Wearing One Face</a>
-          <a href="/portfolio-website/the-threshold-rule.html">The Threshold Rule of Communication and Morality</a>
-          <a href="/portfolio-website/peace-pon-eye-and-eye.html">Peace Pon Eye and Eye</a>
-          <a href="/portfolio-website/science-and-religion.html">When Science and Faith Share a Bench</a>
-          <a href="/portfolio-website/the-aperture.html">The Aperture</a>
-        </section>
-        <section aria-labelledby="siteMapProjects">
-          <h3 id="siteMapProjects">Browser projects</h3>
-          <a href="/drift/">Drift</a>
-          <a href="/drift/artist.html">Drift artist workspace</a>
-          <a href="/memory-app/">Return</a>
-          <a href="/semantic-field-extension/">Semantic Field</a>
-        </section>
-        <section aria-labelledby="siteMapBooks">
-          <h3 id="siteMapBooks">Books and discovery</h3>
-          <a href="/portfolio-website/#books">The seven-book collection</a>
-          <a href="/portfolio-website/#coherence-theory">The coherence sequence</a>
-          <a href="/llms.txt">AI-readable site guide</a>
-          <a href="/robots.txt">Crawler permissions</a>
-        </section>
+        <section aria-labelledby="siteMapTheories"><h3 id="siteMapTheories">The theories</h3><a href="/portfolio-website/lens-of-everything.html">The Lens of Everything</a><a href="/portfolio-website/the-threshold-rule.html">The Threshold Rule</a><a href="/portfolio-website/science-and-religion.html">Science and Religion</a></section>
+        <section aria-labelledby="siteMapProjects"><h3 id="siteMapProjects">Browser projects</h3><a href="/books/">The Library</a><a href="/memory-app/">Return</a><a href="/semantic-field-extension/">Semantic Field</a></section>
+        <section aria-labelledby="siteMapBooks"><h3 id="siteMapBooks">Books and discovery</h3><a href="/portfolio-website/#books">The seven-book collection</a><a href="/portfolio-website/#coherence-theory">The coherence sequence</a><a href="/llms.txt">AI-readable site guide</a></section>
       </div>
     </nav>
-    <footer class="nyarindo-thread-footer">
-      <a href="/portfolio-website/#socials">keep following the thread</a>
-      <nav aria-label="Nyarindo Lens signposts">
-        <a href="/portfolio-website/#universal-coherence-protocol">universal coherence protocol</a>
-        <span aria-hidden="true">·</span>
-        <a href="/portfolio-website/#home">the whole nyarindo lens</a>
-      </nav>
-      <button class="thread-theme-toggle" type="button" data-theme-toggle data-theme-light="#f4f3eb" data-theme-dark="#090a08" aria-label="Switch to day mode" aria-pressed="true"><span class="theme-icon" aria-hidden="true">☾</span><span class="theme-label">NIGHT</span></button>
-    </footer>
+    <footer class="nyarindo-thread-footer"><a href="/portfolio-website/#socials">keep following the thread</a><nav aria-label="Nyarindo Lens signposts"><a href="/portfolio-website/#universal-coherence-protocol">universal coherence protocol</a><span aria-hidden="true">·</span><a href="/portfolio-website/#home">the whole nyarindo lens</a></nav><button class="thread-theme-toggle" type="button" data-theme-toggle aria-label="Switch to day mode" aria-pressed="true"><span class="theme-icon" aria-hidden="true">☾</span><span class="theme-label">NIGHT</span></button></footer>
   </body>
 </html>

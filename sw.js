@@ -1,9 +1,10 @@
-const CACHE = 'nyarindo-universal-v15';
+const CACHE = 'nyarindo-universal-v17';
 const CORE = [
-  '/',
+  '/portfolio-website/',
+  '/portfolio-website/index.html',
   '/site.webmanifest',
   '/portfolio-website/install-apps.css?v=install-note-1',
-  '/portfolio-website/install-app.js?v=install-note-1',
+  '/portfolio-website/install-app.js?v=install-separate-2',
   '/portfolio-website/lens-atmosphere.css?v=lens-atmosphere-17',
   '/portfolio-website/assets/atmosphere/day-sky.svg',
   '/portfolio-website/assets/atmosphere/day-sky-mobile.svg',
@@ -42,7 +43,7 @@ self.addEventListener('fetch', event => {
         cache.put(request, response.clone());
         return response;
       } catch {
-        return (await caches.match(request)) || (await caches.match('/')) || Response.error();
+        return (await caches.match(request)) || (await caches.match('/portfolio-website/')) || Response.error();
       }
     })());
     return;

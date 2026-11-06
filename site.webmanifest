@@ -1,10 +1,10 @@
 {
-  "id": "/",
+  "id": "/portfolio-website/",
   "name": "Nyarindo Lens Universal",
   "short_name": "Nyarindo Lens",
   "description": "The portfolio, theories, books, and browser projects of Newbon Nyarindo Gadson.",
-  "start_url": "/?source=pwa",
-  "scope": "/",
+  "start_url": "/portfolio-website/?source=pwa",
+  "scope": "/portfolio-website/",
   "display": "standalone",
   "display_override": ["standalone", "minimal-ui"],
   "orientation": "any",
