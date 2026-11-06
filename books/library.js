@@ -166,6 +166,7 @@
   const readerResetBackground = document.getElementById("readerResetBackground");
   const readerBackgroundStatus = document.getElementById("readerBackgroundStatus");
   const readerAtmosphereCustom = document.getElementById("readerAtmosphereCustom");
+  const readerMobileControlsToggle = document.getElementById("readerMobileControlsToggle");
   const readerFocusHint = document.getElementById("readerFocusHint");
   const toneButtons = [...document.querySelectorAll("[data-reading-tone]")];
   const atmosphereButtons = [
@@ -182,8 +183,11 @@
   let scrollFrame = 0;
   let rememberTimer = 0;
   let controlsHideTimer = 0;
+  let focusHintTimer = 0;
   let pointerFrame = 0;
   let fallbackFocusMode = false;
+  let readerControlsManuallyHidden = false;
+  let readerBubbleHandledPointer = false;
   let sectionIndex = [];
   let customReaderFontFace = null;
   let customReaderFontFile = null;
@@ -1108,6 +1112,8 @@
       return;
     }
     readerDialog.classList.add("reader-controls-hidden");
+    readerFocusHint.textContent = "Move, tap, or press any key to show controls";
+    readerFocusHint.classList.add("is-visible");
   }
 
   function scheduleReaderControlHide() {
@@ -1116,25 +1122,79 @@
     controlsHideTimer = window.setTimeout(hideReaderControls, 2800);
   }
 
-  function showReaderControls(schedule = true) {
+  function showReaderControls(schedule = true, force = false) {
+    if (readerControlsManuallyHidden && !force) return;
+    readerControlsManuallyHidden = false;
     readerDialog.classList.remove("reader-controls-hidden");
     readerFocusHint.classList.remove("is-visible");
+    clearTimeout(focusHintTimer);
     if (schedule) scheduleReaderControlHide();
   }
 
   function setFocusMode(active) {
     readerDialog.classList.toggle("reader-focus-mode", active);
     readerDialog.classList.remove("reader-controls-hidden");
+    readerControlsManuallyHidden = false;
+    clearTimeout(focusHintTimer);
     readerFullscreen.textContent = active ? "Exit fullscreen ×" : "Fullscreen ⛶";
     readerFullscreen.setAttribute("aria-pressed", String(active));
     clearTimeout(controlsHideTimer);
     if (active) {
       readerDialog.querySelector(":focus")?.blur();
+      readerFocusHint.textContent = "Move, tap, or press any key to show controls";
       readerFocusHint.classList.add("is-visible");
       window.setTimeout(() => readerFocusHint.classList.remove("is-visible"), 1600);
       scheduleReaderControlHide();
     }
   }
+
+  function setTouchReaderControlsHidden(hidden) {
+    readerControlsManuallyHidden = hidden;
+    readerDialog.classList.toggle("reader-controls-hidden", hidden);
+    readerMobileControlsToggle.setAttribute("aria-pressed", String(hidden));
+    readerMobileControlsToggle.setAttribute(
+      "aria-label",
+      hidden ? "Show reader controls" : "Hide reader controls",
+    );
+    clearTimeout(controlsHideTimer);
+    clearTimeout(focusHintTimer);
+    if (hidden) {
+      readerDialog.querySelector(":focus")?.blur();
+      readerFocusHint.textContent = "Controls hidden · tap the bubble to show";
+      readerFocusHint.classList.add("is-visible");
+      focusHintTimer = window.setTimeout(
+        () => readerFocusHint.classList.remove("is-visible"),
+        1900,
+      );
+    } else {
+      readerFocusHint.textContent = "Controls visible";
+      readerFocusHint.classList.add("is-visible");
+      focusHintTimer = window.setTimeout(
+        () => readerFocusHint.classList.remove("is-visible"),
+        1100,
+      );
+      if (focusModeActive()) scheduleReaderControlHide();
+    }
+  }
+
+  readerMobileControlsToggle.addEventListener("pointerdown", (event) => {
+    if (event.pointerType === "mouse" && event.button !== 0) return;
+    readerBubbleHandledPointer = true;
+    event.stopPropagation();
+    setTouchReaderControlsHidden(
+      !readerDialog.classList.contains("reader-controls-hidden"),
+    );
+  });
+  readerMobileControlsToggle.addEventListener("click", (event) => {
+    event.stopPropagation();
+    if (readerBubbleHandledPointer) {
+      readerBubbleHandledPointer = false;
+      return;
+    }
+    setTouchReaderControlsHidden(
+      !readerDialog.classList.contains("reader-controls-hidden"),
+    );
+  });
 
   readerFullscreen.addEventListener("click", async () => {
     if (document.fullscreenElement === readerDialog || fallbackFocusMode) {
@@ -1166,19 +1226,31 @@
   });
 
   readerDialog.addEventListener("pointermove", () => {
-    if (!focusModeActive() || pointerFrame) return;
+    if (!focusModeActive() || pointerFrame || readerControlsManuallyHidden) return;
     pointerFrame = requestAnimationFrame(() => {
       pointerFrame = 0;
       showReaderControls();
     });
   });
-  readerDialog.addEventListener("pointerdown", () => showReaderControls());
-  readerDialog.addEventListener("focusin", () => showReaderControls(false));
+  readerDialog.addEventListener("pointerdown", () => {
+    if (readerControlsManuallyHidden) return;
+    showReaderControls();
+  });
+  readerDialog.addEventListener("focusin", (event) => {
+    if (event.target === readerMobileControlsToggle) return;
+    if (
+      readerControlsManuallyHidden &&
+      !event.target.closest("a, button, input, select, textarea, summary")
+    ) {
+      return;
+    }
+    showReaderControls(false, true);
+  });
   readerDialog.addEventListener("focusout", scheduleReaderControlHide);
 
   document.addEventListener("keydown", (event) => {
     if (!readerDialog.open) return;
-    showReaderControls();
+    showReaderControls(true, true);
     if (event.key === "Escape" && fallbackFocusMode) {
       event.preventDefault();
       fallbackFocusMode = false;
@@ -1234,15 +1306,13 @@
     const xDistance = event.clientX - swipeStart.x;
     const yDistance = event.clientY - swipeStart.y;
     swipeStart = null;
-    if (Math.abs(xDistance) < 55 || Math.abs(xDistance) < Math.abs(yDistance)) {
-      return;
+    if (Math.abs(xDistance) >= 55 && Math.abs(xDistance) > Math.abs(yDistance)) {
+      goToPage(currentPage + (xDistance < 0 ? 1 : -1));
     }
-    goToPage(currentPage + (xDistance < 0 ? 1 : -1));
   });
   readerStage.addEventListener("pointercancel", () => {
     swipeStart = null;
   });
-
   addEventListener("nyarindo:themechange", (event) => {
     if (readerDialog.open && !atmosphereChosen) {
       setAtmosphere(event.detail.theme === "light" ? "day" : "night");
