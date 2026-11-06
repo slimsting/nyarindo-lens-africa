@@ -628,3 +628,146 @@ html[data-theme="light"] .cloud {
     transition: none;
   }
 }
+
+/* The library shares the mother-app living sky, tuned toward open coastal daylight. */
+html[data-theme="light"] {
+  --bg: #ccecf5;
+  --bg-deep: #86c9df;
+  --surface: rgba(252, 250, 241, .86);
+  --ink: #173c48;
+  --muted: #456675;
+  --line: rgba(27, 76, 94, .18);
+  --gold: #a56b31;
+  --blue: #147bc1;
+}
+
+html[data-theme="light"] body {
+  background:
+    radial-gradient(circle at 82% 10%, rgba(255, 230, 154, .34), transparent 27%),
+    radial-gradient(circle at 12% 36%, rgba(255, 255, 255, .34), transparent 28%),
+    linear-gradient(180deg, #229bd8 0%, #69bce8 24%, #b8e2f2 53%, #e7f3ed 76%, #f3f0df 100%);
+}
+
+html[data-theme="light"] .library-atmosphere::before {
+  background:
+    linear-gradient(115deg, rgba(22, 154, 213, .13), transparent 40%),
+    radial-gradient(circle at 50% 18%, rgba(255, 226, 157, .14), transparent 42%);
+}
+
+html[data-theme="light"] .library-sun {
+  background: radial-gradient(circle at 42% 40%, #fff7c8 0 13%, #ffd87e 38%, #ffb65b 70%, rgba(255, 180, 89, .14) 74%);
+  box-shadow:
+    0 0 110px 45px rgba(255, 211, 110, .24),
+    0 0 190px 84px rgba(255, 223, 145, .12);
+}
+
+html[data-theme="light"] .cloud {
+  display: block;
+  background: rgba(255, 255, 255, .82);
+  filter: blur(.5px) drop-shadow(0 8px 16px rgba(47, 113, 148, .08));
+  opacity: .86;
+}
+
+html[data-theme="light"] .bird-flock {
+  opacity: .78;
+}
+
+html[data-theme="light"] .bird-flock-b {
+  animation-delay: -26s;
+}
+
+html[data-theme="light"] .day-plane {
+  color: #174a69;
+  opacity: .55;
+}
+
+html[data-theme="dark"] body {
+  background:
+    radial-gradient(ellipse at 18% 12%, rgba(31, 201, 178, .13), transparent 34%),
+    radial-gradient(ellipse at 78% 24%, rgba(97, 94, 220, .12), transparent 38%),
+    linear-gradient(180deg, #03182f 0%, #082c45 42%, #06161f 76%, #030a0f 100%);
+}
+
+.library-atmosphere::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(116deg, transparent 8%, rgba(65, 255, 185, .2) 29%, rgba(90, 199, 255, .14) 47%, transparent 66%),
+    linear-gradient(68deg, transparent 18%, rgba(172, 89, 255, .12) 39%, rgba(56, 233, 208, .17) 57%, transparent 76%);
+  background-position:
+    -30% 12%,
+    110% 34%;
+  background-size:
+    1200px 420px,
+    1000px 360px;
+  background-repeat: no-repeat;
+  opacity: 0;
+  pointer-events: none;
+  animation: library-aurora 64s ease-in-out infinite alternate;
+}
+
+html[data-theme="dark"] .library-atmosphere::after {
+  opacity: .82;
+}
+
+html[data-theme="dark"] .cloud {
+  display: block;
+  background: rgba(174, 205, 226, .18);
+  filter: blur(2px);
+  opacity: .34;
+}
+
+html[data-theme="dark"] .star-field {
+  display: block;
+  opacity: .74;
+  animation:
+    stars-drift 110s linear infinite,
+    library-stars-twinkle 13s ease-in-out infinite alternate;
+}
+
+html[data-theme="dark"] .shooting-star {
+  display: block;
+}
+
+.shooting-star-b {
+  animation-delay: 10s;
+}
+
+.shooting-star-c {
+  animation-delay: 18s;
+}
+
+@keyframes library-aurora {
+  0% {
+    background-position:
+      -30% 12%,
+      110% 34%;
+  }
+  50% {
+    background-position:
+      34% 24%,
+      62% 28%;
+  }
+  100% {
+    background-position:
+      118% 9%,
+      -18% 42%;
+  }
+}
+
+@keyframes library-stars-twinkle {
+  from {
+    opacity: .48;
+  }
+  to {
+    opacity: .82;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .library-atmosphere::after,
+  html[data-theme="dark"] .star-field {
+    animation: none;
+  }
+}

@@ -1,4 +1,14 @@
 (() => {
+  const PALETTE_STORAGE_KEY = "nyarindo-palette";
+  const PALETTES = Object.freeze([
+    { id: "forest", label: "Forest", swatch: "#4f7c58" },
+    { id: "ocean", label: "Ocean", swatch: "#3f8fa8" },
+    { id: "amethyst", label: "Amethyst", swatch: "#8d70bd" },
+    { id: "ember", label: "Ember", swatch: "#c66d42" },
+    { id: "rose", label: "Rose", swatch: "#c76d87" },
+    { id: "slate", label: "Slate", swatch: "#748b94" },
+  ]);
+
   function ensureCloudscape() {
     if (
       document.querySelector(".library-atmosphere")
@@ -29,6 +39,178 @@
     document.body.append(layer);
   }
 
+  function paletteButtons() {
+    return [...document.querySelectorAll("[data-palette]")];
+  }
+
+  function syncPaletteButtons(palette, scope = document) {
+    scope.querySelectorAll("[data-palette]").forEach((button) => {
+      button.setAttribute(
+        "aria-pressed",
+        String(button.dataset.palette === palette),
+      );
+    });
+  }
+
+  function applyPalette(palette, persist = true) {
+    const valid = PALETTES.some((item) => item.id === palette)
+      ? palette
+      : "forest";
+    document.documentElement.dataset.palette = valid;
+    syncPaletteButtons(valid);
+    const metaTheme = document.querySelector('meta[name="theme-color"]');
+    const fallback = {
+      forest: ["#10110f", "#eeeae0"],
+      ocean: ["#07151c", "#e8f0f1"],
+      amethyst: ["#130f1b", "#f0eaf4"],
+      ember: ["#180e0b", "#f5ebe3"],
+      rose: ["#190f14", "#f7eaf0"],
+      slate: ["#0e1418", "#e9eef0"],
+    }[valid];
+    if (metaTheme) {
+      metaTheme.content =
+        document.documentElement.dataset.theme === "light"
+          ? fallback[1]
+          : fallback[0];
+    }
+    if (persist) {
+      try {
+        localStorage.setItem(PALETTE_STORAGE_KEY, valid);
+      } catch {}
+    }
+    window.dispatchEvent(
+      new CustomEvent("nyarindo:palettechange", {
+        detail: { palette: valid },
+      }),
+    );
+  }
+
+  function createSwatchGrid(className) {
+    const grid = document.createElement("div");
+    grid.className = className;
+    PALETTES.forEach((palette) => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.dataset.palette = palette.id;
+      button.dataset.nyarindoPalette = "true";
+      button.style.setProperty("--swatch", palette.swatch);
+      button.setAttribute("aria-label", `Use ${palette.label} colour world`);
+      button.title = palette.label;
+      button.setAttribute("aria-pressed", "false");
+      button.addEventListener("click", () => {
+        applyPalette(palette.id);
+        const details = button.closest("details");
+        if (details) details.open = false;
+      });
+      grid.append(button);
+    });
+    return grid;
+  }
+
+  function createNavPaletteControl() {
+    const control = document.createElement("details");
+    control.className = "nyarindo-palette-nav";
+    const summary = document.createElement("summary");
+    summary.setAttribute("aria-label", "Choose a shared colour world");
+    summary.title = "Shared colour world";
+    const orbit = document.createElement("span");
+    orbit.className = "nyarindo-palette-orbit";
+    orbit.setAttribute("aria-hidden", "true");
+    ["#c66d42", "#d2a36d", "#3f8fa8", "#8d70bd"].forEach((colour) => {
+      const dot = document.createElement("i");
+      dot.style.setProperty("--dot", colour);
+      orbit.append(dot);
+    });
+    const label = document.createElement("span");
+    label.className = "nyarindo-palette-label";
+    label.textContent = "COLOUR";
+    summary.append(orbit, label);
+
+    const panel = document.createElement("div");
+    panel.className = "nyarindo-palette-popover";
+    const eyebrow = document.createElement("p");
+    eyebrow.textContent = "SHARED COLOUR WORLD";
+    panel.append(eyebrow, createSwatchGrid("nyarindo-palette-grid"));
+    control.append(summary, panel);
+    return control;
+  }
+
+  function createFooterPaletteControl() {
+    const wrapper = document.createElement("div");
+    wrapper.className = "nyarindo-palette-footer";
+    wrapper.setAttribute("role", "group");
+    wrapper.setAttribute("aria-label", "Shared colour world");
+    const label = document.createElement("span");
+    label.className = "nyarindo-palette-footer-label";
+    label.textContent = "COLOUR WORLD";
+    wrapper.append(label, createSwatchGrid("nyarindo-palette-grid is-footer"));
+    return wrapper;
+  }
+
+  function ensurePaletteControls() {
+    const paletteStyles = document.querySelector(
+      'link[data-nyarindo-palette-styles], link[href*="palette-themes.css"]',
+    );
+    if (paletteStyles) {
+      paletteStyles.dataset.nyarindoPaletteStyles = "";
+      document.head.append(paletteStyles);
+    }
+
+    const header = document.querySelector(
+      "header, .topbar, .library-header",
+    );
+    const navHost = header?.querySelector(
+      ".header-actions, .topbar-actions, .header-right, nav",
+    ) || header;
+    let navControl = document.querySelector(".nyarindo-palette-nav");
+    let dock = document.querySelector(".nyarindo-palette-strip");
+    if (!navControl && header && navHost) {
+      navControl = createNavPaletteControl();
+      if (!dock) {
+        dock = document.createElement("div");
+        dock.className = "nyarindo-palette-strip";
+        dock.hidden = true;
+        header.insertAdjacentElement("afterend", dock);
+      }
+      navHost.append(navControl);
+    }
+
+    function positionNavControl() {
+      if (!navControl || !header) return;
+      const dockControl = dock || document.querySelector(".nyarindo-palette-strip");
+      const cramped =
+        matchMedia("(max-width: 1100px)").matches ||
+        header.scrollWidth > header.clientWidth + 2;
+      if (cramped && dockControl) {
+        dockControl.hidden = false;
+        dockControl.append(navControl);
+        navControl.classList.add("is-below-header");
+      } else if (navHost) {
+        if (dockControl) dockControl.hidden = true;
+        navHost.append(navControl);
+        navControl.classList.remove("is-below-header");
+      }
+    }
+
+    requestAnimationFrame(positionNavControl);
+    addEventListener("resize", positionNavControl, { passive: true });
+
+    if (!document.querySelector(".nyarindo-palette-footer, .footer-themes")) {
+      const footer = document.querySelector(
+        ".nyarindo-thread-footer, .social-footer, footer",
+      );
+      if (footer) footer.append(createFooterPaletteControl());
+    }
+
+    paletteButtons().forEach((button) => {
+      if (button.dataset.nyarindoBound === "true") return;
+      button.dataset.nyarindoBound = "true";
+      button.addEventListener("click", () => {
+        applyPalette(button.dataset.palette);
+      });
+    });
+  }
+
   function initThemeControl() {
     ensureCloudscape();
 
@@ -36,6 +218,32 @@
     const buttons = [...new Set(document.querySelectorAll(
       "[data-theme-toggle], .site-theme-toggle, .theme-toggle, .theme-button, .library-theme, #themeToggle",
     ))];
+    if (!buttons.length && !document.documentElement.dataset.palette) return;
+
+    ensurePaletteControls();
+
+    let initialPalette = "forest";
+    try {
+      initialPalette =
+        localStorage.getItem(PALETTE_STORAGE_KEY)
+        || document.documentElement.dataset.palette
+        || "forest";
+    } catch {
+      initialPalette =
+        document.documentElement.dataset.palette || "forest";
+    }
+    applyPalette(initialPalette, false);
+    addEventListener("storage", (event) => {
+      if (event.key === PALETTE_STORAGE_KEY && event.newValue) {
+        applyPalette(event.newValue, false);
+      }
+    });
+    window.NyarindoColourTheme = Object.freeze({
+      current: () => document.documentElement.dataset.palette || "forest",
+      set: (palette) => applyPalette(palette, true),
+      options: PALETTES.map(({ id, label }) => ({ id, label })),
+    });
+
     if (!buttons.length) return;
 
     const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -83,6 +291,7 @@
           localStorage.setItem("nyarindo-theme", light ? "light" : "dark");
         } catch {}
       }
+      applyPalette(document.documentElement.dataset.palette || "forest", false);
       window.dispatchEvent(
         new CustomEvent("nyarindo:themechange", {
           detail: { theme: light ? "light" : "dark" },

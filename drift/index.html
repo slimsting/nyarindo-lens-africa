@@ -28,14 +28,14 @@
     <meta name="twitter:title" content="Drift — Follow the human trail through music">
     <meta name="twitter:description" content="Official source links, visible introductions, and a private Playground for listening, stories, lyrics, and local collections.">
     <meta name="twitter:image" content="https://nyarindolens.com/drift/assets/drift-app-icon.svg">
-    <script src="/portfolio-website/site-theme-init.js?v=site-theme-1"></script>
+    <script src="/portfolio-website/site-theme-init.js?v=colour-world-1"></script>
     <link rel="stylesheet" href="/portfolio-website/local-fonts.css?v=fonts-1">
     <link rel="stylesheet" href="/portfolio-website/theme-controls.css?v=theme-controls-6">
     <link rel="stylesheet" href="/portfolio-website/install-apps.css?v=install-note-1">
-    <link rel="stylesheet" href="/portfolio-website/lens-atmosphere.css?v=lens-atmosphere-17">
+    <link rel="stylesheet" href="/portfolio-website/lens-atmosphere.css?v=lens-atmosphere-18">
     <link rel="stylesheet" href="/portfolio-website/site-map.css?v=site-map-3">
     <link rel="stylesheet" href="tap-feedback.css?v=tap-feedback-1">
-    <link rel="stylesheet" href="styles.css?v=trail-first-3">
+    <link rel="stylesheet" href="styles.css?v=trail-native-1">
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -60,10 +60,11 @@
     <a class="skip-link" href="#main">Skip to Drift</a>
 
     <header class="drift-header">
-      <a class="wordmark" href="#discover" aria-label="Drift home">drift<span>.</span></a>
+      <a class="wordmark" href="#driftPlayerView" data-show-player aria-label="Drift player home">drift<span>.</span></a>
       <nav aria-label="Drift navigation">
-        <a href="#discover">Discover</a>
-        <a href="#playground">Playground</a>
+        <button class="nav-view-link" type="button" data-show-player>Player</button>
+        <button class="nav-view-link" type="button" data-show-lab>Sources</button>
+        <button class="nav-view-link" type="button" data-show-lab data-lab-target="playground">Playground</button>
         <a href="artist.html">Artists</a>
       </nav>
       <div class="header-actions">
@@ -74,6 +75,106 @@
     </header>
 
     <main id="main">
+      <section class="drift-player-view" id="driftPlayerView" aria-labelledby="driftPlayerTitle">
+        <div class="player-shell">
+          <section class="welcome">
+            <p class="eyebrow" id="playerGreeting">YOUR LISTENING SPACE · NYARINDO LENS</p>
+            <h1 id="driftPlayerTitle">Where do you want to <em>drift?</em></h1>
+            <p class="intro">No ads. No paid placement. Move through the songs and official sources already in the Drift field.</p>
+            <p class="install-note-entry"><button class="install-note" type="button" data-install-app data-install-label="Install Drift on this device.">Install Drift on this device.</button><span class="install-note-status" data-install-status role="status" aria-live="polite"></span></p>
+          </section>
+
+          <section class="modes" aria-label="Choose listening direction">
+            <button class="mode mode-familiar" data-mode="familiar" type="button"><b>Familiar</b><small>Nyarindo’s Suno catalogue</small></button>
+            <button class="mode mode-genre" data-mode="genre" type="button"><b>Within genre</b><small>Stay close to the same current</small></button>
+            <button class="mode mode-balance selected" data-mode="balance" type="button"><b>Balance</b><small>Trust + gentle discovery</small></button>
+            <button class="mode mode-explore" data-mode="explore" type="button"><b>Explore</b><small>Open the whole source field</small></button>
+          </section>
+
+          <section class="now-playing" aria-live="polite">
+            <div class="art art-1" id="artwork" aria-hidden="true"><span></span><span></span><span></span></div>
+            <div class="track-info">
+              <p class="eyebrow" id="trackSource">NOW DRIFTING · SUNO</p>
+              <h2 id="trackTitle">Peace Pon Eye And Eye</h2>
+              <p id="trackArtist">Newbon Nyarindo Gadson</p>
+              <p class="album" id="trackAlbum">from the Nyarindo Lens catalogue</p>
+              <p class="path" id="trackPath">The artist introduced this source directly.</p>
+              <a class="official-source-link" id="officialSourceLink" href="https://suno.com/song/1ff0aca8-5405-47fa-8b01-bd9074791cf6" target="_blank" rel="noopener noreferrer">Open official source ↗</a>
+            </div>
+          </section>
+
+          <div class="player-media-shell" id="playerMediaShell" hidden>
+            <div id="playerEmbed"></div>
+          </div>
+          <video class="source-audio-engine" id="sourceAudio" playsinline preload="metadata" aria-hidden="true"></video>
+
+          <section class="transport" aria-label="Player controls">
+            <button id="previousTrack" type="button" aria-label="Previous song">↶<span>Previous</span></button>
+            <button class="transport-play" id="transportPlay" type="button" aria-label="Play">▶</button>
+            <button id="nextTrack" type="button" aria-label="Next song"><span>Next</span>↷</button>
+            <button class="repeat-button" id="repeatButton" type="button" aria-pressed="false">Whole field ↻</button>
+            <button class="screen-button" id="fullscreenButton" type="button" aria-pressed="false">Large lyrics ⛶</button>
+          </section>
+
+          <section class="actions" aria-label="Listening actions">
+            <button class="return-button" id="returnButton" type="button" aria-label="Return to the first song in this drift">↺ Return to drift start</button>
+            <button class="drift-button" id="driftButton" type="button">Drift again <span>→</span></button>
+          </section>
+
+          <section class="direction-panel" id="directionPanel" hidden aria-label="Choose a new approach">
+            <p class="eyebrow">CHANGE THE CURRENT</p>
+            <div class="directions">
+              <button data-direction="softer" type="button">Softer <small>return to the artist’s own sources</small></button>
+              <button data-direction="deeper" type="button">Deeper <small>another song from the Suno catalogue</small></button>
+              <button data-direction="angle" type="button">Different angle <small>open the YouTube current</small></button>
+              <button data-direction="people" type="button">Closer to my people <small>follow the visible introduction</small></button>
+              <button data-direction="surprise" type="button">Surprise me <small>break the pattern across every source</small></button>
+            </div>
+          </section>
+
+          <section class="reason">
+            <p class="eyebrow">WHY THIS SOURCE</p>
+            <p id="reasonText">A direct source from Nyarindo’s public catalogue, introduced with permission.</p>
+          </section>
+
+          <section class="lyrics-section" aria-label="Song lyrics">
+            <div class="lyrics-heading"><button class="lyrics-toggle" id="lyricsToggle" type="button" aria-expanded="false">Lyrics <span>+</span></button><button class="fullscreen-button" id="lyricsFullscreenButton" type="button" aria-pressed="false">Open full lyrics ⛶</button></div>
+            <div class="lyrics" id="lyrics" hidden>
+              <p class="eyebrow" id="lyricsSourceLabel">ARTIST-PROVIDED LYRICS</p>
+              <div class="lyrics-theme-switcher" role="group" aria-label="Current lyric colour"><span>Current line</span><button type="button" data-lyric-colour="#f1d04e" style="--swatch:#f1d04e" aria-label="Yellow"></button><button type="button" data-lyric-colour="#eb4b3c" style="--swatch:#eb4b3c" aria-label="Red"></button><button type="button" data-lyric-colour="#62b36e" style="--swatch:#62b36e" aria-label="Green"></button><button type="button" data-lyric-colour="#5bb8e8" style="--swatch:#5bb8e8" aria-label="Blue"></button><button type="button" data-lyric-colour="#b17345" style="--swatch:#b17345" aria-label="Earth"></button></div>
+              <div class="lyrics-window"><div class="lyrics-lines" id="lyricsText"></div></div>
+              <button class="immersive-exit" id="immersiveExit" type="button">Close full lyrics ×</button>
+            </div>
+          </section>
+
+          <section class="support" aria-label="Support options">
+            <button id="artistTip" type="button">♡ Support the artist</button>
+            <button id="driftSupport" type="button">How Drift works</button>
+          </section>
+
+          <section class="drift-system-reveal" aria-labelledby="driftSystemTitle">
+            <p class="eyebrow">SOURCES · PLAYGROUND · ARTIST CONTROL</p>
+            <h2 id="driftSystemTitle">The whole drift lives below the player.</h2>
+            <button class="drift-system-button" id="openDriftSystem" type="button"><span>Open the Drift system</span><b aria-hidden="true">→</b></button>
+          </section>
+        </div>
+      </section>
+
+      <section class="drift-lab-view" id="driftLabView" hidden aria-label="Drift sources and Playground">
+        <div class="lab-return-bar"><button class="soft-button" id="returnToPlayer" type="button">← Back to the Drift player</button><span>Playback stays mounted while you explore.</span></div>
+        <section class="public-track-sync" aria-labelledby="publicTrackSyncTitle">
+          <div class="public-track-art art art-1" id="publicTrackArt" aria-hidden="true"><span></span><span></span><span></span></div>
+          <div class="public-track-copy">
+            <p class="eyebrow">PUBLIC SOURCE · SYNCED WITH THE DRIFT PLAYER</p>
+            <p class="public-track-source" id="publicTrackSource">SUNO · INTRODUCED BY NEWBON</p>
+            <h2 id="publicTrackSyncTitle">Peace Pon Eye And Eye</h2>
+            <p id="publicTrackMeta">Nyarindo Lens · Suno</p>
+          </div>
+          <div class="public-track-actions">
+            <button class="drift-system-button compact" id="publicTrackPlay" type="button"><span>Play this source</span><b aria-hidden="true">▶</b></button>
+            <a class="source-action" id="publicTrackLink" href="https://suno.com/song/1ff0aca8-5405-47fa-8b01-bd9074791cf6" target="_blank" rel="noopener noreferrer">Official source ↗</a>
+          </div>
+        </section>
       <section class="drift-hero" id="discover" aria-labelledby="driftTitle">
         <div class="hero-copy">
           <p class="eyebrow"><span class="live-dot"></span> HUMAN DISCOVERY · OFFICIAL SOURCES · PRIVATE PLAYGROUND</p>
@@ -101,7 +202,7 @@
             <div class="media-poster media-poster-youtube">
               <span class="poster-orbit"></span>
               <p>Official YouTube playlist</p>
-              <button id="youtubePlay" type="button">Load the official player</button>
+              <button id="youtubePlay" type="button">Drift this playlist</button>
             </div>
           </div>
           <p class="source-description">The first two and last two songs remain constant while the middle of the playlist continues to evolve.</p>
@@ -122,7 +223,7 @@
             <h2>Peace Pon Eye<br><em>And Eye.</em></h2>
             <p class="source-description">A listenable source example from Nyarindo’s Suno catalogue. Play it here or continue directly to the artist’s page.</p>
             <div class="source-actions">
-              <button class="source-action primary" id="sunoPlay" type="button">Play official audio</button>
+              <button class="source-action primary" id="sunoPlay" type="button">Drift into this source</button>
               <a class="source-action" href="https://suno.com/song/1ff0aca8-5405-47fa-8b01-bd9074791cf6" target="_blank" rel="noopener noreferrer">Open on Suno ↗</a>
             </div>
             <div class="media-shell media-shell-audio" id="sunoMedia" hidden></div>
@@ -160,7 +261,7 @@
             <button type="button" data-tool="trail">Trail</button>
             <button type="button" data-tool="collections">Albums</button>
             <button type="button" data-tool="import">Import</button>
-            <button type="button" data-tool="lyrics">Lyric Lab</button>
+            <button type="button" data-tool="lyricLab">Lyric Lab</button>
             <button type="button" data-tool="theme">Theme Lab</button>
             <button type="button" data-tool="sandbox">AI Sandbox</button>
           </nav>
@@ -195,10 +296,11 @@
               <ul class="import-list" id="importList"></ul>
             </article>
 
-            <article class="playground-card lyric-card" id="lyrics">
+            <article class="playground-card lyric-card" id="lyricLab">
               <p class="eyebrow">PRIVATE LYRIC LAB</p>
               <h3>Write. Time. Karaoke.</h3>
               <p>Load a local audio or video file you already have. Nothing is uploaded.</p>
+              <p class="lyric-track-context" id="lyricTrackContext">The current public track’s lyrics load here automatically. Your edits remain private to this device.</p>
               <input id="localMediaFile" type="file" accept="audio/*,video/*">
               <video id="localMedia" controls playsinline hidden></video>
               <div class="lyric-stage" id="lyricStage" data-tone="night">
@@ -260,6 +362,7 @@
         <div><p class="eyebrow">ARTIST CONTROL</p><h2 id="rightsTitle">The source stays theirs.</h2><p>Owners and authorised contacts can allow, restrict, or block public appearances of their catalogue. Drift links to official sources and keeps private local copies private.</p></div>
         <button class="source-action" id="rightsButton" type="button" aria-haspopup="dialog" aria-controls="rightsDialog">Open owner controls</button>
       </section>
+      </section>
     </main>
 
     <dialog id="profileDialog" class="drift-dialog" aria-labelledby="profileTitle">
@@ -304,9 +407,9 @@
     </dialog>
 
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
-    <script src="app.js?v=trail-first-3"></script>
+    <script src="app.js?v=trail-native-1"></script>
     <script src="tap-feedback.js?v=tap-feedback-1"></script>
-    <script src="/portfolio-website/site-theme-control.js?v=theme-controls-6"></script>
+    <script src="/portfolio-website/site-theme-control.js?v=colour-world-1"></script>
     <script src="/portfolio-website/install-app.js?v=install-separate-2"></script>
     <nav class="site-map" aria-label="Nyarindo Lens Universal site map">
       <div class="site-map-intro"><p class="site-map-eyebrow">THE WHOLE NYARINDO LENS</p><h2>Every page, one connected field.</h2><p>Move through the theory sequence, books, and browser projects from the same Lens.</p><a class="site-map-index" href="/sitemap.xml">Machine-readable site map ↗</a></div>

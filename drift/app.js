@@ -4,16 +4,122 @@
   const STORAGE_KEY = "drift.playground.v2";
   const PROFILE_NAME_KEY = "drift.profile-name.v1";
   const YOUTUBE_PLAYLIST = {
+    id: "PLax6dkIC77xw",
     title: "The best songs ever written",
+    artist: "Nyarindo Lens · YouTube",
+    album: "The living YouTube playlist",
     url: "https://www.youtube.com/playlist?list=PLax6dkIC77xw",
     embedUrl:
       "https://www.youtube-nocookie.com/embed/videoseries?list=PLax6dkIC77xw&rel=0",
+    source: "youtube",
+    art: "art-3",
+    colour: "#5bb8e8",
+    lyrics: ["This official playlist does not expose a lyric feed to Drift."],
   };
   const SUNO_SAMPLE = {
+    id: "1ff0aca8-5405-47fa-8b01-bd9074791cf6",
     title: "Peace Pon Eye And Eye",
     url: "https://suno.com/song/1ff0aca8-5405-47fa-8b01-bd9074791cf6",
     embedUrl: "https://suno.com/embed/1ff0aca8-5405-47fa-8b01-bd9074791cf6",
   };
+  const SUNO_CATALOGUE = [
+    {
+      id: "1ff0aca8-5405-47fa-8b01-bd9074791cf6",
+      title: "Peace Pon Eye And Eye",
+      album: "Nyarindo Lens · Suno",
+      duration: 117.96,
+      lyrics: [
+        "Peace pon eye and eye",
+        "May eye and eye walk lightly.",
+        "May contradiction become curiosity.",
+        "May maps remain maps.",
+        "May reality reveal itself in its own time.",
+        "May connection outlive misunderstanding.",
+        "May rest arrive when rest is needed, and motion arrive when motion is called for.",
+        "Peace pon eye and eye.",
+        "yes no enough",
+        "all already agree",
+        "truth no scaffold",
+        "The journey continues.",
+        "peace prayer",
+      ],
+    },
+    {
+      id: "7cb1defe-6848-4c70-9db1-3d8a343ece88",
+      title: "Gallium in Your Hand",
+      album: "Nyarindo Lens · Suno",
+      duration: 179.68,
+      lyrics: [
+        "It’s just gallium in your hand, yeah!",
+        "Watch the silver mirror slide",
+        "Melting away the borders where the Red Container tries to hide",
+        "Raw human warmth is all it took to break the frozen grid",
+        "And a brand new fool meaning is born right where they said it never could be lived!",
+        "The IMF briefcases are heavy, the wands are keeping score",
+        "They want the code to stay solid, locked behind a corporate door",
+        "But the clipboard of the audit is clearing out the slate",
+        "It liquefies your expectations at the open garden gate",
+        "With just gallium in your hand",
+        "Watch the silver mirror slide",
+        "Melting away the borders where the Red Container tries to hide",
+        "Raw human warmth is all it took to break the frozen grid",
+        "No more solid definitions... It completely dissolved.",
+        "It already is.",
+      ],
+    },
+    {
+      id: "7dd58265-0d18-4c8a-9782-376c57f3980e",
+      title: "Poison in Paradise",
+      album: "Nyarindo Lens · Suno",
+      duration: 166.36,
+      lyrics: [
+        "Like the sound of thunder on a sunny day,",
+        "You sneaked right up on me, blew the walls away.",
+        "I was discarded, lost in a world I could not understand,",
+        "Poison in paradise, holding sand in my hand.",
+        "You did not tame my demons, you let them loose.",
+        "Neither did you revere my angels, you cut the noose.",
+        "You grounded them... you stayed right here,",
+        "Each conversation a monologue, turning into a duet through the fear.",
+        "Other times I am low... low like a contrabass.",
+        "It’s a wave that has a life of its own in this space.",
+        "But I dance to this music gleefully under the sun,",
+        "All that matters is this moment, the battle is won.",
+      ],
+    },
+    {
+      id: "eea3ed89-0811-48a0-9771-63661085e112",
+      title: "Forgetting the Journey",
+      album: "Nyarindo Lens · Suno",
+      duration: 72.36,
+      lyrics: [
+        "We argued about the layout, we fought over the lines,",
+        "Measuring the borders, running out of time.",
+        "You held up your ruler, I pointed at the sea,",
+        "Forgetting that the ground beneath is walking you and me.",
+        "Oh, we argued about the map,",
+        "While completely forgetting the journey!",
+        "Trapped inside the text, wrapped inside the grid,",
+        "Locking up the wonder like our childhood never did.",
+        "It already is... yeah, it already is.",
+      ],
+    },
+    {
+      id: "ebe0c49a-f22f-4f73-8ee3-8d35e62eecfd",
+      title: "Regulation of Potential",
+      album: "Nyarindo Lens · Suno",
+      duration: 211.8,
+      lyrics: ["No public lyric text is attached to this source."],
+    },
+  ].map((track, index) => ({
+    ...track,
+    source: "suno",
+    artist: "Newbon Nyarindo Gadson",
+    url: `https://suno.com/song/${track.id}`,
+    embedUrl: `https://suno.com/embed/${track.id}`,
+    art: `art-${(index % 4) + 1}`,
+    colour: ["#eb4b3c", "#8d623c", "#62b36e", "#f1d04e", "#5bb8e8"][index % 5],
+  }));
   const SANDBOX_PROMPT = [
     "Build inside my private Drift Playground.",
     "This workspace is local and private. Do not publish, upload, distribute, or publicly expose its files, lyrics, media, notes, identities, or generated tools.",
@@ -38,6 +144,7 @@
       timings: [],
       mediaName: "",
     },
+    lyricsByTrack: {},
     lyricTheme: { ...defaultLyricTheme },
     theme: {
       color: "#0b1714",
@@ -61,6 +168,18 @@
   let customLyricFont = null;
   let toastTimer = 0;
   let saveTimer = 0;
+  let playerMode = localStorage.getItem("drift-player-mode") || "balance";
+  let playerIndex = Number(localStorage.getItem("drift-player-index") || 0);
+  let playerHistory = [];
+  let playerStart = { mode: playerMode, index: playerIndex };
+  let playerRepeatOne =
+    localStorage.getItem("drift-player-repeat-one") === "true";
+  let currentPlayerTrack = null;
+  let playerPlaying = false;
+  let lyricIndex = -1;
+  let lyricTimer = 0;
+  let lyricColour =
+    localStorage.getItem("drift-player-lyric-colour") || "#f1d04e";
 
   function loadState() {
     try {
@@ -69,6 +188,10 @@
         ...defaultState,
         ...stored,
         lyrics: { ...defaultState.lyrics, ...(stored.lyrics || {}) },
+        lyricsByTrack:
+          stored.lyricsByTrack && typeof stored.lyricsByTrack === "object"
+            ? stored.lyricsByTrack
+            : {},
         lyricTheme: { ...defaultLyricTheme, ...(stored.lyricTheme || {}) },
         theme: { ...defaultState.theme, ...(stored.theme || {}) },
         trail: Array.isArray(stored.trail) ? stored.trail : [],
@@ -235,6 +358,604 @@
     }
   }
 
+  function importedPlayerTracks() {
+    const sources = [
+      ...state.imports.map((entry) => ({
+        title: entry.title,
+        url: entry.url,
+        provider: entry.provider,
+        embedUrl: entry.embedUrl,
+        description: entry.description,
+      })),
+      ...state.collections.flatMap((collection) =>
+        collection.items.map((item) => ({
+          title: item.title,
+          url: item.url,
+          provider: sourceFromUrl(item.url).provider,
+          embedUrl: sourceFromUrl(item.url).embedUrl,
+        })),
+      ),
+    ];
+    const seen = new Set();
+    return sources
+      .filter((source) => {
+        if (!source.url || seen.has(source.url)) return false;
+        seen.add(source.url);
+        return true;
+      })
+      .filter(
+        (source) =>
+          !SUNO_CATALOGUE.some((track) => track.url === source.url) &&
+          source.url !== YOUTUBE_PLAYLIST.url,
+      )
+      .map((source, index) => ({
+        id: `imported-${index}-${source.url}`,
+        title: source.title,
+        artist: "Introduced source",
+        album: source.provider,
+        source: "imported",
+        url: source.url,
+        embedUrl: source.embedUrl,
+        audioUrl: "",
+        art: `art-${(index % 4) + 1}`,
+        colour: ["#eb4b3c", "#8d623c", "#62b36e", "#f1d04e"][index % 4],
+        reason:
+          source.description ||
+          "An official source saved in your private Playground.",
+        lyrics: ["This source does not provide lyric text to Drift."],
+      }));
+  }
+
+  function interleave(first, second) {
+    const result = [];
+    const length = Math.max(first.length, second.length);
+    for (let index = 0; index < length; index += 1) {
+      if (first[index]) result.push(first[index]);
+      if (second[index]) result.push(second[index]);
+    }
+    return result;
+  }
+
+  function playerTracksForMode(mode) {
+    const suno = [...SUNO_CATALOGUE];
+    const imported = importedPlayerTracks();
+    const outside = [YOUTUBE_PLAYLIST, ...imported];
+    if (mode === "familiar") return suno;
+    if (mode === "genre") {
+      return [...suno].sort((a, b) => a.title.localeCompare(b.title));
+    }
+    if (mode === "explore") return [...outside, ...suno].reverse();
+    return interleave(suno, outside);
+  }
+
+  function playerTrackList() {
+    return playerTracksForMode(playerMode);
+  }
+
+  function playerSetPlaying(playing) {
+    playerPlaying = playing;
+    const button = $("transportPlay");
+    if (button) {
+      button.textContent = playing ? "■" : "▶";
+      button.setAttribute(
+        "aria-label",
+        playing ? `Pause ${currentPlayerTrack?.title || "source"}` : "Play",
+      );
+    }
+    if ("mediaSession" in navigator) {
+      navigator.mediaSession.playbackState = playing ? "playing" : "paused";
+    }
+    if ($("publicTrackPlay")) {
+      $("publicTrackPlay").querySelector("span").textContent = playing
+        ? "Pause this source"
+        : "Play this source";
+      $("publicTrackPlay").querySelector("b").textContent = playing ? "■" : "▶";
+    }
+  }
+
+  function privateLyricsForTrack(track) {
+    if (!track) return { text: "", timings: [] };
+    if (!state.lyricsByTrack[track.id]) {
+      state.lyricsByTrack[track.id] = {
+        text: (track.lyrics || []).join("\n"),
+        timings: [],
+      };
+    }
+    return state.lyricsByTrack[track.id];
+  }
+
+  function syncTrackSurfaces(track) {
+    if (!track) return;
+    if ($("publicTrackArt")) {
+      $("publicTrackArt").className =
+        `public-track-art art ${track.art || "art-1"}`;
+    }
+    if ($("publicTrackSource")) {
+      $("publicTrackSource").textContent =
+        `${track.source === "suno" ? "SUNO" : track.source === "youtube" ? "YOUTUBE" : "OFFICIAL SOURCE"} · ${track.album || "INTRODUCED BY NEWBON"}`;
+    }
+    if ($("publicTrackSyncTitle")) {
+      $("publicTrackSyncTitle").textContent = track.title;
+    }
+    if ($("publicTrackMeta")) {
+      $("publicTrackMeta").textContent =
+        `${track.artist || "Official source"} · ${track.reason || "Playback and private lyrics stay in step."}`;
+    }
+    if ($("publicTrackLink")) {
+      $("publicTrackLink").href = track.url;
+    }
+    $("youtube-sample")?.classList.toggle(
+      "is-current-source",
+      track.source === "youtube",
+    );
+    $("suno-sample")?.classList.toggle(
+      "is-current-source",
+      track.source === "suno",
+    );
+    const privateLyrics = privateLyricsForTrack(track);
+    state.lyrics.text = privateLyrics.text || "";
+    state.lyrics.timings = Array.isArray(privateLyrics.timings)
+      ? [...privateLyrics.timings]
+      : [];
+    if ($("lyricEditor")) $("lyricEditor").value = state.lyrics.text;
+    if ($("lyricTrackContext")) {
+      $("lyricTrackContext").textContent =
+        `Currently linked: ${track.title}. The source metadata is public; every lyric edit below stays private on this device.`;
+    }
+    saveState();
+    renderLyrics();
+    window.dispatchEvent(
+      new CustomEvent("nyarindo:drift-track-change", {
+        detail: {
+          id: track.id,
+          title: track.title,
+          source: track.source,
+        },
+      }),
+    );
+  }
+
+  function stopLyricClock() {
+    clearInterval(lyricTimer);
+    lyricTimer = 0;
+  }
+
+  function showPlayerLyric(index) {
+    const lines = [...document.querySelectorAll("#lyricsText .lyric-line")];
+    if (!lines.length) return;
+    const bounded = Math.max(0, Math.min(index, lines.length - 1));
+    lyricIndex = bounded;
+    lines.forEach((line, lineIndex) => {
+      line.classList.toggle("active", lineIndex === bounded);
+      line.classList.toggle("past", lineIndex < bounded);
+      if (lineIndex === bounded) line.setAttribute("aria-current", "true");
+      else line.removeAttribute("aria-current");
+    });
+    const active = lines[bounded];
+    const windowElement = active.closest(".lyrics-window");
+    const linesElement = $("lyricsText");
+    if (!windowElement || !linesElement) return;
+    const target =
+      active.offsetTop -
+      windowElement.clientHeight / 2 +
+      active.offsetHeight / 2;
+    linesElement.style.transform = `translateY(${-Math.max(0, target)}px)`;
+  }
+
+  function renderPlayerLyrics() {
+    const container = $("lyricsText");
+    if (!container) return;
+    const lines =
+      currentPlayerTrack?.lyrics?.length
+        ? currentPlayerTrack.lyrics
+        : ["No lyric text is attached to this source."];
+    const fragment = document.createDocumentFragment();
+    lines.forEach((line) => {
+      const element = document.createElement("p");
+      element.className = "lyric-line";
+      element.textContent = line;
+      fragment.append(element);
+    });
+    container.replaceChildren(fragment);
+    container.style.transform = "translateY(0)";
+    lyricIndex = -1;
+    requestAnimationFrame(() => showPlayerLyric(0));
+    if ($("lyricsSourceLabel")) {
+      $("lyricsSourceLabel").textContent =
+        currentPlayerTrack?.source === "suno"
+          ? "ARTIST-PROVIDED LYRIC SOURCE · SUNO"
+          : "OFFICIAL SOURCE · LYRIC TEXT UNAVAILABLE";
+    }
+  }
+
+  function syncPlayerLyric() {
+    if (!currentPlayerTrack) return;
+    const lines = currentPlayerTrack.lyrics || [];
+    if (!lines.length) return;
+    const audio = $("sourceAudio");
+    if (currentPlayerTrack.audioUrl && audio?.duration > 0) {
+      const nextIndex = Math.min(
+        lines.length - 1,
+        Math.floor((audio.currentTime / audio.duration) * lines.length),
+      );
+      if (nextIndex !== lyricIndex) showPlayerLyric(nextIndex);
+    }
+  }
+
+  function startPlayerLyricClock() {
+    stopLyricClock();
+    if (!currentPlayerTrack || currentPlayerTrack.audioUrl) return;
+    const lines = currentPlayerTrack.lyrics || [];
+    if (lines.length < 2) return;
+    lyricTimer = window.setInterval(() => {
+      showPlayerLyric((lyricIndex + 1) % lines.length);
+    }, 4800);
+  }
+
+  function updateMediaSession() {
+    if (!("mediaSession" in navigator) || !currentPlayerTrack) return;
+    try {
+      navigator.mediaSession.metadata = new MediaMetadata({
+        title: currentPlayerTrack.title,
+        artist: currentPlayerTrack.artist,
+        album: currentPlayerTrack.album,
+        artwork: [
+          {
+            src: new URL("assets/drift-icon-512.png", location.href).href,
+            sizes: "512x512",
+            type: "image/png",
+          },
+        ],
+      });
+      navigator.mediaSession.setActionHandler("play", startPlayerPlayback);
+      navigator.mediaSession.setActionHandler("pause", pausePlayerPlayback);
+      navigator.mediaSession.setActionHandler("previoustrack", () =>
+        movePlayerTrack(-1),
+      );
+      navigator.mediaSession.setActionHandler("nexttrack", () =>
+        movePlayerTrack(1),
+      );
+      navigator.mediaSession.setActionHandler("stop", pausePlayerPlayback);
+    } catch {}
+  }
+
+  function updatePositionState() {
+    if (
+      !("mediaSession" in navigator) ||
+      typeof navigator.mediaSession.setPositionState !== "function"
+    ) {
+      return;
+    }
+    const audio = $("sourceAudio");
+    if (!audio?.duration || !Number.isFinite(audio.duration)) return;
+    try {
+      navigator.mediaSession.setPositionState({
+        duration: audio.duration,
+        playbackRate: audio.playbackRate || 1,
+        position: Math.min(audio.currentTime, audio.duration),
+      });
+    } catch {}
+  }
+
+  function renderPlayer(remember = false) {
+    const tracks = playerTrackList();
+    if (!tracks.length) return;
+    if (remember && currentPlayerTrack) {
+      playerHistory.push({ mode: playerMode, index: playerIndex });
+    }
+    playerIndex = ((playerIndex % tracks.length) + tracks.length) % tracks.length;
+    currentPlayerTrack = tracks[playerIndex];
+    const track = currentPlayerTrack;
+    if (!track) return;
+    pausePlayerPlayback();
+    $("trackTitle").textContent = track.title;
+    $("trackArtist").textContent = track.artist || "Official source";
+    $("trackAlbum").textContent = track.album ? `from ${track.album}` : "";
+    $("trackAlbum").hidden = !track.album;
+    $("trackPath").textContent =
+      track.source === "suno"
+        ? "Introduced directly by Newbon Nyarindo Gadson."
+        : track.source === "youtube"
+          ? "The living YouTube playlist chosen by Newbon."
+          : "Saved in your private Playground.";
+    $("trackSource").textContent =
+      `NOW DRIFTING · ${track.source === "suno" ? "SUNO" : track.source === "youtube" ? "YOUTUBE" : "OFFICIAL SOURCE"}`;
+    $("officialSourceLink").href = track.url;
+    $("reasonText").textContent =
+      track.reason ||
+      (track.source === "suno"
+        ? "A direct source from Nyarindo’s public catalogue, introduced with permission."
+        : "An official source held as a link. Playback remains with its creator and platform.");
+    $("artwork").className = `art ${track.art || "art-1"}`;
+    $("playerMediaShell").hidden = true;
+    $("playerEmbed").replaceChildren();
+    $("sourceAudio").pause();
+    $("sourceAudio").removeAttribute("src");
+    document.documentElement.style.setProperty(
+      "--track-glow",
+      track.colour || "#245c49",
+    );
+    document.querySelectorAll(".mode").forEach((button) => {
+      button.classList.toggle("selected", button.dataset.mode === playerMode);
+    });
+    renderPlayerLyrics();
+    syncTrackSurfaces(track);
+    updateMediaSession();
+    localStorage.setItem("drift-player-mode", playerMode);
+    localStorage.setItem("drift-player-index", String(playerIndex));
+  }
+
+  async function startPlayerPlayback() {
+    if (!currentPlayerTrack) return;
+    const track = currentPlayerTrack;
+    if (track.audioUrl) {
+      const audio = $("sourceAudio");
+      $("playerEmbed").replaceChildren();
+      $("playerMediaShell").hidden = true;
+      audio.hidden = false;
+      if (audio.src !== track.audioUrl) audio.src = track.audioUrl;
+      try {
+        await audio.play();
+        playerSetPlaying(true);
+      } catch {
+        toast("Playback needs another tap from this browser.");
+      }
+    } else if (track.embedUrl) {
+      const audio = $("sourceAudio");
+      audio.pause();
+      audio.hidden = true;
+      const frame = document.createElement("iframe");
+      const embedUrl = new URL(track.embedUrl);
+      embedUrl.searchParams.set("autoplay", "1");
+      embedUrl.searchParams.set("playsinline", "1");
+      frame.src = embedUrl.href;
+      frame.title = `${track.title} from ${track.album}`;
+      frame.allow =
+        "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+      frame.allowFullscreen = true;
+      frame.referrerPolicy = "strict-origin-when-cross-origin";
+      $("playerEmbed").replaceChildren(frame);
+      $("playerMediaShell").hidden = false;
+      playerSetPlaying(true);
+      startPlayerLyricClock();
+    } else {
+      window.open(track.url, "_blank", "noopener,noreferrer");
+      toast("Opened the official source in a new tab.");
+      return;
+    }
+    recordTrail("played", track.title, track.url, track.album);
+    updateMediaSession();
+  }
+
+  function pausePlayerPlayback() {
+    const audio = $("sourceAudio");
+    if (audio && !audio.paused) audio.pause();
+    if ($("playerEmbed")?.querySelector("iframe")) {
+      $("playerEmbed").replaceChildren();
+      $("playerMediaShell").hidden = true;
+    }
+    stopLyricClock();
+    playerSetPlaying(false);
+  }
+
+  function togglePlayerPlayback() {
+    if (playerPlaying) pausePlayerPlayback();
+    else startPlayerPlayback();
+  }
+
+  function movePlayerTrack(direction) {
+    const tracks = playerTrackList();
+    if (!tracks.length) return;
+    if (direction < 0) {
+      const previous = playerHistory.pop();
+      if (previous) {
+        playerMode = previous.mode;
+        playerIndex = previous.index;
+      } else {
+        playerIndex =
+          (playerIndex - 1 + tracks.length) % tracks.length;
+      }
+    } else {
+      playerHistory.push({ mode: playerMode, index: playerIndex });
+      playerIndex = (playerIndex + 1) % tracks.length;
+    }
+    renderPlayer();
+  }
+
+  function savePlayerLyricColour(colour) {
+    lyricColour = colour;
+    localStorage.setItem("drift-player-lyric-colour", colour);
+    document.documentElement.style.setProperty("--lyric-current-colour", colour);
+    document.querySelectorAll("[data-lyric-colour]").forEach((button) => {
+      button.setAttribute(
+        "aria-pressed",
+        String(button.dataset.lyricColour === colour),
+      );
+    });
+  }
+
+  function setImmersiveLyrics(active) {
+    document.body.classList.toggle("immersive", active);
+    if (active && $("lyrics")) $("lyrics").hidden = false;
+    const label = active ? "Close full lyrics ×" : "Open full lyrics ⛶";
+    if ($("lyricsFullscreenButton")) {
+      $("lyricsFullscreenButton").textContent = label;
+      $("lyricsFullscreenButton").setAttribute("aria-pressed", String(active));
+    }
+    if ($("fullscreenButton")) {
+      $("fullscreenButton").textContent = active
+        ? "Exit large lyrics ×"
+        : "Large lyrics ⛶";
+      $("fullscreenButton").setAttribute("aria-pressed", String(active));
+    }
+    requestAnimationFrame(() => {
+      showPlayerLyric(Math.max(0, lyricIndex));
+    });
+  }
+
+  function showPlayerView() {
+    if (document.body.classList.contains("immersive")) setImmersiveLyrics(false);
+    $("driftPlayerView")?.classList.remove("is-view-hidden");
+    $("driftPlayerView")?.removeAttribute("aria-hidden");
+    if ($("driftLabView")) $("driftLabView").hidden = true;
+    document.body.dataset.driftView = "player";
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  function showLabView(targetId = "") {
+    if (document.body.classList.contains("immersive")) setImmersiveLyrics(false);
+    $("driftPlayerView")?.classList.add("is-view-hidden");
+    $("driftPlayerView")?.setAttribute("aria-hidden", "true");
+    if ($("driftLabView")) $("driftLabView").hidden = false;
+    document.body.dataset.driftView = "lab";
+    requestAnimationFrame(() => {
+      const target = targetId ? $(targetId) : null;
+      if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+      else window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+  }
+
+  function bindPlayer() {
+    const audio = $("sourceAudio");
+    if (!audio || !$("transportPlay")) return;
+    document.querySelectorAll(".mode").forEach((button) => {
+      button.addEventListener("click", () => {
+        playerMode = button.dataset.mode;
+        playerIndex = 0;
+        playerStart = { mode: playerMode, index: 0 };
+        playerHistory = [];
+        renderPlayer();
+        toast(`${button.querySelector("b").textContent} selected — this is your new drift start.`);
+      });
+    });
+    $("transportPlay").addEventListener("click", togglePlayerPlayback);
+    $("publicTrackPlay").addEventListener("click", togglePlayerPlayback);
+    $("nextTrack").addEventListener("click", () => movePlayerTrack(1));
+    $("previousTrack").addEventListener("click", () => movePlayerTrack(-1));
+    $("driftButton").addEventListener("click", () => {
+      $("directionPanel").hidden = !$("directionPanel").hidden;
+    });
+    document.querySelectorAll("[data-direction]").forEach((button) => {
+      button.addEventListener("click", () => {
+        const direction = button.dataset.direction;
+        playerHistory.push({ mode: playerMode, index: playerIndex });
+        if (direction === "softer" || direction === "people") {
+          playerMode = "familiar";
+        } else if (direction === "deeper") {
+          playerMode = "genre";
+        } else if (direction === "angle" || direction === "surprise") {
+          playerMode = "explore";
+        } else {
+          playerMode = "balance";
+        }
+        const tracks = playerTrackList();
+        playerIndex = (playerIndex + 1) % tracks.length;
+        $("directionPanel").hidden = true;
+        renderPlayer();
+        toast(`Drifting ${direction}…`);
+      });
+    });
+    $("returnButton").addEventListener("click", () => {
+      if (
+        playerMode === playerStart.mode &&
+        playerIndex === playerStart.index
+      ) {
+        toast("You are already at the start of this drift.");
+        return;
+      }
+      playerMode = playerStart.mode;
+      playerIndex = playerStart.index;
+      playerHistory = [];
+      renderPlayer();
+      toast("Returned to the start of this drift.");
+    });
+    $("repeatButton").addEventListener("click", () => {
+      playerRepeatOne = !playerRepeatOne;
+      localStorage.setItem(
+        "drift-player-repeat-one",
+        String(playerRepeatOne),
+      );
+      $("repeatButton").textContent = playerRepeatOne
+        ? "One source ↻"
+        : "Whole field ↻";
+      $("repeatButton").setAttribute(
+        "aria-pressed",
+        String(playerRepeatOne),
+      );
+    });
+    if (playerRepeatOne) {
+      $("repeatButton").textContent = "One source ↻";
+      $("repeatButton").setAttribute("aria-pressed", "true");
+    }
+    $("lyricsToggle").addEventListener("click", () => {
+      const panel = $("lyrics");
+      const open = panel.hidden;
+      panel.hidden = !open;
+      $("lyricsToggle").setAttribute("aria-expanded", String(open));
+      $("lyricsToggle").querySelector("span").textContent = open ? "−" : "+";
+      if (open) requestAnimationFrame(() => showPlayerLyric(Math.max(0, lyricIndex)));
+    });
+    $("fullscreenButton").addEventListener("click", () => {
+      setImmersiveLyrics(!document.body.classList.contains("immersive"));
+    });
+    $("lyricsFullscreenButton").addEventListener("click", () => {
+      setImmersiveLyrics(!document.body.classList.contains("immersive"));
+    });
+    $("immersiveExit").addEventListener("click", () =>
+      setImmersiveLyrics(false),
+    );
+    document.addEventListener("keydown", (event) => {
+      if (
+        event.key === "Escape" &&
+        document.body.classList.contains("immersive")
+      ) {
+        setImmersiveLyrics(false);
+      }
+    });
+    document.querySelectorAll("[data-lyric-colour]").forEach((button) => {
+      button.addEventListener("click", () =>
+        savePlayerLyricColour(button.dataset.lyricColour),
+      );
+    });
+    document.querySelectorAll("[data-show-player]").forEach((element) => {
+      element.addEventListener("click", (event) => {
+        event.preventDefault();
+        showPlayerView();
+      });
+    });
+    document.querySelectorAll("[data-show-lab]").forEach((element) => {
+      element.addEventListener("click", (event) => {
+        event.preventDefault();
+        showLabView(element.dataset.labTarget || "");
+      });
+    });
+    $("openDriftSystem").addEventListener("click", () => showLabView());
+    $("returnToPlayer").addEventListener("click", showPlayerView);
+    $("artistTip").addEventListener("click", () =>
+      toast("Artist support remains an official-source handoff in this build."),
+    );
+    $("driftSupport").addEventListener("click", () => $("faqDialog")?.showModal());
+    audio.addEventListener("play", () => {
+      playerSetPlaying(true);
+      startPlayerLyricClock();
+    });
+    audio.addEventListener("pause", () => playerSetPlaying(false));
+    audio.addEventListener("timeupdate", () => {
+      syncPlayerLyric();
+      updatePositionState();
+    });
+    audio.addEventListener("ended", () => {
+      if (playerRepeatOne) {
+        audio.currentTime = 0;
+        audio.play().catch(() => {});
+      } else {
+        movePlayerTrack(1);
+      }
+    });
+    savePlayerLyricColour(lyricColour);
+    renderPlayer();
+  }
+
   function renderTrail() {
     const list = $("trailList");
     if (!list) return;
@@ -326,16 +1047,21 @@
   }
 
   function openOfficialPlayer(container, source) {
-    if (!source.embedUrl || container.querySelector("iframe")) return;
-    const frame = document.createElement("iframe");
-    frame.src = source.embedUrl;
-    frame.title = `${source.title} from ${source.provider}`;
-    frame.loading = "lazy";
-    frame.allow =
-      "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
-    frame.allowFullscreen = true;
-    frame.referrerPolicy = "strict-origin-when-cross-origin";
-    container.append(frame);
+    if (!source.embedUrl) return;
+    const track = importedPlayerTracks().find(
+      (candidate) => candidate.url === source.url,
+    );
+    if (!track) return;
+    playerMode = "balance";
+    const tracks = playerTrackList();
+    playerIndex = tracks.findIndex((candidate) => candidate.id === track.id);
+    if (playerIndex < 0) playerIndex = tracks.findIndex(
+      (candidate) => candidate.url === track.url,
+    );
+    if (playerIndex < 0) return;
+    container.closest("li")?.classList.add("is-current-source");
+    renderPlayer();
+    startPlayerPlayback();
   }
 
   function renderImports() {
@@ -372,7 +1098,7 @@
         const load = document.createElement("button");
         load.type = "button";
         load.className = "soft-button import-player-button";
-        load.textContent = "Load official player";
+        load.textContent = "Drift this source";
         load.addEventListener("click", () => {
           openOfficialPlayer(item, entry);
           recordTrail("played import", entry.title, entry.url, entry.provider);
@@ -385,39 +1111,39 @@
   }
 
   function loadYoutubePlayer() {
-    const media = $("youtubeMedia");
-    if (!media || media.querySelector("iframe")) return;
-    media.replaceChildren();
-    const frame = document.createElement("iframe");
-    frame.src = YOUTUBE_PLAYLIST.embedUrl;
-    frame.title = "Official YouTube playlist: The best songs ever written";
-    frame.loading = "eager";
-    frame.allow =
-      "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
-    frame.allowFullscreen = true;
-    frame.referrerPolicy = "strict-origin-when-cross-origin";
-    media.append(frame);
-    recordTrail(
-      "played playlist",
-      YOUTUBE_PLAYLIST.title,
-      YOUTUBE_PLAYLIST.url,
-      "YouTube",
+    let tracks = playerTrackList();
+    let nextIndex = tracks.findIndex(
+      (candidate) => candidate.source === "youtube",
     );
+    if (nextIndex < 0) {
+      playerMode = "balance";
+      tracks = playerTrackList();
+      nextIndex = tracks.findIndex(
+        (candidate) => candidate.source === "youtube",
+      );
+    }
+    if (nextIndex < 0) return;
+    playerIndex = nextIndex;
+    renderPlayer();
+    startPlayerPlayback();
   }
 
   function loadSunoPlayer() {
-    const media = $("sunoMedia");
-    if (!media || media.querySelector("iframe")) return;
-    media.hidden = false;
-    const frame = document.createElement("iframe");
-    frame.src = SUNO_SAMPLE.embedUrl;
-    frame.title = `${SUNO_SAMPLE.title} on Suno`;
-    frame.loading = "lazy";
-    frame.allow = "autoplay; encrypted-media; picture-in-picture";
-    frame.allowFullscreen = true;
-    frame.referrerPolicy = "strict-origin-when-cross-origin";
-    media.replaceChildren(frame);
-    recordTrail("played source", SUNO_SAMPLE.title, SUNO_SAMPLE.url, "Suno");
+    let tracks = playerTrackList();
+    let nextIndex = tracks.findIndex(
+      (candidate) => candidate.id === SUNO_SAMPLE.id,
+    );
+    if (nextIndex < 0) {
+      playerMode = "familiar";
+      tracks = playerTrackList();
+      nextIndex = tracks.findIndex(
+        (candidate) => candidate.id === SUNO_SAMPLE.id,
+      );
+    }
+    if (nextIndex < 0) return;
+    playerIndex = nextIndex;
+    renderPlayer();
+    startPlayerPlayback();
   }
 
   function applyTheme() {
@@ -606,6 +1332,11 @@
     const initial = displayName.trim().charAt(0).toLocaleUpperCase() || "D";
     if ($("profileDisplayName")) $("profileDisplayName").textContent = displayName;
     if ($("profileInitial")) $("profileInitial").textContent = initial;
+    if ($("playerGreeting")) {
+      $("playerGreeting").textContent = name
+        ? `${name.toLocaleUpperCase()}’S LISTENING SPACE · NYARINDO LENS`
+        : "YOUR LISTENING SPACE · NYARINDO LENS";
+    }
     document.querySelectorAll(".profile-avatar-large > span").forEach((element) => {
       element.textContent = initial;
     });
@@ -760,6 +1491,12 @@
       line: lines[nextIndex],
       at: Math.max(0, Math.round(time * 100) / 100),
     });
+    if (currentPlayerTrack) {
+      state.lyricsByTrack[currentPlayerTrack.id] = {
+        text: state.lyrics.text,
+        timings: [...state.lyrics.timings],
+      };
+    }
     saveState();
     renderLyrics();
     renderLyricPreview();
@@ -830,6 +1567,8 @@
         collections: state.collections,
         imports: state.imports,
         lyrics: state.lyrics,
+        lyricsByTrack: state.lyricsByTrack,
+        activeTrack: currentPlayerTrack?.id || "",
         theme: state.theme,
         updatesEnabled: state.updatesEnabled,
       },
@@ -1015,6 +1754,12 @@
     });
     $("clearLyrics")?.addEventListener("click", () => {
       state.lyrics = { ...defaultState.lyrics };
+      if (currentPlayerTrack) {
+        state.lyricsByTrack[currentPlayerTrack.id] = {
+          text: "",
+          timings: [],
+        };
+      }
       $("lyricEditor").value = "";
       deleteAsset("lyric-media").catch(() => {});
       if ($("localMedia")) {
@@ -1146,6 +1891,12 @@
     $("lyricEditor")?.addEventListener("input", () => {
       state.lyrics.text = $("lyricEditor").value;
       state.lyrics.timings = [];
+      if (currentPlayerTrack) {
+        state.lyricsByTrack[currentPlayerTrack.id] = {
+          text: state.lyrics.text,
+          timings: [],
+        };
+      }
       saveState();
       renderLyrics();
     });
@@ -1171,6 +1922,9 @@
       toast("Local media loaded privately.");
     });
     $("localMedia")?.addEventListener("timeupdate", renderLyricPreview);
+    $("localMedia")?.addEventListener("play", () => {
+      if (playerPlaying) pausePlayerPlayback();
+    });
   }
 
   function bindProfile() {
@@ -1245,6 +1999,7 @@
     bindMedia();
     bindProfile();
     bindThemeLab();
+    bindPlayer();
     renderTrail();
     renderCollections();
     renderImports();

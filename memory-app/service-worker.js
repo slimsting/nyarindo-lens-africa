@@ -1,4 +1,4 @@
-const CACHE = 'return-memory-v10';
+const CACHE = 'return-memory-v12';
 const CORE = [
   './',
   './index.html',
@@ -7,7 +7,10 @@ const CORE = [
   './manifest.webmanifest',
   '/portfolio-website/install-apps.css?v=install-note-1',
   '/portfolio-website/install-app.js?v=install-separate-2',
-  '/portfolio-website/lens-atmosphere.css?v=lens-atmosphere-17',
+  '/portfolio-website/lens-atmosphere.css?v=lens-atmosphere-18',
+  '/portfolio-website/site-theme-init.js?v=colour-world-1',
+  '/portfolio-website/site-theme-control.js?v=colour-world-1',
+  '/portfolio-website/palette-themes.css?v=palette-themes-4',
   '/portfolio-website/assets/atmosphere/day-sky.svg',
   '/portfolio-website/assets/atmosphere/day-sky-mobile.svg',
   '/portfolio-website/assets/atmosphere/night-sky.svg',
