@@ -416,6 +416,7 @@ input[type="color"]:focus-visible {
 }
 
 button:not(:disabled) {
+  --nyarindo-button-halo: color-mix(in srgb, currentColor 54%, #5bb8e8);
   transition:
     color .2s ease,
     background-color .2s ease,
@@ -425,23 +426,31 @@ button:not(:disabled) {
     transform .2s ease;
 }
 
-button:not(:disabled):hover {
-  filter: saturate(1.2) brightness(1.055);
-  transform: translateY(-1px);
-  box-shadow: 0 0 24px color-mix(in srgb, currentColor 20%, transparent);
+button:not(:disabled):is(:hover, :focus-visible) {
+  filter: saturate(1.28) brightness(1.07);
+  transform: translateY(-2px) scale(1.012);
+  box-shadow:
+    0 0 0 3px color-mix(in srgb, var(--nyarindo-button-halo) 18%, transparent),
+    0 8px 24px color-mix(in srgb, var(--nyarindo-button-halo) 30%, transparent),
+    inset 0 1px rgba(255, 255, 255, .16);
+}
+
+button:not(:disabled):focus-visible {
+  outline: 2px solid var(--nyarindo-button-halo);
+  outline-offset: 3px;
 }
 
 button:not(:disabled):active {
-  transform: translateY(0) scale(.985);
+  transform: translateY(0) scale(.975);
 }
 
 @media (prefers-reduced-motion: reduce) {
   button:not(:disabled) {
-    transition: none;
+    transition: none !important;
   }
 
-  button:not(:disabled):hover,
+  button:not(:disabled):is(:hover, :focus-visible),
   button:not(:disabled):active {
-    transform: none;
+    transform: none !important;
   }
 }

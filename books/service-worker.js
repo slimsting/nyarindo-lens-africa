@@ -1,4 +1,4 @@
-const CACHE = "nyarindo-library-v20";
+const CACHE = "nyarindo-library-v21";
 const CORE = [
   "/books/",
   "/books/index.html",
@@ -9,7 +9,7 @@ const CORE = [
   "/books/pdf-importer.js?v=local-pdf-2",
   "/books/vendor/pdfjs/pdf.min.mjs",
   "/books/vendor/pdfjs/pdf.worker.min.mjs",
-  "/portfolio-website/theme-controls.css?v=theme-controls-8",
+  "/portfolio-website/theme-controls.css?v=theme-controls-9",
   "/portfolio-website/site-theme-init.js?v=colour-world-2",
   "/portfolio-website/site-theme-control.js?v=colour-world-3",
   "/portfolio-website/palette-themes.css?v=palette-themes-5",
