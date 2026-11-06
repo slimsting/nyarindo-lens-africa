@@ -1,11 +1,11 @@
-const CACHE = "nyarindo-library-v22";
+const CACHE = "nyarindo-library-v23";
 const CORE = [
   "/books/",
   "/books/index.html",
   "/books/manifest.webmanifest",
   "/books/library.css?v=library-sky-1",
-  "/books/library-reader.css?v=reader-atmosphere-2",
-  "/books/library.js?v=reader-toc-4",
+  "/books/library-reader.css?v=reader-background-3",
+  "/books/library.js?v=reader-background-5",
   "/books/pdf-importer.js?v=local-pdf-2",
   "/books/vendor/pdfjs/pdf.min.mjs",
   "/books/vendor/pdfjs/pdf.worker.min.mjs",

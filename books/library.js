@@ -157,6 +157,15 @@
   const readerFontFile = document.getElementById("readerFontFile");
   const readerResetType = document.getElementById("readerResetType");
   const readerTypeStatus = document.getElementById("readerTypeStatus");
+  const readerBackgroundColor = document.getElementById("readerBackgroundColor");
+  const readerBackgroundImage = document.getElementById("readerBackgroundImage");
+  const readerBackgroundOpacity = document.getElementById("readerBackgroundOpacity");
+  const readerBackgroundOpacityValue = document.getElementById("readerBackgroundOpacityValue");
+  const readerBackgroundTransparent = document.getElementById("readerBackgroundTransparent");
+  const readerClearBackgroundImage = document.getElementById("readerClearBackgroundImage");
+  const readerResetBackground = document.getElementById("readerResetBackground");
+  const readerBackgroundStatus = document.getElementById("readerBackgroundStatus");
+  const readerAtmosphereCustom = document.getElementById("readerAtmosphereCustom");
   const readerFocusHint = document.getElementById("readerFocusHint");
   const toneButtons = [...document.querySelectorAll("[data-reading-tone]")];
   const atmosphereButtons = [
@@ -178,6 +187,7 @@
   let sectionIndex = [];
   let customReaderFontFace = null;
   let customReaderFontFile = null;
+  let readerBackgroundImageUrl = "";
   const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   function setPressed(buttons, active, key) {
@@ -209,9 +219,15 @@
 
   function openReaderTypeDb() {
     return new Promise((resolve, reject) => {
-      const request = indexedDB.open("nyarindo-reader-type", 1);
+      const request = indexedDB.open("nyarindo-reader-type", 2);
       request.onupgradeneeded = () => {
-        request.result.createObjectStore("fonts", { keyPath: "id" });
+        const database = request.result;
+        if (!database.objectStoreNames.contains("fonts")) {
+          database.createObjectStore("fonts", { keyPath: "id" });
+        }
+        if (!database.objectStoreNames.contains("backgrounds")) {
+          database.createObjectStore("backgrounds", { keyPath: "id" });
+        }
       };
       request.onsuccess = () => resolve(request.result);
       request.onerror = () => reject(request.error);
@@ -245,6 +261,106 @@
       transaction.oncomplete = resolve;
       transaction.onerror = () => reject(transaction.error);
     });
+  }
+
+  const readerBackgroundKey = "nyarindo-reader-background";
+  const readerBackgroundDefaults = {
+    enabled: false,
+    color: "#2e7181",
+    opacity: 28,
+    transparent: true,
+    imageName: "",
+  };
+
+  async function readStoredReaderBackground() {
+    const db = await openReaderTypeDb();
+    return new Promise((resolve, reject) => {
+      const request = db
+        .transaction("backgrounds", "readonly")
+        .objectStore("backgrounds")
+        .get("current");
+      request.onsuccess = () => resolve(request.result || null);
+      request.onerror = () => reject(request.error);
+    });
+  }
+
+  async function writeStoredReaderBackground(record) {
+    const db = await openReaderTypeDb();
+    return new Promise((resolve, reject) => {
+      const transaction = db.transaction("backgrounds", "readwrite");
+      transaction.objectStore("backgrounds").put({ id: "current", ...record });
+      transaction.oncomplete = resolve;
+      transaction.onerror = () => reject(transaction.error);
+    });
+  }
+
+  async function clearStoredReaderBackground() {
+    const db = await openReaderTypeDb();
+    return new Promise((resolve, reject) => {
+      const transaction = db.transaction("backgrounds", "readwrite");
+      transaction.objectStore("backgrounds").delete("current");
+      transaction.oncomplete = resolve;
+      transaction.onerror = () => reject(transaction.error);
+    });
+  }
+
+  function readReaderBackground() {
+    try {
+      const stored = JSON.parse(localStorage.getItem(readerBackgroundKey) || "{}");
+      return {
+        ...readerBackgroundDefaults,
+        ...stored,
+        opacity: Math.max(0, Math.min(100, Number(stored.opacity) || readerBackgroundDefaults.opacity)),
+        transparent: stored.transparent !== false,
+      };
+    } catch {
+      return { ...readerBackgroundDefaults };
+    }
+  }
+
+  function writeReaderBackground(preferences) {
+    try {
+      localStorage.setItem(readerBackgroundKey, JSON.stringify(preferences));
+    } catch {}
+  }
+
+  function applyReaderBackground(preferences = readReaderBackground()) {
+    const validColour = /^#[0-9a-f]{6}$/i.test(preferences.color)
+      ? preferences.color
+      : readerBackgroundDefaults.color;
+    const opacity = Math.max(
+      0,
+      Math.min(100, Number(preferences.opacity) || readerBackgroundDefaults.opacity),
+    );
+    const hasImage = Boolean(readerBackgroundImageUrl && preferences.imageName);
+    const active = Boolean(preferences.enabled);
+    readerDialog.style.setProperty("--reader-custom-color", validColour);
+    readerDialog.style.setProperty(
+      "--reader-custom-color-strength",
+      preferences.transparent ? ".34" : ".7",
+    );
+    readerDialog.style.setProperty(
+      "--reader-custom-image-opacity",
+      String(opacity / 100),
+    );
+    readerDialog.style.setProperty(
+      "--reader-custom-image",
+      hasImage ? `url("${readerBackgroundImageUrl}")` : "none",
+    );
+    readerDialog.classList.toggle("has-reader-custom-background", active);
+    readerDialog.classList.toggle(
+      "has-reader-transparent-background",
+      Boolean(preferences.transparent),
+    );
+    readerBackgroundColor.value = validColour;
+    readerBackgroundOpacity.value = String(opacity);
+    readerBackgroundOpacityValue.textContent = `${opacity}%`;
+    readerBackgroundTransparent.checked = Boolean(preferences.transparent);
+    readerBackgroundStatus.textContent = active
+      ? hasImage
+        ? `${preferences.imageName} · ${opacity}% photo · ${preferences.transparent ? "transparent" : "solid"} blend`
+        : `${validColour} · ${preferences.transparent ? "transparent" : "solid"} colour`
+      : "Original living sky.";
   }
 
   function readReaderType() {
@@ -348,6 +464,42 @@
     applyReaderType(preferences);
   }
 
+  async function bakeReaderBackground(file) {
+    const bitmap = await createImageBitmap(file);
+    const maxSide = 2200;
+    const scale = Math.min(1, maxSide / Math.max(bitmap.width, bitmap.height));
+    const canvas = document.createElement("canvas");
+    canvas.width = Math.max(1, Math.round(bitmap.width * scale));
+    canvas.height = Math.max(1, Math.round(bitmap.height * scale));
+    const context = canvas.getContext("2d", { alpha: true });
+    if (!context) {
+      bitmap.close();
+      throw new Error("The background image could not be prepared.");
+    }
+    context.drawImage(bitmap, 0, 0, canvas.width, canvas.height);
+    bitmap.close();
+    const rendered = await new Promise((resolve) =>
+      canvas.toBlob(resolve, "image/webp", 0.86),
+    );
+    if (!rendered) throw new Error("The background image could not be compressed.");
+    return rendered;
+  }
+
+  async function restoreReaderBackground() {
+    const preferences = readReaderBackground();
+    try {
+      const stored = await readStoredReaderBackground();
+      if (stored?.blob) {
+        if (readerBackgroundImageUrl) URL.revokeObjectURL(readerBackgroundImageUrl);
+        readerBackgroundImageUrl = URL.createObjectURL(stored.blob);
+        preferences.imageName = stored.fileName || preferences.imageName;
+      }
+    } catch {
+      readerBackgroundStatus.textContent = "The saved background could not be restored.";
+    }
+    applyReaderBackground(preferences);
+  }
+
   toneButtons.forEach((button) => {
     button.addEventListener("click", () => setTone(button.dataset.readingTone));
   });
@@ -402,6 +554,83 @@
     writeReaderType({ ...readerTypeDefaults });
     applyReaderType({ ...readerTypeDefaults });
     readerTypeStatus.textContent = "Reader type reset.";
+  });
+
+  readerBackgroundColor.addEventListener("input", () => {
+    const preferences = readReaderBackground();
+    preferences.enabled = true;
+    preferences.color = readerBackgroundColor.value;
+    writeReaderBackground(preferences);
+    applyReaderBackground(preferences);
+  });
+
+  readerBackgroundOpacity.addEventListener("input", () => {
+    const preferences = readReaderBackground();
+    preferences.enabled = true;
+    preferences.opacity = Number(readerBackgroundOpacity.value);
+    writeReaderBackground(preferences);
+    applyReaderBackground(preferences);
+  });
+
+  readerBackgroundTransparent.addEventListener("change", () => {
+    const preferences = readReaderBackground();
+    preferences.enabled = true;
+    preferences.transparent = readerBackgroundTransparent.checked;
+    writeReaderBackground(preferences);
+    applyReaderBackground(preferences);
+  });
+
+  readerBackgroundImage.addEventListener("change", async () => {
+    const [file] = readerBackgroundImage.files || [];
+    if (!file) return;
+    if (file.size > 20 * 1024 * 1024) {
+      readerBackgroundStatus.textContent = "Choose a background image smaller than 20 MB.";
+      readerBackgroundImage.value = "";
+      return;
+    }
+    try {
+      const rendered = await bakeReaderBackground(file);
+      await writeStoredReaderBackground({
+        blob: rendered,
+        fileName: file.name,
+        type: rendered.type,
+      });
+      if (readerBackgroundImageUrl) URL.revokeObjectURL(readerBackgroundImageUrl);
+      readerBackgroundImageUrl = URL.createObjectURL(rendered);
+      const preferences = readReaderBackground();
+      preferences.enabled = true;
+      preferences.imageName = file.name;
+      writeReaderBackground(preferences);
+      applyReaderBackground(preferences);
+      readerBackgroundStatus.textContent = `${file.name} stored locally.`;
+    } catch (error) {
+      readerBackgroundStatus.textContent =
+        error instanceof Error ? error.message : "The background image could not be imported.";
+    } finally {
+      readerBackgroundImage.value = "";
+    }
+  });
+
+  readerClearBackgroundImage.addEventListener("click", async () => {
+    await clearStoredReaderBackground().catch(() => {});
+    if (readerBackgroundImageUrl) URL.revokeObjectURL(readerBackgroundImageUrl);
+    readerBackgroundImageUrl = "";
+    const preferences = readReaderBackground();
+    preferences.imageName = "";
+    writeReaderBackground(preferences);
+    applyReaderBackground(preferences);
+    readerBackgroundStatus.textContent = preferences.enabled
+      ? "Background photo removed. The colour layer remains."
+      : "Original living sky.";
+  });
+
+  readerResetBackground.addEventListener("click", async () => {
+    await clearStoredReaderBackground().catch(() => {});
+    if (readerBackgroundImageUrl) URL.revokeObjectURL(readerBackgroundImageUrl);
+    readerBackgroundImageUrl = "";
+    writeReaderBackground({ ...readerBackgroundDefaults });
+    applyReaderBackground({ ...readerBackgroundDefaults });
+    readerBackgroundStatus.textContent = "Reader backdrop reset to the living sky.";
   });
 
   function setReaderMessage(message, isError = false) {
@@ -1038,6 +1267,9 @@
   const openingUrl = new URL(location.href);
   const openingBook = openingUrl.searchParams.get("book");
   restoreReaderType();
+  restoreReaderBackground().catch(() => {
+    readerBackgroundStatus.textContent = "The saved background could not be restored.";
+  });
   refreshLocalBooks().then(() => {
     if (getBook(openingBook)) {
       requestAnimationFrame(() =>

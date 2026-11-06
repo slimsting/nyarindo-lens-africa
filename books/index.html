@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="/portfolio-website/install-apps.css?v=install-note-1">
   <link rel="stylesheet" href="/portfolio-website/theme-controls.css?v=theme-controls-10">
   <link rel="stylesheet" href="/books/library.css?v=library-sky-1">
-  <link rel="stylesheet" href="/books/library-reader.css?v=reader-atmosphere-2">
+  <link rel="stylesheet" href="/books/library-reader.css?v=reader-background-3">
 </head>
 <body data-app-install="library" data-app-name="The Nyarindo Library" data-service-worker="/books/service-worker.js" data-service-worker-scope="/books/">
   <div class="library-atmosphere" aria-hidden="true">
@@ -214,6 +214,18 @@
       <div class="reader-toolbar">
         <div class="reader-control-group" aria-label="Reading tone"><span>Tone</span><button type="button" data-reading-tone="paper" aria-pressed="false">Paper</button><button type="button" data-reading-tone="night" aria-pressed="true">Night</button></div>
         <div class="reader-control-group" aria-label="Background atmosphere"><span>Background</span><button type="button" data-reader-atmosphere="day" aria-pressed="false">Day</button><button type="button" data-reader-atmosphere="night" aria-pressed="true">Night</button></div>
+        <details class="reader-type-panel reader-background-panel">
+          <summary>Backdrop</summary>
+          <div class="reader-type-controls reader-background-controls">
+            <label>Background colour<input id="readerBackgroundColor" type="color" value="#2e7181"></label>
+            <label class="reader-font-import">Background photo<input id="readerBackgroundImage" type="file" accept="image/*"></label>
+            <label>Photo opacity<span class="reader-range-row"><input id="readerBackgroundOpacity" type="range" min="0" max="100" value="28"><output id="readerBackgroundOpacityValue">28%</output></span></label>
+            <label class="reader-switch-row"><input id="readerBackgroundTransparent" type="checkbox" checked> Transparent blend</label>
+            <div class="reader-background-actions"><button id="readerClearBackgroundImage" type="button">Remove photo</button><button id="readerResetBackground" type="button">Reset backdrop</button></div>
+            <p class="reader-background-note">The chosen layer stays on this device and blends over the active day or night sky.</p>
+            <span id="readerBackgroundStatus" role="status" aria-live="polite">Original living sky.</span>
+          </div>
+        </details>
         <details class="reader-type-panel">
           <summary>Type</summary>
           <div class="reader-type-controls">
@@ -228,7 +240,7 @@
         <p class="reader-hint">Arrows turn pages · Home and End jump to the edges · G focuses page entry · S focuses section search</p>
       </div>
       <div class="reader-stage" id="readerStage">
-        <div class="reader-atmosphere" aria-hidden="true"><span class="reader-atmosphere-day"></span><span class="reader-atmosphere-night"></span></div>
+        <div class="reader-atmosphere" aria-hidden="true"><span class="reader-atmosphere-day"></span><span class="reader-atmosphere-night"></span><span class="reader-atmosphere-custom" id="readerAtmosphereCustom"></span></div>
         <article class="reader-paper" id="readerPaper" aria-label="Continuous book edition"><p class="reader-page-marker" id="readerPageMarker">Choose a book to begin</p><div class="reader-copy" id="readerCopy"></div></article>
         <p class="reader-message" id="readerMessage" aria-live="polite">Choose a book from the library.</p>
       </div>
@@ -248,7 +260,7 @@
   </dialog>
 
   <script defer src="/books/pdf-importer.js?v=local-pdf-2"></script>
-  <script defer src="/books/library.js?v=reader-toc-4"></script>
+  <script defer src="/books/library.js?v=reader-background-5"></script>
   <script defer src="/portfolio-website/site-theme-control.js?v=colour-world-3"></script>
   <script defer src="/portfolio-website/install-app.js?v=install-separate-2"></script>
 </body>

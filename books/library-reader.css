@@ -887,6 +887,37 @@ html[data-theme="light"] .local-pdf-card {
   background-size: cover;
 }
 
+.reader-atmosphere-custom {
+  position: absolute;
+  z-index: 2;
+  inset: 0;
+  background: var(--reader-custom-color, #2e7181);
+  opacity: 0;
+  transition:
+    opacity .48s ease,
+    background-color .48s ease;
+}
+
+.reader-atmosphere-custom::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: var(--reader-custom-image, none);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  opacity: var(--reader-custom-image-opacity, 0);
+  transition: opacity .38s ease, mix-blend-mode .38s ease;
+}
+
+.reader-dialog.has-reader-custom-background .reader-atmosphere-custom {
+  opacity: var(--reader-custom-color-strength, .34);
+}
+
+.reader-dialog.has-reader-custom-background.has-reader-transparent-background .reader-atmosphere-custom::after {
+  mix-blend-mode: soft-light;
+}
+
 .reader-atmosphere::after {
   content: "";
   position: absolute;
@@ -1142,6 +1173,102 @@ html[data-theme="light"] .local-pdf-card {
 
 .reader-type-controls button {
   min-height: 32px;
+}
+
+.reader-background-controls {
+  width: min(310px, 84vw);
+  color: #f4efe4;
+  background: #0b1718;
+}
+
+.reader-dialog[data-reading-tone="paper"] .reader-background-controls {
+  color: #263a33;
+  background: #f5efe2;
+  border-color: rgba(41, 68, 55, .24);
+  box-shadow: 0 16px 40px rgba(33, 48, 40, .22);
+}
+
+.reader-dialog[data-reading-tone="paper"] .reader-type-panel summary {
+  color: #263a33;
+}
+
+.reader-background-controls :is(label, .reader-background-note, #readerBackgroundStatus) {
+  color: inherit;
+}
+
+.reader-range-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 9px;
+  align-items: center;
+}
+
+.reader-range-row input[type="range"] {
+  width: 100%;
+  min-width: 0;
+  accent-color: #d9b16d;
+}
+
+.reader-range-row output {
+  min-width: 34px;
+  color: inherit;
+  font: 9px var(--mono);
+  text-align: right;
+}
+
+.reader-switch-row {
+  display: flex !important;
+  grid-template-columns: none !important;
+  align-items: center;
+  gap: 9px !important;
+  min-height: 34px;
+  padding: 7px 9px;
+  border: 1px solid rgba(255, 255, 255, .14);
+  border-radius: 7px;
+  cursor: pointer;
+}
+
+.reader-switch-row input {
+  width: 17px;
+  height: 17px;
+  flex: none;
+  margin: 0;
+  accent-color: #d9b16d;
+}
+
+.reader-background-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 7px;
+}
+
+.reader-background-actions button {
+  min-width: 0;
+  min-height: 34px;
+  padding: 7px;
+  border: 1px solid rgba(255, 255, 255, .16);
+  border-radius: 7px;
+  background: rgba(255, 255, 255, .045);
+  color: inherit;
+  font: 8px/1.3 var(--mono);
+}
+
+.reader-dialog[data-reading-tone="paper"] .reader-background-actions button {
+  background: rgba(44, 72, 59, .07);
+  border-color: rgba(41, 68, 55, .2);
+}
+
+.reader-background-note {
+  margin: 0;
+  font: 8px/1.55 var(--mono);
+  letter-spacing: .025em;
+  opacity: .7;
+}
+
+#readerBackgroundStatus {
+  font: 8px/1.5 var(--mono);
+  letter-spacing: .03em;
+  opacity: .72;
 }
 
 #readerTypeStatus {
@@ -1546,6 +1673,8 @@ html[data-theme="light"] .local-pdf-card {
 
   .reader-atmosphere-day,
   .reader-atmosphere-night,
+  .reader-atmosphere-custom,
+  .reader-atmosphere-custom::after,
   .reader-atmosphere::after,
   .reader-dialog.reader-focus-mode :is(.reader-head, .reader-toolbar, .reader-footer, .reader-progress),
   .reader-focus-hint {
