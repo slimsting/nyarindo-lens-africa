@@ -1,4 +1,4 @@
-const CACHE = 'return-memory-v22';
+const CACHE = 'return-memory-v21';
 const CORE = [
   './',
   './index.html',
