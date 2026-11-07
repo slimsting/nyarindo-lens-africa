@@ -1,4 +1,5 @@
 const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const root = document.documentElement;
 
 let previousScrollY = window.scrollY;
 let scrollLightTimer;
