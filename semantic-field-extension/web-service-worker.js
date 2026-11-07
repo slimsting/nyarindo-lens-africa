@@ -1,4 +1,4 @@
-const CACHE = 'semantic-field-v18';
+const CACHE = 'semantic-field-v19';
 const CORE = [
   './',
   './index.html',

@@ -1,4 +1,4 @@
-const CACHE = 'nyarindo-universal-v27';
+const CACHE = 'nyarindo-universal-v28';
 const CORE = [
   '/portfolio-website/',
   '/portfolio-website/index.html',
