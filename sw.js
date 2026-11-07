@@ -1,11 +1,11 @@
-const CACHE = 'nyarindo-universal-v25';
+const CACHE = 'nyarindo-universal-v26';
 const CORE = [
   '/portfolio-website/',
   '/portfolio-website/index.html',
   '/site.webmanifest',
   '/portfolio-website/install-apps.css?v=install-note-1',
   '/portfolio-website/install-app.js?v=install-separate-2',
-  '/portfolio-website/lens-atmosphere.css?v=lens-atmosphere-22',
+  '/portfolio-website/lens-atmosphere.css?v=lens-atmosphere-23',
   '/portfolio-website/theme-controls.css?v=theme-controls-10',
   '/portfolio-website/site-theme-init.js?v=colour-world-3',
   '/portfolio-website/site-theme-control.js?v=colour-world-4',

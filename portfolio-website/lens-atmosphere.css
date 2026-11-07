@@ -172,8 +172,8 @@ html[data-theme="dark"] body::after {
   will-change: opacity, background-position;
 }
 
-/* Dark content floats directly in the same uninterrupted night sky. */
-html[data-theme="dark"][data-page="home"] body > main > :is(
+/* Home content floats directly in the same uninterrupted living sky. */
+html[data-page="home"] body > main > :is(
   .work,
   .app-launchpad,
   .approach,
@@ -187,7 +187,7 @@ html[data-theme="dark"][data-page="home"] body > main > :is(
   box-shadow: none !important;
 }
 
-html[data-theme="dark"][data-page="home"] body > :is(
+html[data-page="home"] body > :is(
   .social-footer,
   .ucp-signoff,
   .nyarindo-thread-footer
