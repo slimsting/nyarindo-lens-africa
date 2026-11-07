@@ -151,11 +151,8 @@ html[data-theme="light"] {
   margin: 0;
   clear: both;
   z-index: 2;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 18px 32px;
-  padding: 24px 7vw;
+  display: block;
+  padding: 0;
   border-top: 1px solid rgba(212, 179, 126, 0.24);
   background: #09110c;
   color: #eef1e8;
@@ -164,27 +161,109 @@ html[data-theme="light"] {
   text-transform: lowercase;
 }
 
-.nyarindo-thread-footer > a,
-.nyarindo-thread-footer nav a {
+.thread-footer-details {
+  width: 100%;
+}
+
+.thread-footer-details summary {
+  min-height: 64px;
+  padding: 14px 7vw;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  cursor: pointer;
+  list-style: none;
+}
+
+.thread-footer-details summary::-webkit-details-marker {
+  display: none;
+}
+
+.thread-footer-summary-copy {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+}
+
+.thread-footer-kicker {
+  color: #8fa493;
+  font: 7px/1.4 "DM Mono", monospace;
+  letter-spacing: 0.16em;
+}
+
+.thread-footer-summary-copy strong {
+  color: inherit;
+  font: 15px/1.25 Georgia, "Times New Roman", serif;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  text-transform: none;
+}
+
+.thread-footer-summary-action {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  color: #aebdb2;
+  font: 8px/1 var(--mono);
+  letter-spacing: 0.12em;
+}
+
+.thread-footer-summary-action b {
+  display: grid;
+  width: 24px;
+  height: 24px;
+  place-items: center;
+  border: 1px solid rgba(216, 180, 119, 0.48);
+  border-radius: 50%;
+  color: #d8b477;
+  font: 16px/1 var(--sans);
+  transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+}
+
+.thread-footer-details[open] .thread-footer-summary-action b {
+  background: #d8b477;
+  color: #17130e;
+  transform: rotate(45deg);
+}
+
+.thread-footer-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px 32px;
+  padding: 0 7vw 24px;
+}
+
+.thread-footer-details[open] .thread-footer-content {
+  border-top: 1px solid rgba(212, 179, 126, 0.16);
+  padding-top: 18px;
+}
+
+.thread-footer-content > a,
+.thread-footer-content nav a {
   color: inherit;
   text-decoration: none;
   border-bottom: 1px solid transparent;
 }
 
-.nyarindo-thread-footer > a:is(:hover, :focus-visible),
-.nyarindo-thread-footer nav a:is(:hover, :focus-visible) {
+.thread-footer-content > a:is(:hover, :focus-visible),
+.thread-footer-content nav a:is(:hover, :focus-visible) {
   color: #d8b477;
   border-bottom-color: currentColor;
 }
 
-.nyarindo-thread-footer nav {
+.thread-footer-content nav {
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-end;
   gap: 7px 14px;
 }
 
-.nyarindo-thread-footer nav span {
+.thread-footer-content nav span {
   color: #7f9a87;
 }
 
@@ -194,23 +273,54 @@ html[data-theme="light"] .nyarindo-thread-footer {
   color: #23352a;
 }
 
-html[data-theme="light"] .nyarindo-thread-footer > a:is(:hover, :focus-visible),
-html[data-theme="light"] .nyarindo-thread-footer nav a:is(:hover, :focus-visible) {
+html[data-theme="light"] .thread-footer-kicker {
+  color: #6d8274;
+}
+
+html[data-theme="light"] .thread-footer-summary-action {
+  color: #607468;
+}
+
+html[data-theme="light"] .thread-footer-summary-action b {
+  border-color: rgba(142, 92, 47, 0.48);
   color: #8e5c2f;
 }
 
-html[data-theme="light"] .nyarindo-thread-footer nav span {
+html[data-theme="light"] .thread-footer-details[open] .thread-footer-summary-action b {
+  background: #8e5c2f;
+  color: #f7f3e9;
+}
+
+html[data-theme="light"] .thread-footer-details[open] .thread-footer-content {
+  border-top-color: rgba(77, 103, 84, 0.16);
+}
+
+html[data-theme="light"] .thread-footer-content > a:is(:hover, :focus-visible),
+html[data-theme="light"] .thread-footer-content nav a:is(:hover, :focus-visible) {
+  color: #8e5c2f;
+}
+
+html[data-theme="light"] .thread-footer-content nav span {
   color: #708176;
 }
 
 @media (max-width: 650px) {
   .nyarindo-thread-footer {
-    align-items: flex-start;
-    flex-direction: column;
-    padding: 22px 20px;
+    padding: 0;
   }
 
-  .nyarindo-thread-footer nav {
+  .thread-footer-details summary {
+    min-height: 60px;
+    padding: 16px 20px;
+  }
+
+  .thread-footer-content {
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 0 20px 22px;
+  }
+
+  .thread-footer-content nav {
     justify-content: flex-start;
   }
 }

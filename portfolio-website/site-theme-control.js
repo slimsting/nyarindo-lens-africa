@@ -264,7 +264,12 @@
       const footer = document.querySelector(
         ".nyarindo-thread-footer, .social-footer, footer",
       );
-      if (footer) footer.append(createFooterPaletteControl());
+      if (footer) {
+        const footerContent = footer.matches(".nyarindo-thread-footer")
+          ? footer.querySelector(".thread-footer-content")
+          : null;
+        (footerContent || footer).append(createFooterPaletteControl());
+      }
     }
 
     paletteButtons().forEach((button) => {

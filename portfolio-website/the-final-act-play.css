@@ -1078,12 +1078,8 @@ main {
 .nyarindo-thread-footer {
   position: relative;
   z-index: 1;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 18px;
-  padding: 25px 5vw;
+  display: block;
+  padding: 0;
   border-top: 1px solid var(--play-border);
   background: var(--play-glass-strong);
   color: var(--muted);
@@ -1093,14 +1089,97 @@ main {
   -webkit-backdrop-filter: blur(14px);
 }
 
-.nyarindo-thread-footer nav {
+.thread-footer-details {
+  width: 100%;
+}
+
+.thread-footer-details summary {
+  min-height: 64px;
+  padding: 14px 5vw;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  cursor: pointer;
+  list-style: none;
+}
+
+.thread-footer-details summary::-webkit-details-marker {
+  display: none;
+}
+
+.thread-footer-summary-copy {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+}
+
+.thread-footer-kicker {
+  color: var(--muted);
+  font: 7px/1.4 var(--mono);
+  letter-spacing: 0.16em;
+  opacity: 0.72;
+}
+
+.thread-footer-summary-copy strong {
+  color: var(--ink);
+  font: 15px/1.25 var(--serif);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+.thread-footer-summary-action {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  color: var(--muted);
+  font: 8px/1 var(--mono);
+  letter-spacing: 0.12em;
+}
+
+.thread-footer-summary-action b {
+  display: grid;
+  width: 24px;
+  height: 24px;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, var(--accent) 48%, transparent);
+  border-radius: 50%;
+  color: var(--accent);
+  font: 16px/1 var(--sans);
+  transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+}
+
+.thread-footer-details[open] .thread-footer-summary-action b {
+  background: var(--accent);
+  color: #17130e;
+  transform: rotate(45deg);
+}
+
+.thread-footer-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 18px;
+  padding: 0 5vw 25px;
+}
+
+.thread-footer-details[open] .thread-footer-content {
+  border-top: 1px solid var(--play-border);
+  padding-top: 18px;
+}
+
+.thread-footer-content nav {
   display: flex;
   flex-wrap: wrap;
   gap: 7px;
   justify-content: center;
 }
 
-.nyarindo-thread-footer a:is(:hover, :focus-visible) {
+.thread-footer-content a:is(:hover, :focus-visible) {
   color: var(--accent);
 }
 
@@ -1307,11 +1386,21 @@ main {
   }
 
   .nyarindo-thread-footer {
-    align-items: flex-start;
-    flex-direction: column;
+    padding: 0;
   }
 
-  .nyarindo-thread-footer nav {
+  .thread-footer-details summary {
+    min-height: 60px;
+    padding: 16px 20px;
+  }
+
+  .thread-footer-content {
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 0 20px 22px;
+  }
+
+  .thread-footer-content nav {
     justify-content: flex-start;
   }
 }
