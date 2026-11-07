@@ -1,4 +1,4 @@
-const CACHE = 'semantic-field-v16';
+const CACHE = 'semantic-field-v17';
 const CORE = [
   './',
   './index.html',
@@ -12,7 +12,7 @@ const CORE = [
   '/portfolio-website/theme-controls.css?v=theme-controls-10',
   '/portfolio-website/site-theme-init.js?v=colour-world-3',
   '/portfolio-website/site-theme-control.js?v=colour-world-4',
-  '/portfolio-website/palette-themes.css?v=palette-themes-6',
+  '/portfolio-website/palette-themes.css?v=palette-themes-7',
   '/portfolio-website/assets/atmosphere/day-sky.svg',
   '/portfolio-website/assets/atmosphere/day-sky-mobile.svg',
   '/portfolio-website/assets/atmosphere/night-sky.svg',

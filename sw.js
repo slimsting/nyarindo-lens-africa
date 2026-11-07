@@ -1,4 +1,4 @@
-const CACHE = 'nyarindo-universal-v24';
+const CACHE = 'nyarindo-universal-v25';
 const CORE = [
   '/portfolio-website/',
   '/portfolio-website/index.html',
@@ -9,7 +9,7 @@ const CORE = [
   '/portfolio-website/theme-controls.css?v=theme-controls-10',
   '/portfolio-website/site-theme-init.js?v=colour-world-3',
   '/portfolio-website/site-theme-control.js?v=colour-world-4',
-  '/portfolio-website/palette-themes.css?v=palette-themes-6',
+  '/portfolio-website/palette-themes.css?v=palette-themes-7',
   '/portfolio-website/styles.css?v=app-grid-colour-2',
   '/portfolio-website/brand-portrait.css?v=brand-portrait-5',
   '/portfolio-website/assets/nyarindo-whimsical-semantic-os-mark.svg?v=semantic-mark-1',

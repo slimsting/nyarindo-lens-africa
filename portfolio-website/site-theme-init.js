@@ -8,7 +8,7 @@
     ) {
       const paletteStyles = document.createElement("link");
       paletteStyles.rel = "stylesheet";
-      paletteStyles.href = new URL("palette-themes.css?v=palette-themes-6", currentScript.src).href;
+      paletteStyles.href = new URL("palette-themes.css?v=palette-themes-7", currentScript.src).href;
       paletteStyles.dataset.nyarindoPaletteStyles = "";
       document.head.append(paletteStyles);
     }

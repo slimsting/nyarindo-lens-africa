@@ -1,39 +1,4 @@
 const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
-const root = document.documentElement;
-const themeSwatches = [...document.querySelectorAll('[data-palette]')];
-
-const paletteColors = {
-  forest: { dark: '#10110f', light: '#eeeae0' },
-  ocean: { dark: '#07151c', light: '#e8f0f1' },
-  amethyst: { dark: '#130f1b', light: '#f0eaf4' },
-  ember: { dark: '#180e0b', light: '#f5ebe3' },
-  rose: { dark: '#190f14', light: '#f7eaf0' },
-  slate: { dark: '#0e1418', light: '#e9eef0' }
-};
-
-function updateThemeColor() {
-  const palette = paletteColors[root.dataset.palette] || paletteColors.forest;
-  document.querySelector('meta[name="theme-color"]').content =
-    root.dataset.theme === 'light' ? palette.light : palette.dark;
-}
-
-function applyPalette(palette, persist = true) {
-  if (!paletteColors[palette]) palette = 'forest';
-  root.dataset.palette = palette;
-  themeSwatches.forEach(button => {
-    button.setAttribute('aria-pressed', String(button.dataset.palette === palette));
-  });
-  updateThemeColor();
-  if (persist) {
-    try { localStorage.setItem('nyarindo-palette', palette); } catch {}
-  }
-}
-
-themeSwatches.forEach(button => {
-  button.addEventListener('click', () => applyPalette(button.dataset.palette));
-});
-applyPalette(root.dataset.palette || 'forest', false);
-window.addEventListener('nyarindo:themechange', updateThemeColor);
 
 let previousScrollY = window.scrollY;
 let scrollLightTimer;

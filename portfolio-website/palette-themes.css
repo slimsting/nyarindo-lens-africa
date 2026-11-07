@@ -279,6 +279,8 @@ button[data-palette=slate]{--swatch:var(--nyarindo-swatch-slate)}
   backdrop-filter:blur(16px) saturate(1.1);
 }
 
+html[data-page=home] .nyarindo-palette-strip{display:none}
+
 html[data-theme=light] .nyarindo-palette-strip{
   border-bottom-color:rgba(23,72,58,.2);
   background:linear-gradient(90deg,rgba(12,97,134,.9),rgba(62,153,174,.62),rgba(12,97,134,.88));
