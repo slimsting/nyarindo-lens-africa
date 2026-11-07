@@ -1,4 +1,4 @@
-const CACHE = 'return-memory-v16';
+const CACHE = 'return-memory-v17';
 const CORE = [
   './',
   './index.html',
@@ -9,9 +9,9 @@ const CORE = [
   '/portfolio-website/install-app.js?v=install-separate-2',
   '/portfolio-website/lens-atmosphere.css?v=lens-atmosphere-22',
   '/portfolio-website/theme-controls.css?v=theme-controls-10',
-  '/portfolio-website/site-theme-init.js?v=colour-world-2',
-  '/portfolio-website/site-theme-control.js?v=colour-world-3',
-  '/portfolio-website/palette-themes.css?v=palette-themes-5',
+  '/portfolio-website/site-theme-init.js?v=colour-world-3',
+  '/portfolio-website/site-theme-control.js?v=colour-world-4',
+  '/portfolio-website/palette-themes.css?v=palette-themes-6',
   '/portfolio-website/assets/atmosphere/day-sky.svg',
   '/portfolio-website/assets/atmosphere/day-sky-mobile.svg',
   '/portfolio-website/assets/atmosphere/night-sky.svg',

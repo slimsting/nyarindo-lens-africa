@@ -1,3 +1,17 @@
+/*
+ * Authoritative source for every shared colour world.
+ * Palette colours and public swatch colours are defined here once.
+ * JavaScript may select an ID or read these tokens, but must not duplicate their values.
+ */
+:root{
+  --nyarindo-swatch-forest:#4f7c58;
+  --nyarindo-swatch-ocean:#3f8fa8;
+  --nyarindo-swatch-amethyst:#8d70bd;
+  --nyarindo-swatch-ember:#c66d42;
+  --nyarindo-swatch-rose:#c76d87;
+  --nyarindo-swatch-slate:#748b94
+}
+
 /* Six complete palettes, each with a tuned dark and light counterpart. */
 html[data-palette=forest]{
   color-scheme:dark;
@@ -198,6 +212,9 @@ body,.playem-section,.playem-copy,.social-footer,.books-section{transition:none}
   backdrop-filter:blur(18px) saturate(1.12);
 }
 
+.nyarindo-palette-nav>.nyarindo-palette-popover{display:none}
+.nyarindo-palette-nav[open]>.nyarindo-palette-popover{display:block}
+
 .nyarindo-palette-popover p{
   margin:0 0 10px;
   color:var(--accent);
@@ -229,6 +246,20 @@ body,.playem-section,.playem-copy,.social-footer,.books-section{transition:none}
   cursor:pointer;
   transition:transform .18s ease,box-shadow .18s ease;
 }
+
+button[data-palette=forest]{--swatch:var(--nyarindo-swatch-forest)}
+button[data-palette=ocean]{--swatch:var(--nyarindo-swatch-ocean)}
+button[data-palette=amethyst]{--swatch:var(--nyarindo-swatch-amethyst)}
+button[data-palette=ember]{--swatch:var(--nyarindo-swatch-ember)}
+button[data-palette=rose]{--swatch:var(--nyarindo-swatch-rose)}
+button[data-palette=slate]{--swatch:var(--nyarindo-swatch-slate)}
+
+.nyarindo-palette-orbit i[data-palette-dot=forest]{--dot:var(--nyarindo-swatch-forest)}
+.nyarindo-palette-orbit i[data-palette-dot=ocean]{--dot:var(--nyarindo-swatch-ocean)}
+.nyarindo-palette-orbit i[data-palette-dot=amethyst]{--dot:var(--nyarindo-swatch-amethyst)}
+.nyarindo-palette-orbit i[data-palette-dot=ember]{--dot:var(--nyarindo-swatch-ember)}
+.nyarindo-palette-orbit i[data-palette-dot=rose]{--dot:var(--nyarindo-swatch-rose)}
+.nyarindo-palette-orbit i[data-palette-dot=slate]{--dot:var(--nyarindo-swatch-slate)}
 
 .nyarindo-palette-grid button:is(:hover,:focus-visible){transform:translateY(-2px);box-shadow:0 0 0 2px var(--ink),0 7px 16px rgba(0,0,0,.24)}
 .nyarindo-palette-grid button[aria-pressed=true]{border-color:var(--ink);box-shadow:0 0 0 2px var(--accent),0 0 15px color-mix(in srgb,var(--swatch) 50%,transparent)}
